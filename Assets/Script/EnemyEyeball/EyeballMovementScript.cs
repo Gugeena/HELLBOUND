@@ -1,0 +1,320 @@
+using System.Collections;
+using System.Collections.Generic;
+using Unity.VisualScripting;
+using UnityEngine;
+using UnityEngine.Playables;
+using static UnityEditor.FilePathAttribute;
+using static UnityEngine.ParticleSystem;
+
+public class EyeballMovementScript : MonoBehaviour
+{
+    Rigidbody2D rb;
+
+    Animator anim;
+
+    SpriteRenderer sr;
+
+    public Transform player;
+
+    public float movespeed;
+
+    float stopDistance = 2.5f;
+
+    public GameObject Hitbox;
+
+    public GameObject BlowUpParticles;
+
+    public GameObject Glow;
+
+    bool Dying = false;
+
+    bool canMove;
+
+    public GameObject DeathParticles;
+
+    public AudioClip deathSound;
+
+    public Transform LPortal;
+    public Transform RPortal;
+
+    public float lastproccessedkill = -1f;
+
+    public float healamount = 5f;
+
+    float distance;
+
+    float closestPortal;
+
+    float closestPortalPlayer;
+
+    float distanceToPlayer;
+
+    float distanceL;
+    float distanceR;
+
+    float distancePlayerL;
+    float distancePlayerR;
+
+    public Transform LLOCATION;
+    public Transform RLLOCATION;
+
+    float leftPortalpath;
+    float righttPortalpath;
+    float Directpath;
+
+    bool charge;
+
+    Quaternion savedRotation;
+    bool lockedRotation = false;
+
+    int teleportCount = 0;
+
+    public GameObject weaponPickup;
+
+    void Start()
+    {
+        rb = GetComponent<Rigidbody2D>();
+        anim = GetComponent<Animator>();
+        sr = GetComponent<SpriteRenderer>();
+
+        player = GameObject.FindWithTag("Player").transform;
+        LPortal = GameObject.Find("LLocation").transform;
+        RPortal = GameObject.Find("RLocation").transform;
+        LLOCATION = GameObject.Find("LLOCATIONLOCATION").transform;
+        RLLOCATION = GameObject.Find("RLOCATIONLOCATION").transform;
+        handleDistance();
+        StartRotation();
+
+        rb.sleepMode = RigidbodySleepMode2D.NeverSleep;
+
+        StartCoroutine(waiter());
+    }
+
+    public IEnumerator waiter()
+    {
+        yield return new WaitForSeconds(0.5f);
+        canMove = true;
+        StartCoroutine(distanceDetection());
+    }
+
+    void Update()
+    {
+        if (canMove)
+        {
+            if (stopDistance <= distance && !charge)
+            {
+                Vector2 targetPosition;
+                Vector2 moveDir;
+
+                if (Directpath <= leftPortalpath && Directpath <= righttPortalpath)
+                {
+                    targetPosition = new Vector2(player.position.x, player.transform.position.y);
+                    moveDir = (targetPosition - (Vector2)transform.position).normalized;
+
+                    float angle = Mathf.Atan2(moveDir.y, moveDir.x) * Mathf.Rad2Deg;
+                    transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+
+                    rb.linearVelocity = moveDir * movespeed;
+                }
+                else if (leftPortalpath <= righttPortalpath)
+                {
+                    targetPosition = new Vector2(LPortal.position.x, transform.position.y);
+                    moveDir = (targetPosition - (Vector2)transform.position).normalized;
+
+                    float angle = Mathf.Atan2(moveDir.y, moveDir.x) * Mathf.Rad2Deg;
+                    transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+
+                    rb.linearVelocity = new Vector2(moveDir.x * movespeed, rb.linearVelocity.y);
+                }
+                else
+                {
+                    targetPosition = new Vector2(RPortal.position.x, transform.position.y);
+                    moveDir = (targetPosition - (Vector2)transform.position).normalized;
+
+                    float angle = Mathf.Atan2(moveDir.y, moveDir.x) * Mathf.Rad2Deg;
+                    transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+
+                    rb.linearVelocity = new Vector2(moveDir.x * movespeed, rb.linearVelocity.y);
+                }
+            }
+            else
+            {
+                charge = true;
+                movespeed = 11;
+                rb.linearVelocity = transform.right * movespeed;
+                StartCoroutine(ExplodeAfterTime());
+            }
+        }
+    }
+    private IEnumerator distanceDetection()
+    {
+        yield return new WaitForFixedUpdate();
+        handleDistance();
+        StartCoroutine(distanceDetection());
+    }
+
+    public void StartRotation()
+    {
+        Vector2 direction = (player.transform.position - transform.position).normalized;
+        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+        transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+    }
+
+    public void handleDistance()
+    {
+        distance = Mathf.Abs(player.position.x - transform.position.x); // THIS > Player
+
+        distanceL = Vector2.Distance(new Vector2(transform.position.x, transform.position.y), new Vector2(LPortal.transform.position.x + 0.25f, transform.position.y)); // THIS > LPortal
+        distanceR = Vector2.Distance(new Vector2(transform.position.x, transform.position.y), new Vector2(RPortal.transform.position.x - 0.25f, transform.position.y)); // THIS > RPortal
+
+        distancePlayerL = Vector2.Distance(new Vector2(player.transform.position.x, transform.position.y), new Vector2(LPortal.transform.position.x, transform.position.y)); // Player > LPortal
+        distancePlayerR = Vector2.Distance(new Vector2(player.transform.position.x, transform.position.y), new Vector2(RPortal.transform.position.x, transform.position.y)); // Player > RPortal
+
+        leftPortalpath = distanceL + Mathf.Abs(player.position.x - RLLOCATION.position.x); // This > LPortal >  Player > RPortal
+        righttPortalpath = distanceR + Mathf.Abs(player.position.x - LLOCATION.position.x); // This > RPortal >  Player > LPortal
+        Directpath = distance;
+    }
+
+    IEnumerator FailSafe()
+    {
+        yield return new WaitForSeconds(3f);
+        BlowUpParticles.SetActive(true);
+        Destroy(gameObject);
+    }
+
+    private IEnumerator ExplosionHitbox()
+    {
+        Hitbox.SetActive(true);
+        yield return new WaitForSeconds(0.2f);
+        Hitbox.SetActive(false);
+    }
+
+    private IEnumerator DestroyTimer()
+    {
+        Destroy(Glow);
+
+        transform.rotation = Quaternion.AngleAxis(0, Vector3.up);
+        movespeed = 0f;
+
+        Color color = sr.color;
+        color.a = 0f;
+        sr.color = color;
+
+        BlowUpParticles.SetActive(true);
+        StartCoroutine(ExplosionHitbox());
+
+        yield return new WaitForSeconds(0.5f);
+        Destroy(gameObject);
+    }
+
+    private IEnumerator ExplodeAfterTime()
+    {
+        yield return new WaitForSeconds(5f);
+        StartCoroutine(DestroyTimer());
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.layer == 3 || collision.gameObject.layer == 6)
+        {
+            StartCoroutine(DestroyTimer());
+        }
+
+        if (collision.gameObject.name == "LLocation")
+        {
+            Vector2 vel = rb.linearVelocity;
+            rb.MovePosition(new Vector2(SidePortalScript.RLocation.position.x, transform.position.y));
+            rb.linearVelocity = vel;
+        }
+        else if (collision.gameObject.name == "RLocation")
+        {
+            Vector2 vel = rb.linearVelocity;
+            rb.MovePosition(new Vector2(SidePortalScript.LLocation.position.x, transform.position.y));
+            rb.linearVelocity = vel;
+        }
+
+        if (collision.gameObject.tag == "mfHitbox")
+        {
+            death();
+        }
+
+        RetrieveTeleportCount(collision);
+    }
+
+    public void RetrieveTeleportCount(Collider2D collision)
+    {
+        string weapon = collision.gameObject.name;
+        switch (weapon)
+        {
+            case "motherfuckr(Clone)":
+                teleportCount = collision.gameObject.GetComponent<mfScript>().getteleportCount();
+                break;
+            case "BoomerangPrefab(Clone)":
+                teleportCount = collision.gameObject.GetComponent<BoomerangWeaponScript>().getteleportCount();
+                break;
+            case "SpearPrefab(Clone)":
+                teleportCount = collision.gameObject.GetComponent<spearScript>().getteleportCount();
+                break;
+            case "Arrow(Clone)":
+                teleportCount = collision.gameObject.GetComponent<arrowScript>().getteleportCount();
+                break;
+            default: break;
+        }
+    }
+
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "autodamaylevebeli")
+        {
+            death();
+        }
+    }
+
+    void death()
+    {
+        canMove = false;
+        Dying = true;
+        StopAllCoroutines();
+        Destroy(Glow);
+        PauseScript.kill++;
+        /*
+        if ((int)PauseScript.kill % 15 == 0 && PauseScript.kill != 0 && (int)PauseScript.kill != lastproccessedkill)
+        {
+            if (healamount < 12 && healamount > 9)
+            {
+                healamount++;
+            }
+            lastproccessedkill = (int)PauseScript.kill;
+        }
+        */
+        PlayerMovement playerScript = player.GetComponent<PlayerMovement>();
+        playerScript.hp += healamount;
+        if (PlayerMovement.shouldMakeSound) audioManager.instance.playAudio(deathSound, 0.65f, 1, transform, audioManager.instance.sfx);
+        if (teleportCount <= 0)
+        {
+            //print(dist);
+            if (Directpath < 7f)
+            {
+                print("inRange");
+                if (playerScript.hp > 0)
+                {
+                    if (!playerScript.isAngelicGetter()) playerScript.hp += healamount;
+                    else playerScript.hp += healamount + 2f;
+                }
+            }
+        }
+        else if (teleportCount > 0)
+        {
+            print("isntRange");
+            if (playerScript.hp > 0) playerScript.hp += healamount * 0.7f;
+        }
+        if (playerScript.shouldGainStyle)
+        {
+            if(teleportCount > 0) StyleManager.instance.growStyle(2 * 1 + teleportCount);
+            else StyleManager.instance.growStyle(1 * 1 + teleportCount);
+        }
+        if (playerScript.isAngelic) Instantiate(weaponPickup, this.gameObject.transform.position, Quaternion.identity);
+        Instantiate(DeathParticles, transform.position, Quaternion.identity);
+        Destroy(gameObject);
+    }
+}
