@@ -1595,6 +1595,7 @@ MonoBehaviour:
   source: {fileID: 2449307550315473392, guid: 56d86b270501d01459fe0f962b0ef699, type: 3}
   mainMusic: {fileID: 261767363}
   lillithMusic: {fileID: 261767362}
+  endMusic: {fileID: 0}
   sfx: {fileID: 2591810775286935292, guid: 24050ca52f2985449a4f63c0bb205950, type: 2}
   music: {fileID: 3215911852611322790, guid: 24050ca52f2985449a4f63c0bb205950, type: 2}
 --- !u!4 &261767365
@@ -2845,6 +2846,7 @@ MonoBehaviour:
   deathSound: {fileID: 8300000, guid: 8b9044592f5121a4d8cc2d1c97be3bfe, type: 3}
   player: {fileID: 1573698067}
   healamount: 5
+  isdead: 0
 --- !u!1 &515780312
 GameObject:
   m_ObjectHideFlags: 0
@@ -22796,6 +22798,7 @@ MonoBehaviour:
   mjolnir: {fileID: 0}
   ukvegadavaida: 0
   fadeOut: {fileID: 83400944}
+  finalfadeOut: {fileID: 0}
   hurtparticle: {fileID: 0}
   angelOverlayAnim: {fileID: 0}
   Special: 0
@@ -22809,6 +22812,8 @@ MonoBehaviour:
   ascension: {fileID: 0}
   hitStop: {fileID: 0}
   revival: {fileID: 0}
+  finaldissapearence: {fileID: 0}
+  Beyondascension: {fileID: 0}
   punches: []
   gravelWalk: []
   jumps: []
@@ -22841,6 +22846,11 @@ MonoBehaviour:
   shouldmakeAudio: 1
   autokillcollider: {fileID: 0}
   canMove: 1
+  truespirit: {fileID: 0}
+  hasbeyonded: 0
+  canvasAnimator: {fileID: 0}
+  HPbar: {fileID: 0}
+  undachaijvayleoagarshemidzlia: 0
 --- !u!4 &1215419742
 Transform:
   m_ObjectHideFlags: 0
@@ -24714,6 +24724,7 @@ GameObject:
   - component: {fileID: 1772829021}
   - component: {fileID: 1772829020}
   - component: {fileID: 1772829019}
+  - component: {fileID: 1772829022}
   m_Layer: 3
   m_Name: Square (2)
   m_TagString: Untagged
@@ -24840,6 +24851,52 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!61 &1772829022
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1772829018}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 6200000, guid: 9a40cefc6455d894b9e0ae949c545c43, type: 2}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: -0.5034394, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1, y: 1}
+    newSize: {x: 1, y: 1}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Size: {x: 0.0065379143, y: 1}
+  m_EdgeRadius: 0
 --- !u!1 &1847952936
 GameObject:
   m_ObjectHideFlags: 0
@@ -25242,6 +25299,7 @@ GameObject:
   - component: {fileID: 1910381177}
   - component: {fileID: 1910381176}
   - component: {fileID: 1910381175}
+  - component: {fileID: 1910381178}
   m_Layer: 3
   m_Name: Square (1)
   m_TagString: Untagged
@@ -25283,7 +25341,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0.0040042996, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -25293,7 +25351,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 1.0080085, y: 1}
   m_EdgeRadius: 0
 --- !u!212 &1910381176
 SpriteRenderer:
@@ -25368,6 +25426,52 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!61 &1910381178
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1910381174}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 6200000, guid: 9a40cefc6455d894b9e0ae949c545c43, type: 2}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0.51032305, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1, y: 1}
+    newSize: {x: 1, y: 1}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Size: {x: 0.0032434464, y: 1}
+  m_EdgeRadius: 0
 --- !u!1 &1938476788
 GameObject:
   m_ObjectHideFlags: 0
@@ -26404,6 +26508,7 @@ MonoBehaviour:
   deathSound: {fileID: 8300000, guid: 8b9044592f5121a4d8cc2d1c97be3bfe, type: 3}
   player: {fileID: 1573698067}
   healamount: 5
+  isdead: 0
 --- !u!1 &2140871439
 GameObject:
   m_ObjectHideFlags: 0

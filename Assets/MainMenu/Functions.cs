@@ -41,8 +41,8 @@ public class Functions : MonoBehaviour
     {
         FadeOut.SetActive(true);
         yield return new WaitForSeconds(0.95f);
-        loadScene.SceneToLoad = 2;
-        SceneManager.LoadScene(1);
+        loadScene.SceneToLoad = 3;
+        SceneManager.LoadScene(2);
     }
 
     public void SettingsRollin()

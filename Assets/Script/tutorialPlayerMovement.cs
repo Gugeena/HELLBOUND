@@ -2,11 +2,9 @@ using Cinemachine;
 using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UIElements;
 
 public class tutorialPlayerMovement : MonoBehaviour
 {
@@ -203,7 +201,7 @@ public class tutorialPlayerMovement : MonoBehaviour
             StartCoroutine(dash());
         }
 
-        if (Input.GetKeyDown(Dash) && isGrounded && !IsJumping)
+        if (Input.GetKeyDown(Jump) && isGrounded && !IsJumping)
         {
             StartCoroutine(jump());
         }
@@ -351,13 +349,15 @@ public class tutorialPlayerMovement : MonoBehaviour
         {
             rb.AddForce(transform.right * direction * dashForce);
         }
-        anim.Play("player_dash");
+        if (currentWeapon != 4) anim.Play("player_dash");
+        else anim.Play("player_speardash");
         yield return new WaitForSeconds(0.3f);
         isDashing = false;
         rb.gravityScale = 1f;
         StartCoroutine(dashCooldown());
         yield break;
     }
+
     private IEnumerator jump()
     {
         IsJumping = true;
@@ -462,8 +462,8 @@ public class tutorialPlayerMovement : MonoBehaviour
     private IEnumerator endTutor() {
         cineAnim.Play("cinecam_end");
         yield return new WaitForSeconds(3f);
-        loadScene.SceneToLoad = 3;
-        SceneManager.LoadScene(1);
+        loadScene.SceneToLoad = 4;
+        SceneManager.LoadScene(2);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

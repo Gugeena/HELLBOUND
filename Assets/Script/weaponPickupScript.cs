@@ -1,4 +1,3 @@
-
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,7 +10,7 @@ public class weaponPickupScript : MonoBehaviour
 
     public bool disappear = true;
 
-    enum weapon {random = 0, bow = 1, boomerang = 2, mf = 3, spear = 4, mjolnir = 5 };
+    enum weapon { random = 0, bow = 1, boomerang = 2, mf = 3, spear = 4, mjolnir = 5 };
     [SerializeField]
     private Sprite[] sprites;
     [SerializeField]
@@ -21,8 +20,6 @@ public class weaponPickupScript : MonoBehaviour
     private Rigidbody2D rb;
 
     [SerializeField] private weapon preSelectedWeapon;
-
-    public bool lilithdrop;
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -35,14 +32,15 @@ public class weaponPickupScript : MonoBehaviour
         else
         {
             setWeapon((int)preSelectedWeapon);
-            bc.enabled = true;
+            //bc.enabled = true;
+            StartCoroutine(delay());
         }
         StartCoroutine(deleter());
     }
 
     private void throwUp()
     {
-        
+
         rb.AddForce(transform.up * 200);
         int[] t = { -1, 1 };
         rb.AddTorque(Random.Range(170f, 210f) * t[Random.Range(0, 2)]);
@@ -59,6 +57,7 @@ public class weaponPickupScript : MonoBehaviour
 
     private IEnumerator delay()
     {
+        print("got into delay");
         bc.enabled = false;
         yield return new WaitForSeconds(0.6f);
         bc.enabled = true;
@@ -73,7 +72,7 @@ public class weaponPickupScript : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.gameObject.layer == 3)
+        if (collision.gameObject.layer == 3)
         {
             rb.bodyType = RigidbodyType2D.Static;
         }

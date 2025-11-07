@@ -267,6 +267,7 @@ public class EnemyChargerScript : MonoBehaviour
 
     public IEnumerator death()
     {
+        if (isdead) yield break;
         isdead = true;
         float pitch =  Random.Range(0.8f, 1.01f);
         if (PlayerMovement.shouldMakeSound) audioManager.instance.playAudio(deathSound, 0.65f, pitch, transform, audioManager.instance.sfx);

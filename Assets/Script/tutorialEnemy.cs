@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class tutorialEnemy : MonoBehaviour
@@ -19,9 +18,10 @@ public class tutorialEnemy : MonoBehaviour
     public AudioClip deathSound;
     public GameObject player;
     public float healamount = 5f;
+    public bool isdead;
     void Start()
     {
-        player = GameObject.Find("Player");
+        player = GameObject.Find("player_tutorial");
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         isGrounded = true;
@@ -47,6 +47,8 @@ public class tutorialEnemy : MonoBehaviour
 
     public IEnumerator death()
     {
+        if (isdead) yield break;
+        isdead = true;
         audioManager.instance.playAudio(deathSound, 0.65f, 1 ,transform, audioManager.instance.sfx);
         Rigidbody2D[] rbs = GetComponentsInChildren<Rigidbody2D>();
         foreach (Rigidbody2D rbb in rbs)
@@ -62,8 +64,8 @@ public class tutorialEnemy : MonoBehaviour
         Vector2 pos = this.transform.position;
         pos.y -= 0.3f;
         Instantiate(bow, pos, Quaternion.identity);
-        PlayerMovement playerScript = player.GetComponent<PlayerMovement>();
-        playerScript.hp += healamount;
+        //PlayerMovement playerScript = player.GetComponent<PlayerMovement>();
+        //playerScript.hp += healamount;
         Instantiate(particles, transform.position, Quaternion.identity);
         Destroy(gameObject);
         yield break;
