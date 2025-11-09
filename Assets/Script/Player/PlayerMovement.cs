@@ -174,10 +174,12 @@ public class PlayerMovement : MonoBehaviour
     public bool undachaijvayleoagarshemidzlia = false;
 
     public static bool stopAttacking = false;
-
+    private bool hassubscribedtolilith = false;
     // Start is called before the first frame update
     void Start()
     {
+        canLose = true;
+
         findeverythingatspawn();
 
         Time.timeScale = 1;
@@ -188,6 +190,7 @@ public class PlayerMovement : MonoBehaviour
         hpslider.value = 150f;
 
         if(!isAngelic)StartCoroutine(pickUpWeapon(0, "fists"));
+        if(isAngelic) LilithScript.lilithDeathEvent += EnterFinalAscension;
 
         rPEmitter = runParticles.emission;
 
@@ -214,7 +217,6 @@ public class PlayerMovement : MonoBehaviour
         Drop = KeyBindManagerScript.DropKey;
 
         rb = GetComponent<Rigidbody2D>();
-        anim = GetComponent<Animator>();
         camShake = GetComponent<camShakerScript>();
         bodyPartShakes = GetComponentsInChildren<ShakeSelfScript>();
         damageFlashScript = GetComponent<spriteFlashScript>();
@@ -222,6 +224,7 @@ public class PlayerMovement : MonoBehaviour
         RLocation = GameObject.Find("RLOCATIONLOCATION").transform;
         LLocation = GameObject.Find("LLOCATIONLOCATION").transform;
         hpslider = GameObject.Find("HP").GetComponent<UnityEngine.UI.Slider>();
+        anim = GetComponent<Animator>();
         angelicTransistionTrans = GameObject.Find("angelicTransistionPos").transform;
         flashScript = GameObject.Find("Flash").GetComponent<flashScript>();
         angelOverlayAnim = GameObject.Find("angelStatus").GetComponent<Animator>();
@@ -252,6 +255,13 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (LilithScript.bossfightstarted && !hassubscribedtolilith)
+        {
+            print("just subscribed");
+            hassubscribedtolilith = true;
+            LilithScript.lilithDeathEvent += EnterFinalAscension;
+        }
+
         if (Input.GetKeyDown(KeyCode.F1))
         {
             Debug.Log("=== PLAYER STATE DEBUG ===");
@@ -308,6 +318,7 @@ public class PlayerMovement : MonoBehaviour
             walkedDistance++;
         }
     }
+
     void handleMovement()
     {
         if (canMove)
@@ -391,6 +402,16 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    private void OnEnable()
+    {
+        LilithScript.lilithDeathEvent += EnterFinalAscension;
+    }
+
+    private void OnDisable()
+    {
+        LilithScript.lilithDeathEvent -= EnterFinalAscension;
+    }
+
     void handleCombat()
     {
         if (Input.GetKeyDown(AttackButton) && canPunch)
@@ -408,23 +429,18 @@ public class PlayerMovement : MonoBehaviour
             if (currentWeapon == 3 && isGrounded) StartCoroutine(mfSpecial());
             if (currentWeapon == 4) StartCoroutine(spearspecialAttack());
         }
-        
-        
-        if (Beyonder && !hasbeyonded)
-        {
-           StartCoroutine(enterAngelic());
-        }
 
         if (Input.GetKeyDown(KeyCode.E))
         {
-            StartCoroutine(enterAngelic());
+            // StartCoroutine(enterAngelic(false));
+            StartCoroutine(gadasvla(5));
         }
 
         if (StyleManager.canAscend && !isAngelic)
         {
             if (Input.GetKeyDown(KeyCode.E))
             {
-                StartCoroutine(enterAngelic());
+                StartCoroutine(enterAngelic(false));
             }
         }
 
@@ -441,20 +457,20 @@ public class PlayerMovement : MonoBehaviour
         canAngel = true;
     }
 
-    public void goultraandbeyond()
+    public void EnterFinalAscension()
     {
-        StartCoroutine(enterBeyonder());
-    }    
-
-    public IEnumerator enterBeyonder()
-    {
-        yield return new WaitForSeconds(3f);
-        Beyonder = true;
-        yield break;
+        StartCoroutine(StartFinalAscension());
     }
 
-    private IEnumerator enterAngelic()
+    public IEnumerator StartFinalAscension()
     {
+        yield return new WaitForSeconds(3f);
+        StartCoroutine(enterAngelic(true));
+    }
+
+    private IEnumerator enterAngelic(bool Beyonder)
+    {
+        canLose = false;
         if (!Beyonder)
         {
             if (isAngelic) yield break;
@@ -531,12 +547,28 @@ public class PlayerMovement : MonoBehaviour
         else spawnLocation = this.transform.position;
         GameObject spawned = Instantiate(tospawn, spawnLocation, Quaternion.identity);
 
-        if(spawned.Equals(angelic))
+        if (Beyonder)
         {
-            PlayerMovement playerMovement = spawned.GetComponent<PlayerMovement>();
-            playerMovement.pickUpWeapon(currentWeapon, "weapon");
+            yield return new WaitForSeconds(1.5f);
+            audioManager.instance.startEnd();
+            yield return new WaitForSeconds(6f);
+            canvasAnimator.Play("credits");
+            yield return new WaitForSeconds(22f);
+            //finalfadeOut.SetActive(true);
+            audioManager.instance.playAudio(finaldissapearence, 1, 1, transform, audioManager.instance.sfx);
+            yield return new WaitForSeconds(2f);
+            audioManager.instance.stopEnd();
+            yield return new WaitForSeconds(2f);
+            SceneManager.LoadScene(1);
+            //audioManager.instance.playAudio(finaldissapearence, 1, 1, transform, audioManager.instance.sfx);
         }
 
+        if (spawned.CompareTag("Player"))
+        {
+            PlayerMovement playerMovement = spawned.GetComponent<PlayerMovement>();
+            StartCoroutine(playerMovement.pickUpWeapon(currentWeapon, "weapon"));
+            spawned.transform.localScale = new Vector3(this.transform.localScale.x, 1, 1);
+        }
 
         if (Beyonder)
         {
@@ -825,6 +857,7 @@ public class PlayerMovement : MonoBehaviour
             bowHands.SetActive(false);
             leftHand.SetActive(true);
             rightHand.SetActive(true);
+            if(anim == null) anim = GetComponent<Animator>();
             anim.SetBool("shouldChargeIn", false);
         }
         else if (id == 1)
@@ -856,7 +889,7 @@ public class PlayerMovement : MonoBehaviour
             spear.SetActive(false);
             boomerang.SetActive(false);
             mjolnir.SetActive(false);
-            anim.SetBool("shouldChargeIn", true);
+            anim.SetBool("shouldChargeIn", false);
             bowHands.SetActive(false);
             leftHand.SetActive(true);
             rightHand.SetActive(true);
@@ -867,7 +900,7 @@ public class PlayerMovement : MonoBehaviour
             motherfucker.SetActive(false);
             boomerang.SetActive(false);
             mjolnir.SetActive(false);
-
+            anim = GetComponent<Animator>();
             anim.SetBool("shouldChargeIn", true);
 
             bowHands.SetActive(false);
@@ -1022,7 +1055,7 @@ public class PlayerMovement : MonoBehaviour
         }
         else if(hp <= 0 && isAngelic)
         {
-            StartCoroutine(gadasvla(4));
+            StartCoroutine(gadasvla(5));
         }
 
         Instantiate(hurtparticle, new Vector2(transform.position.x, transform.position.y - 0.75f), Quaternion.identity);
@@ -1098,6 +1131,7 @@ public class PlayerMovement : MonoBehaviour
         rb.gravityScale = 1f;
         PauseScript.kill = 0f;
         PauseScript.dmg = 0;
+        PauseScript.dro = 0f;
         StartCoroutine(pickUpWeapon(0, "null"));
         StyleManager.instance.reset();
         isDead = false;
@@ -1109,6 +1143,7 @@ public class PlayerMovement : MonoBehaviour
         autokillcollider.enabled = false;
         canMove = true;
         shouldMakeSound = true;
+        stopAttacking = false;
         yield return null;
     }
 

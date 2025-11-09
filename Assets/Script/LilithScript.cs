@@ -9,6 +9,7 @@ using UnityEditor.Experimental.GraphView;
 using UnityEditor.Timeline;
 using UnityEngine;
 using UnityEngine.Audio;
+using UnityEngine.Events;
 using UnityEngine.UI;
 using UnityEngine.UIElements;
 using static UnityEditor.FilePathAttribute;
@@ -77,10 +78,15 @@ public class LilithScript : MonoBehaviour
     public GameObject[] destroyParticles;
     public Transform[] destroyParticleLocations;
 
-    public AudioClip lilithdeath;
+
+    public AudioClip lilithDeathSound;
+
+    public static event Action lilithDeathEvent;
+    public static bool bossfightstarted;
 
     void Start()
     {
+        bossfightstarted = true;
         StartCoroutine(waiter());
         /*
         canTeleport = true;
@@ -181,15 +187,14 @@ public class LilithScript : MonoBehaviour
             }
         }
         Destroy(handrb.gameObject);
-        audioManager.instance.playAudio(lilithdeath, 1f, 1, transform, audioManager.instance.sfx);
+        audioManager.instance.playAudio(lilithDeathSound, 1f, 1, transform, audioManager.instance.sfx);
         yield return new WaitForSeconds(1f);
         audioManager.instance.stopLillith();
         yield return new WaitForSeconds(2.4f);
         for(int i = 0; i < deathParticles.Length; i++) Instantiate(deathParticles[i], this.transform.position, Quaternion.identity);
-        //PlayerMovement.Beyonder = true;
-        PlayerMovement playermovement = player.GetComponent<PlayerMovement>();
-        playermovement.goultraandbeyond();
         cum.Stop();
+        lilithDeathEvent.Invoke();
+        yield return null;
         Destroy(gameObject);
     }
 
@@ -383,6 +388,8 @@ public class LilithScript : MonoBehaviour
         Debug.Log("Playing animation: LilithStaffHeart(Red-Orange)");
         heartAnimator.Play("LilithStaffHeart(Red-Orange)");
         yield return new WaitForSeconds(1.4f);
+        audioSource.clip = cast;
+        audioSource.Play();
         animator.SetBool("shouldFLAME", false);
         cum.amplitude = 0.3f;
         cum.frequency = 0.4f;
@@ -426,6 +433,8 @@ public class LilithScript : MonoBehaviour
         Vector3 scale = staffController.transform.localScale;
         //staffController.transform.rotation = Quaternion.identity;
         //Quaternion originalrotation = staffController.transform.rotation;
+        bool hasplayed = false;
+        bool isCasting = false;
         while (elapsed < duration)
         {
             dir = (new Vector3(player.position.x, player.position.y - 1.6f) - staffController.transform.position).normalized;
@@ -457,6 +466,14 @@ public class LilithScript : MonoBehaviour
             staffController.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
             staffController.transform.localScale = scale;
             elapsed += Time.deltaTime;
+            if (elapsed >= 0.3f && !hasplayed)
+            {
+               if (isCasting) break;
+               isCasting = true;
+               audioSource.clip = cast;
+               audioSource.Play();
+               hasplayed = true;
+            }
             if (isDead) yield break;
             yield return null;
         }
@@ -466,8 +483,6 @@ public class LilithScript : MonoBehaviour
         GameObject particles = Instantiate(shardSpawnParticles, shardSpawner.transform.position, Quaternion.identity);
         particles.transform.rotation = Quaternion.Euler(0, 0, angle);
         Vector2 direction = Vector2.zero;
-        audioSource.clip = cast;
-        audioSource.Play();
         GameObject shard = Instantiate(crystal, shardSpawner.transform.position, Quaternion.identity);
         //if (isGrounded) direction = (new Vector3(player.transform.position.x, player.transform.position.y -0.4f) - shard.transform.position).normalized;
         //else direction = (new Vector3(player.transform.position.x, player.transform.position.y - 0.2f) - shard.transform.position).normalized;
@@ -501,7 +516,7 @@ public class LilithScript : MonoBehaviour
         Vector3 scale = staffController.transform.localScale;
         //staffController.transform.rotation = Quaternion.identity;
         //Quaternion originalrotation = staffController.transform.rotation;
-
+        bool hasplayed = false;
         while (elapsed < duration)
         {
             dir = (new Vector3(player.position.x, player.position.y - 1.6f) - staffController.transform.position).normalized;
@@ -533,14 +548,19 @@ public class LilithScript : MonoBehaviour
             staffController.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
             staffController.transform.localScale = scale;
             elapsed += Time.deltaTime;
+            if(elapsed > 0.29f && elapsed < 0.4f && !hasplayed)
+            {
+                audioSource.clip = cast;
+                audioSource.Play();
+                hasplayed = true;
+            }
+            if (isDead) yield break;
             yield return null;
         }
         shouldFlip = false;
         //if (isToTheRight) staffController.transform.localScale = new Vector3(-3.835358f, -3.835358f, 0);
         heartAnimator.Play("LilithStaffHeart(Purple-Red)");
         //yield return new WaitForSeconds(0.02f);
-        audioSource.clip = cast;
-        audioSource.Play();
         GameObject particles = Instantiate(fireBallSpawnParticles, shardSpawner.transform.position, Quaternion.identity);
         particles.transform.rotation = Quaternion.Euler(0, 0, angle);
         Vector2 direction = Vector2.zero;
@@ -627,14 +647,14 @@ public class LilithScript : MonoBehaviour
         // if (player.transform.position.x < transform.position.x) staffController.transform.localScale = new Vector3(-3.835358f, -3.835358f, staffController.transform.localScale.z);
         staffScale();
         animator.SetBool("shouldSUMMON", true);
+        if (isDead) yield break;
         heartAnimator.Play("LilithStaffHeart(Red-Yellow)");
         yield return new WaitForSeconds(1f);
+        if (isDead) yield break;
         animator.SetBool("shouldSUMMON", false);
         float x1 = UnityEngine.Random.Range(0, 1.6f);
         cum.time = 0.5f;
         StartCoroutine(cum.shake());
-        audioSource.clip = cast;
-        audioSource.Play();
         if (x1 < 0.5f)
         {
             for (int i = 7; i >= 4; i--)
@@ -832,7 +852,7 @@ public class LilithScript : MonoBehaviour
     {
         if (collision.gameObject.tag == "mfHitbox")
         {
-            if (collision.gameObject.name == "meleehitbox") damage(RetrieveTeleportCount(collision), 0.2f);
+            if (collision.gameObject.name == "meleehitbox") damage(RetrieveTeleportCount(collision), 300f);
             else damage(RetrieveTeleportCount(collision), 1f);
         }
     }

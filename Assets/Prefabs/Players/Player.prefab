@@ -8233,15 +8233,15 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 5997426521991012493}
+  - {fileID: 8044303374779258394}
+  - {fileID: 7860039895052055066}
+  - {fileID: 189827094031798746}
   - {fileID: 6771204588545431527}
   - {fileID: 6963654342453565018}
   - {fileID: 244321959907467413}
   - {fileID: 5662890454325027215}
   - {fileID: 1515911318371072854}
-  - {fileID: 5997426521991012493}
-  - {fileID: 8044303374779258394}
-  - {fileID: 7860039895052055066}
-  - {fileID: 189827094031798746}
   - {fileID: 2018096663545368578}
   - {fileID: 5098380768796600771}
   - {fileID: 385940606821189886}
@@ -8517,7 +8517,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0.040925026, y: -1.0432458}
+  m_Offset: {x: 0.040925026, y: -1.0424643}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -8527,7 +8527,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 0.69477654, y: 0.13725376}
+  m_Size: {x: 0.69477654, y: 0.13569069}
   m_EdgeRadius: 0
 --- !u!114 &2170593106054981859
 MonoBehaviour:

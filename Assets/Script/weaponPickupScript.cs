@@ -33,8 +33,9 @@ public class weaponPickupScript : MonoBehaviour
         {
             setWeapon((int)preSelectedWeapon);
             //bc.enabled = true;
-            StartCoroutine(delay());
+            //StartCoroutine(delay());
         }
+
         StartCoroutine(deleter());
     }
 
@@ -57,7 +58,7 @@ public class weaponPickupScript : MonoBehaviour
 
     private IEnumerator delay()
     {
-        print("got into delay");
+       // if (this.gameObject.name == "BoomerangWhichYouJustShot") yield break;
         bc.enabled = false;
         yield return new WaitForSeconds(0.6f);
         bc.enabled = true;

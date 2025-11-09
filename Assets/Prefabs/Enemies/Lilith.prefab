@@ -282,7 +282,7 @@ CapsuleCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2066835622473702311}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Density: 1
   m_Material: {fileID: 0}
@@ -762,7 +762,7 @@ MonoBehaviour:
   destroyParticleLocations:
   - {fileID: 730188837101944897}
   - {fileID: 3688303591140071074}
-  lilithdeath: {fileID: 8300000, guid: 70b2aeb1a37032948b46e610d41351a5, type: 3}
+  lilithDeathSound: {fileID: 8300000, guid: 70b2aeb1a37032948b46e610d41351a5, type: 3}
 --- !u!95 &7610987853696653380
 Animator:
   serializedVersion: 7
@@ -2178,7 +2178,7 @@ BoxCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8957020131757599231}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Density: 1
   m_Material: {fileID: 0}

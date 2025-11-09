@@ -75,7 +75,7 @@ public class StyleManager : MonoBehaviour
     {
         StartCoroutine(ascentiontextcontrol());
 
-        if (!playerMovement.shouldGainStyle && !playerMovement.shouldLoseStyle && shouldTurnOff)
+        if (!playerMovement.shouldGainStyle && !playerMovement.shouldLoseStyle)
         {
             if (!isAngelic) changeColors("red-lightgrey");
             else changeColors("yellow-lightgrey");

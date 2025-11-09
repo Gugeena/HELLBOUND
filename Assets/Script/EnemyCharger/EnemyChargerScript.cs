@@ -186,7 +186,6 @@ public class EnemyChargerScript : MonoBehaviour
                 animator.SetBool("shouldAttack", true);
                 animator.SetBool("shouldFein", false);
                 StartCoroutine(attack());
-                canAttack = false;
             }
             else if ((int)player.transform.position.y != (int)this.transform.position.y)
             {
@@ -339,6 +338,7 @@ public class EnemyChargerScript : MonoBehaviour
     public IEnumerator attack()
     {
         //animplay
+        canAttack = false;
         if (PlayerMovement.stopAttacking) yield break;
         float pitch = Random.Range(0.8f, 1.01f);
         audioManager.instance.playAudio(attackSound, 0.55f, pitch, transform, audioManager.instance.sfx);

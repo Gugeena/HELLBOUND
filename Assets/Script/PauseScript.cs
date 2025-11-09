@@ -9,7 +9,7 @@ public class PauseScript : MonoBehaviour
 {
     public GameObject Scroll;
 
-   public static bool Paused = false;
+    public static bool Paused = false;
 
     public GameObject Fadeout;
 
@@ -24,7 +24,7 @@ public class PauseScript : MonoBehaviour
     {
         scenename = SceneManager.GetActiveScene().name;
 
-        if (scenename == "IrasScena")
+        if (scenename == "LashaiasScena")
         {
             kill = 0;
             dmg = 0;
@@ -41,7 +41,7 @@ public class PauseScript : MonoBehaviour
             {
                 yield return new WaitForSeconds(1f);
                 dro++;
-                if (scenename != "IrasScena")
+                if (scenename != "LashaiasScena")
                     break;
             }
         }
@@ -84,6 +84,7 @@ public class PauseScript : MonoBehaviour
 
     public void YesMainMenu()
     {
+        Debug.Log("Button clicked!");
         StartCoroutine(MainMenu());
     }
 
