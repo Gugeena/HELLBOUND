@@ -51,7 +51,7 @@ public class PauseScript : MonoBehaviour
     {
         if (scenename == "LashaiasScene")
         {
-            if (Input.GetKeyDown(KeyCode.Escape))
+            if (Input.GetKeyDown(KeyCode.Escape) && PlayerMovement.canPause)
             {
                 if (!Paused)
                 {

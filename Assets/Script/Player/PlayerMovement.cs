@@ -176,9 +176,14 @@ public class PlayerMovement : MonoBehaviour
     public static bool stopAttacking = false;
     private bool hassubscribedtolilith = false;
 
+    public static bool hasdiedforeverybody = false;
+
+    public static bool canPause = true;
     // Start is called before the first frame update
     void Start()
     {
+        canPause = true;
+        hasdiedforeverybody = false;
         canLose = true;
 
         findeverythingatspawn();
@@ -256,6 +261,8 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (PauseScript.Paused || isDead) return;
+
         if (LilithScript.bossfightstarted && !hassubscribedtolilith)
         {
             print("just subscribed");
@@ -286,8 +293,6 @@ public class PlayerMovement : MonoBehaviour
         {
             StartCoroutine(gadasvla(5));
         }
-
-        if (PauseScript.Paused || isDead) return;
    
         if (angelTransistion)
         {
@@ -471,6 +476,7 @@ public class PlayerMovement : MonoBehaviour
 
     private IEnumerator enterAngelic(bool Beyonder)
     {
+        canPause = false;
         invincible = true;
         canLose = false;
         if (!Beyonder)
@@ -488,7 +494,6 @@ public class PlayerMovement : MonoBehaviour
         unreadyAngelic();
         rb.linearVelocity = Vector3.zero;
         anim.updateMode = AnimatorUpdateMode.UnscaledTime;
-
 
         Vector2 spawnLocation;
         string animtoplay;
@@ -1044,7 +1049,7 @@ public class PlayerMovement : MonoBehaviour
 
     public IEnumerator damage(int damage, float duration)
     {
-
+        hasdiedforeverybody = true;
         isPoisoned = false;
         PauseScript.dmg += damage;
         invincible = true;
@@ -1075,9 +1080,11 @@ public class PlayerMovement : MonoBehaviour
         yield return null;
     }
 
-
     private IEnumerator deathCRT()
     {
+        canPause = false;
+        invincible = false;
+        DisableAllActiveWeapons();
         stopAttacking = true;
         shouldMakeSound = false;
         camShake.StopAllCoroutines();
@@ -1085,9 +1092,8 @@ public class PlayerMovement : MonoBehaviour
         canMove = false;
         SpawnerScript.shouldSpawn = false;
         yield return StartCoroutine(frameStop(0.2f));
-        float f;
-        audioManager.instance.sfx.audioMixer.GetFloat("music", out f);
-        audioManager.instance.sfx.audioMixer.SetFloat("music", Mathf.Log10(0.2f) * 20);
+        //audioManager.instance.sfx.audioMixer.GetFloat("music", out f);
+        //audioManager.instance.sfx.audioMixer.SetFloat("music", Mathf.Log10(0.2f) * 20);
         audioManager.instance.playAudio(death, 1f, 1f, transform, audioManager.instance.sfx);
 
         gravityBox.enabled = false;
@@ -1095,9 +1101,11 @@ public class PlayerMovement : MonoBehaviour
         rb.bodyType = RigidbodyType2D.Kinematic;
         anim.Play("player_death");
         yield return new WaitForSeconds(1f);
+        DisableAllActiveWeapons();
         rb.gravityScale = 8f;
         rb.bodyType = RigidbodyType2D.Dynamic;
         yield return new WaitForSeconds(1f);
+        DisableAllActiveWeapons();
         rb.gravityScale = 0f;
         rb.bodyType = RigidbodyType2D.Kinematic;
         this.transform.position = new Vector3(this.transform.position.x, -4.4f, 0);
@@ -1106,15 +1114,17 @@ public class PlayerMovement : MonoBehaviour
         audioManager.instance.playAudio(revival, 1, 1, transform, audioManager.instance.sfx);
         camAnimator.Play("player_camera_fall");
         audioManager.instance.stopMusic();
-        audioManager.instance.sfx.audioMixer.SetFloat("music", f);
+        //audioManager.instance.sfx.audioMixer.SetFloat("music", f);
         yield return new WaitForSeconds(2f);
-        float y;
-        audioManager.instance.sfx.audioMixer.GetFloat("sfx", out y);
-        audioManager.instance.sfx.audioMixer.SetFloat("sfx", Mathf.Log10(0.2f) * 20);
+        DisableAllActiveWeapons();
+        camShake.StopAllCoroutines();
+        //audioManager.instance.sfx.audioMixer.GetFloat("sfx", out y);
+        //audioManager.instance.sfx.audioMixer.SetFloat("sfx", Mathf.Log10(0.2f) * 20);
         autokillcollider.enabled = true;
         //audioManager.instance.sfx.audioMixer.SetFloat("sfx", f);
         hp = 150f;
         yield return new WaitForSeconds(8f);
+        camShake.StopAllCoroutines();
         StartCoroutine(revive());
         yield return null;
     }
@@ -1138,7 +1148,7 @@ public class PlayerMovement : MonoBehaviour
         StyleManager.instance.reset();
         isDead = false;
         yield return new WaitForSeconds(2f);
-        invincible = false;
+        //invincible = false;
         SpawnerScript.shouldSpawn = true;
         spawner.SetActive(true);
         SpawnerScript.shouldChangeBack = true;
@@ -1146,7 +1156,17 @@ public class PlayerMovement : MonoBehaviour
         canMove = true;
         shouldMakeSound = true;
         stopAttacking = false;
+        hasdiedforeverybody = false;
+        canPause = true;
         yield return null;
+    }
+
+    public void DisableAllActiveWeapons()
+    {
+        GameObject weapon = GameObject.Find("motherfuckr(Clone)") ?? GameObject.Find("BoomerangPrefab(Clone)");
+        if(weapon != null) weapon.SetActive(false);
+        camShake.StopAllCoroutines();
+        StartCoroutine(pickUpWeapon(0, "null"));
     }
 
     IEnumerator posionCure()

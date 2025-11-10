@@ -80,6 +80,7 @@ public class StyleManager : MonoBehaviour
             if (!isAngelic) changeColors("red-lightgrey");
             else changeColors("yellow-lightgrey");
         }
+
         /*
         else if (playerMovement.shouldGainStyle && !isAngelic)
         {
@@ -208,11 +209,45 @@ public class StyleManager : MonoBehaviour
 
     public void reset()
     {
-        switchLetter(Style.Forsaken);
-        styleText.text = "Forsaken";
-        isAngelic = false;
+        StopAllCoroutines();
+
+        // Reset all variables to their starting state
         stylePoints = 0;
-        shouldTurnOff = true;
+        totalStylePoints = 0;
+        currStyle = Style.Forsaken;
+        isAngelic = false;
+        shouldTurnOff = false;
+        canAscend = false;
+        wasLosingstyle = false;
+        lastPlayedAnim = "";
+
+        // Reset UI and visuals
+        fillImage.color = Color.red;
+        styleSlider.value = 0;
+        styleAnim.Play("red-lightgrey");
+        styleText.text = "Forsaken";
+        letterOutline.sprite = letterOutlines[(int)Style.Forsaken];
+        letterFill.sprite = letterFills[(int)Style.Forsaken];
+
+        // Stop any shaking or animations that were active
+        shaker.stopShake();
+        textShaker.stopShake();
+
+        // Turn off Ascend text and reset related flags
+        if (Ascend != null)
+        {
+            Ascend.SetActive(false);
+            ascentionanimator.Play("AsecndTextDissapear");
+        }
+
+        // Reset player’s angelic readiness
+        if (playerMovement != null)
+        {
+            playerMovement.unreadyAngelic();
+        }
+
+        // Restart the main style coroutine
+        StartCoroutine(styleLife());
     }
 
     private IEnumerator styleLife()

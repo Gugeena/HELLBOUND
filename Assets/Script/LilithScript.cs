@@ -820,12 +820,15 @@ public class LilithScript : MonoBehaviour
         }
     }
 
-    public void damage(int teleportCount, float damageCount)
+    public IEnumerator damage(int teleportCount, float damageCount)
     {
         //animator.Play("LilithHurt");
-        if (invincible) return;
+        if (invincible) yield break;
+        invincible = true;
         spriteFlash.callFlash();
         hp -= damageCount + teleportCount;
+        yield return new WaitForSeconds(0.1f);
+        invincible = false;
     }
 
     public int RetrieveTeleportCount(Collider2D collision)
@@ -855,8 +858,8 @@ public class LilithScript : MonoBehaviour
     {
         if (collision.gameObject.tag == "mfHitbox")
         {
-            if (collision.gameObject.name == "meleehitbox") damage(RetrieveTeleportCount(collision), 300f);
-            else damage(RetrieveTeleportCount(collision), 1f);
+            if (collision.gameObject.name == "meleehitbox") StartCorotuine(damage(RetrieveTeleportCount(collision), 300f));
+            else StartCoroutine(damage(RetrieveTeleportCount(collision), 1f));
         }
     }
 }

@@ -28,6 +28,11 @@ public class mfScript : MonoBehaviour
     [SerializeField]
     private ParticleSystem particles;
 
+    private void Start()
+    {
+        playerTransform = GameObject.Find("Player(Clone)").transform;
+    }
+
     void Awake()
     {
         
