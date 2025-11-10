@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -76,7 +77,9 @@ public class tutorialEnemy : MonoBehaviour
         if (collision.gameObject.tag == "meleehitbox")
         {
             hp--;
-            float direction = Mathf.Sign(transform.localScale.x);
+            float direction;
+            if (player.transform.position.x < this.transform.position.x) direction = -1;
+            else direction = 1;
             audioManager.instance.playRandomAudio(damageSounds, 0.65f, 1, transform, audioManager.instance.sfx);
             float knockback = 2f;
             Vector2 force = new Vector2(-direction, 0);

@@ -8,7 +8,7 @@ public class audioManager : MonoBehaviour
     public static audioManager instance;
 
     [SerializeField] private AudioSource source;
-    [SerializeField] private AudioSource mainMusic, lillithMusic, endMusic;
+    [SerializeField] private AudioSource mainMusic, lillithMusic, endMusic, tutorialMusic;
     public AudioMixerGroup sfx, music;
 
     private void Awake()
@@ -48,7 +48,8 @@ public class audioManager : MonoBehaviour
         Destroy(audioSource.gameObject, len);
     }
 
-    public void stopMusic() { 
+    public void stopMusic() 
+    { 
         mainMusic.Stop();
         lillithMusic.Stop();
         endMusic.Stop();
@@ -77,5 +78,15 @@ public class audioManager : MonoBehaviour
     public void stopEnd()
     { 
         endMusic.Stop();
+    }
+
+    public void startTutorial()
+    {
+        tutorialMusic.Play();
+    }
+
+    public void stopTutorial()
+    {
+        tutorialMusic.Stop();
     }
 }

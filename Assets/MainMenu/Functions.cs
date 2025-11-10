@@ -13,9 +13,12 @@ public class Functions : MonoBehaviour
     public bool hasrolledin;
     public AudioMixer audioMixer;
     public UnityEngine.UI.Slider sfxSlider, musicSlider;
+    public AudioClip rollout, rollin;
 
     void Start()
     {
+       Cursor.lockState = CursorLockMode.None;
+       Cursor.visible = true;
        loadAudioSettings();
     }
 
@@ -56,6 +59,7 @@ public class Functions : MonoBehaviour
         if (!hasrolledin) return;
         StartCoroutine(agarshemidzliadamacadeyleo());
         settingsanim.Play("SettingsPanelRollout");
+        audioManager.instance.playAudio(rollin, 1, 1, transform, audioManager.instance.sfx);
     }
 
     public IEnumerator agarshemidzliadamacadeyleo()
@@ -67,6 +71,7 @@ public class Functions : MonoBehaviour
     public IEnumerator settingsrollinwaiter()
     {
         settingsanim.Play("SettingsPanelRollIn");
+        audioManager.instance.playAudio(rollout, 1, 1, transform, audioManager.instance.sfx);
         yield return new WaitForSeconds(1.5f);
         hasrolledin = true;
     }

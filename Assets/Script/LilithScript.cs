@@ -84,6 +84,8 @@ public class LilithScript : MonoBehaviour
     public static event Action lilithDeathEvent;
     public static bool bossfightstarted;
 
+    private bool invincible = false;
+
     void Start()
     {
         bossfightstarted = true;
@@ -163,6 +165,7 @@ public class LilithScript : MonoBehaviour
 
     IEnumerator death()
     {
+        invincible = true;
         cum.Stop();
         cum.amplitude = 0.13f;
         cum.frequency = 0.2f;
@@ -820,7 +823,7 @@ public class LilithScript : MonoBehaviour
     public void damage(int teleportCount, float damageCount)
     {
         //animator.Play("LilithHurt");
-
+        if (invincible) return;
         spriteFlash.callFlash();
         hp -= damageCount + teleportCount;
     }

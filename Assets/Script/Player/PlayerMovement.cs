@@ -175,6 +175,7 @@ public class PlayerMovement : MonoBehaviour
 
     public static bool stopAttacking = false;
     private bool hassubscribedtolilith = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -470,6 +471,7 @@ public class PlayerMovement : MonoBehaviour
 
     private IEnumerator enterAngelic(bool Beyonder)
     {
+        invincible = true;
         canLose = false;
         if (!Beyonder)
         {
