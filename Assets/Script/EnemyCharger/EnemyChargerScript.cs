@@ -290,7 +290,8 @@ public class EnemyChargerScript : MonoBehaviour
         }
         canMove = false;
         canAttack = false;
-        Instantiate(weaponPickup, this.gameObject.transform.position, Quaternion.identity);
+        int chance = UnityEngine.Random.Range(0, 5);
+        if(chance > 1) Instantiate(weaponPickup, this.gameObject.transform.position, Quaternion.identity);
         float dist = Directpath;
         if (teleportCount <= 0)
         {

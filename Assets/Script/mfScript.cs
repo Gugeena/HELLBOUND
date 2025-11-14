@@ -27,6 +27,7 @@ public class mfScript : MonoBehaviour
 
     [SerializeField]
     private ParticleSystem particles;
+    public Coroutine runningShake;
 
     private void Start()
     {
@@ -42,10 +43,16 @@ public class mfScript : MonoBehaviour
         camShakerScript = GetComponent<camShakerScript>();
         StartCoroutine(life());
         shakeSelfScript.Begin();
+        runningShake = null;
     }
 
     private void Update()
     {
+        if(transform.position.x >= startPos.x)
+        {
+            print("true");
+        }
+
         if (playerTransform == null)
         {
             Destroy(gameObject);
@@ -59,9 +66,9 @@ public class mfScript : MonoBehaviour
         else if (goBack) {
             backing();
         }
-        if(teleportCount >= 2 && transform.position.x >= startPos.x)
+        if(teleportCount >= 4 && (int) transform.position.x == (int) startPos.x)
         {
-            StartCoroutine(back());
+           StartCoroutine(back());
         }
     }
 
@@ -90,7 +97,7 @@ public class mfScript : MonoBehaviour
     {
         yield return new WaitForSeconds(0.8f);
         move = true;
-        StartCoroutine(camShakerScript.shake());
+        runningShake = StartCoroutine(camShakerScript.shake());
         startPos = transform.position;
     }
 
@@ -111,12 +118,17 @@ public class mfScript : MonoBehaviour
         teleportCount++;
     }
 
+    public void OnDestroy()
+    {
+        print("getting destroyed");
+        camShakerScript.Stop();
+    }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.name == "LLocation")
         {
-            rb.MovePosition(new Vector2(SidePortalScript.RLocation.position.x, transform.position.y));
+            rb.MovePosition(new Vector2(SidePortalScript.RLocation.position.x - 0.25f, transform.position.y));
             teleportCount++;
             StartCoroutine(teleport());
         }

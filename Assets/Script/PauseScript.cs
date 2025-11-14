@@ -41,7 +41,7 @@ public class PauseScript : MonoBehaviour
             {
                 yield return new WaitForSeconds(1f);
                 dro++;
-                if (scenename != "LashaiasScena")
+                if (scenename != "LashaiasScene")
                     break;
             }
         }
@@ -78,13 +78,11 @@ public class PauseScript : MonoBehaviour
         Time.timeScale = 1f;
         Fadeout.SetActive(true);
         yield return new WaitForSeconds(0.95f);
-        Scroll.SetActive(false);
-        SceneManager.LoadScene(0);
+        SceneManager.LoadScene(1);
     }
 
     public void YesMainMenu()
     {
-        Debug.Log("Button clicked!");
         StartCoroutine(MainMenu());
     }
 
@@ -109,6 +107,6 @@ public class PauseScript : MonoBehaviour
         yield return new WaitForSeconds(5f);
         Fadeout.SetActive(true);
         yield return new WaitForSeconds(0.95f);
-        SceneManager.LoadScene(0);
+        SceneManager.LoadScene(1);
     }
 }

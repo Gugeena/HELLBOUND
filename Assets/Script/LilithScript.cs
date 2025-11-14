@@ -309,7 +309,7 @@ public class LilithScript : MonoBehaviour
         animator.SetBool("shouldPORT", false);
         shouldFlip = true;
         Instantiate(teleportParticles1, this.transform.position, Quaternion.identity);
-        audioManager.instance.playRandomAudio(lillithLaughs, 0.7f, 1, transform, audioManager.instance.sfx);
+        if(PlayerMovement.shouldMakeSound) audioManager.instance.playRandomAudio(lillithLaughs, 0.7f, 1, transform, audioManager.instance.sfx);
         this.transform.position = pos;
         staffScale();
         if (isDead) yield break;
@@ -391,8 +391,7 @@ public class LilithScript : MonoBehaviour
         Debug.Log("Playing animation: LilithStaffHeart(Red-Orange)");
         heartAnimator.Play("LilithStaffHeart(Red-Orange)");
         yield return new WaitForSeconds(1.4f);
-        audioSource.clip = cast;
-        audioSource.Play();
+        if (PlayerMovement.shouldMakeSound) audioSource.Play();
         animator.SetBool("shouldFLAME", false);
         cum.amplitude = 0.3f;
         cum.frequency = 0.4f;
@@ -437,7 +436,6 @@ public class LilithScript : MonoBehaviour
         //staffController.transform.rotation = Quaternion.identity;
         //Quaternion originalrotation = staffController.transform.rotation;
         bool hasplayed = false;
-        bool isCasting = false;
         while (elapsed < duration)
         {
             dir = (new Vector3(player.position.x, player.position.y - 1.6f) - staffController.transform.position).normalized;
@@ -471,10 +469,7 @@ public class LilithScript : MonoBehaviour
             elapsed += Time.deltaTime;
             if (elapsed >= 0.3f && !hasplayed)
             {
-               if (isCasting) break;
-               isCasting = true;
-               audioSource.clip = cast;
-               audioSource.Play();
+               if (PlayerMovement.shouldMakeSound) audioSource.Play(); audioManager.instance.playAudio(cast, 1, 1, transform, audioManager.instance.sfx);
                hasplayed = true;
             }
             if (isDead) yield break;
@@ -553,8 +548,7 @@ public class LilithScript : MonoBehaviour
             elapsed += Time.deltaTime;
             if(elapsed > 0.29f && elapsed < 0.4f && !hasplayed)
             {
-                audioSource.clip = cast;
-                audioSource.Play();
+                if (PlayerMovement.shouldMakeSound) audioSource.Play(); audioManager.instance.playAudio(cast, 1, 1, transform, audioManager.instance.sfx);
                 hasplayed = true;
             }
             if (isDead) yield break;
@@ -756,13 +750,11 @@ public class LilithScript : MonoBehaviour
         canTeleport = true;
         animator.Play("LillithBats");
         //audioManager.instance.playAudio(hailMary, 1, 1, transform, audioManager.instance.sfx);
-        audioSource.clip = cast;
-        audioSource.Play();
         animator.SetBool("shouldBATS", true);
         yield return new WaitForSeconds(0.15f);
-        audioSource.Stop();
-        audioSource.clip = hailMary;
-        audioSource.Play();
+
+        if (PlayerMovement.shouldMakeSound) audioSource.Play(); audioManager.instance.playAudio(hailMary, 1, 1, transform, audioManager.instance.sfx);
+
         StartCoroutine(batHailMary());
         cum.amplitude = 0.13f;
         cum.frequency = 0.2f;
@@ -858,7 +850,7 @@ public class LilithScript : MonoBehaviour
     {
         if (collision.gameObject.tag == "mfHitbox")
         {
-            if (collision.gameObject.name == "meleehitbox") StartCorotuine(damage(RetrieveTeleportCount(collision), 300f));
+            if (collision.gameObject.name == "meleehitbox") StartCoroutine(damage(RetrieveTeleportCount(collision), 0.2f));
             else StartCoroutine(damage(RetrieveTeleportCount(collision), 1f));
         }
     }

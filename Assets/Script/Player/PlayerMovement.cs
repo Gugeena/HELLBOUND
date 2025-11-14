@@ -163,6 +163,7 @@ public class PlayerMovement : MonoBehaviour
 
     public bool canMove = true;
     public static bool Beyonder = false;
+    public static bool hasAscendedonce = false;
     public GameObject truespirit;
     public bool hasbeyonded;
 
@@ -196,7 +197,7 @@ public class PlayerMovement : MonoBehaviour
         hpslider.value = 150f;
 
         if(!isAngelic)StartCoroutine(pickUpWeapon(0, "fists"));
-        if(isAngelic) LilithScript.lilithDeathEvent += EnterFinalAscension;
+        else LilithScript.lilithDeathEvent += EnterFinalAscension;
 
         rPEmitter = runParticles.emission;
 
@@ -408,16 +409,6 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    private void OnEnable()
-    {
-        LilithScript.lilithDeathEvent += EnterFinalAscension;
-    }
-
-    private void OnDisable()
-    {
-        LilithScript.lilithDeathEvent -= EnterFinalAscension;
-    }
-
     void handleCombat()
     {
         if (Input.GetKeyDown(AttackButton) && canPunch)
@@ -436,11 +427,22 @@ public class PlayerMovement : MonoBehaviour
             if (currentWeapon == 4) StartCoroutine(spearspecialAttack());
         }
 
+        /*
         if (Input.GetKeyDown(KeyCode.E))
         {
-            // StartCoroutine(enterAngelic(false));
-            StartCoroutine(gadasvla(5));
+            //StartCoroutine(deathCRT());
+            //StartCoroutine(gadasvla(5));
+            StartCoroutine(enterAngelic(false));
+            //StartCoroutine(pickUpWeapon(3, "fists"));
         }
+
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            StartCoroutine(deathCRT());
+            //StartCoroutine(gadasvla(5));
+            //StartCoroutine(pickUpWeapon(3, "fists"));
+        }
+        */
 
         if (StyleManager.canAscend && !isAngelic)
         {
@@ -476,6 +478,7 @@ public class PlayerMovement : MonoBehaviour
 
     private IEnumerator enterAngelic(bool Beyonder)
     {
+        hasAscendedonce = true;
         canPause = false;
         invincible = true;
         canLose = false;
@@ -509,7 +512,6 @@ public class PlayerMovement : MonoBehaviour
             tospawn = angelic;
         }
         anim.Play(animtoplay);
-
 
         audioManager.instance.stopMusic();
         if(!Beyonder) audioManager.instance.playAudio(ascension, 0.65f, 1, transform, audioManager.instance.sfx);
@@ -645,7 +647,7 @@ public class PlayerMovement : MonoBehaviour
 
         Vector2 mousepos = Camera.main.ScreenToWorldPoint(Input.mousePosition); // gamoitvlis in world space sad aris mouse
         Vector2 dir = mousepos - mfPos; // gvadzlevs directions -1;0 for left da egeti shit boomerangidan mausamde
-        float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg; // radianebidan gadaaq degreeshi'
+        float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg; // radianebidan gadaaq degreeshi
         float pitch = UnityEngine.Random.Range(0.8f, 1.01f);
         audioManager.instance.playRandomAudio(boomerangShots, 1, pitch, transform, audioManager.instance.sfx);
         mrb.linearVelocity = dir.normalized * 15f;
@@ -657,14 +659,13 @@ public class PlayerMovement : MonoBehaviour
 
     public IEnumerator mjolnirAttack()
     {
-        Vector2 mousepos = Camera.main.ScreenToWorldPoint(Input.mousePosition); // Mouse position in world space
-        Vector2 dir = mousepos - (Vector2)transform.position; // Direction vector from object to mouse
+        Vector2 mousepos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        Vector2 dir = mousepos - (Vector2)transform.position;
 
-        float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg; // Angle in degrees from X-axis to dir vector
+        float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
         anim.Play("player_mjolnirattack");
-        transform.rotation = Quaternion.Euler(0, 0, angle - 90f); // Rotate object so its tip faces mouse (assuming tip faces up)
+        transform.rotation = Quaternion.Euler(0, 0, angle - 90f);
 
-        // Disable gravity and set velocity towards mouse position
         rb.gravityScale = 0f;
         rb.linearVelocity = transform.up * 15f;
         Debug.Log("Direction: " + dir + ", Velocity: " + rb.linearVelocity);
@@ -746,6 +747,11 @@ public class PlayerMovement : MonoBehaviour
         Transform temp = transform.GetChild(3).GetChild(1);
         Vector2 mfPos = temp.position;
         Quaternion mfRot = temp.rotation;
+        if (isRunning)
+        {
+            if(this.transform.localScale.x < 0) mfRot = Quaternion.Euler(0f, 0f, 150f);
+            else mfRot = Quaternion.Euler(0f, 0f, -150f);
+        }
         GameObject m = Instantiate(motherFuckerPrefab, mfPos, mfRot);
         m.GetComponent<mfScript>().direction = direction;
         motherfucker.SetActive(false);
@@ -1083,11 +1089,10 @@ public class PlayerMovement : MonoBehaviour
     private IEnumerator deathCRT()
     {
         canPause = false;
-        invincible = false;
+        invincible = true;
         DisableAllActiveWeapons();
         stopAttacking = true;
         shouldMakeSound = false;
-        camShake.StopAllCoroutines();
         rb.linearVelocity = Vector2.zero;
         canMove = false;
         SpawnerScript.shouldSpawn = false;
@@ -1117,7 +1122,6 @@ public class PlayerMovement : MonoBehaviour
         //audioManager.instance.sfx.audioMixer.SetFloat("music", f);
         yield return new WaitForSeconds(2f);
         DisableAllActiveWeapons();
-        camShake.StopAllCoroutines();
         //audioManager.instance.sfx.audioMixer.GetFloat("sfx", out y);
         //audioManager.instance.sfx.audioMixer.SetFloat("sfx", Mathf.Log10(0.2f) * 20);
         autokillcollider.enabled = true;
@@ -1164,8 +1168,7 @@ public class PlayerMovement : MonoBehaviour
     public void DisableAllActiveWeapons()
     {
         GameObject weapon = GameObject.Find("motherfuckr(Clone)") ?? GameObject.Find("BoomerangPrefab(Clone)");
-        if(weapon != null) weapon.SetActive(false);
-        camShake.StopAllCoroutines();
+        if (weapon != null) Destroy(weapon);
         StartCoroutine(pickUpWeapon(0, "null"));
     }
 
@@ -1278,6 +1281,7 @@ public class PlayerMovement : MonoBehaviour
         {
             GetComponent<CapsuleCollider2D>().isTrigger = false;
             isGrounded = true;
+            isFalling = false;
         }
     }
 

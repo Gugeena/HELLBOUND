@@ -52,6 +52,7 @@ public class Functions : MonoBehaviour
     {
         if (hasrolledin) return;
         StartCoroutine(settingsrollinwaiter());
+        EventSystem.current.SetSelectedGameObject(null);
     }
 
     public void SettingsRollout()

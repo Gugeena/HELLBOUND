@@ -8,6 +8,11 @@ public class HoverShitScript : MonoBehaviour, IPointerEnterHandler, IPointerExit
     public GameObject Glow;
     public bool isHovering = false;
 
+    private void OnDisable()
+    {
+        Glow.SetActive(false);
+    }
+
     public void OnPointerEnter(PointerEventData eventData)
     {
         isHovering = true;
