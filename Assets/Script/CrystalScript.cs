@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEditor.TextCore.Text;
 using UnityEngine;
 
 public class CrystalScript : MonoBehaviour
@@ -29,6 +28,12 @@ public class CrystalScript : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        if (collision.gameObject.tag == "mfHitbox")
+        {
+            Instantiate(deathParticles, new Vector2(this.transform.position.x, this.transform.position.y - 0.25f), Quaternion.identity);
+            Destroy(gameObject);
+        }
+
         if (collision.gameObject.name == "LLocation")
         {
             RLocation = GameObject.Find("RLOCATIONLOCATION").transform;
@@ -52,7 +57,6 @@ public class CrystalScript : MonoBehaviour
           collision.gameObject.name == "square" ||
           collision.gameObject.name == "Torso" ||
           collision.gameObject.tag == "poison" || 
-          collision.gameObject.tag == "mfHitbox" ||
           collision.gameObject.tag == "Fireball" ||
           collision.gameObject.tag == "FireballP")
         {
@@ -91,12 +95,6 @@ public class CrystalScript : MonoBehaviour
             BoxCollider2D boxCollider = gameObject.GetComponent<BoxCollider2D>();
             boxCollider.enabled = false;
             StartCoroutine(deleter(poisonhitbox));
-        }
-
-        else if (collision.gameObject.tag == "mfHitbox")
-        {
-            Instantiate(deathParticles, new Vector2(this.transform.position.x, this.transform.position.y - 0.25f), Quaternion.identity);
-            Destroy(gameObject);
         }
     }
 

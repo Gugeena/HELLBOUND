@@ -95,6 +95,7 @@ public class spearScript : MonoBehaviour
             return;
         }
 
+
         if (collision.gameObject.tag == "enemyorb" ||
             collision.gameObject.name == "Hand_L" ||
             collision.gameObject.name == "Hand_R" ||
@@ -106,7 +107,8 @@ public class spearScript : MonoBehaviour
             collision.gameObject.name == "Torso" ||
             collision.gameObject.tag == "poison" ||
             collision.gameObject.tag == "FireballP" ||
-            collision.gameObject.tag == "Fireball")
+            collision.gameObject.tag == "Fireball" || 
+            collision.gameObject.tag == "Explosion")
         {
             return;
         }
@@ -132,18 +134,21 @@ public class spearScript : MonoBehaviour
 
     public void OnCollisionEnter2D(Collision2D collision)
     {
-
         if (collision.gameObject.tag == "enemyorb" ||
-            collision.gameObject.name == "Hand_L" ||
-            collision.gameObject.name == "Hand_R" ||
-            collision.gameObject.name == "Leg_L" ||
-            collision.gameObject.name == "Leg_R" ||
-            collision.gameObject.name == "headPivot" ||
-            collision.gameObject.tag == "weaponPickup" ||
-            collision.gameObject.name == "square" ||
-            collision.gameObject.name == "Torso")
+          collision.gameObject.name == "Hand_L" ||
+          collision.gameObject.name == "Hand_R" ||
+          collision.gameObject.name == "Leg_L" ||
+          collision.gameObject.name == "Leg_R" ||
+          collision.gameObject.name == "headPivot" ||
+          collision.gameObject.tag == "weaponPickup" ||
+          collision.gameObject.name == "square" ||
+          collision.gameObject.name == "Torso" ||
+          collision.gameObject.tag == "poison" ||
+          collision.gameObject.tag == "FireballP" ||
+          collision.gameObject.tag == "Fireball" ||
+          collision.gameObject.tag == "Explosion")
         {
-            StartCoroutine(Bouttaxplode());
+            return;
         }
 
         if (collision.gameObject.layer == 8 && !hasexploded || collision.gameObject.layer == 3 && !hasexploded)

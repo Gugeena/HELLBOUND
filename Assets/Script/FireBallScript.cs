@@ -53,7 +53,7 @@ public class FireBallScript : MonoBehaviour
         else if (collision.gameObject.tag == "Player")
         {
             Instantiate(deathParticles, new Vector2(this.transform.position.x, this.transform.position.y - 0.25f), Quaternion.identity);
-            if(!isProjectile) Instantiate(firePillar, new Vector2(this.transform.position.x, 1f), Quaternion.identity);
+            if(!isProjectile) Instantiate(firePillar, new Vector2(collision.gameObject.transform.position.x, 1f), Quaternion.identity);
             Destroy(gameObject);
         }
         else if (collision.gameObject.tag == "mfHitbox")

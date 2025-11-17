@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+using System;
 
 public class spriteFlashScript : MonoBehaviour
 {
@@ -9,12 +10,12 @@ public class spriteFlashScript : MonoBehaviour
     public float _duration;
 
     private int _hitEffectAmount = Shader.PropertyToID("_hEffectAmount");
+    private int _hcolor = Shader.PropertyToID("_hEffectColor");
 
     private SpriteRenderer[] _spriteRenderers;
     private Material[] _materials;
 
     private float _lerpAmount;
-
 
     private void Awake()
     {
@@ -56,4 +57,12 @@ public class spriteFlashScript : MonoBehaviour
         DOTween.To(GetLerpValue, SetLerpValue, 1f, _duration).SetEase(Ease.OutExpo).OnUpdate(OnLerpUpdate).OnComplete(OnLerpComplete);
     }
 
+    public void changeColor(bool isRed)
+    {
+        foreach(Material material in _materials)
+        {
+            Color color = isRed ? Color.red : Color.green;
+            material.SetColor(_hcolor, color);
+        }
+    }
 }

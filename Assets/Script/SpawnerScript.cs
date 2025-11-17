@@ -139,11 +139,11 @@ public class SpawnerScript : MonoBehaviour
                 else if (Equals(enemy, eyeBall))
                 {
                     pos.y = Random.Range(1f, 4f);
-
                 }
                 else pos.y = -3.189f;
 
-                Instantiate(spawningparticles, new Vector2(pos.x, pos.y - 0.75f), Quaternion.identity);
+                if(!Equals(enemy, eyeBall)) Instantiate(spawningparticles, new Vector2(pos.x, pos.y - 0.75f), Quaternion.identity);
+                else Instantiate(spawningparticles, new Vector2(pos.x, pos.y), Quaternion.identity);
                 Instantiate(banished[enemyToSpawn], pos, Quaternion.identity);
 
             }

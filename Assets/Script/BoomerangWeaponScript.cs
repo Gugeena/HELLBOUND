@@ -91,7 +91,8 @@ public class BoomerangWeaponScript : MonoBehaviour
             collision.gameObject.name == "Torso" ||
             collision.gameObject.tag == "poison" ||
             collision.gameObject.tag == "FireballP" ||
-            collision.gameObject.tag == "Fireball")
+            collision.gameObject.tag == "Fireball" ||
+            collision.gameObject.tag == "Explosion")
         {
             return;
         }

@@ -5,15 +5,11 @@ using System.Collections.Generic;
 using System.Security.Cryptography;
 using Unity.VisualScripting;
 using UnityEditor;
-using UnityEditor.Experimental.GraphView;
-using UnityEditor.Timeline;
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.Events;
 using UnityEngine.UI;
 using UnityEngine.UIElements;
-using static UnityEditor.FilePathAttribute;
-using static UnityEditor.PlayerSettings;
 
 public class LilithScript : MonoBehaviour
 {
@@ -812,14 +808,14 @@ public class LilithScript : MonoBehaviour
         }
     }
 
-    public IEnumerator damage(int teleportCount, float damageCount)
+    public IEnumerator damage(int teleportCount, float damageCount, float timer)
     {
         //animator.Play("LilithHurt");
         if (invincible) yield break;
         invincible = true;
         spriteFlash.callFlash();
         hp -= damageCount + teleportCount;
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(timer);
         invincible = false;
     }
 
@@ -850,8 +846,13 @@ public class LilithScript : MonoBehaviour
     {
         if (collision.gameObject.tag == "mfHitbox")
         {
-            if (collision.gameObject.name == "meleehitbox") StartCoroutine(damage(RetrieveTeleportCount(collision), 0.2f));
-            else StartCoroutine(damage(RetrieveTeleportCount(collision), 1f));
+            float timer = 0.1f;
+            if (collision.gameObject.name == "meleehitbox") StartCoroutine(damage(RetrieveTeleportCount(collision), 0.2f, timer));
+            else
+            {
+                if (Vector2.Distance(this.transform.position, player.transform.position) > 0.5f) timer = 0.5f;
+                StartCoroutine(damage(RetrieveTeleportCount(collision), 1f, timer));
+            }
         }
     }
 }

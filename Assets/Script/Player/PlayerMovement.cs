@@ -12,7 +12,6 @@ using UnityEngine.Rendering;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using UnityEngine.UIElements;
-using static UnityEditor.PlayerSettings;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -180,6 +179,19 @@ public class PlayerMovement : MonoBehaviour
     public static bool hasdiedforeverybody = false;
 
     public static bool canPause = true;
+
+    public bool isinbubble = false;
+
+    public Animator hpAnimator;
+
+    public bool wasPoisoned;
+
+    bool isPoisonRunning = false;
+
+    public Queue<float> poisonQueue = new Queue<float>();
+
+    public Coroutine PoisonQueCorountine, SecondQueue;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -196,7 +208,7 @@ public class PlayerMovement : MonoBehaviour
         hp = 150f;
         hpslider.value = 150f;
 
-        if(!isAngelic)StartCoroutine(pickUpWeapon(0, "fists"));
+        if (!isAngelic) StartCoroutine(pickUpWeapon(0, "fists"));
         else LilithScript.lilithDeathEvent += EnterFinalAscension;
 
         rPEmitter = runParticles.emission;
@@ -207,11 +219,11 @@ public class PlayerMovement : MonoBehaviour
 
         canBePoisoned = true;
     }
- 
+
     void findeverythingatspawn()
     {
         Animator[] animators = GameObject.FindObjectsOfType<Animator>(true);
-        foreach(Animator animator in animators)
+        foreach (Animator animator in animators)
         {
             if (animator.gameObject.name == "FadeOut (2)") fadeOut = animator.gameObject;
             if (animator.gameObject.name == "FinalFadeOut") finalfadeOut = animator.gameObject;
@@ -241,6 +253,7 @@ public class PlayerMovement : MonoBehaviour
         autokillcollider = GameObject.Find("InstaKillBox").GetComponent<BoxCollider2D>();
         autokillcollider.enabled = false;
         canvasAnimator = GameObject.Find("Canvas (1)").GetComponent<Animator>();
+        hpAnimator = GameObject.Find("HP").GetComponent<Animator>();
     }
 
     IEnumerator meteorSpawn()
@@ -256,13 +269,13 @@ public class PlayerMovement : MonoBehaviour
 
     public bool isAngelicGetter()
     {
-        return isAngelic; 
+        return isAngelic;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (PauseScript.Paused || isDead) return;
+        //if (PauseScript.Paused || isDead) return;
 
         if (LilithScript.bossfightstarted && !hassubscribedtolilith)
         {
@@ -290,11 +303,11 @@ public class PlayerMovement : MonoBehaviour
             damageFlashScript.callFlash();
         }
 
-        if(shouldEnd && !ukvegadavaida)
+        if (shouldEnd && !ukvegadavaida)
         {
             StartCoroutine(gadasvla(5));
         }
-   
+
         if (angelTransistion)
         {
             transform.position = Vector2.MoveTowards(transform.position, angelicTransistionTrans.position, ((Time.unscaledDeltaTime * 10f) * Vector2.Distance(transform.position, angelicTransistionTrans.position)));
@@ -427,7 +440,6 @@ public class PlayerMovement : MonoBehaviour
             if (currentWeapon == 4) StartCoroutine(spearspecialAttack());
         }
 
-        /*
         if (Input.GetKeyDown(KeyCode.E))
         {
             //StartCoroutine(deathCRT());
@@ -436,6 +448,7 @@ public class PlayerMovement : MonoBehaviour
             //StartCoroutine(pickUpWeapon(3, "fists"));
         }
 
+        /*
         if (Input.GetKeyDown(KeyCode.F))
         {
             StartCoroutine(deathCRT());
@@ -444,7 +457,7 @@ public class PlayerMovement : MonoBehaviour
         }
         */
 
-        if (StyleManager.canAscend && !isAngelic)
+        if (StyleManager.canAscend && !isAngelic && !isDead)
         {
             if (Input.GetKeyDown(KeyCode.E))
             {
@@ -478,6 +491,7 @@ public class PlayerMovement : MonoBehaviour
 
     private IEnumerator enterAngelic(bool Beyonder)
     {
+        if (isDead) yield break;
         hasAscendedonce = true;
         canPause = false;
         invincible = true;
@@ -514,7 +528,7 @@ public class PlayerMovement : MonoBehaviour
         anim.Play(animtoplay);
 
         audioManager.instance.stopMusic();
-        if(!Beyonder) audioManager.instance.playAudio(ascension, 0.65f, 1, transform, audioManager.instance.sfx);
+        if (!Beyonder) audioManager.instance.playAudio(ascension, 0.65f, 1, transform, audioManager.instance.sfx);
         else audioManager.instance.playAudio(Beyondascension, 0.65f, 1, transform, audioManager.instance.sfx);
         //audioManager.instance.playAudio(ascension, 0.65f, 1, transform, audioManager.instance.sfx);
         foreach (ShakeSelfScript s in bodyPartShakes)
@@ -524,7 +538,7 @@ public class PlayerMovement : MonoBehaviour
 
         Time.timeScale = 0.1f;
         rb.gravityScale = 0.0f;
-        if(!Beyonder) yield return new WaitForSecondsRealtime(1.5f);
+        if (!Beyonder) yield return new WaitForSecondsRealtime(1.5f);
         if (Beyonder)
         {
             yield return new WaitForSeconds(0.5f);
@@ -594,13 +608,17 @@ public class PlayerMovement : MonoBehaviour
             SceneManager.LoadScene(1);
             //audioManager.instance.playAudio(finaldissapearence, 1, 1, transform, audioManager.instance.sfx);
         }
-        else Destroy(gameObject);
+        else
+        {
+            invincible = false;
+            Destroy(gameObject);
+        }
     }
 
     public void unreadyAngelic()
     {
         angelOverlayAnim.Play("angelUnready");
-        canAngel = false;   
+        canAngel = false;
     }
 
     public IEnumerator spearAttack()
@@ -681,10 +699,20 @@ public class PlayerMovement : MonoBehaviour
 
     public void handleHP()
     {
-        if (isPoisoned && canBePoisoned)
+        if (isPoisoned)
         {
-            StartCoroutine(damage(5, 0));
-            StartCoroutine(posionCure());
+            if(!isPoisonRunning) hpAnimator.Play("PlayerPoisoning");
+            if (canBePoisoned)
+            {
+                damageFlashScript.changeColor(false);
+                damageFlashScript.callFlash(); 
+                StartCoroutine(damage(5, 0, true));
+                float seconds = isinbubble ? 0.3f : 1; StartCoroutine(posionCure(seconds));
+            }
+            else if (wasPoisoned) 
+            {
+                if (!isPoisonRunning) hpAnimator.Play("PlayerDepoisoning");
+            }
         }
 
         hp = Mathf.Clamp(hp, 0, 150);
@@ -717,7 +745,7 @@ public class PlayerMovement : MonoBehaviour
     private IEnumerator mjolAttack()
     {
         anim.Play("player_mjolnirAttack");
-        
+
         yield return new WaitForSeconds(0.65f);
         mjolTime = 1;
         isMjolFlying = true;
@@ -749,8 +777,8 @@ public class PlayerMovement : MonoBehaviour
         Quaternion mfRot = temp.rotation;
         if (isRunning)
         {
-            if(this.transform.localScale.x < 0) mfRot = Quaternion.Euler(0f, 0f, 150f);
-            else mfRot = Quaternion.Euler(0f, 0f, -150f);
+            if (this.transform.localScale.x < 0) mfRot = Quaternion.Euler(0f, 0f, 160f);
+            else mfRot = Quaternion.Euler(0f, 0f, -155f);
         }
         GameObject m = Instantiate(motherFuckerPrefab, mfPos, mfRot);
         m.GetComponent<mfScript>().direction = direction;
@@ -814,7 +842,7 @@ public class PlayerMovement : MonoBehaviour
             StopCoroutine(mjolnirDecay());
             transform.rotation = Quaternion.Euler(0, 0, 0);
         }
-        if(mjolTime == 1)StartCoroutine(mjolnirDecay());
+        if (mjolTime == 1) StartCoroutine(mjolnirDecay());
     }
 
     private IEnumerator mjolnirDecay()
@@ -870,7 +898,7 @@ public class PlayerMovement : MonoBehaviour
             bowHands.SetActive(false);
             leftHand.SetActive(true);
             rightHand.SetActive(true);
-            if(anim == null) anim = GetComponent<Animator>();
+            if (anim == null) anim = GetComponent<Animator>();
             anim.SetBool("shouldChargeIn", false);
         }
         else if (id == 1)
@@ -959,7 +987,7 @@ public class PlayerMovement : MonoBehaviour
 
         float timer = 0f;
 
-        while(timer < 3f)
+        while (timer < 3f)
         {
             if (currentID != currentWeapon && currentID == 2 && currentWeapon == 0 && justShotBoomerang)
             {
@@ -980,11 +1008,11 @@ public class PlayerMovement : MonoBehaviour
         timer = 0f;
         while (timer < 3f)
         {
-            if(currentID != currentWeapon && currentID == 2 && currentWeapon == 0 && justShotBoomerang)
+            if (currentID != currentWeapon && currentID == 2 && currentWeapon == 0 && justShotBoomerang)
             {
                 print("nothing");
             }
-            else if(currentID != currentWeapon && currentID != 2 && currentWeapon != 0 && !justShotBoomerang)
+            else if (currentID != currentWeapon && currentID != 2 && currentWeapon != 0 && !justShotBoomerang)
             {
                 print("id is off");
                 shouldGainStyle = true;
@@ -1032,7 +1060,7 @@ public class PlayerMovement : MonoBehaviour
             firstLand = true;
             rb.excludeLayers = endLM;
             StartCoroutine(camShake.shake());
-            if(!isAngelic)audioManager.instance.playAudio(firstLandSound, 1, 1, transform, audioManager.instance.sfx);
+            if (!isAngelic) audioManager.instance.playAudio(firstLandSound, 1, 1, transform, audioManager.instance.sfx);
         }
 
         if (collision.gameObject.tag == "Enemy")
@@ -1053,20 +1081,22 @@ public class PlayerMovement : MonoBehaviour
         canDash = true;
     }
 
-    public IEnumerator damage(int damage, float duration)
+    public IEnumerator damage(int damage, float duration, bool poisoned)
     {
+        invincible = true;
+
         hasdiedforeverybody = true;
-        isPoisoned = false;
+        //isPoisoned = false;
         PauseScript.dmg += damage;
         invincible = true;
         hp -= damage;
 
-        if(hp <= 0 && !isAngelic)
+        if (hp <= 0 && !isAngelic && !isDead)
         {
             StartCoroutine(deathCRT());
             yield break;
         }
-        else if(hp <= 0 && isAngelic)
+        else if (hp <= 0 && isAngelic)
         {
             StartCoroutine(gadasvla(5));
         }
@@ -1074,6 +1104,8 @@ public class PlayerMovement : MonoBehaviour
         Instantiate(hurtparticle, new Vector2(transform.position.x, transform.position.y - 0.75f), Quaternion.identity);
         float pitch = UnityEngine.Random.Range(0.8f, 1.01f);
         audioManager.instance.playAudio(hitStop, 1f, pitch, transform, audioManager.instance.sfx);
+        if (poisoned) damageFlashScript.changeColor(false);
+        else damageFlashScript.changeColor(true);
         damageFlashScript.callFlash();
         yield return new WaitForSeconds(0.1f);
         yield return StartCoroutine(frameStop(duration));
@@ -1088,6 +1120,9 @@ public class PlayerMovement : MonoBehaviour
 
     private IEnumerator deathCRT()
     {
+        if (PoisonQueCorountine != null) StopCoroutine(PoisonQueCorountine);
+        poisonQueue = new Queue<float>();
+        isDead = true;
         canPause = false;
         invincible = true;
         DisableAllActiveWeapons();
@@ -1172,11 +1207,12 @@ public class PlayerMovement : MonoBehaviour
         StartCoroutine(pickUpWeapon(0, "null"));
     }
 
-    IEnumerator posionCure()
+    IEnumerator posionCure(float seconds)
     {
         canBePoisoned = false;
-        yield return new WaitForSeconds(0.3f);
+        yield return new WaitForSeconds(seconds);
         canBePoisoned = true;
+        wasPoisoned = false;
     }
 
     public IEnumerator frameStop(float duration)
@@ -1198,7 +1234,7 @@ public class PlayerMovement : MonoBehaviour
             Destroy(collision.transform.parent.gameObject);
         }
 
-        if(collision.gameObject.CompareTag("boomerangPickup") && currentWeapon == 0)
+        if (collision.gameObject.CompareTag("boomerangPickup") && currentWeapon == 0)
         {
             if (collision.gameObject.name == "BoomerangWhichYouJustShot") justShotBoomerang = true;
             StartCoroutine(pickUpWeapon(2, collision.gameObject.name));
@@ -1229,7 +1265,7 @@ public class PlayerMovement : MonoBehaviour
                 Vector2 force = new Vector2(-direction, 0);
                 rb.AddForce(force * (knockback * 100f), ForceMode2D.Impulse);
                 */
-                StartCoroutine(damage(30, 0.1f));
+                StartCoroutine(damage(30, 0.1f, false));
                 print("hit by enemy hitbox");
             }
 
@@ -1241,7 +1277,7 @@ public class PlayerMovement : MonoBehaviour
                Vector2 force = new Vector2(-direction, 0);
                rb.AddForce(force * (knockback * 100f), ForceMode2D.Impulse);
                */
-                StartCoroutine(damage(25, 0.1f));
+                StartCoroutine(damage(25, 0.1f, false));
             }
 
             if (collision.gameObject.CompareTag("Enemy"))
@@ -1257,23 +1293,28 @@ public class PlayerMovement : MonoBehaviour
 
             if (collision.gameObject.CompareTag("Explosion"))
             {
-                StartCoroutine(damage(25, 0.2f));
+                StartCoroutine(damage(25, 0.2f, false));
+            }
+
+            if (collision.gameObject.name == "GreenFireBall(Clone)")
+            {
+                ApplyPoison(4f);
             }
 
             if (collision.gameObject.CompareTag("FireballP"))
             {
-                StartCoroutine(damage(20, 0.2f));
+                StartCoroutine(damage(20, 0.2f, false));
             }
 
             if (collision.gameObject.CompareTag("Fireball"))
             {
-                StartCoroutine(damage(8, 0.1f));    
+                StartCoroutine(damage(8, 0.1f, false));
                 //invincible = false;
             }
 
             if (collision.gameObject.CompareTag("Crystal"))
             {
-                StartCoroutine(damage(15, 0.1f));
+                StartCoroutine(damage(15, 0.1f, false));
             }
         }
 
@@ -1298,6 +1339,19 @@ public class PlayerMovement : MonoBehaviour
         if (collision.gameObject.CompareTag("poison"))
         {
             isPoisoned = false;
+            isinbubble = false;
+            wasPoisoned = false;
+        }
+    }
+
+    public IEnumerator poison(float seconds)
+    {
+        float timer = 0f;
+        while (timer < seconds && !isDead)
+        {
+            yield return StartCoroutine(damage(20, 0, true));
+            yield return new WaitForSeconds(0.7f);
+            timer += 1f;
         }
     }
 
@@ -1306,6 +1360,31 @@ public class PlayerMovement : MonoBehaviour
         if (collision.gameObject.CompareTag("poison") && isPoisoned == false)
         {
             isPoisoned = true;
+            isinbubble = true;
+            wasPoisoned = true;
         }
+    }
+
+    public void ApplyPoison(float seconds)
+    {
+        poisonQueue.Enqueue(seconds);
+
+        if (!isPoisonRunning)
+            PoisonQueCorountine = StartCoroutine(ProcessPoisonQueue());
+    }
+
+    public IEnumerator ProcessPoisonQueue()
+    {
+        hpAnimator.Play("PlayerPoisoning");
+        isPoisonRunning = true;
+
+        while(poisonQueue.Count > 0 && !isDead)
+        {
+            float duration = poisonQueue.Dequeue();
+            yield return StartCoroutine(poison(duration));
+        }
+
+        hpAnimator.Play("PlayerDepoisoning");
+        isPoisonRunning = false;
     }
 }

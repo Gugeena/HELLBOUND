@@ -10,6 +10,6 @@ public class bodyPartScript : MonoBehaviour
     {
         animator = GetComponentInChildren<Animator>();
         animator.enabled = true;
-        Destroy(gameObject, 7);
+        Destroy(gameObject, 4.5f);
     }
 }

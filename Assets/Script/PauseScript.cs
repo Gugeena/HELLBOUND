@@ -20,6 +20,8 @@ public class PauseScript : MonoBehaviour
 
     public bool alreadyshown = false;
 
+    float minutes, seconds;
+
     private void Start()
     {
         scenename = SceneManager.GetActiveScene().name;
@@ -41,7 +43,7 @@ public class PauseScript : MonoBehaviour
             {
                 yield return new WaitForSeconds(1f);
                 dro++;
-                if (scenename != "LashaiasScene")
+                if (scenename != "LashaiasScene" && scenename != "TenthLayerOfHell")
                     break;
             }
         }
@@ -49,7 +51,7 @@ public class PauseScript : MonoBehaviour
 
     private void Update()
     {
-        if (scenename == "LashaiasScene")
+        if (scenename == "LashaiasScene" && scenename == "TenthLayerOfHell")
         {
             if (Input.GetKeyDown(KeyCode.Escape) && PlayerMovement.canPause)
             {
@@ -67,7 +69,7 @@ public class PauseScript : MonoBehaviour
                 }
             }
         }
-        else if(scenename != "LashaiasScene" && !alreadyshown)
+        else if(scenename != "LashaiasScene" && !alreadyshown && scenename != "TenthLayerOfHell")
         {
             StartCoroutine(death());
         }
@@ -103,7 +105,7 @@ public class PauseScript : MonoBehaviour
         alreadyshown = true;
         kills.text = "" + kill;
         damage.text = "" + dmg;
-        time.text = "" + dro;
+        time.text = "" + dro + "s";
         yield return new WaitForSeconds(5f);
         Fadeout.SetActive(true);
         yield return new WaitForSeconds(0.95f);
