@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class Functions : MonoBehaviour
 {
@@ -14,12 +15,34 @@ public class Functions : MonoBehaviour
     public AudioMixer audioMixer;
     public UnityEngine.UI.Slider sfxSlider, musicSlider;
     public AudioClip rollout, rollin;
+    public int alreadybeatthegame = 0;
+    public Button startGame, discord, quit, settings;
+    public GameObject tenth;
 
     void Start()
     {
-       Cursor.lockState = CursorLockMode.None;
-       Cursor.visible = true;
-       loadAudioSettings();
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+        loadAudioSettings();
+        loadsaved();
+    }
+
+    public void loadsaved()
+    {
+        alreadybeatthegame = PlayerPrefs.GetInt("alreadybeatthegame", 0);
+        alreadybeatthegame = 1;
+        if (alreadybeatthegame != 0)
+        {
+            RectTransform rectTransform = startGame.GetComponent<RectTransform>();
+            rectTransform.anchoredPosition = new Vector2(0, -32f);
+            rectTransform = discord.GetComponent<RectTransform>();
+            rectTransform.anchoredPosition = new Vector2(0, -229.78f);
+            rectTransform = quit.GetComponent<RectTransform>();
+            rectTransform.anchoredPosition = new Vector2(0, -296f);
+            rectTransform = settings.GetComponent<RectTransform>();
+            rectTransform.anchoredPosition = new Vector2(0, -163.78f);
+            tenth.SetActive(true);
+        }
     }
 
     public void Update()
@@ -32,7 +55,12 @@ public class Functions : MonoBehaviour
 
     public void Play()
     {
-        StartCoroutine(StartGame());
+        StartCoroutine(StartGame(3));
+    }
+
+    public void PlayTenth()
+    {
+        StartCoroutine(StartGame(6));
     }
 
     public void Quit()
@@ -40,11 +68,11 @@ public class Functions : MonoBehaviour
        Application.Quit();
     }
 
-    private IEnumerator StartGame()
+    private IEnumerator StartGame(int scene)
     {
         FadeOut.SetActive(true);
         yield return new WaitForSeconds(0.95f);
-        loadScene.SceneToLoad = 3;
+        loadScene.SceneToLoad = scene;
         SceneManager.LoadScene(2);
     }
 

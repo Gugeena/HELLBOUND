@@ -7,7 +7,7 @@ public class audioManager : MonoBehaviour
 {
     public static audioManager instance;
 
-    [SerializeField] private AudioSource source;
+    [SerializeField] private AudioSource source, lastPlayedSFX;
     [SerializeField] private AudioSource mainMusic, lillithMusic, endMusic, tutorialMusic;
     public AudioMixerGroup sfx, music;
 
@@ -16,7 +16,7 @@ public class audioManager : MonoBehaviour
         if (instance == null) instance = this;
     }
 
-    public void playAudio(AudioClip a, float volume, float pitch, Transform pos, AudioMixerGroup channel)
+    public AudioSource playAudio(AudioClip a, float volume, float pitch, Transform pos, AudioMixerGroup channel)
     {
         AudioSource audioSource = Instantiate(source, pos.position, Quaternion.identity);
 
@@ -30,6 +30,8 @@ public class audioManager : MonoBehaviour
         float len = audioSource.clip.length;
 
         Destroy(audioSource.gameObject, len);
+
+        return audioSource;
     }
 
     public void playRandomAudio(AudioClip[] a, float volume, float pitch, Transform pos, AudioMixerGroup channel)

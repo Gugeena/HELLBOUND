@@ -82,6 +82,8 @@ public class LilithScript : MonoBehaviour
 
     private bool invincible = false;
 
+    AudioSource hailmarysound;
+
     void Start()
     {
         bossfightstarted = true;
@@ -161,6 +163,9 @@ public class LilithScript : MonoBehaviour
 
     IEnumerator death()
     {
+        if(hailmarysound != null) hailmarysound.Stop();
+        PlayerMovement.TLOHLFADEOUTANDINNER(1);
+        TenthLayerOfHellScript.shouldturnoffforawhile = true;
         invincible = true;
         cum.Stop();
         cum.amplitude = 0.13f;
@@ -736,6 +741,8 @@ public class LilithScript : MonoBehaviour
     IEnumerator BatAttack()
     {
         if (isDead) yield break;
+        PlayerMovement.TLOHLFADEOUTANDINNER(1);
+        TenthLayerOfHellScript.shouldturnoffforawhile = true;
         isDoneWithBats = false;
         hasBatted = false;
         yield return null;
@@ -749,7 +756,7 @@ public class LilithScript : MonoBehaviour
         animator.SetBool("shouldBATS", true);
         yield return new WaitForSeconds(0.15f);
 
-        if (PlayerMovement.shouldMakeSound) audioSource.Play(); audioManager.instance.playAudio(hailMary, 1, 1, transform, audioManager.instance.sfx);
+        if (PlayerMovement.shouldMakeSound) hailmarysound = audioManager.instance.playAudio(hailMary, 1, 1, transform, audioManager.instance.sfx);
 
         StartCoroutine(batHailMary());
         cum.amplitude = 0.13f;
@@ -789,6 +796,8 @@ public class LilithScript : MonoBehaviour
         shouldPURPLE = false;
         //StartCoroutine(attackCooldown(0.2f, 0));
         attackCount++;
+        PlayerMovement.TLOHLFADEOUTANDINNER(2);
+        TenthLayerOfHellScript.shouldturnoffforawhile = false;
         yield break;
     }
 

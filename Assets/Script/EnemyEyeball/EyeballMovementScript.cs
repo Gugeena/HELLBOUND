@@ -70,11 +70,20 @@ public class EyeballMovementScript : MonoBehaviour
 
     public GameObject weaponPickup;
 
+    public bool stoned;
+
+    public GameObject[] deathparticles;
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         sr = GetComponent<SpriteRenderer>();
+
+        if(stoned)
+        {
+            anim.SetBool("stoned", true);
+        }
 
         player = GameObject.FindWithTag("Player").transform;
         LPortal = GameObject.Find("LLocation").transform;
@@ -287,33 +296,37 @@ public class EyeballMovementScript : MonoBehaviour
         }
         */
         PlayerMovement playerScript = player.GetComponent<PlayerMovement>();
-        playerScript.hp += healamount;
         if (PlayerMovement.shouldMakeSound) audioManager.instance.playAudio(deathSound, 0.65f, 1, transform, audioManager.instance.sfx);
-        if (teleportCount <= 0)
+        if (!stoned || stoned == null)
         {
-            //print(dist);
-            if (Directpath < 7f)
+            playerScript.hp += healamount;
+            if (teleportCount <= 0)
             {
-                print("inRange");
-                if (playerScript.hp > 0)
+                //print(dist);
+                if (Directpath < 7f)
                 {
-                    if (!playerScript.isAngelicGetter()) playerScript.hp += healamount;
-                    else playerScript.hp += healamount + 2f;
+                    print("inRange");
+                    if (playerScript.hp > 0)
+                    {
+                        if (!playerScript.isAngelicGetter()) playerScript.hp += healamount;
+                        else playerScript.hp += healamount + 2f;
+                    }
                 }
             }
+            else if (teleportCount > 0)
+            {
+                print("isntRange");
+                if (playerScript.hp > 0) playerScript.hp += healamount * 0.7f;
+            }
+            if (playerScript.shouldGainStyle)
+            {
+                if (teleportCount > 0) StyleManager.instance.growStyle(2 * 1 + teleportCount);
+                else StyleManager.instance.growStyle(1 * 1 + teleportCount);
+            }
+            Instantiate(DeathParticles, transform.position, Quaternion.identity);
         }
-        else if (teleportCount > 0)
-        {
-            print("isntRange");
-            if (playerScript.hp > 0) playerScript.hp += healamount * 0.7f;
-        }
-        if (playerScript.shouldGainStyle)
-        {
-            if(teleportCount > 0) StyleManager.instance.growStyle(2 * 1 + teleportCount);
-            else StyleManager.instance.growStyle(1 * 1 + teleportCount);
-        }
+        else if (stoned) Instantiate(deathparticles[Random.Range(0, deathparticles.Length)], transform.position, Quaternion.identity);
         if (playerScript.isAngelic) Instantiate(weaponPickup, this.gameObject.transform.position, Quaternion.identity);
-        Instantiate(DeathParticles, transform.position, Quaternion.identity);
         Destroy(gameObject);
     }
 }

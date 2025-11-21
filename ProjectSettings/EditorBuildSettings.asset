@@ -26,8 +26,11 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/deathScene.unity
     guid: 3ca6eaf97606fc147bbedbbd8e03ba36
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/DemoEndingScene.unity
     guid: 88e67ac8612bb3e43b10242ea9236cbb
+  - enabled: 1
+    path: Assets/Scenes/TenthLayerOfHell.unity
+    guid: 174f9e9a6dff66d49972af1553ef94bf
   m_configObjects: {}
   m_UseUCBPForAssetBundles: 0

@@ -10,9 +10,10 @@ public class FireBallScript : MonoBehaviour
     public Transform RLocation;
     public Transform LLocation;
     // Start is called before the first frame update
+
     void Start()
     {
-        
+        StartCoroutine(failsafe());
     }
 
     // Update is called once per frame
@@ -56,10 +57,19 @@ public class FireBallScript : MonoBehaviour
             if(!isProjectile) Instantiate(firePillar, new Vector2(collision.gameObject.transform.position.x, 1f), Quaternion.identity);
             Destroy(gameObject);
         }
+        /*
         else if (collision.gameObject.tag == "mfHitbox")
         {
             Instantiate(deathParticles, new Vector2(this.transform.position.x, this.transform.position.y - 0.25f), Quaternion.identity);
             Destroy(gameObject);
         }
+        */
+    }
+
+    public IEnumerator failsafe()
+    {
+        yield return new WaitForSeconds(5f);
+        Instantiate(deathParticles, new Vector2(this.transform.position.x, this.transform.position.y - 0.25f), Quaternion.identity);
+        Destroy(gameObject);
     }
 }

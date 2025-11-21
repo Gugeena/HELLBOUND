@@ -6588,7 +6588,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0, b: 0.125, a: 1}
+  m_Color: {r: 0.34509805, g: 0.015686275, b: 0.02745098, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -7995,10 +7995,12 @@ MonoBehaviour:
   - {fileID: 1905699683672262216, guid: b1ebd27fe73df5940bf9ff1c59f56b70, type: 3}
   - {fileID: 3035034816929892809, guid: 6efa15b653543184a9a41eede124680e, type: 3}
   - {fileID: 3035034816929892809, guid: 6efa15b653543184a9a41eede124680e, type: 3}
+  stonedbanished: []
   skyCandle: {fileID: 3035034816929892809, guid: 6efa15b653543184a9a41eede124680e, type: 3}
   eyeBall: {fileID: 1905699683672262216, guid: b1ebd27fe73df5940bf9ff1c59f56b70, type: 3}
+  stonedskyCandle: {fileID: 0}
+  stonedeyeBall: {fileID: 0}
   spawningparticles: {fileID: 4471190713132977389, guid: 53fbc06bb2f442141ab223fb083a7a97, type: 3}
-  weapons: []
   Player: {fileID: 0}
   cooldownTimer: 0
 --- !u!4 &536033092
@@ -8234,6 +8236,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   source: {fileID: 2449307550315473392, guid: 56d86b270501d01459fe0f962b0ef699, type: 3}
+  lastPlayedSFX: {fileID: 0}
   mainMusic: {fileID: 543562847}
   lillithMusic: {fileID: 543562850}
   endMusic: {fileID: 543562851}
@@ -23697,6 +23700,7 @@ MonoBehaviour:
   damage: {fileID: 0}
   time: {fileID: 0}
   alreadyshown: 0
+  TLOH: {fileID: 0}
 --- !u!95 &833567533
 Animator:
   serializedVersion: 7
@@ -40684,8 +40688,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 11.189999, y: -0.000015258789}
-  m_SizeDelta: {x: 22.41, y: -0.000015259}
+  m_AnchoredPosition: {x: 2.2799988, y: -1.6599998}
+  m_SizeDelta: {x: -12.14, y: -13.23}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1655954851
 MonoBehaviour:
@@ -40700,14 +40704,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.83137256, g: 0, b: 0.043137256, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 477989489, guid: 3da4ba1a8180780438b71120e0ba7c4c, type: 3}
+  m_Sprite: {fileID: 3375658564577939505, guid: 72580808f4e875d43a8a868c7e1aec96, type: 3}
   m_Type: 3
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -58428,6 +58432,9 @@ MonoBehaviour:
   canvasAnimator: {fileID: 883276627}
   HPbar: {fileID: 0}
   undachaijvayleoagarshemidzlia: 0
+  isinbubble: 0
+  hpAnimator: {fileID: 0}
+  wasPoisoned: 0
 --- !u!4 &2089724964
 Transform:
   m_ObjectHideFlags: 0

@@ -1,0 +1,475 @@
+fileFormatVersion: 2
+guid: 797f8f7d723a4214db4662e3ae3b8828
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 7934621405032360485
+    second: GapingJawGrayscale_0
+  - first:
+      213: 8841893431305322344
+    second: GapingJawGrayscale_1
+  - first:
+      213: 8115830993415546868
+    second: GapingJawGrayscale_2
+  - first:
+      213: 8727216439014856233
+    second: GapingJawGrayscale_3
+  - first:
+      213: -2178598712117683161
+    second: GapingJawGrayscale_4
+  - first:
+      213: -1744132796973960864
+    second: GapingJawGrayscale_5
+  - first:
+      213: 6164503220906317642
+    second: GapingJawGrayscale_6
+  - first:
+      213: 4876313818029823702
+    second: GapingJawGrayscale_7
+  - first:
+      213: 2679315729011010533
+    second: GapingJawGrayscale_8
+  - first:
+      213: -7982567314921408945
+    second: GapingJawGrayscale_9
+  - first:
+      213: -8803507622411354552
+    second: GapingJawGrayscale_10
+  - first:
+      213: -8470738491012862454
+    second: GapingJawGrayscale_11
+  - first:
+      213: 8576123610716207777
+    second: GapingJawGrayscale_12
+  - first:
+      213: 574737283206300591
+    second: GapingJawGrayscale_13
+  - first:
+      213: -3955227812818524423
+    second: GapingJawGrayscale_14
+  - first:
+      213: 6982628325310103117
+    second: GapingJawGrayscale_15
+  - first:
+      213: 6486968595541935167
+    second: GapingJawGrayscale_16
+  - first:
+      213: 1865827162781098087
+    second: GapingJawGrayscale_17
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 600
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 1
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: GapingJawGrayscale_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 96
+        width: 137
+        height: 96
+      alignment: 9
+      pivot: {x: 0.25547445, y: 0.375}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 52a2a22e0207d1e60800000000000000
+      internalID: 7934621405032360485
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GapingJawGrayscale_2
+      rect:
+        serializedVersion: 2
+        x: 195
+        y: 119
+        width: 82
+        height: 44
+      alignment: 9
+      pivot: {x: 0.3414634, y: 0.4318182}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4f7a3abf94931a070800000000000000
+      internalID: 8115830993415546868
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GapingJawGrayscale_3
+      rect:
+        serializedVersion: 2
+        x: 323
+        y: 131
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9261e6dcc1d4d1970800000000000000
+      internalID: 8727216439014856233
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GapingJawGrayscale_4
+      rect:
+        serializedVersion: 2
+        x: 400
+        y: 101
+        width: 105
+        height: 56
+      alignment: 9
+      pivot: {x: 0.13333334, y: 0.6607143}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 72c1a18930014c1e0800000000000000
+      internalID: -2178598712117683161
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GapingJawGrayscale_6
+      rect:
+        serializedVersion: 2
+        x: 563
+        y: 119
+        width: 44
+        height: 73
+      alignment: 9
+      pivot: {x: 0.022727273, y: 0.34246576}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a475fdab407bc8550800000000000000
+      internalID: 6164503220906317642
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GapingJawGrayscale_7
+      rect:
+        serializedVersion: 2
+        x: 666
+        y: 119
+        width: 183
+        height: 73
+      alignment: 9
+      pivot: {x: 0.32786885, y: 0.34246576}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6d61ff8e4952ca340800000000000000
+      internalID: 4876313818029823702
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GapingJawGrayscale_8
+      rect:
+        serializedVersion: 2
+        x: 849
+        y: 119
+        width: 159
+        height: 73
+      alignment: 9
+      pivot: {x: 0.16981131, y: 0.34246576}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5eb61dcb577de2520800000000000000
+      internalID: 2679315729011010533
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GapingJawGrayscale_10
+      rect:
+        serializedVersion: 2
+        x: 305
+        y: 101
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 84e3abcd578a3d580800000000000000
+      internalID: -8803507622411354552
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GapingJawGrayscale_11
+      rect:
+        serializedVersion: 2
+        x: 317
+        y: 107
+        width: 14
+        height: 14
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a0e23f9e834e17a80800000000000000
+      internalID: -8470738491012862454
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GapingJawGrayscale_14
+      rect:
+        serializedVersion: 2
+        x: 29
+        y: 29
+        width: 38
+        height: 32
+      alignment: 9
+      pivot: {x: 0.5, y: 0.59375}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9f6e43b82453c19c0800000000000000
+      internalID: -3955227812818524423
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GapingJawGrayscale_15
+      rect:
+        serializedVersion: 2
+        x: 137
+        y: 35
+        width: 20
+        height: 14
+      alignment: 9
+      pivot: {x: 0.35, y: 0.92857146}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d4e70b0677747e060800000000000000
+      internalID: 6982628325310103117
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GapingJawGrayscale_16
+      rect:
+        serializedVersion: 2
+        x: 221
+        y: 29
+        width: 50
+        height: 44
+      alignment: 9
+      pivot: {x: 0.38, y: 0.4318182}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f3444667197560a50800000000000000
+      internalID: 6486968595541935167
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GapingJawGrayscale_17
+      rect:
+        serializedVersion: 2
+        x: 335
+        y: 41
+        width: 14
+        height: 14
+      alignment: 9
+      pivot: {x: 0.071428575, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 760a7d14befb4e910800000000000000
+      internalID: 1865827162781098087
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 498a022333ed6534fb6c12855f13d09e
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      GapingJawGrayscale_0: 7934621405032360485
+      GapingJawGrayscale_1: 8841893431305322344
+      GapingJawGrayscale_10: -8803507622411354552
+      GapingJawGrayscale_11: -8470738491012862454
+      GapingJawGrayscale_12: 8576123610716207777
+      GapingJawGrayscale_13: 574737283206300591
+      GapingJawGrayscale_14: -3955227812818524423
+      GapingJawGrayscale_15: 6982628325310103117
+      GapingJawGrayscale_16: 6486968595541935167
+      GapingJawGrayscale_17: 1865827162781098087
+      GapingJawGrayscale_2: 8115830993415546868
+      GapingJawGrayscale_3: 8727216439014856233
+      GapingJawGrayscale_4: -2178598712117683161
+      GapingJawGrayscale_5: -1744132796973960864
+      GapingJawGrayscale_6: 6164503220906317642
+      GapingJawGrayscale_7: 4876313818029823702
+      GapingJawGrayscale_8: 2679315729011010533
+      GapingJawGrayscale_9: -7982567314921408945
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -61,6 +61,11 @@ public class EnemyChargerScript : MonoBehaviour
     int teleportCount = 0;
     PlayerMovement playerScript;
     bool alreadydetecting = false;
+
+    public bool stoned;
+
+    public GameObject[] deathparticles;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -287,31 +292,40 @@ public class EnemyChargerScript : MonoBehaviour
             if (bc != null) bc.isTrigger = false;
             GameObject bodypart = rb.gameObject;
         }
+        if (playerScript.shouldGainStyle)
+        {
+            if (teleportCount == 0) StyleManager.instance.growStyle(2);
+            else if (teleportCount > 0) StyleManager.instance.growStyle(3);
+        }
         canMove = false;
         canAttack = false;
         int chance = UnityEngine.Random.Range(0, 5);
         if(chance > 1) Instantiate(weaponPickup, this.gameObject.transform.position, Quaternion.identity);
         float dist = Directpath;
-        if (teleportCount <= 0)
+        if (!stoned || stoned == null)
         {
-            PlayerMovement playerScript = player.GetComponent<PlayerMovement>();
-            //print(dist);
-            if (dist < 4f)
+            if (teleportCount <= 0)
             {
-                print("inRange");
-                if (playerScript.hp > 0)
+                PlayerMovement playerScript = player.GetComponent<PlayerMovement>();
+                //print(dist);
+                if (dist < 4f)
                 {
-                    if (!playerScript.isAngelicGetter()) playerScript.hp += healamount;
-                    else playerScript.hp += healamount + 2f;
+                    print("inRange");
+                    if (playerScript.hp > 0)
+                    {
+                        if (!playerScript.isAngelicGetter()) playerScript.hp += healamount;
+                        else playerScript.hp += healamount + 2f;
+                    }
                 }
             }
+            else if (teleportCount > 0)
+            {
+                print("isntRange");
+                if (playerScript.hp > 0) playerScript.hp += healamount * 0.7f;
+            }
+            Instantiate(particles, transform.position, Quaternion.identity);
         }
-        else if (teleportCount > 0)
-        {
-            print("isntRange");
-            if (playerScript.hp > 0) playerScript.hp += healamount * 0.7f;
-        }
-        Instantiate(particles, transform.position, Quaternion.identity);
+        else if (stoned) Instantiate(deathparticles[Random.Range(0, deathparticles.Length)], transform.position, Quaternion.identity);
         Destroy(gameObject);
         yield break;
     }
@@ -327,11 +341,6 @@ public class EnemyChargerScript : MonoBehaviour
         Vector2 force = new Vector2(-direction, 0);
         rb.AddForce(force * (knockback * 1000f), ForceMode2D.Impulse);
         PlayerMovement playerScript = player.GetComponent<PlayerMovement>();
-        if (playerScript.shouldGainStyle)
-        {
-            if (teleportCount == 0) StyleManager.instance.growStyle(2 * damage);
-            else if (teleportCount > 0) StyleManager.instance.growStyle(3 * damage);
-        }
     }
 
 

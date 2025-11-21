@@ -12,6 +12,7 @@ using UnityEngine.Rendering;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using UnityEngine.UIElements;
+using static UnityEngine.ParticleSystem;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -192,6 +193,10 @@ public class PlayerMovement : MonoBehaviour
 
     public Coroutine PoisonQueCorountine, SecondQueue;
 
+    public static Animator TLOHLANIMATOR;
+
+    public static bool isintenthlayer;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -222,11 +227,16 @@ public class PlayerMovement : MonoBehaviour
 
     void findeverythingatspawn()
     {
+        String scenename = SceneManager.GetActiveScene().name;
+        if (scenename == "TenthLayerOfHell") isintenthlayer = true;
+        else isintenthlayer = false;
+
         Animator[] animators = GameObject.FindObjectsOfType<Animator>(true);
         foreach (Animator animator in animators)
         {
             if (animator.gameObject.name == "FadeOut (2)") fadeOut = animator.gameObject;
             if (animator.gameObject.name == "FinalFadeOut") finalfadeOut = animator.gameObject;
+            if (animator.gameObject.name == "Vinigreti") TLOHLANIMATOR = animator;
         }
 
         Special = KeyBindManagerScript.heavyKey;
@@ -279,7 +289,6 @@ public class PlayerMovement : MonoBehaviour
 
         if (LilithScript.bossfightstarted && !hassubscribedtolilith)
         {
-            print("just subscribed");
             hassubscribedtolilith = true;
             LilithScript.lilithDeathEvent += EnterFinalAscension;
         }
@@ -337,6 +346,13 @@ public class PlayerMovement : MonoBehaviour
             audioManager.instance.playRandomAudio(gravelWalk, 0.75f, 1, transform, audioManager.instance.sfx);
             walkedDistance++;
         }
+    }
+
+    public static void TLOHLFADEOUTANDINNER(int decision)
+    {
+        if (TLOHLANIMATOR == null) return;
+        if(decision == 1) TLOHLANIMATOR.Play("TLOHLFADEOUT");
+        else if (decision == 2) TLOHLANIMATOR.Play("TLOHFADEIN");
     }
 
     void handleMovement()
@@ -444,7 +460,7 @@ public class PlayerMovement : MonoBehaviour
         {
             //StartCoroutine(deathCRT());
             //StartCoroutine(gadasvla(5));
-            StartCoroutine(enterAngelic(false));
+            StartCoroutine(enterAngelic(true));
             //StartCoroutine(pickUpWeapon(3, "fists"));
         }
 
@@ -492,6 +508,8 @@ public class PlayerMovement : MonoBehaviour
     private IEnumerator enterAngelic(bool Beyonder)
     {
         if (isDead) yield break;
+        TLOHLFADEOUTANDINNER(1);
+        TenthLayerOfHellScript.shouldturnoffforawhile = true;
         hasAscendedonce = true;
         canPause = false;
         invincible = true;
@@ -517,7 +535,8 @@ public class PlayerMovement : MonoBehaviour
         GameObject tospawn;
         if (Beyonder == true)
         {
-            animtoplay = "player_finalangeltransition";
+            if (!isintenthlayer) animtoplay = "player_finalangeltransition";
+            else animtoplay = "player_tenthlayerofhelltransition";
             tospawn = truespirit;
         }
         else
@@ -528,6 +547,37 @@ public class PlayerMovement : MonoBehaviour
         anim.Play(animtoplay);
 
         audioManager.instance.stopMusic();
+
+        if(isintenthlayer)
+        {
+            /*
+            yield return new WaitForSeconds(1f);
+            Rigidbody2D[] rbs = GetComponentsInChildren<Rigidbody2D>();
+            foreach (Rigidbody2D rbb in rbs)
+            {
+                rbb.bodyType = RigidbodyType2D.Dynamic;
+                rbb.AddForce(transform.up * UnityEngine.Random.Range(2f, 3f), ForceMode2D.Impulse);
+                rbb.AddTorque(UnityEngine.Random.Range(6f, 7f));
+                rbb.gameObject.transform.parent = null;
+                bodyPartScript bpscript = rbb.gameObject.GetComponent<bodyPartScript>();
+                if (bpscript != null) bpscript.disappear();
+                BoxCollider2D bc = rbb.gameObject.GetComponent<BoxCollider2D>();
+                if (bc != null) bc.isTrigger = false;
+                GameObject bodypart = rb.gameObject;
+            }
+            */
+
+
+            //aq dawere eg shit 1111
+
+
+            Instantiate(hurtparticle, transform.position, Quaternion.identity);
+            fadeOut.SetActive(true);
+            yield return new WaitForSeconds(1f);
+            SceneManager.LoadScene(1);
+            Destroy(gameObject);
+        }
+
         if (!Beyonder) audioManager.instance.playAudio(ascension, 0.65f, 1, transform, audioManager.instance.sfx);
         else audioManager.instance.playAudio(Beyondascension, 0.65f, 1, transform, audioManager.instance.sfx);
         //audioManager.instance.playAudio(ascension, 0.65f, 1, transform, audioManager.instance.sfx);
@@ -569,6 +619,23 @@ public class PlayerMovement : MonoBehaviour
         if (Beyonder) spawnLocation = new Vector2(25.43f, 0.7f);
         else spawnLocation = this.transform.position;
         GameObject spawned = Instantiate(tospawn, spawnLocation, Quaternion.identity);
+        GameObject TLOH = null;
+
+        if (isintenthlayer)
+        {
+            TLOH = GameObject.Find("TLOH");
+            if (TLOH != null) TLOH.SetActive(false);
+            LogScript[] LogScripts = GameObject.FindObjectsOfType<LogScript>(true);
+            foreach (LogScript script in LogScripts)
+            {
+                Destroy(script.gameObject);
+            }
+            greenposionballScript[] poisonscripts = GameObject.FindObjectsOfType<greenposionballScript>(true);
+            foreach (greenposionballScript script in poisonscripts)
+            {
+                Destroy(script.gameObject);
+            }
+        }
 
         if (Beyonder)
         {
@@ -605,12 +672,20 @@ public class PlayerMovement : MonoBehaviour
             yield return new WaitForSeconds(2f);
             audioManager.instance.stopEnd();
             yield return new WaitForSeconds(2f);
+            PlayerPrefs.SetInt("alreadybeatthegame", 1);
+            PlayerPrefs.Save();
             SceneManager.LoadScene(1);
             //audioManager.instance.playAudio(finaldissapearence, 1, 1, transform, audioManager.instance.sfx);
         }
         else
         {
             invincible = false;
+            if (isintenthlayer)
+            {
+                TLOH.SetActive(true);
+                TenthLayerOfHellScript tlohscript = TLOH.GetComponent<TenthLayerOfHellScript>();
+                tlohscript.alreadyin = false;
+            }
             Destroy(gameObject);
         }
     }
@@ -854,7 +929,6 @@ public class PlayerMovement : MonoBehaviour
 
     private IEnumerator dash()
     {
-        print("dashing");
         isDashing = true;
         rb.gravityScale = 0f;
         if (!isGrounded)
@@ -886,7 +960,6 @@ public class PlayerMovement : MonoBehaviour
 
     private IEnumerator pickUpWeapon(int id, String name)
     {
-        print("JUSTS shot boomerang: " + justShotBoomerang);
         currentWeapon = id;
 
         if (id == 0)
@@ -966,13 +1039,10 @@ public class PlayerMovement : MonoBehaviour
         }
         if (name.Equals("BoomerangWhichYouJustShot"))
         {
-            print("name equals");
             yield break;
         }
-        print("about to start the coroutine");
         if (currentLoseStyleCoroutine != null)
         {
-            print("about to end the coroutine");
             StopCoroutine(currentLoseStyleCoroutine);
         }
         currentLoseStyleCoroutine = StartCoroutine(loseStyle(id));
@@ -1062,17 +1132,6 @@ public class PlayerMovement : MonoBehaviour
             StartCoroutine(camShake.shake());
             if (!isAngelic) audioManager.instance.playAudio(firstLandSound, 1, 1, transform, audioManager.instance.sfx);
         }
-
-        if (collision.gameObject.tag == "Enemy")
-        {
-            /*
-            hp -= 5;
-            float direction = Mathf.Sign(-transform.localScale.x);
-            float knockback = 4f;
-            Vector2 force = new Vector2(-direction, 0);
-            rb.AddForce(force * (knockback * 100f), ForceMode2D.Impulse);
-            */
-        }
     }
 
     public IEnumerator dashCooldown()
@@ -1085,7 +1144,7 @@ public class PlayerMovement : MonoBehaviour
     {
         invincible = true;
 
-        hasdiedforeverybody = true;
+        //hasdiedforeverybody = true;
         //isPoisoned = false;
         PauseScript.dmg += damage;
         invincible = true;
@@ -1120,6 +1179,7 @@ public class PlayerMovement : MonoBehaviour
 
     private IEnumerator deathCRT()
     {
+        hasdiedforeverybody = true;
         if (PoisonQueCorountine != null) StopCoroutine(PoisonQueCorountine);
         poisonQueue = new Queue<float>();
         isDead = true;
@@ -1131,6 +1191,7 @@ public class PlayerMovement : MonoBehaviour
         rb.linearVelocity = Vector2.zero;
         canMove = false;
         SpawnerScript.shouldSpawn = false;
+        TLOHLFADEOUTANDINNER(1);
         yield return StartCoroutine(frameStop(0.2f));
         //audioManager.instance.sfx.audioMixer.GetFloat("music", out f);
         //audioManager.instance.sfx.audioMixer.SetFloat("music", Mathf.Log10(0.2f) * 20);
@@ -1140,6 +1201,7 @@ public class PlayerMovement : MonoBehaviour
         legBox.enabled = false;
         rb.bodyType = RigidbodyType2D.Kinematic;
         anim.Play("player_death");
+        runParticles.Stop();
         yield return new WaitForSeconds(1f);
         DisableAllActiveWeapons();
         rb.gravityScale = 8f;
@@ -1162,6 +1224,7 @@ public class PlayerMovement : MonoBehaviour
         autokillcollider.enabled = true;
         //audioManager.instance.sfx.audioMixer.SetFloat("sfx", f);
         hp = 150f;
+        hpAnimator.Play("PlayerDepoisoning");
         yield return new WaitForSeconds(8f);
         camShake.StopAllCoroutines();
         StartCoroutine(revive());
@@ -1175,6 +1238,8 @@ public class PlayerMovement : MonoBehaviour
         audioManager.instance.startMusic();
         uiCanvas.renderMode = RenderMode.ScreenSpaceCamera;
         anim.Play("player_revive");
+        anim.SetBool("isWalking", false);
+        anim.SetBool("isJumping", false);
         //yield return new WaitForSeconds(1f);
         rb.bodyType = RigidbodyType2D.Dynamic;
         gravityBox.enabled = true;
@@ -1197,6 +1262,8 @@ public class PlayerMovement : MonoBehaviour
         stopAttacking = false;
         hasdiedforeverybody = false;
         canPause = true;
+        invincible = false;
+        TLOHLFADEOUTANDINNER(2);
         yield return null;
     }
 
@@ -1266,7 +1333,6 @@ public class PlayerMovement : MonoBehaviour
                 rb.AddForce(force * (knockback * 100f), ForceMode2D.Impulse);
                 */
                 StartCoroutine(damage(30, 0.1f, false));
-                print("hit by enemy hitbox");
             }
 
             if (collision.gameObject.CompareTag("enemyorb"))
@@ -1315,6 +1381,11 @@ public class PlayerMovement : MonoBehaviour
             if (collision.gameObject.CompareTag("Crystal"))
             {
                 StartCoroutine(damage(15, 0.1f, false));
+            }
+
+            if (collision.gameObject.CompareTag("Log"))
+            {
+                StartCoroutine(damage(25, 0.1f, false));
             }
         }
 

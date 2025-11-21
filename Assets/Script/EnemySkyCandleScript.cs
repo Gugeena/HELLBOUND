@@ -74,6 +74,10 @@ public class EnemySkyCandleScript : MonoBehaviour
 
     public GameObject weaponPickup;
 
+    public bool stoned;
+
+    public GameObject[] deathparticles;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -432,26 +436,30 @@ public class EnemySkyCandleScript : MonoBehaviour
         */
         PlayerMovement playerScript = player.GetComponent<PlayerMovement>();
 
-        if (teleportCount <= 0)
+        if (!stoned)
         {
-            //print(dist);
-            if (Directpath < 8f)
+            if (teleportCount <= 0)
             {
-                print("inRange");
-                if (playerScript.hp > 0)
+                //print(dist);
+                if (Directpath < 8f)
                 {
-                    if (!playerScript.isAngelicGetter()) playerScript.hp += healamount;
-                    else playerScript.hp += healamount + 2f;
+                    print("inRange");
+                    if (playerScript.hp > 0)
+                    {
+                        if (!playerScript.isAngelicGetter()) playerScript.hp += healamount;
+                        else playerScript.hp += healamount + 2f;
+                    }
                 }
             }
+            else if (teleportCount > 0)
+            {
+                print("isntRange");
+                if (playerScript.hp > 0) playerScript.hp += healamount * 0.7f;
+            }
+            Instantiate(particles, transform.position, Quaternion.identity);
         }
-        else if (teleportCount > 0)
-        {
-            print("isntRange");
-            if (playerScript.hp > 0) playerScript.hp += healamount * 0.7f;
-        }
-        Instantiate(particles, transform.position, Quaternion.identity);
-        if(playerScript.isAngelic) Instantiate(weaponPickup, this.gameObject.transform.position, Quaternion.identity);
+        else if (stoned) Instantiate(deathparticles[Random.Range(0, deathparticles.Length)], transform.position, Quaternion.identity);
+        if (playerScript.isAngelic) Instantiate(weaponPickup, this.gameObject.transform.position, Quaternion.identity);
         Destroy(gameObject);
         yield break;
     }

@@ -5,15 +5,13 @@ using UnityEngine;
 
 public class SpawnerScript : MonoBehaviour
 {
-    public GameObject[] banished;
+    public GameObject[] banished, stonedbanished;
 
     [SerializeField]
-    private GameObject skyCandle, eyeBall;
+    private GameObject skyCandle, eyeBall, stonedskyCandle, stonedeyeBall;
 
     bool canspawn = true;
     public GameObject spawningparticles;
-
-    public GameObject[] weapons;
 
     public Transform Player;
 
@@ -27,6 +25,7 @@ public class SpawnerScript : MonoBehaviour
     public static bool shouldChangeBack = false;
     enum Enemies { charger = 0 , skyCandle = 1, eyeball = 2 }
     public static bool shouldSpawn = true;
+
     void Start()
     {
         Player = GameObject.FindGameObjectWithTag("Player").transform;
@@ -123,20 +122,20 @@ public class SpawnerScript : MonoBehaviour
             yield return new WaitForSeconds(cooldownTimer);
             for (int i = 0; i < spawningcount; i++)
             {
-
-                int enemyToSpawn = Random.Range(0, banished.Length);
+                GameObject[] POOL = TenthLayerOfHellScript.stoned ? stonedbanished : banished;
+                int enemyToSpawn = Random.Range(0, POOL.Length);
 
                 float randomx = Random.Range(15.379f, 35.6f);
 
                 Vector2 pos = new Vector2(randomx, 0);
 
-                GameObject enemy = banished[enemyToSpawn];
+                GameObject enemy = POOL[enemyToSpawn];
 
-                if (Equals(enemy, skyCandle))
+                if (Equals(enemy, skyCandle) || Equals(enemy, stonedskyCandle))
                 {
                     pos.y = Random.Range(-2.24f, 3.4f);
                 }
-                else if (Equals(enemy, eyeBall))
+                else if (Equals(enemy, eyeBall) || Equals(enemy, stonedeyeBall))
                 {
                     pos.y = Random.Range(1f, 4f);
                 }
@@ -144,7 +143,7 @@ public class SpawnerScript : MonoBehaviour
 
                 if(!Equals(enemy, eyeBall)) Instantiate(spawningparticles, new Vector2(pos.x, pos.y - 0.75f), Quaternion.identity);
                 else Instantiate(spawningparticles, new Vector2(pos.x, pos.y), Quaternion.identity);
-                Instantiate(banished[enemyToSpawn], pos, Quaternion.identity);
+                Instantiate(POOL[enemyToSpawn], pos, Quaternion.identity);
 
             }
             canspawn = true;

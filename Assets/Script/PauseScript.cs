@@ -22,19 +22,33 @@ public class PauseScript : MonoBehaviour
 
     float minutes, seconds;
 
+    public GameObject TLOH;
+
     private void Start()
     {
         scenename = SceneManager.GetActiveScene().name;
 
-        if (scenename == "LashaiasScena")
+        if (scenename == "LashaiasScena" || scenename == "TenthLayerOfHell")
         {
             kill = 0;
             dmg = 0;
             dro = 0;
         }
 
+        if(scenename == "TenthLayerOfHell")
+        {
+            StartCoroutine(TLOHCoroutine());
+        }
+
         StartCoroutine(Timer());
     }
+
+    public IEnumerator TLOHCoroutine()
+    {
+        yield return new WaitForSeconds(0.5f);
+        TLOH.SetActive(true);   
+    }
+
     public IEnumerator Timer()
     {
         while (true)

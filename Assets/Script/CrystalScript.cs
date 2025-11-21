@@ -17,7 +17,7 @@ public class CrystalScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        StartCoroutine(failsafe());
     }
 
     // Update is called once per frame
@@ -28,11 +28,13 @@ public class CrystalScript : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        /*
         if (collision.gameObject.tag == "mfHitbox")
         {
             Instantiate(deathParticles, new Vector2(this.transform.position.x, this.transform.position.y - 0.25f), Quaternion.identity);
             Destroy(gameObject);
         }
+        */
 
         if (collision.gameObject.name == "LLocation")
         {
@@ -58,7 +60,8 @@ public class CrystalScript : MonoBehaviour
           collision.gameObject.name == "Torso" ||
           collision.gameObject.tag == "poison" || 
           collision.gameObject.tag == "Fireball" ||
-          collision.gameObject.tag == "FireballP")
+          collision.gameObject.tag == "FireballP" ||
+          collision.gameObject.tag == "mfHitbox")
         {
             print("hit: " + collision.gameObject.name);
             return;
@@ -103,6 +106,13 @@ public class CrystalScript : MonoBehaviour
         shouldBreakToPlatform = false;
         yield return new WaitForSeconds(0.1f);
         shouldBreakToPlatform = true;
+    }
+
+    public IEnumerator failsafe()
+    {
+        yield return new WaitForSeconds(5f);
+        Instantiate(deathParticles, new Vector2(this.transform.position.x, this.transform.position.y - 0.25f), Quaternion.identity);
+        Destroy(gameObject);
     }
 
     public IEnumerator deleter(GameObject hitbox)
