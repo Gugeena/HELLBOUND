@@ -510,6 +510,7 @@ public class PlayerMovement : MonoBehaviour
         if (isDead) yield break;
         TLOHLFADEOUTANDINNER(1);
         TenthLayerOfHellScript.shouldturnoffforawhile = true;
+        isGrounded = false;
         hasAscendedonce = true;
         canPause = false;
         invincible = true;
@@ -550,8 +551,9 @@ public class PlayerMovement : MonoBehaviour
 
         if(isintenthlayer)
         {
-            /*
-            yield return new WaitForSeconds(1f);
+
+            yield return new WaitForSeconds(1.4f);
+            anim.enabled = false;
             Rigidbody2D[] rbs = GetComponentsInChildren<Rigidbody2D>();
             foreach (Rigidbody2D rbb in rbs)
             {
@@ -565,13 +567,11 @@ public class PlayerMovement : MonoBehaviour
                 if (bc != null) bc.isTrigger = false;
                 GameObject bodypart = rb.gameObject;
             }
-            */
-
-
-            //aq dawere eg shit 1111
+            
 
 
             Instantiate(hurtparticle, transform.position, Quaternion.identity);
+            yield return new WaitForSeconds(4f);
             fadeOut.SetActive(true);
             yield return new WaitForSeconds(1f);
             SceneManager.LoadScene(1);

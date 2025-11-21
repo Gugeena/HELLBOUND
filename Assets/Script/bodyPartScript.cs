@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class bodyPartScript : MonoBehaviour
 {
-    private Animator animator;
+    public Animator animator;
 
     public void disappear()
     {
