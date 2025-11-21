@@ -16,7 +16,7 @@ public class Functions : MonoBehaviour
     public UnityEngine.UI.Slider sfxSlider, musicSlider;
     public AudioClip rollout, rollin;
     public int alreadybeatthegame = 0;
-    public Button startGame, discord, quit, settings;
+    public Button startGame, discord, quit, settings, tenthbutton;
     public GameObject tenth;
 
     void Start()
@@ -30,11 +30,10 @@ public class Functions : MonoBehaviour
     public void loadsaved()
     {
         alreadybeatthegame = PlayerPrefs.GetInt("alreadybeatthegame", 0);
-        alreadybeatthegame = 1;
         if (alreadybeatthegame != 0)
         {
             RectTransform rectTransform = startGame.GetComponent<RectTransform>();
-            rectTransform.anchoredPosition = new Vector2(0, -32f);
+            rectTransform.anchoredPosition = new Vector2(0, 28.7f);
             rectTransform = discord.GetComponent<RectTransform>();
             rectTransform.anchoredPosition = new Vector2(0, -229.78f);
             rectTransform = quit.GetComponent<RectTransform>();
@@ -55,11 +54,13 @@ public class Functions : MonoBehaviour
 
     public void Play()
     {
+        EventSystem.current.SetSelectedGameObject(null);
         StartCoroutine(StartGame(3));
     }
 
     public void PlayTenth()
     {
+        EventSystem.current.SetSelectedGameObject(null);
         StartCoroutine(StartGame(6));
     }
 
@@ -70,6 +71,7 @@ public class Functions : MonoBehaviour
 
     private IEnumerator StartGame(int scene)
     {
+        EventSystem.current.SetSelectedGameObject(null);
         FadeOut.SetActive(true);
         yield return new WaitForSeconds(0.95f);
         loadScene.SceneToLoad = scene;
@@ -113,9 +115,9 @@ public class Functions : MonoBehaviour
 
     public void loadAudioSettings()
     {
-        musicSlider.value = PlayerPrefs.GetFloat("musicVolume");
+        musicSlider.value = PlayerPrefs.GetFloat("musicVolume", 1);
 
-        sfxSlider.value = PlayerPrefs.GetFloat("sfxVolume");
+        sfxSlider.value = PlayerPrefs.GetFloat("sfxVolume", 1);
 
         setMusicVolume();
         setSFXVolume();
@@ -128,13 +130,13 @@ public class Functions : MonoBehaviour
 
     public void loadMusicVolume()
     {
-        musicSlider.value = PlayerPrefs.GetFloat("musicVolume");
+        musicSlider.value = PlayerPrefs.GetFloat("musicVolume", 1);
         setMusicVolume();
     }
 
     public void loadSFXVolume()
     {
-        sfxSlider.value = PlayerPrefs.GetFloat("sfxVolume");
+        sfxSlider.value = PlayerPrefs.GetFloat("sfxVolume", 1);
         setSFXVolume();
     }
 

@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Security.Permissions;
+using Unity.Burst.Intrinsics;
 using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
@@ -196,6 +197,8 @@ public class PlayerMovement : MonoBehaviour
     public static Animator TLOHLANIMATOR;
 
     public static bool isintenthlayer;
+
+    public AudioClip slash;
 
     // Start is called before the first frame update
     void Start()
@@ -508,6 +511,10 @@ public class PlayerMovement : MonoBehaviour
     private IEnumerator enterAngelic(bool Beyonder)
     {
         if (isDead) yield break;
+        if (PoisonQueCorountine != null) StopCoroutine(PoisonQueCorountine);
+        poisonQueue = new Queue<float>();
+        isPoisoned = false;
+        isPoisonRunning = false;
         TLOHLFADEOUTANDINNER(1);
         TenthLayerOfHellScript.shouldturnoffforawhile = true;
         isGrounded = false;
@@ -515,14 +522,15 @@ public class PlayerMovement : MonoBehaviour
         canPause = false;
         invincible = true;
         canLose = false;
+        spawner.SetActive(false);
         if (!Beyonder)
         {
             if (isAngelic) yield break;
-            spawner.SetActive(false);
+            //spawner.SetActive(false);
         }
         else
         {
-            shouldMakeSound = false;
+            if (!isintenthlayer) shouldMakeSound = false;
             hasbeyonded = true;
         }
         StyleManager.shouldTurnOff = true;
@@ -549,12 +557,16 @@ public class PlayerMovement : MonoBehaviour
 
         audioManager.instance.stopMusic();
 
-        if(isintenthlayer)
+        if(isintenthlayer && Beyonder)
         {
-
-            yield return new WaitForSeconds(1.4f);
+            autokillcollider.enabled = true;
+            runParticles.Stop();
+            stopAttacking = true;
+            rb.gravityScale = 0f;
+            yield return new WaitForSeconds(1.64f);
             anim.enabled = false;
             Rigidbody2D[] rbs = GetComponentsInChildren<Rigidbody2D>();
+            flashScript.CallRedFlash();
             foreach (Rigidbody2D rbb in rbs)
             {
                 rbb.bodyType = RigidbodyType2D.Dynamic;
@@ -566,16 +578,15 @@ public class PlayerMovement : MonoBehaviour
                 BoxCollider2D bc = rbb.gameObject.GetComponent<BoxCollider2D>();
                 if (bc != null) bc.isTrigger = false;
                 GameObject bodypart = rb.gameObject;
+                Vector2 direction = UnityEngine.Random.Range(-1, 1) * rbb.transform.right;
+                rbb.AddForce(200 * direction);
             }
-            
-
-
+            audioManager.instance.playAudio(slash, 1, 1, this.transform, audioManager.instance.sfx);
             Instantiate(hurtparticle, transform.position, Quaternion.identity);
             yield return new WaitForSeconds(4f);
             fadeOut.SetActive(true);
             yield return new WaitForSeconds(1f);
             SceneManager.LoadScene(1);
-            Destroy(gameObject);
         }
 
         if (!Beyonder) audioManager.instance.playAudio(ascension, 0.65f, 1, transform, audioManager.instance.sfx);
@@ -1182,6 +1193,8 @@ public class PlayerMovement : MonoBehaviour
         hasdiedforeverybody = true;
         if (PoisonQueCorountine != null) StopCoroutine(PoisonQueCorountine);
         poisonQueue = new Queue<float>();
+        isPoisoned = false;
+        isPoisonRunning = false;
         isDead = true;
         canPause = false;
         invincible = true;

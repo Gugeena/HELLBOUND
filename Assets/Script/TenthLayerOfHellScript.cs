@@ -74,6 +74,7 @@ public class TenthLayerOfHellScript : MonoBehaviour
             if (shouldturnoffforawhile)
             {
                 alreadyin = false;
+                lastplayedaudio.Stop();
                 yield break;
             }
             yield return new WaitForSeconds(0.25f);
@@ -86,9 +87,11 @@ public class TenthLayerOfHellScript : MonoBehaviour
 
     public IEnumerator snakeattack()
     {
+        lastplayedaudio = audioManager.instance.playAudio(snakeaudio, 1, 1, this.transform, audioManager.instance.sfx);
         StartCoroutine(ColorFade(vinigreti, Color.red, 0.5f));
         if (shouldturnoffforawhile)
         {
+            lastplayedaudio.Stop();
             alreadyin = false;
             yield break;
         }
@@ -99,7 +102,6 @@ public class TenthLayerOfHellScript : MonoBehaviour
         float waittime = 3.5f;
         if (animation.ToLower().Contains("vertical")) waittime = 3f;
         TLOHanim.Play(animations[random].name);
-        lastplayedaudio = audioManager.instance.playAudio(snakeaudio, 1, 1, this.transform, audioManager.instance.sfx);
         yield return new WaitForSeconds(waittime);
         alreadyin = false;
         yield break;
@@ -114,6 +116,7 @@ public class TenthLayerOfHellScript : MonoBehaviour
         {
             if (shouldturnoffforawhile)
             {
+                lastplayedaudio.Stop();
                 alreadyin = false;
                 yield break;
             }

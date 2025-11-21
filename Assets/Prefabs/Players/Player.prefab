@@ -8380,6 +8380,10 @@ MonoBehaviour:
   canvasAnimator: {fileID: 0}
   HPbar: {fileID: 0}
   undachaijvayleoagarshemidzlia: 0
+  isinbubble: 0
+  hpAnimator: {fileID: 0}
+  wasPoisoned: 0
+  slash: {fileID: 8300000, guid: 8b9044592f5121a4d8cc2d1c97be3bfe, type: 3}
 --- !u!50 &4171776631434826395
 Rigidbody2D:
   serializedVersion: 5

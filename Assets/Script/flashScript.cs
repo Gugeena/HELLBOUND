@@ -18,6 +18,11 @@ public class flashScript : MonoBehaviour
     {
         _anim.Play("whiteFlash");
     }
+
+    public void CallRedFlash()
+    {
+        _anim.Play("redFlash");
+    }
 }
 
 
