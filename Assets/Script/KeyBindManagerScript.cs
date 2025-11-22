@@ -33,6 +33,8 @@ public class KeyBindManagerScript : MonoBehaviour
 
     private void Start()
     {
+        Time.timeScale = 1f;
+
         SetPivot(inputfieldJump, pivotX, pivotY);
         SetPivot(inputfieldDash, pivotX, pivotY);
         SetPivot(inputfieldAttack, pivotX, pivotY);

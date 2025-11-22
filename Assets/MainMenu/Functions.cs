@@ -109,7 +109,7 @@ public class Functions : MonoBehaviour
 
     public void discordloader()
     {
-        Application.OpenURL("https://discord.gg/BuAXWgqr");
+        Application.OpenURL("https://discord.gg/Kn7P2Rkx3b");
         EventSystem.current.SetSelectedGameObject(null);
     }
 

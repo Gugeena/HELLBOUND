@@ -65,7 +65,7 @@ public class PauseScript : MonoBehaviour
 
     private void Update()
     {
-        if (scenename == "LashaiasScene" && scenename == "TenthLayerOfHell")
+        if (scenename == "LashaiasScene" || scenename == "TenthLayerOfHell")
         {
             if (Input.GetKeyDown(KeyCode.Escape) && PlayerMovement.canPause)
             {
@@ -83,7 +83,7 @@ public class PauseScript : MonoBehaviour
                 }
             }
         }
-        else if(scenename != "LashaiasScene" && !alreadyshown && scenename != "TenthLayerOfHell")
+        else if(scenename != "LashaiasScene" && !alreadyshown || scenename != "TenthLayerOfHell" && !alreadyshown)
         {
             StartCoroutine(death());
         }
@@ -91,9 +91,8 @@ public class PauseScript : MonoBehaviour
 
     private IEnumerator MainMenu()
     {
-        Time.timeScale = 1f;
         Fadeout.SetActive(true);
-        yield return new WaitForSeconds(0.95f);
+        yield return new WaitForSecondsRealtime(0.95f);
         SceneManager.LoadScene(1);
     }
 

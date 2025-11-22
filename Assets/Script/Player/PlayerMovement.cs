@@ -463,7 +463,7 @@ public class PlayerMovement : MonoBehaviour
         {
             //StartCoroutine(deathCRT());
             //StartCoroutine(gadasvla(5));
-            StartCoroutine(enterAngelic(true));
+            StartCoroutine(enterAngelic(false));
             //StartCoroutine(pickUpWeapon(3, "fists"));
         }
 
@@ -511,6 +511,7 @@ public class PlayerMovement : MonoBehaviour
     private IEnumerator enterAngelic(bool Beyonder)
     {
         if (isDead) yield break;
+        runParticles.Stop();
         if (PoisonQueCorountine != null) StopCoroutine(PoisonQueCorountine);
         poisonQueue = new Queue<float>();
         isPoisoned = false;
@@ -522,7 +523,7 @@ public class PlayerMovement : MonoBehaviour
         canPause = false;
         invincible = true;
         canLose = false;
-        spawner.SetActive(false);
+        if(spawner != null) spawner.SetActive(false);
         if (!Beyonder)
         {
             if (isAngelic) yield break;
@@ -560,7 +561,6 @@ public class PlayerMovement : MonoBehaviour
         if(isintenthlayer && Beyonder)
         {
             autokillcollider.enabled = true;
-            runParticles.Stop();
             stopAttacking = true;
             rb.gravityScale = 0f;
             yield return new WaitForSeconds(1.64f);
