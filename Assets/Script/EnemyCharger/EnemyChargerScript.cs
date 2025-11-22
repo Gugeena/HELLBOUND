@@ -388,10 +388,9 @@ public class EnemyChargerScript : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         teleportCount = RetrieveTeleportCount(collision);
-
+        print("died from " + collision.gameObject.name + "; " + collision.gameObject.tag);
         if (collision.gameObject.tag == "meleehitbox")
         {
-            print("died from meleehitbox" + collision.gameObject.name);
             damage(1);
         }
        

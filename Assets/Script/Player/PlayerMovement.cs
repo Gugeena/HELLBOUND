@@ -200,6 +200,10 @@ public class PlayerMovement : MonoBehaviour
 
     public AudioClip slash;
 
+    public bool isFuckingPoisoned = false;
+
+    public Animator[] animatorofhands;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -463,7 +467,7 @@ public class PlayerMovement : MonoBehaviour
         {
             //StartCoroutine(deathCRT());
             //StartCoroutine(gadasvla(5));
-            StartCoroutine(enterAngelic(false));
+            StartCoroutine(enterAngelic(true));
             //StartCoroutine(pickUpWeapon(3, "fists"));
         }
 
@@ -567,6 +571,10 @@ public class PlayerMovement : MonoBehaviour
             anim.enabled = false;
             Rigidbody2D[] rbs = GetComponentsInChildren<Rigidbody2D>();
             flashScript.CallRedFlash();
+            foreach(Animator animator in animatorofhands)
+            {
+                animator.enabled = true;
+            }    
             foreach (Rigidbody2D rbb in rbs)
             {
                 rbb.bodyType = RigidbodyType2D.Dynamic;
@@ -586,6 +594,8 @@ public class PlayerMovement : MonoBehaviour
             yield return new WaitForSeconds(4f);
             fadeOut.SetActive(true);
             yield return new WaitForSeconds(1f);
+            PlayerPrefs.SetInt("alreadybeatthegame", 1);
+            PlayerPrefs.Save();
             SceneManager.LoadScene(1);
         }
 
@@ -683,8 +693,6 @@ public class PlayerMovement : MonoBehaviour
             yield return new WaitForSeconds(2f);
             audioManager.instance.stopEnd();
             yield return new WaitForSeconds(2f);
-            PlayerPrefs.SetInt("alreadybeatthegame", 1);
-            PlayerPrefs.Save();
             SceneManager.LoadScene(1);
             //audioManager.instance.playAudio(finaldissapearence, 1, 1, transform, audioManager.instance.sfx);
         }
@@ -787,7 +795,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (isPoisoned)
         {
-            if(!isPoisonRunning) hpAnimator.Play("PlayerPoisoning");
+            //if(!isPoisonRunning) hpAnimator.Play("PlayerPoisoning");
             if (canBePoisoned)
             {
                 damageFlashScript.changeColor(false);
@@ -797,7 +805,7 @@ public class PlayerMovement : MonoBehaviour
             }
             else if (wasPoisoned) 
             {
-                if (!isPoisonRunning) hpAnimator.Play("PlayerDepoisoning");
+                //if (!isPoisonRunning) hpAnimator.Play("PlayerDepoisoning");
             }
         }
 
@@ -972,7 +980,7 @@ public class PlayerMovement : MonoBehaviour
     private IEnumerator pickUpWeapon(int id, String name)
     {
         currentWeapon = id;
-
+        if (anim == null) anim = GetComponent<Animator>();
         if (id == 0)
         {
             motherfucker.SetActive(false);
@@ -982,7 +990,6 @@ public class PlayerMovement : MonoBehaviour
             bowHands.SetActive(false);
             leftHand.SetActive(true);
             rightHand.SetActive(true);
-            if (anim == null) anim = GetComponent<Animator>();
             anim.SetBool("shouldChargeIn", false);
         }
         else if (id == 1)
@@ -1237,7 +1244,7 @@ public class PlayerMovement : MonoBehaviour
         autokillcollider.enabled = true;
         //audioManager.instance.sfx.audioMixer.SetFloat("sfx", f);
         hp = 150f;
-        hpAnimator.Play("PlayerDepoisoning");
+        if(isintenthlayer) hpAnimator.Play("PlayerDepoisoning");
         yield return new WaitForSeconds(8f);
         camShake.StopAllCoroutines();
         StartCoroutine(revive());
@@ -1408,6 +1415,11 @@ public class PlayerMovement : MonoBehaviour
             isGrounded = true;
             isFalling = false;
         }
+
+        //if (collision.gameObject.CompareTag("poison"))
+        //{
+            //hpAnimator.Play("PlayerPoisoning");
+        //}
     }
 
     private void OnCollisionExit2D(Collision2D collision)
@@ -1425,6 +1437,7 @@ public class PlayerMovement : MonoBehaviour
             isPoisoned = false;
             isinbubble = false;
             wasPoisoned = false;
+            hpAnimator.Play("PlayerDepoisoning");
         }
     }
 
@@ -1446,6 +1459,8 @@ public class PlayerMovement : MonoBehaviour
             isPoisoned = true;
             isinbubble = true;
             wasPoisoned = true;
+            if(isFuckingPoisoned) hpAnimator.Play("PlayerPoisoning");
+            isFuckingPoisoned = true;
         }
     }
 
@@ -1459,12 +1474,17 @@ public class PlayerMovement : MonoBehaviour
 
     public IEnumerator ProcessPoisonQueue()
     {
-        hpAnimator.Play("PlayerPoisoning");
+        //if(!isFuckingPoisoned) hpAnimator.Play("PlayerPoisoning");
+        //isPoisonRunning = true;
+        if (!isFuckingPoisoned) hpAnimator.Play("PlayerPoisoning");
         isPoisonRunning = true;
+        isFuckingPoisoned = true;
 
-        while(poisonQueue.Count > 0 && !isDead)
+        while (poisonQueue.Count > 0 && !isDead)
         {
             float duration = poisonQueue.Dequeue();
+            if (!isFuckingPoisoned) hpAnimator.Play("PlayerPoisoning");
+            isFuckingPoisoned = true;
             yield return StartCoroutine(poison(duration));
         }
 

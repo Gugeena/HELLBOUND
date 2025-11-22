@@ -33,13 +33,7 @@ public class Functions : MonoBehaviour
         if (alreadybeatthegame != 0)
         {
             RectTransform rectTransform = startGame.GetComponent<RectTransform>();
-            rectTransform.anchoredPosition = new Vector2(0, 28.7f);
-            rectTransform = discord.GetComponent<RectTransform>();
-            rectTransform.anchoredPosition = new Vector2(0, -229.78f);
-            rectTransform = quit.GetComponent<RectTransform>();
-            rectTransform.anchoredPosition = new Vector2(0, -296f);
-            rectTransform = settings.GetComponent<RectTransform>();
-            rectTransform.anchoredPosition = new Vector2(0, -163.78f);
+            rectTransform.anchoredPosition = new Vector2(0, -5f);
             tenth.SetActive(true);
         }
     }

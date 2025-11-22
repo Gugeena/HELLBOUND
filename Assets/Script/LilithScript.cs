@@ -388,6 +388,16 @@ public class LilithScript : MonoBehaviour
         }
         Vector3 scale = transform.localScale;
         shouldFlip = false;
+        if (direction == 1)
+        {
+            scale.y = -Mathf.Abs(scale.y);
+            scale.x = -Mathf.Abs(scale.x);
+        }
+        else
+        {
+            scale.y = Mathf.Abs(scale.y);
+            scale.x = Mathf.Abs(scale.x);
+        }
         animator.SetBool("shouldFLAME", true);
         Debug.Log("Playing animation: LilithStaffHeart(Red-Orange)");
         heartAnimator.Play("LilithStaffHeart(Red-Orange)");
@@ -789,6 +799,7 @@ public class LilithScript : MonoBehaviour
             Instantiate(bat, new Vector2(x1, 6.86f), Quaternion.identity);
             //Instantiate(bat, new Vector2(x2, 6.86f), Quaternion.identity);
         }
+        yield return new WaitForSeconds(0.5f);
         StopCoroutine(teleportCooldownBats());
         staffScale();
         canAttack = true;
