@@ -119,7 +119,9 @@ public class PauseScript : MonoBehaviour
         alreadyshown = true;
         kills.text = "" + kill;
         damage.text = "" + dmg;
-        time.text = "" + dro + "s";
+        float minutes = dro / 60;
+        float seconds = dro % 60;
+        time.text = minutes + ":" + seconds.ToString("00");
         yield return new WaitForSeconds(5f);
         Fadeout.SetActive(true);
         yield return new WaitForSeconds(0.95f);
