@@ -178,8 +178,11 @@ public class LilithScript : MonoBehaviour
         ShakeSelfScript shakeself = gameObject.GetComponent<ShakeSelfScript>();
         staffshake.Begin();
         shakeself.Begin();
-        Animator vinnigreteAnimator = GameObject.Find("Vinigreti(Lilith)").GetComponent<Animator>();
-        vinnigreteAnimator.Play("VinnigreteDissapearence");
+        if (PlayerMovement.isintenthlayer)
+        {
+            Animator vinnigreteAnimator = GameObject.Find("Vinigreti(Lilith)").GetComponent<Animator>();
+            vinnigreteAnimator.Play("VinnigreteDissapearence");
+        }
         Animator lilithhpanimator = GameObject.Find("HPFADER").GetComponent<Animator>();
         lilithhpanimator.Play("LilithHPFadeOut");
         audioSource.Stop();
