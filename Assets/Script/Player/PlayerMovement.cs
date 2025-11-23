@@ -168,7 +168,7 @@ public class PlayerMovement : MonoBehaviour
     public GameObject truespirit;
     public bool hasbeyonded;
 
-    public Animator canvasAnimator;
+    public Animator canvasAnimator, styleAnimator;
     public GameObject HPbar;
 
     public static bool shouldMakeSound = true;
@@ -271,6 +271,7 @@ public class PlayerMovement : MonoBehaviour
         autokillcollider.enabled = false;
         canvasAnimator = GameObject.Find("Canvas (1)").GetComponent<Animator>();
         hpAnimator = GameObject.Find("HP").GetComponent<Animator>();
+        styleAnimator = GameObject.Find("styleAnim").GetComponent<Animator>();
     }
 
     IEnumerator meteorSpawn()
@@ -471,7 +472,10 @@ public class PlayerMovement : MonoBehaviour
             //StartCoroutine(pickUpWeapon(3, "fists"));
         }
         */
-
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            StartCoroutine(enterAngelic(true));
+        }
         if (StyleManager.canAscend && !isAngelic && !isDead)
         {
             if (Input.GetKeyDown(KeyCode.E))
@@ -554,7 +558,7 @@ public class PlayerMovement : MonoBehaviour
 
         audioManager.instance.stopMusic();
 
-        if(isintenthlayer && Beyonder)
+        if (isintenthlayer && Beyonder)
         {
             autokillcollider.enabled = true;
             stopAttacking = true;
@@ -563,10 +567,10 @@ public class PlayerMovement : MonoBehaviour
             anim.enabled = false;
             Rigidbody2D[] rbs = GetComponentsInChildren<Rigidbody2D>();
             flashScript.CallRedFlash();
-            foreach(Animator animator in animatorofhands)
+            foreach (Animator animator in animatorofhands)
             {
                 animator.enabled = true;
-            }    
+            }
             foreach (Rigidbody2D rbb in rbs)
             {
                 rbb.bodyType = RigidbodyType2D.Dynamic;
@@ -606,6 +610,8 @@ public class PlayerMovement : MonoBehaviour
         {
             yield return new WaitForSeconds(0.5f);
             autokillcollider.enabled = true;
+            hpAnimator.Play("HPFadeOut");
+            styleAnimator.Play("FadeOutStyle");
             //yield return new WaitForSecondsRealtime(1f);
         }
         foreach (ShakeSelfScript s in bodyPartShakes)
@@ -650,22 +656,6 @@ public class PlayerMovement : MonoBehaviour
             }
         }
 
-        if (Beyonder)
-        {
-            yield return new WaitForSeconds(1.5f);
-            audioManager.instance.startEnd();
-            yield return new WaitForSeconds(6f);
-            canvasAnimator.Play("credits");
-            yield return new WaitForSeconds(22f);
-            //finalfadeOut.SetActive(true);
-            audioManager.instance.playAudio(finaldissapearence, 1, 1, transform, audioManager.instance.sfx);
-            yield return new WaitForSeconds(2f);
-            audioManager.instance.stopEnd();
-            yield return new WaitForSeconds(2f);
-            SceneManager.LoadScene(1);
-            //audioManager.instance.playAudio(finaldissapearence, 1, 1, transform, audioManager.instance.sfx);
-        }
-
         if (spawned.CompareTag("Player"))
         {
             PlayerMovement playerMovement = spawned.GetComponent<PlayerMovement>();
@@ -688,7 +678,9 @@ public class PlayerMovement : MonoBehaviour
             SceneManager.LoadScene(1);
             //audioManager.instance.playAudio(finaldissapearence, 1, 1, transform, audioManager.instance.sfx);
         }
-        else
+        else invincible = false;
+
+        if (isintenthlayer)
         {
             invincible = false;
             if (isintenthlayer)
@@ -699,6 +691,7 @@ public class PlayerMovement : MonoBehaviour
             }
             Destroy(gameObject);
         }
+
     }
 
     public void unreadyAngelic()

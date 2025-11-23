@@ -98,7 +98,8 @@ public class EnemySkyCandleScript : MonoBehaviour
         rb.bodyType = RigidbodyType2D.Kinematic;
         originalYPosition = transform.position.y;
 
-        randomizedx = UnityEngine.Random.Range(1f, 5f);
+        int randomizedxx = UnityEngine.Random.Range(0, 2);
+        randomizedx = randomizedxx == 0 ? UnityEngine.Random.Range(1f, 5f) : UnityEngine.Random.Range(-1f, -5f);
         randomizedy = UnityEngine.Random.Range(3f, 5f);
 
         canMove = false;
