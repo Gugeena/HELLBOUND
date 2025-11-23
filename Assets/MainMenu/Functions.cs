@@ -30,11 +30,15 @@ public class Functions : MonoBehaviour
     public void loadsaved()
     {
         alreadybeatthegame = PlayerPrefs.GetInt("alreadybeatthegame", 0);
+        RectTransform rectTransform = startGame.GetComponent<RectTransform>();
         if (alreadybeatthegame != 0)
         {
-            RectTransform rectTransform = startGame.GetComponent<RectTransform>();
             rectTransform.anchoredPosition = new Vector2(0, -5f);
             tenth.SetActive(true);
+        }
+        else
+        {
+            rectTransform.anchoredPosition = new Vector2(0, -72f);
         }
     }
 

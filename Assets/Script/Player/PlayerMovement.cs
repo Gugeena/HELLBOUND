@@ -463,14 +463,6 @@ public class PlayerMovement : MonoBehaviour
             if (currentWeapon == 4) StartCoroutine(spearspecialAttack());
         }
 
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            //StartCoroutine(deathCRT());
-            //StartCoroutine(gadasvla(5));
-            StartCoroutine(enterAngelic(true));
-            //StartCoroutine(pickUpWeapon(3, "fists"));
-        }
-
         /*
         if (Input.GetKeyDown(KeyCode.F))
         {
