@@ -39,7 +39,7 @@ public class FireBallScript : MonoBehaviour
 
         if (collision.gameObject.layer == 3 && collision.gameObject.name == "Ground" && isProjectile)
         {
-            Instantiate(deathParticles, new Vector2(this.transform.position.x, this.transform.position.y - 0.25f), Quaternion.identity);
+            Instantiate(deathParticles, new Vector2(this.transform.position.x, this.transform.position.y - 0.5f), deathParticles.transform.rotation);
             //Instantiate(firePillar, new Vector2(this.transform.position.x, 1f), Quaternion.identity);
             Destroy(gameObject);
         }

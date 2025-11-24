@@ -18,9 +18,11 @@ public class Functions : MonoBehaviour
     public int alreadybeatthegame = 0;
     public Button startGame, discord, quit, settings, tenthbutton;
     public GameObject tenth;
+    public GameObject eventsystem, glow;
 
     void Start()
     {
+        AudioListener.pause = false;
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
         loadAudioSettings();
@@ -69,11 +71,23 @@ public class Functions : MonoBehaviour
 
     private IEnumerator StartGame(int scene)
     {
-        EventSystem.current.SetSelectedGameObject(null);
+        //EventSystem.current.SetSelectedGameObject(null);
         FadeOut.SetActive(true);
+        UnInteract();
         yield return new WaitForSeconds(0.95f);
         loadScene.SceneToLoad = scene;
         SceneManager.LoadScene(2);
+    }
+
+    void UnInteract()
+    {
+        Destroy(eventsystem);
+        Destroy(glow);
+        startGame.interactable = false;
+        quit.interactable = false;
+        settings.interactable = false;
+        tenthbutton.interactable = false;
+        discord.interactable = false;
     }
 
     public void SettingsRollin()

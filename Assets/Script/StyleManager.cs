@@ -118,7 +118,6 @@ public class StyleManager : MonoBehaviour
             yield return new WaitForSeconds(1f);
             Ascend.SetActive(false);
         }
-        print("shouldturnoff: " + shouldTurnOff);
         if(shouldTurnOff)
         {
             canAscend = false;

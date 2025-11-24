@@ -63,7 +63,7 @@ public class CrystalScript : MonoBehaviour
           collision.gameObject.tag == "FireballP" ||
           collision.gameObject.tag == "mfHitbox")
         {
-            print("hit: " + collision.gameObject.name);
+
             return;
         }
 
@@ -117,7 +117,6 @@ public class CrystalScript : MonoBehaviour
 
     public IEnumerator deleter(GameObject hitbox)
     {
-        print("entered deleter");
         yield return new WaitForSeconds(3.8f);
         Destroy(hitbox);
         Destroy(gameObject);

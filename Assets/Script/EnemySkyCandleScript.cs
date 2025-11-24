@@ -81,9 +81,7 @@ public class EnemySkyCandleScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        print("about to find Player");
         player = GameObject.FindGameObjectWithTag("Player").transform;
-        print("about to find PlayerScript");
         playerScript = player.GetComponent<PlayerMovement>();
         LPortal = GameObject.Find("LLocation (1)").transform;
         RPortal = GameObject.Find("RLocation (1)").transform;
@@ -167,7 +165,6 @@ public class EnemySkyCandleScript : MonoBehaviour
                 }
                 else if (leftPortalpath <= righttPortalpath)
                 {
-                    print("left portal path taken");
                     Vector2 targetposition = new Vector2(LPortal.position.x, originalYPosition);
                     float currentY = transform.position.y;
                     float TargetY = Mathf.MoveTowards(currentY, originalYPosition, returnToYSpeed * Time.deltaTime);
@@ -186,7 +183,6 @@ public class EnemySkyCandleScript : MonoBehaviour
                 }
                 else
                 {
-                    print("right portal path taken");
                     Vector2 targetposition = new Vector2(RPortal.position.x, originalYPosition);
                     float currentY = transform.position.y;
                     float TargetY = Mathf.MoveTowards(currentY, originalYPosition, returnToYSpeed * Time.deltaTime);
@@ -328,7 +324,6 @@ public class EnemySkyCandleScript : MonoBehaviour
             if (teleportCount > 0) StyleManager.instance.growStyle(2 * 1 + teleportCount);
             else StyleManager.instance.growStyle(1 * 1 + teleportCount);
         }
-        print("damaged");
     }
 
     public int RetrieveTeleportCount(Collider2D collision)
@@ -359,7 +354,6 @@ public class EnemySkyCandleScript : MonoBehaviour
         teleportCount = RetrieveTeleportCount(collision);
         if (collision.gameObject.tag == "meleehitbox")
         {
-            print("died from meleehitbox" + collision.gameObject.name);
             damage(1);
         }
 
@@ -444,7 +438,6 @@ public class EnemySkyCandleScript : MonoBehaviour
                 //print(dist);
                 if (Directpath < 8f)
                 {
-                    print("inRange");
                     if (playerScript.hp > 0)
                     {
                         if (!playerScript.isAngelicGetter()) playerScript.hp += healamount;
@@ -454,7 +447,6 @@ public class EnemySkyCandleScript : MonoBehaviour
             }
             else if (teleportCount > 0)
             {
-                print("isntRange");
                 if (playerScript.hp > 0) playerScript.hp += healamount * 0.7f;
             }
             Instantiate(particles, transform.position, Quaternion.identity);

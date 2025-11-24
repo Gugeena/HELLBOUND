@@ -13,7 +13,7 @@ public class EnemyChargerScript : MonoBehaviour
     public float detectiondistance = 8f;
     public Animator animator;
     public bool canMove = true;
-    Rigidbody2D rb;
+    Rigidbody2D rbprint;
     float hp = 2f;
     public GameObject particles;
 
@@ -32,7 +32,7 @@ public class EnemyChargerScript : MonoBehaviour
     public Transform LPortal;
     public Transform RPortal;
 
-
+    public Rigidbody2D rb;
 
     float distance;
 
@@ -290,7 +290,7 @@ public class EnemyChargerScript : MonoBehaviour
             if(bpscript != null)bpscript.disappear();
             BoxCollider2D bc = rbb.gameObject.GetComponent<BoxCollider2D>();
             if (bc != null) bc.isTrigger = false;
-            GameObject bodypart = rb.gameObject;
+            GameObject bodypart = rbb.gameObject;
         }
         if (playerScript.shouldGainStyle)
         {
@@ -310,7 +310,6 @@ public class EnemyChargerScript : MonoBehaviour
                 //print(dist);
                 if (dist < 4f)
                 {
-                    print("inRange");
                     if (playerScript.hp > 0)
                     {
                         if (!playerScript.isAngelicGetter()) playerScript.hp += healamount;
@@ -320,7 +319,6 @@ public class EnemyChargerScript : MonoBehaviour
             }
             else if (teleportCount > 0)
             {
-                print("isntRange");
                 if (playerScript.hp > 0) playerScript.hp += healamount * 0.7f;
             }
             Instantiate(particles, transform.position, Quaternion.identity);
@@ -388,7 +386,6 @@ public class EnemyChargerScript : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         teleportCount = RetrieveTeleportCount(collision);
-        print("died from " + collision.gameObject.name + "; " + collision.gameObject.tag);
         if (collision.gameObject.tag == "meleehitbox")
         {
             damage(1);
@@ -412,7 +409,6 @@ public class EnemyChargerScript : MonoBehaviour
     {
         if (collision.gameObject.tag == "autodamaylevebeli")
         {
-            print("died from: instakillbox");
             StartCoroutine(death());
         }
     }
@@ -431,7 +427,6 @@ public class EnemyChargerScript : MonoBehaviour
 
         if (collision.gameObject.CompareTag("Fireball"))
         {
-            print("died from: " + collision.gameObject.name);
             StartCoroutine(death());
         }
 

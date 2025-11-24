@@ -8378,12 +8378,15 @@ MonoBehaviour:
   truespirit: {fileID: 8706924981857714343, guid: 85160c33a265b1c4297c48472977f09c, type: 3}
   hasbeyonded: 0
   canvasAnimator: {fileID: 0}
+  styleAnimator: {fileID: 0}
   HPbar: {fileID: 0}
   undachaijvayleoagarshemidzlia: 0
   isinbubble: 0
   hpAnimator: {fileID: 0}
   wasPoisoned: 0
   slash: {fileID: 8300000, guid: 8b9044592f5121a4d8cc2d1c97be3bfe, type: 3}
+  isFuckingPoisoned: 0
+  animatorofhands: []
 --- !u!50 &4171776631434826395
 Rigidbody2D:
   serializedVersion: 5
@@ -8521,7 +8524,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0.040925026, y: -1.0424643}
+  m_Offset: {x: 0.04188251, y: -1.032316}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -8531,7 +8534,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 0.69477654, y: 0.13569069}
+  m_Size: {x: 0.6928616, y: 0.1153948}
   m_EdgeRadius: 0
 --- !u!114 &2170593106054981859
 MonoBehaviour:

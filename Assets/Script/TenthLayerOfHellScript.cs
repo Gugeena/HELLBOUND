@@ -19,6 +19,10 @@ public class TenthLayerOfHellScript : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        alreadyin = false;
+        last = -1;
+        stoned = false;
+        shouldturnoffforawhile = false;
         //StartCoroutine(EventManager());
     }
 
@@ -27,6 +31,9 @@ public class TenthLayerOfHellScript : MonoBehaviour
         if (TLOHanim == null) TLOHanim = GetComponent<Animator>();
         if (animations == null) animations = TLOHanim.runtimeAnimatorController.animationClips;
         alreadyin = false;
+        last = -1;
+        stoned = false;
+        shouldturnoffforawhile = false;
         StartCoroutine(EventManager()); 
     }
 
@@ -43,7 +50,6 @@ public class TenthLayerOfHellScript : MonoBehaviour
 
     public IEnumerator EventManager()
     {
-        print(LilithScript.bossfightstarted + " fight started");
         while (true)
         {
             if (!alreadyin && !PlayerMovement.hasdiedforeverybody && !shouldturnoffforawhile)

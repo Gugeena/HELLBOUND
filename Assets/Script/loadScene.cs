@@ -8,7 +8,6 @@ public class loadScene : MonoBehaviour
     public static int SceneToLoad;
     void Start()
     {
-        print(SceneToLoad);
         StartCoroutine(load());
     }
 

@@ -128,8 +128,6 @@ public class spearScript : MonoBehaviour
             //StartCoroutine(Bouttaxplode());
         }
 
-        print("collided with: " + collision.gameObject.tag + ", name of: " + collision.gameObject.name);
-        //rb.velocity = Vector2.zero;
         //shouldReturn = true;
     }
 

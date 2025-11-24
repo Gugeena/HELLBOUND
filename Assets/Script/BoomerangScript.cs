@@ -14,6 +14,8 @@ public class BoomerangScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(PauseScript.Paused) return;
+
         Vector3 mousePosition = Input.mousePosition;
         mousePosition = Camera.main.ScreenToWorldPoint(mousePosition);
 

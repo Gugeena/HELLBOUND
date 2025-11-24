@@ -78,16 +78,23 @@ public class LilithScript : MonoBehaviour
     public AudioClip lilithDeathSound;
 
     public static event Action lilithDeathEvent;
-    public static bool bossfightstarted;
+    public static bool bossfightstarted = false;
 
     private bool invincible = false;
 
     AudioSource hailmarysound;
 
+    public SpriteRenderer staffSpriteRenderer;
+
+    Vector3 scale = new Vector3 (1, 1, 1);
+
     void Start()
     {
+        scale = transform.localScale;
         bossfightstarted = true;
         StartCoroutine(waiter());
+        var temp = staffSpriteRenderer.color;
+        staffSpriteRenderer.color = staffSpriteRenderer.color;
         /*
         canTeleport = true;
         if (!hasBatted) StartCoroutine(BatAttack());
@@ -106,7 +113,7 @@ public class LilithScript : MonoBehaviour
         hasAlreadystarted = true;
         player = GameObject.Find("Player(Clone)").transform;
         cum = GetComponent<camShakerScript>();
-
+        cum.Stop();
         spawners[0] = GameObject.Find("SCS").transform;
         spawners[1] = GameObject.Find("SCS1").transform;
         spawners[4] = GameObject.Find("C").transform;
@@ -132,6 +139,14 @@ public class LilithScript : MonoBehaviour
         hpslider = GameObject.Find("LilithHP").GetComponent<UnityEngine.UI.Slider>();
         heartAnimator.Rebind();
         cantlosehp = false;
+        if (heartAnimator == null)
+            Debug.LogError("No Animator component!");
+        else if (heartAnimator.runtimeAnimatorController == null)
+            Debug.LogError("No Animator Controller assigned!");
+        else if (!heartAnimator.enabled)
+            Debug.LogWarning("Animator is disabled!");
+        else
+            Debug.Log("Animator is set up correctly");
         yield return new WaitForSeconds(1f);
         candles[0] = GameObject.Find("Candle");
         candles[1] = GameObject.Find("Candle1");
@@ -207,8 +222,8 @@ public class LilithScript : MonoBehaviour
 
     void handleflip()
     {
-        Vector3 scale = transform.localScale;
-        Vector3 controllerScale = staffController.transform.localScale;
+        if (!shouldFlip) return;
+        scale = transform.localScale;
         if (player.transform.position.x > this.transform.position.x)
         {
             scale.x = Mathf.Abs(scale.x);
@@ -269,10 +284,6 @@ public class LilithScript : MonoBehaviour
             //angle += 5f;
             //angle += 60f;
         }
-        else
-        {
-            print("TRIIIIPLE GGG");
-        }
 
         staffController.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
         staffController.transform.localScale = scale;
@@ -281,10 +292,9 @@ public class LilithScript : MonoBehaviour
 
     IEnumerator HandleTeleport()
     {
-        if (isDead) yield break;
+        if (isDead || !canTeleport) yield break;
         //staffScale();
         StopCoroutine(teleportCooldownBats());
-        if (!canTeleport) yield break;
         canTeleport = false;
         shouldFlip = false;
         if (shouldPURPLE) animator.SetBool("shouldPURPLE", true);
@@ -402,8 +412,8 @@ public class LilithScript : MonoBehaviour
             scale.x = Mathf.Abs(scale.x);
         }
         animator.SetBool("shouldFLAME", true);
-        Debug.Log("Playing animation: LilithStaffHeart(Red-Orange)");
-        heartAnimator.Play("LilithStaffHeart(Red-Orange)");
+        int stateHash = Animator.StringToHash("LilithStaffHeartRedToOrange");
+        heartAnimator.Play(stateHash, 0);
         yield return new WaitForSeconds(1.4f);
         if (PlayerMovement.shouldMakeSound) audioSource.Play();
         animator.SetBool("shouldFLAME", false);
@@ -412,6 +422,7 @@ public class LilithScript : MonoBehaviour
         cum.time = 3f;
         StartCoroutine(cum.shake());
         staffScale();
+        shouldFlip = false;
         if (direction == 1)
         {
             scale.y = -Mathf.Abs(scale.y);
@@ -424,7 +435,8 @@ public class LilithScript : MonoBehaviour
         }
         if (direction == -1) flameanimator.Play("FlamesController-LeftFlame");
         else flameanimator.Play("FlamesController-RightFlame");
-        heartAnimator.Play("LilithStaffHeart(Orange-Red)");
+        stateHash = Animator.StringToHash("LilithStaffHeartOrangeToRed");
+        heartAnimator.Play(stateHash, 0);
         yield return new WaitForSeconds(4f);
         shouldFlip = true;
         StartCoroutine(attackCooldown(0.4f, 0));
@@ -439,8 +451,8 @@ public class LilithScript : MonoBehaviour
 
     public IEnumerator shardAttack()
     {
-        Debug.Log("Playing animation: LilithStaffHeart(Red-Green)");
-        heartAnimator.Play("LilithStaffHeart(Red-Green)");
+        int stateHash = Animator.StringToHash("LilithStaffHeartRedToGreen");
+        heartAnimator.Play(stateHash, 0);
         shouldFlip = true;
         float duration = 1f;
         float elapsed = 0f;
@@ -473,10 +485,6 @@ public class LilithScript : MonoBehaviour
                 //angle += 5f;
                 //angle += 60f;
             }
-            else
-            {
-                print("TRIIIIPLE GGG");
-            }
 
             staffController.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
             staffController.transform.localScale = scale;
@@ -489,9 +497,10 @@ public class LilithScript : MonoBehaviour
             if (isDead) yield break;
             yield return null;
         }
+        stateHash = Animator.StringToHash("LilithStaffHeartGreenToRed");
+        heartAnimator.Play(stateHash, 0);
+        //yield return new WaitForSeconds(0.05f);
         shouldFlip = false;
-        heartAnimator.Play("LilithStaffHeart(Green-Red)");
-        yield return new WaitForSeconds(0.05f);
         GameObject particles = Instantiate(shardSpawnParticles, shardSpawner.transform.position, Quaternion.identity);
         particles.transform.rotation = Quaternion.Euler(0, 0, angle);
         Vector2 direction = Vector2.zero;
@@ -519,7 +528,8 @@ public class LilithScript : MonoBehaviour
 
     public IEnumerator fireBallAttack()
     {
-        heartAnimator.Play("LilithStaffHeart(Red-Purple)");
+        int stateHash = Animator.StringToHash("LilithStaffHeartRedToPurple");
+        heartAnimator.Play(stateHash, 0);
         shouldFlip = true;
         float duration = 1f;
         float elapsed = 0f;
@@ -552,10 +562,7 @@ public class LilithScript : MonoBehaviour
                 //angle += 5f;
                 //angle += 60f;
             }
-            else
-            {
-                print("TRIIIIPLE GGG");
-            }
+
             if (isDead) yield break;
             staffController.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
             staffController.transform.localScale = scale;
@@ -570,7 +577,8 @@ public class LilithScript : MonoBehaviour
         }
         shouldFlip = false;
         //if (isToTheRight) staffController.transform.localScale = new Vector3(-3.835358f, -3.835358f, 0);
-        heartAnimator.Play("LilithStaffHeart(Purple-Red)");
+        stateHash = Animator.StringToHash("LilithStaffHeartPurpleToRed");
+        heartAnimator.Play(stateHash, 0);
         //yield return new WaitForSeconds(0.02f);
         GameObject particles = Instantiate(fireBallSpawnParticles, shardSpawner.transform.position, Quaternion.identity);
         particles.transform.rotation = Quaternion.Euler(0, 0, angle);
@@ -630,25 +638,28 @@ public class LilithScript : MonoBehaviour
         shouldFlip = false;
         float elapsed = 0f;
         //target.localScale = new Vector3(3.835358f, 3.835358f, 0);
-        Quaternion goal = transform.localScale.x < 0 ? Quaternion.Euler(0, 0, 180) : Quaternion.identity;
+        bool wasFlippedleft = transform.localScale.x < 0f;
         //Quaternion goal = (angle >= -60 && angle <= 60) ? Quaternion.identity : Quaternion.Euler(0, 0, 180);
         //Quaternion goal = Quaternion.identity;
         //Quaternion goal = center.x > this.transform.position.x ? Quaternion.identity : Quaternion.Euler(0, 0, 180);
         //Quaternion goal = player.transform.position.x > transform.position.x ? Quaternion.identity : Quaternion.Euler(0, 0, 180);
+        Quaternion current1 = staffController.transform.rotation;
         while (elapsed < duration)
         {
             //bool still = this.transform.position.x > center.x && this.transform.position.x > player.transform.position.x;
             //if (still) goal = goal;
             //else goal = Quaternion.identity;
+            shouldFlip = false;
+            Quaternion goal = transform.localScale.x < 0 ? Quaternion.Euler(0, 0, 180) : Quaternion.identity;
             float t = elapsed / duration;
-            target.rotation = Quaternion.Slerp(current, goal, t);
+            target.rotation = Quaternion.Slerp(current1, goal, t);
             elapsed += Time.deltaTime;
             if (isDead) yield break;
             yield return null;
         }
-        target.rotation = goal;
-        shouldFlip = true;
-        staffScale();
+        Quaternion finalgoal = transform.localScale.x < 0 ? Quaternion.Euler(0, 0, 180) : Quaternion.identity;
+        target.rotation = finalgoal;
+        //staffScale();
         //target.localScale = new Vector3(3.835358f, 3.835358f, 0);
     }
 
@@ -659,7 +670,8 @@ public class LilithScript : MonoBehaviour
         staffScale();
         animator.SetBool("shouldSUMMON", true);
         if (isDead) yield break;
-        heartAnimator.Play("LilithStaffHeart(Red-Yellow)");
+        int stateHash = Animator.StringToHash("LilithStaffHeartRedToYellow");
+        heartAnimator.Play(stateHash, 0);
         yield return new WaitForSeconds(1f);
         if (isDead) yield break;
         animator.SetBool("shouldSUMMON", false);
@@ -716,9 +728,9 @@ public class LilithScript : MonoBehaviour
         }
         staffScale();
         canSummon = false;
-        heartAnimator.Play("LilithStaffHeart(Yellow-Red)");
+        stateHash = Animator.StringToHash("LilithStaffHeartYellowToRed");
+        heartAnimator.Play(stateHash, 0);
         StartCoroutine(summonCooldown(8f));
-        print("bouta start attack cooldown");
         StartCoroutine(attackCooldown(3f, 3));
         yield break;
     }
@@ -726,7 +738,6 @@ public class LilithScript : MonoBehaviour
     IEnumerator attackCooldown(float cooldown, int attack) // 0 - Bats || 1 - Posion || 2 - Fireball || 3 - Summon || 4 - FirePillars
     {
         if (!isDoneWithBats) yield break;
-        print("bouta wait for the cooldown");
         //if (attack == 0 || attack == 2) heartAnimator.Play("LilithStaffHeart(Purple-Red)");
         // else if (attack == 3) heartAnimator.Play("LilithStaffHeart(Yellow-Red)");
         //else if (attack == 1) heartAnimator.Play("LilithStaffHeart(Green-Red)");
@@ -735,12 +746,14 @@ public class LilithScript : MonoBehaviour
         StartCoroutine(HandleTeleport());
         yield return new WaitForSeconds(0.2f);
         canAttack = true;
+        shouldFlip = true;
         attackCount++;
         yield break;
     }
 
     IEnumerator teleportCooldownBats()
     {
+        yield return new WaitForSeconds(0.5f);
         for (int i = 0; i < 4; i++)
         {
             canTeleport = false;
@@ -758,39 +771,39 @@ public class LilithScript : MonoBehaviour
         TenthLayerOfHellScript.shouldturnoffforawhile = true;
         isDoneWithBats = false;
         hasBatted = false;
+        canTeleport = false;
         yield return null;
-        heartAnimator.Play("LilithStaffHeart(Red-Purple)");
+        shouldFlip = false;
+        int stateHash = Animator.StringToHash("LilithStaffHeartRedToPurple");
+        heartAnimator.Play(stateHash, 0);
         //yield return new WaitForSeconds(1f);
         //animator.SetBool("shouldBATS", true);
         //hasBatted = true;
-        canTeleport = true;
-        animator.Play("LillithBats");
+        StartCoroutine(teleportCooldownBats());
+        animator.Play("LilithBats");
         //audioManager.instance.playAudio(hailMary, 1, 1, transform, audioManager.instance.sfx);
         animator.SetBool("shouldBATS", true);
-        yield return new WaitForSeconds(0.15f);
+        yield return new WaitForSeconds(0.8f);
 
         if (PlayerMovement.shouldMakeSound) hailmarysound = audioManager.instance.playAudio(hailMary, 1, 1, transform, audioManager.instance.sfx);
 
         StartCoroutine(batHailMary());
-        cum.amplitude = 0.13f;
+        cum.amplitude = 1.3f;
         cum.frequency = 0.2f;
-        cum.time = 17f;
+        cum.time = 13f;
         StartCoroutine(cum.shake());
         yield return new WaitForSeconds(0.8f);
-        canTeleport = true;
         hasBatted = true;
-        canTeleport = true;
+        yield return new WaitForSeconds(1f);
+        animator.SetBool("shouldBATS", false);
         shouldFlip = true;
-        yield return new WaitForSeconds(0.1f);
-        StartCoroutine(teleportCooldownBats());
-        yield return new WaitForSeconds(0.6f);
+        //canTeleport = true;
         //animator.SetBool("shouldBATS", false);
         yield break;
     }
 
     IEnumerator batHailMary()
     {
-        animator.SetBool("shouldBATS", false);
         Vector3 scale = staffController.transform.localScale;
         scale = new Vector3(3.835358f, 3.835358f, 0);
         for (int i = 0; i < 200; i++)
@@ -836,7 +849,14 @@ public class LilithScript : MonoBehaviour
         //animator.Play("LilithHurt");
         if (invincible) yield break;
         invincible = true;
+        Color renderercolor;
+        renderercolor = staffSpriteRenderer.color;
         spriteFlash.callFlash();
+        heartAnimator.SetLayerWeight(0, 0f);
+        staffSpriteRenderer.color = Color.red;
+        yield return new WaitForSeconds(0.05f);
+        staffSpriteRenderer.color = renderercolor;
+        heartAnimator.SetLayerWeight(0, 1f);
         hp -= damageCount + teleportCount;
         yield return new WaitForSeconds(timer);
         invincible = false;
@@ -873,8 +893,11 @@ public class LilithScript : MonoBehaviour
             if (collision.gameObject.name == "meleehitbox") StartCoroutine(damage(RetrieveTeleportCount(collision), 0.2f, timer));
             else
             {
+                float damagexz;
                 if (Vector2.Distance(this.transform.position, player.transform.position) > 0.5f) timer = 0.5f;
-                StartCoroutine(damage(RetrieveTeleportCount(collision), 1f, timer));
+                if (collision.gameObject.name == "motherfuckr(Clone)") damagexz = 0.5f;
+                else damagexz = 1f;
+                StartCoroutine(damage(RetrieveTeleportCount(collision), damagexz, timer));
             }
         }
     }

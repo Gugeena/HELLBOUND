@@ -28,8 +28,7 @@ public class HoverShitScript : MonoBehaviour, IPointerEnterHandler, IPointerExit
     public void OnButtonClick()
     {
         StartCoroutine(buttonclicker());
-        if (!isHovering)
-            Glow.SetActive(false);
+        Glow.SetActive(false);
     }
 
     public IEnumerator buttonclicker()

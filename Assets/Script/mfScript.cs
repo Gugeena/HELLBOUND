@@ -48,11 +48,6 @@ public class mfScript : MonoBehaviour
 
     private void Update()
     {
-        if(transform.position.x >= startPos.x)
-        {
-            print("true");
-        }
-
         if (playerTransform == null)
         {
             Destroy(gameObject);
@@ -120,7 +115,6 @@ public class mfScript : MonoBehaviour
 
     public void OnDestroy()
     {
-        print("getting destroyed");
         camShakerScript.Stop();
     }
 

@@ -28,6 +28,8 @@ public class SpawnerScript : MonoBehaviour
 
     void Start()
     {
+        shouldSpawn = true;
+        shouldChangeBack = false;
         Player = GameObject.FindGameObjectWithTag("Player").transform;
         cooldownTimer = 1f;
         spawningcount = 1;

@@ -98,7 +98,6 @@ public class BoomerangWeaponScript : MonoBehaviour
             return;
         }
 
-        print("collided with: " + collision.gameObject.tag + ", name of: " + collision.gameObject.name);
         rb.linearVelocity = Vector2.zero;
         shouldReturn = true;
     }

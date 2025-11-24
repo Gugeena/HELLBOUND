@@ -132,6 +132,7 @@ public class LilithMeteorScript : MonoBehaviour
         }
         Destroy(lilithspawninglocation.gameObject);
         Destroy(target);
+        cum.Stop();
         Destroy(gameObject);
     }
 }

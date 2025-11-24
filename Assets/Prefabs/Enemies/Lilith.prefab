@@ -763,6 +763,7 @@ MonoBehaviour:
   - {fileID: 730188837101944897}
   - {fileID: 3688303591140071074}
   lilithDeathSound: {fileID: 8300000, guid: 70b2aeb1a37032948b46e610d41351a5, type: 3}
+  staffSpriteRenderer: {fileID: 4725189739158240430}
 --- !u!95 &7610987853696653380
 Animator:
   serializedVersion: 7
@@ -2349,7 +2350,7 @@ Animator:
   m_Controller: {fileID: 9100000, guid: d237dcf8d6f81854681065f4724360fc, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
-  m_ApplyRootMotion: 0
+  m_ApplyRootMotion: 1
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
   m_AnimatePhysics: 0
@@ -2483,6 +2484,6 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0.8316123, y: 0.0014948874}
-  m_Size: {x: 6.426618, y: 9.709186}
+  m_Offset: {x: 0.8316123, y: 0.01168118}
+  m_Size: {x: 6.426618, y: 9.689091}
   m_Direction: 0

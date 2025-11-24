@@ -73,18 +73,14 @@ public class KeyBindManagerScript : MonoBehaviour
 
     private void DetectKeyInput()
     {
-        print("trying to detect input");
         if (Input.anyKeyDown)
         {
-            print("detected some kind of input");
             foreach (KeyCode key in System.Enum.GetValues(typeof(KeyCode)))
             {
                 if (Input.GetKeyDown(key))
                 {
-                    print("detected input: " + key);
                     if (!Input.GetKeyDown(KeyCode.Escape) && !Input.GetKeyDown(KeyCode.Backspace))
                     {
-                        print("got inside negative if-s");
                         if (IsKeyAlreadyAssigned(key))
                         {
                             /*
@@ -130,7 +126,6 @@ public class KeyBindManagerScript : MonoBehaviour
                                 inputfieldDrop.text = string.Empty;
                                 DropKey = KeyCode.None;
                             }
-                            print("returned");
                             return;
                         }
                         if (inputfieldDash.isFocused)
@@ -190,7 +185,6 @@ public class KeyBindManagerScript : MonoBehaviour
         inputfieldDash.text = keyDisplay;
         AdjustInputFieldWidth(inputfieldDash, keyDisplay);
         SaveKeyBindings();
-        Debug.Log("Dash Key Set: " + dashKey);
     }
 
     public void setDropKey(KeyCode key)
@@ -209,7 +203,6 @@ public class KeyBindManagerScript : MonoBehaviour
         inputfieldAttack.text = keyDisplay;
         AdjustInputFieldWidth(inputfieldAttack, keyDisplay);
         SaveKeyBindings();
-        Debug.Log("Attack Key Set: " + attackKey);
     }
 
     private void SetJumpKey(KeyCode key)
@@ -219,7 +212,6 @@ public class KeyBindManagerScript : MonoBehaviour
         inputfieldJump.text = keyDisplay;
         AdjustInputFieldWidth(inputfieldJump, keyDisplay);
         SaveKeyBindings();
-        Debug.Log("Jump Key Set: " + jumpKey);
     }
 
     private void SetHeavyKey(KeyCode key)
@@ -229,7 +221,6 @@ public class KeyBindManagerScript : MonoBehaviour
         inputfieldHeavy.text = keyDisplay;
         AdjustInputFieldWidth(inputfieldHeavy, keyDisplay);
         SaveKeyBindings();
-        Debug.Log("HeavyAttack Key Set: " + jumpKey);
     }
 
     private void SaveKeyBindings()
@@ -240,7 +231,6 @@ public class KeyBindManagerScript : MonoBehaviour
         PlayerPrefs.SetInt("HeavyKey", (int)heavyKey);
         PlayerPrefs.SetInt("DropKey", (int)DropKey);
         PlayerPrefs.Save();
-        Debug.Log("Key bindings saved.");
     }
 
     private void LoadKeyBindings()
@@ -268,8 +258,6 @@ public class KeyBindManagerScript : MonoBehaviour
         AdjustInputFieldWidth(inputfieldJump, jumpDisplay);
         AdjustInputFieldWidth(inputfieldHeavy, HeavyDisplay);
         AdjustInputFieldWidth(inputfieldDrop, DropDisplay);
-
-        Debug.Log("Key bindings loaded: Dash[" + dashKey + "] Attack[" + attackKey + "] Jump[" + jumpKey + "] + [" + heavyKey + "]");
     }
 
     private bool IsKeyAlreadyAssigned(KeyCode key)

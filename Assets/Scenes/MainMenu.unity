@@ -8706,8 +8706,10 @@ MonoBehaviour:
   discord: {fileID: 1348776691}
   quit: {fileID: 1271285624}
   settings: {fileID: 2051589576}
-  tenthbutton: {fileID: 0}
+  tenthbutton: {fileID: 1944512386}
   tenth: {fileID: 1944512382}
+  eventsystem: {fileID: 2064691277}
+  glow: {fileID: 189006636}
 --- !u!114 &1209260350
 MonoBehaviour:
   m_ObjectHideFlags: 0

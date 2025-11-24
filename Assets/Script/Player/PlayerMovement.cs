@@ -207,18 +207,8 @@ public class PlayerMovement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        canPause = true;
-        hasdiedforeverybody = false;
-        canLose = true;
-
         findeverythingatspawn();
-
-        Time.timeScale = 1;
-        direction = 1;
-        canPunch = true;
-
-        hp = 150f;
-        hpslider.value = 150f;
+        variablesetting();
 
         if (!isAngelic) StartCoroutine(pickUpWeapon(0, "fists"));
         else LilithScript.lilithDeathEvent += EnterFinalAscension;
@@ -228,16 +218,38 @@ public class PlayerMovement : MonoBehaviour
         rb.excludeLayers = startLM;
 
         rb.sleepMode = RigidbodySleepMode2D.NeverSleep;
+    }
 
+    void variablesetting()
+    {
+        LilithScript.bossfightstarted = false;
+        Time.timeScale = 1;
+        direction = 1;
+        hp = 150f;
+        hpslider.value = 150f;
         canBePoisoned = true;
+        canPunch = true;
+        canLose = true;
+        shouldEnd = false;
+        shouldMakeSound = true;
+        shouldmakeAudio = true;
+        stopAttacking = false;
+        hasdiedforeverybody = false;
+        if (!isAngelic) canPause = true;
+        else StartCoroutine(canPauseEnabler());
+        String scenename = SceneManager.GetActiveScene().name;
+        if (scenename == "TenthLayerOfHell") isintenthlayer = true;
+        else isintenthlayer = false;
+    }
+
+    public IEnumerator canPauseEnabler()
+    {
+        yield return new WaitForSeconds(0.6f);
+        canPause = true;
     }
 
     void findeverythingatspawn()
     {
-        String scenename = SceneManager.GetActiveScene().name;
-        if (scenename == "TenthLayerOfHell") isintenthlayer = true;
-        else isintenthlayer = false;
-
         Animator[] animators = GameObject.FindObjectsOfType<Animator>(true);
         foreach (Animator animator in animators)
         {
@@ -301,24 +313,9 @@ public class PlayerMovement : MonoBehaviour
             LilithScript.lilithDeathEvent += EnterFinalAscension;
         }
 
-        if (Input.GetKeyDown(KeyCode.F1))
-        {
-            Debug.Log("=== PLAYER STATE DEBUG ===");
-            Debug.Log("canMove: " + canMove);
-            Debug.Log("PauseScript.Paused: " + PauseScript.Paused);
-            Debug.Log("isDead: " + isDead);
-            Debug.Log("angelTransistion: " + angelTransistion);
-            Debug.Log("RB bodyType: " + rb.bodyType);
-            Debug.Log("RB constraints: " + rb.constraints);
-            Debug.Log("RB velocity: " + rb.linearVelocity);
-            Debug.Log("RB gravityScale: " + rb.gravityScale);
-            Debug.Log("Position: " + transform.position);
-            Debug.Log("========================");
-        }
-
-        if (Input.GetKeyDown(KeyCode.T)) {
-            damageFlashScript.callFlash();
-        }
+        //if (Input.GetKeyDown(KeyCode.T)) {
+            //damageFlashScript.callFlash();
+        //}
 
         if (shouldEnd && !ukvegadavaida)
         {
@@ -415,7 +412,7 @@ public class PlayerMovement : MonoBehaviour
                 rb.gravityScale = 1f;
             }
 
-            if (!isDashing)
+            if (!isDashing && !PauseScript.Paused)
             {
                 if (x < 0 && transform.localScale.x > 0)
                 {
@@ -474,7 +471,7 @@ public class PlayerMovement : MonoBehaviour
         */
         if (Input.GetKeyDown(KeyCode.E))
         {
-            StartCoroutine(enterAngelic(true));
+            StartCoroutine(enterAngelic(false));
         }
         if (StyleManager.canAscend && !isAngelic && !isDead)
         {
@@ -510,7 +507,8 @@ public class PlayerMovement : MonoBehaviour
 
     private IEnumerator enterAngelic(bool Beyonder)
     {
-        if (isDead) yield break;
+        if (isDead || PauseScript.Paused) yield break;
+        canPause = false;
         runParticles.Stop();
         if (PoisonQueCorountine != null) StopCoroutine(PoisonQueCorountine);
         poisonQueue = new Queue<float>();
@@ -523,7 +521,7 @@ public class PlayerMovement : MonoBehaviour
         canPause = false;
         invincible = true;
         canLose = false;
-        if(spawner != null) spawner.SetActive(false);
+        if (spawner != null) spawner.SetActive(false);
         if (!Beyonder)
         {
             if (isAngelic) yield break;
@@ -682,16 +680,16 @@ public class PlayerMovement : MonoBehaviour
 
         if (isintenthlayer)
         {
-            invincible = false;
-            if (isintenthlayer)
+            if (TLOH != null)
             {
                 TLOH.SetActive(true);
                 TenthLayerOfHellScript tlohscript = TLOH.GetComponent<TenthLayerOfHellScript>();
                 tlohscript.alreadyin = false;
             }
-            Destroy(gameObject);
         }
 
+        if(isintenthlayer) Destroy(gameObject);
+        if(!isintenthlayer && !Beyonder) Destroy(gameObject);
     }
 
     public void unreadyAngelic()
@@ -881,6 +879,8 @@ public class PlayerMovement : MonoBehaviour
 
     private void bowAim()
     {
+        if (PauseScript.Paused) return;
+
         Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
         Vector3 aimDirection = (mousePos - transform.position).normalized * direction;
@@ -1062,13 +1062,8 @@ public class PlayerMovement : MonoBehaviour
 
         while (timer < 3f)
         {
-            if (currentID != currentWeapon && currentID == 2 && currentWeapon == 0 && justShotBoomerang)
+            if (currentID != currentWeapon && currentID != 2 && currentWeapon != 0 && !justShotBoomerang)
             {
-                print("nothing");
-            }
-            else if (currentID != currentWeapon && currentID != 2 && currentWeapon != 0 && !justShotBoomerang)
-            {
-                print("id is off");
                 shouldGainStyle = true;
                 shouldLoseStyle = false;
                 yield break;
@@ -1081,13 +1076,8 @@ public class PlayerMovement : MonoBehaviour
         timer = 0f;
         while (timer < 3f)
         {
-            if (currentID != currentWeapon && currentID == 2 && currentWeapon == 0 && justShotBoomerang)
+            if (currentID != currentWeapon && currentID != 2 && currentWeapon != 0 && !justShotBoomerang)
             {
-                print("nothing");
-            }
-            else if (currentID != currentWeapon && currentID != 2 && currentWeapon != 0 && !justShotBoomerang)
-            {
-                print("id is off");
                 shouldGainStyle = true;
                 shouldLoseStyle = false;
                 yield break;
@@ -1394,7 +1384,7 @@ public class PlayerMovement : MonoBehaviour
             }
         }
 
-        if (collision.gameObject.layer == 3)
+        if (collision.gameObject.layer == 3 && collision.gameObject.name != "Movable")
         {
             GetComponent<CapsuleCollider2D>().isTrigger = false;
             isGrounded = true;

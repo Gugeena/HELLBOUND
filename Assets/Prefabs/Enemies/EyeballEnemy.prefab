@@ -153,7 +153,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: -88
+  m_SortingOrder: -10
   m_Sprite: {fileID: -572440932, guid: 1f4c6c29d53d9ce48af62418fe070e7d, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 1
@@ -191,6 +191,8 @@ MonoBehaviour:
   LLOCATION: {fileID: 0}
   RLLOCATION: {fileID: 0}
   weaponPickup: {fileID: 729149941573794601, guid: 26727b72f2514104bacba35cdf56052c, type: 3}
+  stoned: 0
+  deathparticles: []
 --- !u!50 &2083026935205815712
 Rigidbody2D:
   serializedVersion: 5

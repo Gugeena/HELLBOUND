@@ -26,6 +26,8 @@ public class PauseScript : MonoBehaviour
 
     private void Start()
     {
+        Paused = false;
+
         scenename = SceneManager.GetActiveScene().name;
 
         if (scenename == "LashaiasScena" || scenename == "TenthLayerOfHell")
@@ -74,12 +76,14 @@ public class PauseScript : MonoBehaviour
                     Scroll.SetActive(true);
                     Time.timeScale = 0f;
                     Paused = true;
+                    AudioListener.pause = true;
                 }
                 else
                 {
                     Scroll.SetActive(false);
                     Time.timeScale = 1f;
                     Paused = false;
+                    AudioListener.pause = false;
                 }
             }
         }
@@ -125,6 +129,9 @@ public class PauseScript : MonoBehaviour
         yield return new WaitForSeconds(5f);
         Fadeout.SetActive(true);
         yield return new WaitForSeconds(0.95f);
+        kill = 0;
+        dro = 0;
+        dro = 0;
         SceneManager.LoadScene(1);
     }
 }

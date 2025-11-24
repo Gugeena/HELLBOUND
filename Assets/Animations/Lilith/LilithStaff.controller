@@ -7,7 +7,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: LilithStaffHeart(Orange-Red)
+  m_Name: LilithStaffHeartOrangeToRed
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []
@@ -33,7 +33,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: LilithStaffHeart(Green-Red)
+  m_Name: LilithStaffHeartGreenToRed
   m_Speed: 2
   m_CycleOffset: 0
   m_Transitions: []
@@ -59,7 +59,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: LilithStaffHeart(Red-Yellow)
+  m_Name: LilithStaffHeartRedToYellow
   m_Speed: 2
   m_CycleOffset: 0
   m_Transitions: []
@@ -85,7 +85,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: LilithStaffHeart(Red-Purple)
+  m_Name: LilithStaffHeartRedToPurple
   m_Speed: 2
   m_CycleOffset: 0
   m_Transitions: []
@@ -176,7 +176,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: LilithStaffHeart(Red-Orange)
+  m_Name: LilithStaffHeartRedToOrange
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []
@@ -202,7 +202,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: LilithStaffHeart(Red-Green)
+  m_Name: LilithStaffHeartRedToGreen
   m_Speed: 2
   m_CycleOffset: 0
   m_Transitions: []
@@ -228,7 +228,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: LilithStaffHeart(Purple-Red)
+  m_Name: LilithStaffHeartPurpleToRed
   m_Speed: 2
   m_CycleOffset: 0
   m_Transitions: []
@@ -254,7 +254,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: LilithStaffHeart(Yellow-Red)
+  m_Name: LilithStaffHeartYellowToRed
   m_Speed: 2
   m_CycleOffset: 0
   m_Transitions: []

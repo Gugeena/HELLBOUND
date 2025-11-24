@@ -305,7 +305,6 @@ public class EyeballMovementScript : MonoBehaviour
                 //print(dist);
                 if (Directpath < 7f)
                 {
-                    print("inRange");
                     if (playerScript.hp > 0)
                     {
                         if (!playerScript.isAngelicGetter()) playerScript.hp += healamount;
@@ -315,7 +314,6 @@ public class EyeballMovementScript : MonoBehaviour
             }
             else if (teleportCount > 0)
             {
-                print("isntRange");
                 if (playerScript.hp > 0) playerScript.hp += healamount * 0.7f;
             }
             if (playerScript.shouldGainStyle)
