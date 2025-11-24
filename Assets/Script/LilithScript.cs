@@ -90,11 +90,13 @@ public class LilithScript : MonoBehaviour
 
     void Start()
     {
+        shouldFlip = true;
         scale = transform.localScale;
         bossfightstarted = true;
         StartCoroutine(waiter());
         var temp = staffSpriteRenderer.color;
         staffSpriteRenderer.color = staffSpriteRenderer.color;
+        heartAnimator = transform.GetChild(3).GetChild(0).GetChild(0).GetComponent<Animator>();
         /*
         canTeleport = true;
         if (!hasBatted) StartCoroutine(BatAttack());
@@ -133,11 +135,18 @@ public class LilithScript : MonoBehaviour
         if (!hasBatted) StartCoroutine(BatAttack());
         canSummon = true;
         hasAlreadyTeleportedonce = false;
-        shouldFlip = false;
         shouldPURPLE = true;
         spriteFlash = GetComponent<spriteFlashScript>();
         hpslider = GameObject.Find("LilithHP").GetComponent<UnityEngine.UI.Slider>();
         heartAnimator.Rebind();
+        heartAnimator.Update(0);
+        if (heartAnimator == null)
+        {
+            heartAnimator = transform.GetChild(3).GetChild(0).GetChild(0).GetComponent<Animator>();
+            if (heartAnimator == null)
+                Debug.LogError("Heart Animator not found!");
+        }
+        //staffSpriteRenderer.material = new Material(staffSpriteRenderer.material);
         cantlosehp = false;
         if (heartAnimator == null)
             Debug.LogError("No Animator component!");
@@ -260,8 +269,8 @@ public class LilithScript : MonoBehaviour
 
     void staffScale()
     {
+        return;
         Vector2 dir = new Vector2(0, 0);
-        Vector3 scale = staffController.transform.localScale;
         //staffController.transform.rotation = Quaternion.identity;
         //Quaternion originalrotation = staffController.transform.rotation;
         dir = (new Vector3(player.position.x, player.position.y - 1.6f) - staffController.transform.position).normalized;
@@ -773,7 +782,6 @@ public class LilithScript : MonoBehaviour
         hasBatted = false;
         canTeleport = false;
         yield return null;
-        shouldFlip = false;
         int stateHash = Animator.StringToHash("LilithStaffHeartRedToPurple");
         heartAnimator.Play(stateHash, 0);
         //yield return new WaitForSeconds(1f);
@@ -781,6 +789,7 @@ public class LilithScript : MonoBehaviour
         //hasBatted = true;
         StartCoroutine(teleportCooldownBats());
         animator.Play("LilithBats");
+        shouldFlip = false;
         //audioManager.instance.playAudio(hailMary, 1, 1, transform, audioManager.instance.sfx);
         animator.SetBool("shouldBATS", true);
         yield return new WaitForSeconds(0.8f);
@@ -853,7 +862,7 @@ public class LilithScript : MonoBehaviour
         renderercolor = staffSpriteRenderer.color;
         spriteFlash.callFlash();
         heartAnimator.SetLayerWeight(0, 0f);
-        staffSpriteRenderer.color = Color.red;
+        staffSpriteRenderer.color = Color.white;
         yield return new WaitForSeconds(0.05f);
         staffSpriteRenderer.color = renderercolor;
         heartAnimator.SetLayerWeight(0, 1f);

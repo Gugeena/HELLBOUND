@@ -72,6 +72,22 @@ public class StyleManager : MonoBehaviour
 
     private void Update()
     {
+        if(PlayerMovement.hasAscendedonce)
+        {
+            shaker.stopShake();
+            stylePoints = 30;
+            styleSlider.value = stylePoints;
+            changeColors("yellow");
+            currStyle = Style.Angelic;
+            switchLetter(Style.Angelic);
+            playerMovement.readyAngelic();
+            shaker._distance = 2f;
+            shaker.Begin();
+            styleText.text = "ANGELIC!!!";
+            isAngelic = true;
+            return;
+        }
+
         StartCoroutine(ascentiontextcontrol());
 
         if (!playerMovement.shouldGainStyle && !playerMovement.shouldLoseStyle && !PlayerMovement.hasAscendedonce)

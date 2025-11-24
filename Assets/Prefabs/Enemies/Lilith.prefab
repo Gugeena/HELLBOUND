@@ -703,7 +703,7 @@ MonoBehaviour:
   shardSpawner: {fileID: 4862985810086280841}
   shardSpawnParticles: {fileID: 1156409255216420425, guid: 246c3208f2d31ab49a43c2301086ff72, type: 3}
   shouldFlip: 0
-  heartAnimator: {fileID: 4087672607371441320}
+  heartAnimator: {fileID: 0}
   fireBall: {fileID: 5726156385776376966, guid: c22d85288b9b20c4e90c420d14405a5a, type: 3}
   fireBallSpawnParticles: {fileID: 1156409255216420425, guid: 5b3978cecada52f4e83a3efe1b40badc, type: 3}
   isGrounded: 1
@@ -811,7 +811,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 63a926f177ab45b41a795a20336dc4f3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

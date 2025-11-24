@@ -300,7 +300,7 @@ public class EnemyChargerScript : MonoBehaviour
         canMove = false;
         canAttack = false;
         int chance = UnityEngine.Random.Range(0, 5);
-        if(chance > 1) Instantiate(weaponPickup, this.gameObject.transform.position, Quaternion.identity);
+        if(chance > 0) Instantiate(weaponPickup, this.gameObject.transform.position, Quaternion.identity);
         float dist = Directpath;
         if (!stoned || stoned == null)
         {
