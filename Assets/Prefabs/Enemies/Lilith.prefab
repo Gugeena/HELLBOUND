@@ -703,7 +703,6 @@ MonoBehaviour:
   shardSpawner: {fileID: 4862985810086280841}
   shardSpawnParticles: {fileID: 1156409255216420425, guid: 246c3208f2d31ab49a43c2301086ff72, type: 3}
   shouldFlip: 0
-  heartAnimator: {fileID: 0}
   fireBall: {fileID: 5726156385776376966, guid: c22d85288b9b20c4e90c420d14405a5a, type: 3}
   fireBallSpawnParticles: {fileID: 1156409255216420425, guid: 5b3978cecada52f4e83a3efe1b40badc, type: 3}
   isGrounded: 1
@@ -764,6 +763,7 @@ MonoBehaviour:
   - {fileID: 3688303591140071074}
   lilithDeathSound: {fileID: 8300000, guid: 70b2aeb1a37032948b46e610d41351a5, type: 3}
   staffSpriteRenderer: {fileID: 4725189739158240430}
+  staffScript: {fileID: 7695054318062159001}
 --- !u!95 &7610987853696653380
 Animator:
   serializedVersion: 7
@@ -1999,6 +1999,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4121920799804414632}
   - component: {fileID: 4725189739158240430}
+  - component: {fileID: 7695054318062159001}
   m_Layer: 0
   m_Name: LilithstaffHeart
   m_TagString: Untagged
@@ -2046,7 +2047,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 63a926f177ab45b41a795a20336dc4f3, type: 2}
+  - {fileID: 2100000, guid: 9ea35307f79c31a4ebcc48a816690124, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2069,7 +2070,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: -110
   m_Sprite: {fileID: 21300000, guid: f0fd6f388cde5db449b3624c2920cb8e, type: 3}
-  m_Color: {r: 1, g: 0, b: 0, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -2079,6 +2080,20 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &7695054318062159001
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8870473149813945247}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 875be306e196cf44eafa6dc0057e1b75, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
+  _duration: 0.15
+  _hueDuration: 0.75
 --- !u!1 &8957020131757599231
 GameObject:
   m_ObjectHideFlags: 0
@@ -2255,7 +2270,6 @@ GameObject:
   m_Component:
   - component: {fileID: 3766399384014210334}
   - component: {fileID: 8357257086667536129}
-  - component: {fileID: 4087672607371441320}
   m_Layer: 7
   m_Name: Lilith
   m_TagString: Untagged
@@ -2337,28 +2351,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!95 &4087672607371441320
-Animator:
-  serializedVersion: 7
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9037330008458268145}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: d237dcf8d6f81854681065f4724360fc, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 1
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_AnimatePhysics: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &9184890450596979948
 GameObject:
   m_ObjectHideFlags: 0

@@ -1317,7 +1317,7 @@ public class PlayerMovement : MonoBehaviour
             Destroy(collision.gameObject.transform.parent.gameObject);
         }
 
-        if (!invincible)
+        if (!invincible && !godMode)
         {
             if (collision.gameObject.CompareTag("enemyhitbox"))
             {
