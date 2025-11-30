@@ -1201,6 +1201,7 @@ MonoBehaviour:
   isAngelic: 0
   Ascend: {fileID: 372488917}
   ascentionanimator: {fileID: 372488921}
+  fill: {fileID: 322454875}
 --- !u!1 &229567742
 GameObject:
   m_ObjectHideFlags: 0
@@ -7895,8 +7896,8 @@ Transform:
   m_GameObject: {fileID: 533527915}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 8.593, y: 0.5114, z: 0.06044344}
-  m_LocalScale: {x: 0.030326663, y: 0.06584124, z: 0.02828277}
+  m_LocalPosition: {x: 8.5954, y: 0.5114, z: 0.06044344}
+  m_LocalScale: {x: 0.029948818, y: 0.06584124, z: 0.02828277}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 902870064}
@@ -7975,7 +7976,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &536033091
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -33239,8 +33240,8 @@ Transform:
   m_GameObject: {fileID: 1339730941}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -5.0389, y: 0.5059, z: 0.06044344}
-  m_LocalScale: {x: 0.030326663, y: 0.06862752, z: 0.02828277}
+  m_LocalPosition: {x: -5.03649, y: 0.5059, z: 0.06044344}
+  m_LocalScale: {x: 0.029947275, y: 0.06862752, z: 0.02828277}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 902870064}
@@ -39968,8 +39969,8 @@ Transform:
   m_GameObject: {fileID: 1560182976}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 7.275901, y: 0.495, z: 0.06044344}
-  m_LocalScale: {x: -0.02997319, y: 0.065267004, z: 0.02828277}
+  m_LocalPosition: {x: 7.27378, y: 0.495, z: 0.06044344}
+  m_LocalScale: {x: -0.029638823, y: 0.065267004, z: 0.02828277}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 902870064}
@@ -40261,7 +40262,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 197, y: -270}
+  m_AnchoredPosition: {x: 269, y: -270}
   m_SizeDelta: {x: 1531.71, y: 769.25}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1614478369
@@ -40297,7 +40298,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'EXILED
+  m_Text: 'EXILE
 
 '
 --- !u!222 &1614478370
@@ -58351,7 +58352,7 @@ MonoBehaviour:
   rightHand: {fileID: 762624402}
   comboTime: 0.75
   runParticles: {fileID: 1224951686}
-  godMode: 1
+  godMode: 0
   RLocation: {fileID: 58100624}
   LLocation: {fileID: 1228808078}
   canDash: 1
@@ -58453,11 +58454,11 @@ MonoBehaviour:
   truespirit: {fileID: 8706924981857714343, guid: 85160c33a265b1c4297c48472977f09c, type: 3}
   hasbeyonded: 0
   canvasAnimator: {fileID: 883276627}
-  styleAnimator: {fileID: 0}
-  HPbar: {fileID: 0}
+  styleAnimator: {fileID: 1036440291}
+  HPbar: {fileID: 1790343742}
   undachaijvayleoagarshemidzlia: 0
   isinbubble: 0
-  hpAnimator: {fileID: 0}
+  hpAnimator: {fileID: 1790343744}
   wasPoisoned: 0
   slash: {fileID: 0}
   isFuckingPoisoned: 0

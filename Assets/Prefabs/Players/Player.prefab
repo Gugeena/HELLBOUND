@@ -8276,7 +8276,7 @@ MonoBehaviour:
   rightHand: {fileID: 5311164959235726242}
   comboTime: 0.75
   runParticles: {fileID: 7862376639472423346}
-  godMode: 1
+  godMode: 0
   RLocation: {fileID: 0}
   LLocation: {fileID: 0}
   canDash: 1

@@ -33,7 +33,7 @@ public class TenthLayerOfHellScript : MonoBehaviour
         alreadyin = false;
         last = -1;
         stoned = false;
-        shouldturnoffforawhile = false;
+        //shouldturnoffforawhile = false;
         StartCoroutine(EventManager()); 
     }
 
@@ -45,11 +45,12 @@ public class TenthLayerOfHellScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        print("sote: " + shouldturnoffforawhile);
     }
 
     public IEnumerator EventManager()
     {
+        yield return null;
         while (true)
         {
             if (!alreadyin && !PlayerMovement.hasdiedforeverybody && !shouldturnoffforawhile)
@@ -58,6 +59,7 @@ public class TenthLayerOfHellScript : MonoBehaviour
                 do { random = UnityEngine.Random.Range(0, 4); }
                 while (random == last || random == 3 && LilithScript.bossfightstarted);
                 last = random;
+                alreadyin = true;
                 switch (random)
                 {
                     case 0: StartCoroutine(snakeattack()); break;
@@ -73,7 +75,6 @@ public class TenthLayerOfHellScript : MonoBehaviour
     public IEnumerator Fireballrain()
     {
         StartCoroutine(ColorFade(vinigreti, Color.green, 0.5f));
-        alreadyin = true;
         lastplayedaudio = audioManager.instance.playAudio(acidrain, 1, 1, this.transform, audioManager.instance.sfx);
         for (int i = 0; i < 40; i++)
         {
@@ -101,7 +102,6 @@ public class TenthLayerOfHellScript : MonoBehaviour
             alreadyin = false;
             yield break;
         }
-        alreadyin = true;
         string animation;
         int random = UnityEngine.Random.Range(0, animations.Length);
         animation = animations[random].name;
@@ -116,7 +116,6 @@ public class TenthLayerOfHellScript : MonoBehaviour
     public IEnumerator logs()
     {
         StartCoroutine(ColorFade(vinigreti, Color.sandyBrown, 0.5f));
-        alreadyin = true;
         lastplayedaudio = audioManager.instance.playAudio(logaudio, 1, 1, this.transform, audioManager.instance.sfx);
         for (int i = 0; i < 10; i++)
         {
@@ -150,7 +149,6 @@ public class TenthLayerOfHellScript : MonoBehaviour
     public IEnumerator gettingstoned()
     { 
         StartCoroutine(ColorFade(vinigreti, Color.cyan, 0.5f));
-        alreadyin = true;
         stoned = true;
         yield return new WaitForSeconds(5f);
         stoned = false;

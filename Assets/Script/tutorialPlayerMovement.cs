@@ -81,6 +81,7 @@ public class tutorialPlayerMovement : MonoBehaviour
     [SerializeField] private AudioClip[] punches, gravelWalk, jumps, lands, bowShots, chainSounds;
     [SerializeField] private AudioClip chainBreak;
     private int walkedDistance = 1;
+    private int lastStepDistance = -1;
 
     // Start is called before the first frame update
     void Start()
@@ -119,6 +120,17 @@ public class tutorialPlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            ScreenCapture.CaptureScreenshot("Screenshot.png", superSize: 1);
+        }
+
+        if (isGrounded)
+        {
+            IsJumping = false;
+            isFalling = false;
+        }
+
         if (trapped == false && bowScene == false)
         {
             handleMovement();
@@ -131,11 +143,13 @@ public class tutorialPlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (isRunning) walkedDistance++;
+        if (isRunning && !IsJumping) walkedDistance++;
 
         if (walkedDistance % 15 == 0 && isGrounded)
         {
             audioManager.instance.playRandomAudio(gravelWalk, 1, 1, transform, audioManager.instance.sfx);
+            walkedDistance++;
+            //lastStepDistance = walkedDistance;
         }
     }
 
@@ -201,6 +215,7 @@ public class tutorialPlayerMovement : MonoBehaviour
             StartCoroutine(dash());
         }
 
+        print("isJumping:  " + IsJumping + "; isGrounded: " + isGrounded);
         if (Input.GetKeyDown(Jump) && isGrounded && !IsJumping)
         {
             StartCoroutine(jump());
@@ -208,7 +223,7 @@ public class tutorialPlayerMovement : MonoBehaviour
 
         isFalling = rb.linearVelocity.y < -0.1f;
         anim.SetBool("isFalling", isFalling);
-        anim.SetBool("isJumping", !isGrounded);
+        anim.SetBool("isJumping", IsJumping);
     }
     
 
@@ -313,6 +328,8 @@ public class tutorialPlayerMovement : MonoBehaviour
         yield return new WaitForSeconds(0.4f);
         audioManager.instance.playRandomAudio(bowShots, 0.5f, 1, transform, audioManager.instance.sfx);
         Time.timeScale = 0.4f;
+        var emission = runParticles.emission;
+        emission.enabled = false;
         GameObject arr = Instantiate(arrow, bowHands.transform.position, bowHands.transform.rotation);
         arr.GetComponent<Rigidbody2D>().gravityScale = 0.2f;
         arr.GetComponent<Rigidbody2D>().AddForce(arr.transform.right * 400 * direction);
@@ -365,7 +382,7 @@ public class tutorialPlayerMovement : MonoBehaviour
         audioManager.instance.playRandomAudio(jumps, 0.7f, 1, transform, audioManager.instance.sfx);
         isGrounded = false;
         yield return null;
-        IsJumping = false;
+       // IsJumping = false;
     }
 
     private IEnumerator pickUpWeapon(int id)
@@ -412,6 +429,7 @@ public class tutorialPlayerMovement : MonoBehaviour
 
         if (collision.gameObject.layer == 3)
         {
+            print("hit: " + collision.gameObject.name);
             isGrounded = true;
             audioManager.instance.playRandomAudio(lands, 1f, 1, transform, audioManager.instance.sfx);
         }
@@ -494,6 +512,13 @@ public class tutorialPlayerMovement : MonoBehaviour
         {
             isGrounded = false;
         }
+    }
 
+    private void OnCollisionStay2D(Collision2D collision)
+    {
+        if (collision.gameObject.layer == 3)
+        {
+            isGrounded = true;
+        }
     }
 }

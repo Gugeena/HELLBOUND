@@ -119,6 +119,63 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &9720678
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 9720680}
+  - component: {fileID: 9720679}
+  - component: {fileID: 9720681}
+  m_Layer: 0
+  m_Name: API
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &9720679
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9720678}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef4bffeda13d7a748973ff9204401c07, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SteamManager
+--- !u!4 &9720680
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9720678}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 26.5315, y: 0.50253, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &9720681
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9720678}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4ae082e1780028148b9b5523e47cac1c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
 --- !u!1 &32619853
 GameObject:
   m_ObjectHideFlags: 0
@@ -385,6 +442,7 @@ GameObject:
   - component: {fileID: 134413247}
   - component: {fileID: 134413246}
   - component: {fileID: 134413245}
+  - component: {fileID: 134413248}
   m_Layer: 5
   m_Name: JUMPINPUT
   m_TagString: Untagged
@@ -519,6 +577,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 134413243}
   m_CullTransparentMesh: 1
+--- !u!114 &134413248
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 134413243}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a78f7348529c1894b9e9e9f3e7ca90bd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
+  sp: {fileID: 1291600647}
 --- !u!1 &155104701
 GameObject:
   m_ObjectHideFlags: 0
@@ -659,7 +730,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0, b: 0, a: 0.3764706}
+  m_Color: {r: 0.49019608, g: 0, b: 0, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -1315,6 +1386,7 @@ GameObject:
   - component: {fileID: 358150691}
   - component: {fileID: 358150690}
   - component: {fileID: 358150689}
+  - component: {fileID: 358150692}
   m_Layer: 5
   m_Name: DROPINPUT
   m_TagString: Untagged
@@ -1449,6 +1521,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 358150687}
   m_CullTransparentMesh: 1
+--- !u!114 &358150692
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 358150687}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a78f7348529c1894b9e9e9f3e7ca90bd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::InputFieldLisetenerScript
+  sp: {fileID: 499517199}
 --- !u!1 &362028496
 GameObject:
   m_ObjectHideFlags: 0
@@ -1988,7 +2073,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0, b: 0, a: 0.3764706}
+  m_Color: {r: 0.49019608, g: 0, b: 0, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -2836,6 +2921,7 @@ GameObject:
   - component: {fileID: 751064496}
   - component: {fileID: 751064495}
   - component: {fileID: 751064494}
+  - component: {fileID: 751064497}
   m_Layer: 5
   m_Name: DASHINPUT
   m_TagString: Untagged
@@ -2970,6 +3056,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 751064492}
   m_CullTransparentMesh: 1
+--- !u!114 &751064497
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 751064492}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a78f7348529c1894b9e9e9f3e7ca90bd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::InputFieldLisetenerScript
+  sp: {fileID: 170027515}
 --- !u!1 &758135049
 GameObject:
   m_ObjectHideFlags: 0
@@ -3174,7 +3273,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0, b: 0, a: 0.3764706}
+  m_Color: {r: 0.49019608, g: 0, b: 0, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -3250,8 +3349,8 @@ RectTransform:
   - {fileID: 831138557}
   - {fileID: 499517198}
   - {fileID: 2121387759}
-  - {fileID: 644495986}
   - {fileID: 1943311717}
+  - {fileID: 644495986}
   - {fileID: 134413244}
   - {fileID: 751064493}
   - {fileID: 1121006172}
@@ -8286,6 +8385,7 @@ GameObject:
   - component: {fileID: 1121006175}
   - component: {fileID: 1121006174}
   - component: {fileID: 1121006173}
+  - component: {fileID: 1121006176}
   m_Layer: 5
   m_Name: ATTACKINPUT
   m_TagString: Untagged
@@ -8420,6 +8520,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1121006171}
   m_CullTransparentMesh: 1
+--- !u!114 &1121006176
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1121006171}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a78f7348529c1894b9e9e9f3e7ca90bd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::InputFieldLisetenerScript
+  sp: {fileID: 2014521020}
 --- !u!1 &1150642072
 GameObject:
   m_ObjectHideFlags: 0
@@ -9359,7 +9472,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0, b: 0, a: 0.3764706}
+  m_Color: {r: 0.49019608, g: 0, b: 0, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -10508,6 +10621,7 @@ GameObject:
   - component: {fileID: 1761520713}
   - component: {fileID: 1761520712}
   - component: {fileID: 1761520711}
+  - component: {fileID: 1761520714}
   m_Layer: 5
   m_Name: SPECIALINPUT
   m_TagString: Untagged
@@ -10642,6 +10756,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1761520709}
   m_CullTransparentMesh: 1
+--- !u!114 &1761520714
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1761520709}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a78f7348529c1894b9e9e9f3e7ca90bd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::InputFieldLisetenerScript
+  sp: {fileID: 831138558}
 --- !u!1 &1768518790
 GameObject:
   m_ObjectHideFlags: 0
@@ -11655,7 +11782,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0, b: 0, a: 0.3764706}
+  m_Color: {r: 0.49019608, g: 0, b: 0, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -12340,11 +12467,12 @@ CanvasRenderer:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
+  - {fileID: 9720680}
+  - {fileID: 1209260348}
   - {fileID: 110290668}
   - {fileID: 1815488560}
   - {fileID: 155104703}
   - {fileID: 1115141938}
-  - {fileID: 1209260348}
   - {fileID: 1890200940}
   - {fileID: 2064691280}
   - {fileID: 695689964}

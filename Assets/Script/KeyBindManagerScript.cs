@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class KeyBindManagerScript : MonoBehaviour
@@ -103,29 +104,30 @@ public class KeyBindManagerScript : MonoBehaviour
                             */
                             if (inputfieldDash.isFocused)
                             {
-                                inputfieldDash.text = string.Empty;
+                                inputfieldDash.text = "N/A";
                                 dashKey = KeyCode.None;
                             }
                             else if (inputfieldAttack.isFocused)
                             {
-                                inputfieldAttack.text = string.Empty;
+                                inputfieldAttack.text = "N/A";
                                 attackKey = KeyCode.None;
                             }
                             else if (inputfieldJump.isFocused)
                             {
-                                inputfieldJump.text = string.Empty;
+                                inputfieldJump.text = "N/A";
                                 jumpKey = KeyCode.None;
                             }
                             else if (inputfieldHeavy.isFocused)
                             {
-                                inputfieldHeavy.text = string.Empty;
+                                inputfieldHeavy.text = "N/A";
                                 heavyKey = KeyCode.None;
                             }
                             else if (inputfieldDrop.isFocused)
                             {
-                                inputfieldDrop.text = string.Empty;
+                                inputfieldDrop.text = "N/A";
                                 DropKey = KeyCode.None;
                             }
+                            EventSystem.current.SetSelectedGameObject(null);
                             return;
                         }
                         if (inputfieldDash.isFocused)
@@ -138,6 +140,7 @@ public class KeyBindManagerScript : MonoBehaviour
                             SetHeavyKey(key);
                         else if (inputfieldDrop.isFocused)
                             setDropKey(key);
+                        EventSystem.current.SetSelectedGameObject(null);
                     }
 
                     if (Input.GetKeyDown(KeyCode.Backspace))
@@ -172,6 +175,7 @@ public class KeyBindManagerScript : MonoBehaviour
                             DropKey = KeyCode.None;
                             inputfieldHeavy.placeholder.gameObject.SetActive(false);
                         }
+
                     }
                 }
             }
@@ -184,6 +188,7 @@ public class KeyBindManagerScript : MonoBehaviour
         string keyDisplay = KeyToString(key);
         inputfieldDash.text = keyDisplay;
         AdjustInputFieldWidth(inputfieldDash, keyDisplay);
+        inputfieldDash.ForceLabelUpdate();
         SaveKeyBindings();
     }
 
@@ -193,6 +198,7 @@ public class KeyBindManagerScript : MonoBehaviour
         string keyDisplay = KeyToString(key);
         inputfieldDrop.text = keyDisplay;
         AdjustInputFieldWidth(inputfieldDrop, keyDisplay);
+        inputfieldDrop.ForceLabelUpdate();
         SaveKeyBindings();
     }
 
@@ -202,6 +208,7 @@ public class KeyBindManagerScript : MonoBehaviour
         string keyDisplay = KeyToString(key);
         inputfieldAttack.text = keyDisplay;
         AdjustInputFieldWidth(inputfieldAttack, keyDisplay);
+        inputfieldAttack.ForceLabelUpdate();
         SaveKeyBindings();
     }
 
@@ -211,6 +218,7 @@ public class KeyBindManagerScript : MonoBehaviour
         string keyDisplay = KeyToString(key);
         inputfieldJump.text = keyDisplay;
         AdjustInputFieldWidth(inputfieldJump, keyDisplay);
+        inputfieldJump.ForceLabelUpdate();
         SaveKeyBindings();
     }
 
@@ -220,6 +228,7 @@ public class KeyBindManagerScript : MonoBehaviour
         string keyDisplay = KeyToString(key);
         inputfieldHeavy.text = keyDisplay;
         AdjustInputFieldWidth(inputfieldHeavy, keyDisplay);
+        inputfieldHeavy.ForceLabelUpdate();
         SaveKeyBindings();
     }
 
@@ -270,8 +279,8 @@ public class KeyBindManagerScript : MonoBehaviour
         switch (key)
         {
             case KeyCode.Space: return "Space";
-            case KeyCode.LeftShift: return "Shift";
-            case KeyCode.RightShift: return "Shift";
+            case KeyCode.LeftShift: return "LShift";
+            case KeyCode.RightShift: return "RShift";
             case KeyCode.Tab: return "Tab";
             case KeyCode.LeftControl: return "LCtrl";
             case KeyCode.RightControl: return "RCtrl";
@@ -392,7 +401,7 @@ public class KeyBindManagerScript : MonoBehaviour
             case KeyCode.Help: return "Help";
 
 
-            default: return "Invalid";
+            default: return "N/A";
         }
     }
 

@@ -305,6 +305,10 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.CapsLock))
+        {
+            ScreenCapture.CaptureScreenshot("Screenshot.png", superSize: 1);
+        }
         //if (PauseScript.Paused || isDead) return;
 
         if (LilithScript.bossfightstarted && !hassubscribedtolilith)
@@ -344,7 +348,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (isRunning) walkedDistance++;
+        if (isRunning && !IsJumping) walkedDistance++;
 
         if (walkedDistance % 15 == 0 && isGrounded)
         {
@@ -471,7 +475,7 @@ public class PlayerMovement : MonoBehaviour
         */
         if (Input.GetKeyDown(KeyCode.E))
         {
-            StartCoroutine(enterAngelic(false));
+            StartCoroutine(enterAngelic(true));
         }
         if (StyleManager.canAscend && !isAngelic && !isDead)
         {
@@ -515,7 +519,7 @@ public class PlayerMovement : MonoBehaviour
         isPoisoned = false;
         isPoisonRunning = false;
         TLOHLFADEOUTANDINNER(1);
-        TenthLayerOfHellScript.shouldturnoffforawhile = true;
+        if(isintenthlayer) TenthLayerOfHellScript.shouldturnoffforawhile = true;
         isGrounded = false;
         hasAscendedonce = true;
         canPause = false;
@@ -1465,5 +1469,13 @@ public class PlayerMovement : MonoBehaviour
 
         hpAnimator.Play("PlayerDepoisoning");
         isPoisonRunning = false;
+    }
+
+    private void OnCollisionStay2D(Collision2D collision)
+    {
+        if (collision.gameObject.layer == 3)
+        {
+            isGrounded = true;
+        }
     }
 }

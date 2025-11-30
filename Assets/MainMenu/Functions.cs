@@ -1,3 +1,4 @@
+using Steamworks;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -22,6 +23,8 @@ public class Functions : MonoBehaviour
 
     void Start()
     {
+        AchivementScript.instance.UnlockAchivement("HELLBOUND_ENTRY");
+
         AudioListener.pause = false;
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;

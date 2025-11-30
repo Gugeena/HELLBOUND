@@ -90,6 +90,8 @@ public class LilithScript : MonoBehaviour
 
     Vector3 scale = new Vector3 (1, 1, 1);
 
+    public bool shoulddieyet = true;
+
     void Start()
     {
         shouldFlip = true;
@@ -238,7 +240,7 @@ public class LilithScript : MonoBehaviour
             }
         }
 
-        if(hp <= 0 && !isDead)
+        if(hp <= 0 && !isDead && shoulddieyet)
         {
             StartCoroutine(death());
         }
@@ -248,7 +250,6 @@ public class LilithScript : MonoBehaviour
     IEnumerator HandleTeleport()
     {
         if (isDead || !canTeleport) yield break;
-        //staffScale();
         StopCoroutine(teleportCooldownBats());
         canTeleport = false;
         shouldFlip = false;
@@ -256,7 +257,7 @@ public class LilithScript : MonoBehaviour
         else animator.SetBool("shouldPURPLE", false);
         animator.SetBool("shouldPORT", true);
 
-        resetStaff();
+        //resetStaff();
 
         yield return new WaitForSeconds(0.25f);
         //canAttack = false;
@@ -282,6 +283,7 @@ public class LilithScript : MonoBehaviour
         Instantiate(teleportParticles1, this.transform.position, Quaternion.identity);
         if(PlayerMovement.shouldMakeSound) audioManager.instance.playRandomAudio(lillithLaughs, 0.7f, 1, transform, audioManager.instance.sfx);
         this.transform.position = pos;
+        staffScale();
         if (isDead) yield break;
         yield return new WaitForSeconds(0.5F);
         staff.SetActive(true);
@@ -313,10 +315,7 @@ public class LilithScript : MonoBehaviour
                         if (!isInFarRightPosition && !isInFarLeftPosition) continue;
                         else
                         {
-                            int dir;
-                            if (isInFarRightPosition) dir = 1;
-                            else dir = -1;
-                            StartCoroutine(flameAttack(dir));
+                            StartCoroutine(flameAttack(isInFarLeftPosition, isInFarRightPosition));
                         }
                     }
                     else StartCoroutine(summonAttack());
@@ -328,14 +327,10 @@ public class LilithScript : MonoBehaviour
                     else if (x < 0.66f) StartCoroutine(shardAttack());
                     else
                     {
-                        if (!isInFarRightPosition && !isInFarLeftPosition) continue;
-                        if (!isInFarRightPosition && !isInFarLeftPosition) continue;
+                        if (!isInFarRightPosition && !isInFarLeftPosition || isInFarLeftPosition && player.transform.position.x < this.transform.position.x || isInFarRightPosition && player.transform.position.x > this.transform.position.x) continue;
                         else
                         {
-                            int dir;
-                            if (isInFarRightPosition) dir = 1;
-                            else dir = -1;
-                            StartCoroutine(flameAttack(dir));
+                            StartCoroutine(flameAttack(isInFarLeftPosition, isInFarRightPosition));
                         }
                     }
                     break;
@@ -346,28 +341,29 @@ public class LilithScript : MonoBehaviour
 
     }
 
-    public IEnumerator flameAttack(int direction)
+    public IEnumerator flameAttack(bool isfarleft, bool isfarright)
     {
-        bool isInFarLeftPosition = Vector2.Distance(new Vector2(16.27f, -2.539f), this.transform.position) < 0.1f;
-        bool isInFarRightPosition = Vector2.Distance(new Vector2(33.98f, -2.539f), this.transform.position) < 0.1f;
-        if (!isInFarLeftPosition && !isInFarRightPosition)
+        shoulddieyet = false;
+        bool isInFarLeftPosition = isfarleft;
+        bool isInFarRightPosition = isfarright;
+        if (!isInFarLeftPosition && !isInFarRightPosition || isInFarLeftPosition && player.transform.position.x < this.transform.position.x || isInFarRightPosition && player.transform.position.x > this.transform.position.x)
         {
             shouldFlip = true;
+            staffScale();
             StartCoroutine(attackCooldown(0.4f, 0));
             yield break;
         }
         Vector3 scale = transform.localScale;
         shouldFlip = false;
-        if (direction == 1)
+        if (isInFarRightPosition)
         {
-            scale.y = -Mathf.Abs(scale.y);
             scale.x = -Mathf.Abs(scale.x);
         }
-        else
+        else if (isInFarLeftPosition)
         {
-            scale.y = Mathf.Abs(scale.y);
             scale.x = Mathf.Abs(scale.x);
         }
+        transform.localScale = scale;
         animator.SetBool("shouldFLAME", true);
         //int stateHash = Animator.StringToHash("LilithStaffHeartRedToOrange");
         //heartAnimator.Play(stateHash, 0);
@@ -380,24 +376,16 @@ public class LilithScript : MonoBehaviour
         cum.frequency = 0.4f;
         cum.time = 3f;
         StartCoroutine(cum.shake());
+        staffScale();
         shouldFlip = false;
-        if (direction == 1)
-        {
-            scale.y = -Mathf.Abs(scale.y);
-            scale.x = -Mathf.Abs(scale.x);
-        }
-        else
-        {
-            scale.y = Mathf.Abs(scale.y);
-            scale.x = Mathf.Abs(scale.x);
-        }
-        if (direction == -1) flameanimator.Play("FlamesController-LeftFlame");
-        else flameanimator.Play("FlamesController-RightFlame");
+        if (isInFarLeftPosition == true) flameanimator.Play("FlamesController-LeftFlame");
+        else if (isInFarRightPosition == true) flameanimator.Play("FlamesController-RightFlame");
         //stateHash = Animator.StringToHash("LilithStaffHeartOrangeToRed");
         //heartAnimator.Play(stateHash, 0);
         staffScript.changeColor(LillithStaffScript.Colors.red);
         yield return new WaitForSeconds(4f);
         shouldFlip = true;
+        shoulddieyet = true;
         StartCoroutine(attackCooldown(0.4f, 0));
     }
 
@@ -406,6 +394,59 @@ public class LilithScript : MonoBehaviour
         yield return new WaitForSeconds(cooldown);
         canSummon = true;
         yield break;
+    }
+
+    void staffScale()
+    {
+        int dir = getDirection();
+
+        Vector3 direction = (new Vector3(player.position.x, player.position.y - 1.6f) - staffController.transform.position).normalized;
+        float angle = MathF.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+
+        Vector3 scale = staffController.transform.localScale;
+
+        if (dir > 0)
+        {
+            scale.y = Mathf.Abs(scale.y);
+            scale.x = Mathf.Abs(scale.x);
+        }
+        else
+        {
+            scale.y = Mathf.Abs(scale.y);
+            scale.x = Mathf.Abs(scale.x);
+        }
+        //staffController.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+        staffController.transform.rotation = Quaternion.Euler(0, 0, 0);
+        staffController.transform.localScale = scale;
+    }
+
+    IEnumerator rotatetooriginal(Transform target)
+    {
+        shouldFlip = false;
+        float elapsed = 0f;
+        float duration = 0.3f;
+        //target.localScale = new Vector3(3.835358f, 3.835358f, 0);
+        bool wasFlippedleft = transform.localScale.x < 0f;
+        //Quaternion goal = (angle >= -60 && angle <= 60) ? Quaternion.identity : Quaternion.Euler(0, 0, 180);
+        //Quaternion goal = Quaternion.identity;
+        //Quaternion goal = center.x > this.transform.position.x ? Quaternion.identity : Quaternion.Euler(0, 0, 180);
+        //Quaternion goal = player.transform.position.x > transform.position.x ? Quaternion.identity : Quaternion.Euler(0, 0, 180);
+        Quaternion current = staffController.transform.rotation;
+        while (elapsed < duration)
+        {
+            //bool still = this.transform.position.x > center.x && this.transform.position.x > player.transform.position.x;
+            //if (still) goal = goal;
+            //else goal = Quaternion.identity;
+            shouldFlip = false;
+            Quaternion goal = transform.localScale.x < 0 ? Quaternion.Euler(0, 0, 180) : Quaternion.identity;
+            float t = elapsed / duration;
+            target.rotation = Quaternion.Slerp(current, goal, t);
+            elapsed += Time.deltaTime;
+            if (isDead) yield break;
+            yield return null;
+        }
+        Quaternion finalgoal = transform.localScale.x < 0 ? Quaternion.Euler(0, 0, 180) : Quaternion.identity;
+        target.rotation = finalgoal;
     }
 
     public IEnumerator shardAttack()
@@ -421,13 +462,14 @@ public class LilithScript : MonoBehaviour
         //staffController.transform.rotation = Quaternion.identity;
         //Quaternion originalrotation = staffController.transform.rotation;
         bool hasplayed = false;
+        Vector3 scale = staffController.transform.localScale;
         while (elapsed < duration)
         {
             dir = (new Vector3(player.position.x, player.position.y - 1.6f) - staffController.transform.position).normalized;
 
             angle = MathF.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
 
-            if (player.position.x > staffController.transform.position.x)
+            if (player.position.x > transform.position.x)
             {
                 scale.y = Mathf.Abs(scale.y);
                 scale.x = Mathf.Abs(scale.x);
@@ -435,17 +477,19 @@ public class LilithScript : MonoBehaviour
                 //angle -= 5f;
                 //angle -= 60f;
             }
-            else if (player.position.x < staffController.transform.position.x)
+            else if (player.position.x < transform.position.x)
             {
                 scale.y = -Mathf.Abs(scale.y);
                 scale.x = -Mathf.Abs(scale.x);
                 if (angle > 0) angle -= 360;
                 angle = Mathf.Clamp(angle, -240f, -120f);
                 //angle += 5f;
+                print("elseshi shevedi");
                 //angle += 60f;
             }
 
             staffController.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+            staffController.transform.localScale = scale;
             elapsed += Time.deltaTime;
             if (elapsed >= 0.3f && !hasplayed)
             {
@@ -460,14 +504,14 @@ public class LilithScript : MonoBehaviour
         staffScript.changeColor(LillithStaffScript.Colors.red);
 
         //yield return new WaitForSeconds(0.05f);
+        Vector2 direction = Vector2.zero;
+        direction = (new Vector3(player.transform.position.x, player.transform.position.y - 0.4f) - shardSpawner.transform.position).normalized;
         shouldFlip = false;
         GameObject particles = Instantiate(shardSpawnParticles, shardSpawner.transform.position, Quaternion.identity);
-        particles.transform.rotation = Quaternion.Euler(0, 0, angle);
-        Vector2 direction = Vector2.zero;
         GameObject shard = Instantiate(crystal, shardSpawner.transform.position, Quaternion.identity);
+        particles.transform.rotation = Quaternion.Euler(0, 0, angle);
         //if (isGrounded) direction = (new Vector3(player.transform.position.x, player.transform.position.y -0.4f) - shard.transform.position).normalized;
         //else direction = (new Vector3(player.transform.position.x, player.transform.position.y - 0.2f) - shard.transform.position).normalized;
-        direction = (new Vector3(player.transform.position.x, player.transform.position.y - 0.4f) - shard.transform.position).normalized;
         angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
         angle -= 90;
         shard.transform.rotation = Quaternion.Euler(0, 0, angle);
@@ -481,6 +525,7 @@ public class LilithScript : MonoBehaviour
         //staffController.transform.rotation = Quaternion.identity;
         //bool isToTheRight = this.transform.position.x > center.x && this.transform.position.x > player.transform.position.x;
         if (isDead) yield break;
+        StartCoroutine(rotatetooriginal(staffController.transform));
         yield return new WaitForSeconds(0.3f);
         StartCoroutine(attackCooldown(0.4f, 0));
     }
@@ -489,11 +534,6 @@ public class LilithScript : MonoBehaviour
     {
         if (player.transform.position.x > this.transform.position.x) return 1;
         else return -1;
-    }
-    private void staffAim(float elapsed)
-    {
-
-    
     }
 
     public IEnumerator fireBallAttack()
@@ -506,7 +546,7 @@ public class LilithScript : MonoBehaviour
         float elapsed = 0f;
         float angle = 0f;
         Vector2 dir = new Vector2(0, 0);
-
+        Vector3 scale = staffController.transform.localScale;
         bool hasplayed = false;
         while (elapsed < duration)
         {
@@ -514,7 +554,7 @@ public class LilithScript : MonoBehaviour
 
             angle = MathF.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
 
-            if (player.position.x > staffController.transform.position.x)
+            if (player.position.x > transform.position.x)
             {
                 scale.y = Mathf.Abs(scale.y);
                 scale.x = Mathf.Abs(scale.x);
@@ -522,7 +562,7 @@ public class LilithScript : MonoBehaviour
                 //angle -= 5f;
                 //angle -= 60f;
             }
-            else if (player.position.x < staffController.transform.position.x)
+            else if (player.position.x < transform.position.x)
             {
                 scale.y = -Mathf.Abs(scale.y);
                 scale.x = -Mathf.Abs(scale.x);
@@ -533,6 +573,7 @@ public class LilithScript : MonoBehaviour
             }
 
             staffController.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+            staffController.transform.localScale = scale;
             elapsed += Time.deltaTime;
             if (elapsed >= 0.3f && !hasplayed)
             {
@@ -542,17 +583,13 @@ public class LilithScript : MonoBehaviour
             if (isDead) yield break;
             yield return null;
         }
-        shouldFlip = false;
-
-        staffScript.changeColor(LillithStaffScript.Colors.red);
-
-
-        GameObject particles = Instantiate(fireBallSpawnParticles, shardSpawner.transform.position, Quaternion.identity);
-        particles.transform.rotation = Quaternion.Euler(0, 0, angle);
         Vector2 direction = Vector2.zero;
+        direction = (new Vector3(player.transform.position.x, player.transform.position.y - 0.4f) - shardSpawner.transform.position).normalized;
+        shouldFlip = false;
+        staffScript.changeColor(LillithStaffScript.Colors.red);
+        GameObject particles = Instantiate(fireBallSpawnParticles, shardSpawner.transform.position, Quaternion.identity);
         GameObject shard = Instantiate(fireBall, shardSpawner.transform.position, Quaternion.identity);
-
-        direction = (new Vector3(player.transform.position.x, player.transform.position.y - 0.4f) - shard.transform.position).normalized;
+        particles.transform.rotation = Quaternion.Euler(0, 0, angle);
         angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
         angle -= 90;
         shard.transform.rotation = Quaternion.Euler(0, 0, angle);
@@ -562,7 +599,7 @@ public class LilithScript : MonoBehaviour
 
         yield return new WaitForSeconds(0.2f);
         if (isDead) yield break;
-
+        StartCoroutine(rotatetooriginal(staffController.transform));
         yield return new WaitForSeconds(0.3f);
         StartCoroutine(attackCooldown(0.4f, 0));
     }
@@ -573,8 +610,10 @@ public class LilithScript : MonoBehaviour
         staffController.transform.rotation = Quaternion.Euler(0, 0, 0);
 
     }
+
     public IEnumerator summonAttack()
     {
+        staffScale();
         animator.SetBool("shouldSUMMON", true);
         if (isDead) yield break;
         //int stateHash = Animator.StringToHash("LilithStaffHeartRedToYellow");

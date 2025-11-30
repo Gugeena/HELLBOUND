@@ -58,6 +58,10 @@ public class StyleManager : MonoBehaviour
     public static bool canAscend;
     public static bool shouldTurnOff = false;
 
+    public Image fill;
+
+    bool hasalreadydonethis = false;
+
     private void Start()
     {
         lightGrey = new Color(0.7f, 0.7f, 0.7f, 1.0f);
@@ -72,12 +76,13 @@ public class StyleManager : MonoBehaviour
 
     private void Update()
     {
-        if(PlayerMovement.hasAscendedonce)
+
+        if (PlayerMovement.hasAscendedonce && !hasalreadydonethis)
         {
+            styleAnim.enabled = false;
             shaker.stopShake();
             stylePoints = 30;
             styleSlider.value = stylePoints;
-            changeColors("yellow");
             currStyle = Style.Angelic;
             switchLetter(Style.Angelic);
             playerMovement.readyAngelic();
@@ -85,10 +90,15 @@ public class StyleManager : MonoBehaviour
             shaker.Begin();
             styleText.text = "ANGELIC!!!";
             isAngelic = true;
+            fill.color = Color.yellow;
+            hasalreadydonethis = true;
             return;
         }
 
-        StartCoroutine(ascentiontextcontrol());
+        if(hasalreadydonethis)
+        {
+            return;
+        }
 
         if (!playerMovement.shouldGainStyle && !playerMovement.shouldLoseStyle && !PlayerMovement.hasAscendedonce)
         {
@@ -103,7 +113,9 @@ public class StyleManager : MonoBehaviour
             //else fillImage.color = Color.red;
         }
         */
-       
+
+        StartCoroutine(ascentiontextcontrol());
+
         handleSlider();
 
         if(stylePoints >= 30 && currStyle != Style.Angelic)
@@ -117,30 +129,38 @@ public class StyleManager : MonoBehaviour
         {
             shrinkStyle();
         }
-
     }
 
     public IEnumerator ascentiontextcontrol()
     {
-        if (isAngelic && stylePoints >= 30 && !shouldTurnOff)
+        while (!PlayerMovement.hasAscendedonce)
         {
-            canAscend = true;
-            Ascend.SetActive(true);
+            if (isAngelic && stylePoints >= 30 && !shouldTurnOff)
+            {
+                if (!Ascend.activeSelf)
+                {
+                    canAscend = true;
+                    Ascend.SetActive(true);
+                }
+            }
+            else
+            {
+                if (Ascend.activeSelf)
+                {
+                    canAscend = false;
+                    ascentionanimator.Play("AsecndTextDissapear");
+                    yield return new WaitForSeconds(1f);
+                    Ascend.SetActive(false);
+                }
+            }
+
+            yield return new WaitForSeconds(0.1f);
         }
-        else
-        {
-            canAscend = false;
-            ascentionanimator.Play("AsecndTextDissapear");
-            yield return new WaitForSeconds(1f);
-            Ascend.SetActive(false);
-        }
-        if(shouldTurnOff)
-        {
-            canAscend = false;
-            ascentionanimator.Play("AsecndTextDissapear");
-            yield return new WaitForSeconds(1f);
-            Ascend.SetActive(false);
-        }
+        canAscend = false;
+        ascentionanimator.Play("AsecndTextDissapear");
+        yield return new WaitForSeconds(1f);
+        Ascend.SetActive(false);
+        yield break;
     }
 
     void changeColors(string anim)
@@ -267,17 +287,20 @@ public class StyleManager : MonoBehaviour
     private IEnumerator styleLife()
     {
         yield return new WaitForSeconds(0.3f);
-        if (playerMovement.shouldLoseStyle && !playerMovement.shouldGainStyle)
+        if (playerMovement.shouldLoseStyle && !playerMovement.shouldGainStyle && !PlayerMovement.hasAscendedonce)
         {
             changeColors("lightgrey-darkgrey");
             if (stylePoints > -3) stylePoints--;
         }
         else
         {
-            if (!isAngelic) changeColors("darkgrey-red");
-            else
+            if (!PlayerMovement.hasAscendedonce)
             {
-                if(!shouldTurnOff) changeColors("darkgrey-yellow");
+                if (!isAngelic) changeColors("darkgrey-red");
+                else
+                {
+                    if (!shouldTurnOff) changeColors("darkgrey-yellow");
+                }
             }
         }
 
