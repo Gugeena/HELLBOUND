@@ -1334,7 +1334,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 240116537}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
@@ -6493,7 +6493,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 322454873}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
@@ -7063,7 +7063,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 427955568}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
@@ -7405,7 +7405,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -27839,7 +27839,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1220645820}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
@@ -42457,7 +42457,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1655954849}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
@@ -60704,7 +60704,7 @@ MonoBehaviour:
   rightHand: {fileID: 762624402}
   comboTime: 0.75
   runParticles: {fileID: 1224951686}
-  godMode: 0
+  godMode: 1
   RLocation: {fileID: 58100624}
   LLocation: {fileID: 1228808078}
   canDash: 1
@@ -60745,6 +60745,7 @@ MonoBehaviour:
   revival: {fileID: 8300000, guid: 7a4e0329aa8e2804c8e1b86ea6ee3bd0, type: 3}
   finaldissapearence: {fileID: 8300000, guid: e2c220fce51f4084f84c76590d4dc424, type: 3}
   Beyondascension: {fileID: 8300000, guid: e4da62ff74a9e1a41a253bf80e82d8f1, type: 3}
+  angelicDeath: {fileID: 0}
   punches:
   - {fileID: 8300000, guid: 62da8b6a6b0e9254988c9bd8f3e286ba, type: 3}
   - {fileID: 8300000, guid: b92fa1e7bcf634f47925069d3b97cba7, type: 3}
@@ -60817,6 +60818,7 @@ MonoBehaviour:
   animatorofhands:
   - {fileID: 1819971425}
   - {fileID: 1765679918}
+  angelDeathParticles: {fileID: 0}
 --- !u!4 &2089724964
 Transform:
   m_ObjectHideFlags: 0

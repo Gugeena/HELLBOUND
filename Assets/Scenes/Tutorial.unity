@@ -1139,7 +1139,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!95 &160525848
 Animator:
   serializedVersion: 7
@@ -22762,6 +22762,7 @@ MonoBehaviour:
   revival: {fileID: 0}
   finaldissapearence: {fileID: 0}
   Beyondascension: {fileID: 0}
+  angelicDeath: {fileID: 0}
   punches: []
   gravelWalk: []
   jumps: []
@@ -22806,6 +22807,7 @@ MonoBehaviour:
   slash: {fileID: 0}
   isFuckingPoisoned: 0
   animatorofhands: []
+  angelDeathParticles: {fileID: 0}
 --- !u!4 &1215419742
 Transform:
   m_ObjectHideFlags: 0
