@@ -83,6 +83,7 @@ public class arrowScript : MonoBehaviour
 
         if (collision.gameObject.name == "LLocation")
         {
+            if (teleportCount >= 1) killcount = 0;
             Vector2 vel = rb.linearVelocity;
             rb.MovePosition(new Vector2(SidePortalScript.RLocation.position.x, transform.position.y));
             teleportCount++;
@@ -90,6 +91,7 @@ public class arrowScript : MonoBehaviour
         }
         else if (collision.gameObject.name == "RLocation")
         {
+            if (teleportCount >= 1) killcount = 0;
             Vector2 vel = rb.linearVelocity;
             rb.MovePosition(new Vector2(SidePortalScript.LLocation.position.x, transform.position.y));
             teleportCount++;
@@ -104,6 +106,7 @@ public class arrowScript : MonoBehaviour
 
     public void increaseKillCount()
     {
+        if (teleportCount == 0) return;
         killcount++;
     }
 
@@ -111,5 +114,4 @@ public class arrowScript : MonoBehaviour
     {
         return killcount;
     }
-
 }

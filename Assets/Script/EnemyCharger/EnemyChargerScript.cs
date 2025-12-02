@@ -395,11 +395,11 @@ public class EnemyChargerScript : MonoBehaviour
         {
             teleportCount = RetrieveTeleportCount(collision);
             damage(2);
-            if (collision.gameObject.name == "Arrow(Clone")
+            if (collision.gameObject.name == "Arrow(Clone)")
             {
                 arrowScript arrowscript = collision.gameObject.GetComponent<arrowScript>();
                 arrowscript.increaseKillCount();
-                if (arrowscript.getKillCount() > 0 && teleportCount > 0) AchivementScript.instance.UnlockAchivement("FIVE_ONE_KILLS");
+                if (arrowscript.getKillCount() >= 5 && teleportCount > 0) AchivementScript.instance.UnlockAchivement("FIVE_ONE_KILLS");
             }
         }
       

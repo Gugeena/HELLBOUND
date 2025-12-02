@@ -245,7 +245,7 @@ public class EyeballMovementScript : MonoBehaviour
         {
             death();
             RetrieveTeleportCount(collision);
-            if (collision.gameObject.name == "Arrow(Clone")
+            if (collision.gameObject.name == "Arrow(Clone)")
             {
                 arrowScript arrowscript = collision.gameObject.GetComponent<arrowScript>();
                 arrowscript.increaseKillCount();

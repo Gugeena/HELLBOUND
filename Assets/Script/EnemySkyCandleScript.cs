@@ -360,7 +360,7 @@ public class EnemySkyCandleScript : MonoBehaviour
         {
             teleportCount = RetrieveTeleportCount(collision);
             damage(2);
-            if (collision.gameObject.name == "Arrow(Clone")
+            if (collision.gameObject.name == "Arrow(Clone)")
             {
                 arrowScript arrowscript = collision.gameObject.GetComponent<arrowScript>();
                 arrowscript.increaseKillCount();
