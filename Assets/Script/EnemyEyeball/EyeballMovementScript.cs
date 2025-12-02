@@ -244,9 +244,14 @@ public class EyeballMovementScript : MonoBehaviour
         if (collision.gameObject.tag == "mfHitbox")
         {
             death();
+            RetrieveTeleportCount(collision);
+            if (collision.gameObject.name == "Arrow(Clone")
+            {
+                arrowScript arrowscript = collision.gameObject.GetComponent<arrowScript>();
+                arrowscript.increaseKillCount();
+                if (arrowscript.getKillCount() > 0 && teleportCount > 0) AchivementScript.instance.UnlockAchivement("FIVE_ONE_KILLS");
+            }
         }
-
-        RetrieveTeleportCount(collision);
     }
 
     public void RetrieveTeleportCount(Collider2D collision)
@@ -302,7 +307,7 @@ public class EyeballMovementScript : MonoBehaviour
             playerScript.hp += healamount;
             if (teleportCount <= 0)
             {
-                //print(dist);
+                //printv(dist);
                 if (Directpath < 7f)
                 {
                     if (playerScript.hp > 0)

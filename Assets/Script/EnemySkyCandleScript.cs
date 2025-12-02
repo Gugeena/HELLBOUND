@@ -351,7 +351,6 @@ public class EnemySkyCandleScript : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        teleportCount = RetrieveTeleportCount(collision);
         if (collision.gameObject.tag == "meleehitbox")
         {
             damage(1);
@@ -359,7 +358,14 @@ public class EnemySkyCandleScript : MonoBehaviour
 
         if (collision.gameObject.tag == "mfHitbox")
         {
+            teleportCount = RetrieveTeleportCount(collision);
             damage(2);
+            if (collision.gameObject.name == "Arrow(Clone")
+            {
+                arrowScript arrowscript = collision.gameObject.GetComponent<arrowScript>();
+                arrowscript.increaseKillCount();
+                if (arrowscript.getKillCount() > 0 && teleportCount > 0) AchivementScript.instance.UnlockAchivement("FIVE_ONE_KILLS");
+            }
         }
 
         if (collision.gameObject.CompareTag("Crystal")) StartCoroutine(death());

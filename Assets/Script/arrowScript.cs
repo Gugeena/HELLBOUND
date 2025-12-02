@@ -18,7 +18,7 @@ public class arrowScript : MonoBehaviour
     [SerializeField]
     private AudioClip land, returnSound;
 
-    private int teleportCount = 0;
+    private int teleportCount = 0, killcount;
     GameObject player;
 
     private void Awake()
@@ -100,6 +100,16 @@ public class arrowScript : MonoBehaviour
     public int getteleportCount()
     {
         return teleportCount;
+    }
+
+    public void increaseKillCount()
+    {
+        killcount++;
+    }
+
+    public int getKillCount()
+    {
+        return killcount;
     }
 
 }

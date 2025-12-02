@@ -473,10 +473,7 @@ public class PlayerMovement : MonoBehaviour
             //StartCoroutine(pickUpWeapon(3, "fists"));
         }
         */
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            StartCoroutine(enterAngelic(true));
-        }
+     
         if (StyleManager.canAscend && !isAngelic && !isDead)
         {
             if (Input.GetKeyDown(KeyCode.E))
@@ -694,6 +691,8 @@ public class PlayerMovement : MonoBehaviour
 
         if(isintenthlayer) Destroy(gameObject);
         if(!isintenthlayer && !Beyonder) Destroy(gameObject);
+
+        AchivementScript.instance.UnlockAchivement("MADE_IN_HEAVEN");
     }
 
     public void unreadyAngelic()
