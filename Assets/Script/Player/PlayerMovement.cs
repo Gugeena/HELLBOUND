@@ -8,6 +8,7 @@ using Unity.Burst.Intrinsics;
 using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.Audio;
 using UnityEngine.EventSystems;
 using UnityEngine.Rendering;
 using UnityEngine.SceneManagement;
@@ -110,7 +111,7 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("SFX")]
     [SerializeField] private AudioClip death;
-    [SerializeField] private AudioClip mfGarwoba, firstLandSound, ascension, hitStop, revival, finaldissapearence, Beyondascension;
+    [SerializeField] private AudioClip mfGarwoba, firstLandSound, ascension, hitStop, revival, finaldissapearence, Beyondascension, angelicDeath;
     [SerializeField] private AudioClip[] punches, gravelWalk, jumps, lands, bowShots, mfHits, spearHits, boomerangShots, hurts;
     private int walkedDistance = 1;
 
@@ -203,6 +204,8 @@ public class PlayerMovement : MonoBehaviour
     public bool isFuckingPoisoned = false;
 
     public Animator[] animatorofhands;
+
+    [SerializeField] ParticleSystem angelDeathParticles;
 
     // Start is called before the first frame update
     void Start()
@@ -305,10 +308,6 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.CapsLock))
-        {
-            ScreenCapture.CaptureScreenshot("Screenshot.png", superSize: 1);
-        }
         //if (PauseScript.Paused || isDead) return;
 
         if (LilithScript.bossfightstarted && !hassubscribedtolilith)
@@ -317,9 +316,6 @@ public class PlayerMovement : MonoBehaviour
             LilithScript.lilithDeathEvent += EnterFinalAscension;
         }
 
-        //if (Input.GetKeyDown(KeyCode.T)) {
-            //damageFlashScript.callFlash();
-        //}
 
         if (shouldEnd && !ukvegadavaida)
         {
@@ -1146,14 +1142,10 @@ public class PlayerMovement : MonoBehaviour
         invincible = true;
         hp -= damage;
 
-        if (hp <= 0 && !isAngelic && !isDead)
+        if (hp <= 0 && !isDead)
         {
             StartCoroutine(deathCRT());
             yield break;
-        }
-        else if (hp <= 0 && isAngelic)
-        {
-            StartCoroutine(gadasvla(5));
         }
 
         Instantiate(hurtparticle, new Vector2(transform.position.x, transform.position.y - 0.75f), Quaternion.identity);
@@ -1191,17 +1183,46 @@ public class PlayerMovement : MonoBehaviour
         SpawnerScript.shouldSpawn = false;
         TLOHLFADEOUTANDINNER(1);
         yield return StartCoroutine(frameStop(0.2f));
-        //audioManager.instance.sfx.audioMixer.GetFloat("music", out f);
-        //audioManager.instance.sfx.audioMixer.SetFloat("music", Mathf.Log10(0.2f) * 20);
-        audioManager.instance.playAudio(death, 1f, 1f, transform, audioManager.instance.sfx);
+
+        string animclip = "player_death";
+        AudioClip clip = death;
+        if (isAngelic)
+        {
+            clip = angelicDeath;
+            animclip = "player_angelic_death";
+
+            foreach (ShakeSelfScript s in bodyPartShakes)
+            {
+                s.Begin();
+            }
+        }
+        audioManager.instance.playAudio(clip, 1f, 1f, transform, audioManager.instance.sfx);
 
         gravityBox.enabled = false;
         legBox.enabled = false;
         rb.bodyType = RigidbodyType2D.Kinematic;
-        anim.Play("player_death");
+
+        anim.Play(animclip);
+
         runParticles.Stop();
-        yield return new WaitForSeconds(1f);
         DisableAllActiveWeapons();
+        if (isAngelic)
+        {
+            angelDeathParticles.Play();
+            camShake.amplitude = 2;
+            camShake.frequency = 1.2f;
+            camShake.time = -1;
+            StartCoroutine(camShake.shake());
+            yield return new WaitForSeconds(1.5f);
+            
+            audioManager.instance.stopLillith();
+            yield return new WaitForSeconds(2);
+            AudioListener.pause = true;
+            StartCoroutine(gadasvla(5));
+            yield break;
+        }
+
+        yield return new WaitForSeconds(1f);
         rb.gravityScale = 8f;
         rb.bodyType = RigidbodyType2D.Dynamic;
         yield return new WaitForSeconds(1f);
@@ -1212,15 +1233,14 @@ public class PlayerMovement : MonoBehaviour
         rb.constraints = RigidbodyConstraints2D.FreezePositionY;
         uiCanvas.renderMode = RenderMode.WorldSpace;
         audioManager.instance.playAudio(revival, 1, 1, transform, audioManager.instance.sfx);
+         
+
+
         camAnimator.Play("player_camera_fall");
         audioManager.instance.stopMusic();
-        //audioManager.instance.sfx.audioMixer.SetFloat("music", f);
         yield return new WaitForSeconds(2f);
         DisableAllActiveWeapons();
-        //audioManager.instance.sfx.audioMixer.GetFloat("sfx", out y);
-        //audioManager.instance.sfx.audioMixer.SetFloat("sfx", Mathf.Log10(0.2f) * 20);
         autokillcollider.enabled = true;
-        //audioManager.instance.sfx.audioMixer.SetFloat("sfx", f);
         hp = 150f;
         if(isintenthlayer) hpAnimator.Play("PlayerDepoisoning");
         yield return new WaitForSeconds(8f);

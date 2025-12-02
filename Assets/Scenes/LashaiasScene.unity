@@ -665,7 +665,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 141964243}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
@@ -6583,7 +6583,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 322454873}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
@@ -7153,7 +7153,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 427955568}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
@@ -7489,7 +7489,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 470715776}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
   m_Name: 
@@ -13812,7 +13812,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 595217474}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
@@ -26839,7 +26839,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1220645820}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
@@ -58393,6 +58393,7 @@ MonoBehaviour:
   revival: {fileID: 8300000, guid: 7a4e0329aa8e2804c8e1b86ea6ee3bd0, type: 3}
   finaldissapearence: {fileID: 8300000, guid: e2c220fce51f4084f84c76590d4dc424, type: 3}
   Beyondascension: {fileID: 8300000, guid: e4da62ff74a9e1a41a253bf80e82d8f1, type: 3}
+  angelicDeath: {fileID: 0}
   punches:
   - {fileID: 8300000, guid: 62da8b6a6b0e9254988c9bd8f3e286ba, type: 3}
   - {fileID: 8300000, guid: b92fa1e7bcf634f47925069d3b97cba7, type: 3}
@@ -58463,6 +58464,7 @@ MonoBehaviour:
   slash: {fileID: 0}
   isFuckingPoisoned: 0
   animatorofhands: []
+  angelDeathParticles: {fileID: 0}
 --- !u!4 &2089724964
 Transform:
   m_ObjectHideFlags: 0
