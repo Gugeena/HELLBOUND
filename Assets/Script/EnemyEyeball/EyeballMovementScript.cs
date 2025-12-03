@@ -77,6 +77,8 @@ public class EyeballMovementScript : MonoBehaviour
 
     private spriteFlashScript colorFlash;
 
+    private Coroutine destroyCoroutine;
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -168,7 +170,7 @@ public class EyeballMovementScript : MonoBehaviour
         colorFlash._duration = 0.15f;
 
         movespeed = 11;
-        StartCoroutine(ExplodeAfterTime());
+        destroyCoroutine = StartCoroutine(ExplodeAfterTime());
     }
 
     private IEnumerator distanceDetection()
@@ -217,10 +219,10 @@ public class EyeballMovementScript : MonoBehaviour
     private IEnumerator DestroyTimer()
     {
         Instantiate(BlowUpParticles, transform.position, Quaternion.identity);
-        audioManager.instance.playAudio(explodeSound, 0.65f, 1, transform, audioManager.instance.sfx);
+        Instantiate(Hitbox, transform.position, Quaternion.identity);
+        audioManager.instance.playAudio(explodeSound, 1f, 1, transform, audioManager.instance.sfx);
         StartCoroutine(ExplosionHitbox());
-
-        yield return new WaitForSeconds(0.5f);
+        yield return null;
         Destroy(gameObject);
     }
 
@@ -234,6 +236,7 @@ public class EyeballMovementScript : MonoBehaviour
     {
         if (collision.gameObject.layer == 3 || collision.gameObject.layer == 6)
         {
+            StopCoroutine(destroyCoroutine);
             StartCoroutine(DestroyTimer());
         }
 
