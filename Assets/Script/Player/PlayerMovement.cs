@@ -14,7 +14,9 @@ using UnityEngine.Rendering;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using UnityEngine.UIElements;
+using System.IO;
 using static UnityEngine.ParticleSystem;
+using static UnityEngine.Rendering.DebugUI;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -585,8 +587,13 @@ public class PlayerMovement : MonoBehaviour
             yield return new WaitForSeconds(4f);
             fadeOut.SetActive(true);
             yield return new WaitForSeconds(1f);
-            PlayerPrefs.SetInt("alreadybeatthegame", 1);
-            PlayerPrefs.Save();
+
+            GlobalSettings globalsettings = SaveSystem.Load();
+
+            globalsettings.information.hasbeatthegame = 1;
+
+            SaveSystem.Save(globalsettings);
+
             SceneManager.LoadScene(1);
         }
 

@@ -7,6 +7,7 @@ using UnityEngine.Audio;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using System.IO;
 
 public class Functions : MonoBehaviour
 {
@@ -23,8 +24,8 @@ public class Functions : MonoBehaviour
 
     void Start()
     {
+        SaveSystem.Load();
         AchivementScript.instance.UnlockAchivement("HELLBOUND_ENTRY");
-
         AudioListener.pause = false;
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
@@ -34,7 +35,10 @@ public class Functions : MonoBehaviour
 
     public void loadsaved()
     {
-        alreadybeatthegame = PlayerPrefs.GetInt("alreadybeatthegame", 0);
+        GlobalSettings globalsettings = SaveSystem.Load();
+
+        alreadybeatthegame = globalsettings.information.hasbeatthegame;
+
         RectTransform rectTransform = startGame.GetComponent<RectTransform>();
         if (alreadybeatthegame != 0)
         {
@@ -58,7 +62,29 @@ public class Functions : MonoBehaviour
     public void Play()
     {
         EventSystem.current.SetSelectedGameObject(null);
-        StartCoroutine(StartGame(3));
+        int scene = 3;
+
+        /*
+        string path = System.IO.Path.Combine(Application.persistentDataPath, "Information.json");
+
+        if (!File.Exists(path))
+        {
+            Information info = new Information()
+            {
+                hasbeatthegame = 0,
+            };
+            File.WriteAllText(path, JsonUtility.ToJson(info));
+        }
+
+        Information information = JsonUtility.FromJson<Information>(System.IO.File.ReadAllText(path));
+        */
+
+        //alreadybeatthegame = information.hasbeatthegame;
+
+        GlobalSettings globalsettings = SaveSystem.Load();
+
+        if (globalsettings.information.doneTutorial > 0) scene = 4;
+        StartCoroutine(StartGame(scene));
     }
 
     public void PlayTenth()
@@ -130,29 +156,22 @@ public class Functions : MonoBehaviour
 
     public void loadAudioSettings()
     {
-        musicSlider.value = PlayerPrefs.GetFloat("musicVolume", 1);
+        GlobalSettings globalsettings = SaveSystem.Load();
 
-        sfxSlider.value = PlayerPrefs.GetFloat("sfxVolume", 1);
+        musicSlider.value = globalsettings.audio.MUSICVolume;
+        sfxSlider.value = globalsettings.audio.SFXVolume;
 
         setMusicVolume();
         setSFXVolume();
     }
+
     public void saveAudioSettings(float volume, int value)
     {
-        if(value == 0) PlayerPrefs.SetFloat("sfxVolume", volume);
-        else PlayerPrefs.SetFloat("musicVolume", volume);
-    }
+        GlobalSettings globalsettings = SaveSystem.Load();
+        if (value > 0) globalsettings.audio.MUSICVolume = volume;
+        else globalsettings.audio.SFXVolume = volume;
 
-    public void loadMusicVolume()
-    {
-        musicSlider.value = PlayerPrefs.GetFloat("musicVolume", 1);
-        setMusicVolume();
-    }
-
-    public void loadSFXVolume()
-    {
-        sfxSlider.value = PlayerPrefs.GetFloat("sfxVolume", 1);
-        setSFXVolume();
+        SaveSystem.Save(globalsettings);
     }
 
     public void setMusicVolume()

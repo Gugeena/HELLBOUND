@@ -88,6 +88,7 @@ public class EnemyChargerScript : MonoBehaviour
         canAttack = false;
         canMove = false;
         StartCoroutine(waiter());
+        stopDistance = UnityEngine.Random.Range(1f, 1.41f);
     }
 
     public IEnumerator waiter()

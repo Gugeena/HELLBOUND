@@ -1,8 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.Rendering;
 using UnityEngine.UI;
+using static UnityEngine.Rendering.DebugUI;
 
 public class KeyBindManagerScript : MonoBehaviour
 {
@@ -234,21 +237,26 @@ public class KeyBindManagerScript : MonoBehaviour
 
     private void SaveKeyBindings()
     {
-        PlayerPrefs.SetInt("DashKey", (int)dashKey);
-        PlayerPrefs.SetInt("AttackKey", (int)attackKey);
-        PlayerPrefs.SetInt("JumpKey", (int)jumpKey);
-        PlayerPrefs.SetInt("HeavyKey", (int)heavyKey);
-        PlayerPrefs.SetInt("DropKey", (int)DropKey);
-        PlayerPrefs.Save();
+        GlobalSettings globalsettings = SaveSystem.Load();
+
+        globalsettings.keybinds.JKey = (int)jumpKey;
+        globalsettings.keybinds.AKey = (int)attackKey;
+        globalsettings.keybinds.SKey = (int)heavyKey;
+        globalsettings.keybinds.DRKey = (int)DropKey;
+        globalsettings.keybinds.DSHKey = (int)dashKey;
+
+        SaveSystem.Save(globalsettings);
     }
 
     private void LoadKeyBindings()
     {
-        dashKey = (KeyCode)PlayerPrefs.GetInt("DashKey", (int)KeyCode.LeftShift);
-        attackKey = (KeyCode)PlayerPrefs.GetInt("AttackKey", (int)KeyCode.Mouse0);
-        jumpKey = (KeyCode)PlayerPrefs.GetInt("JumpKey", (int)KeyCode.Space);
-        heavyKey = (KeyCode)PlayerPrefs.GetInt("HeavyKey", (int)KeyCode.Mouse1);
-        DropKey = (KeyCode)PlayerPrefs.GetInt("DropKey", (int)KeyCode.Q);
+        GlobalSettings globalsettings = SaveSystem.Load();
+
+        dashKey = (KeyCode)globalsettings.keybinds.DSHKey;
+        attackKey = (KeyCode)globalsettings.keybinds.AKey;
+        jumpKey = (KeyCode)globalsettings.keybinds.JKey;
+        heavyKey = (KeyCode)globalsettings.keybinds.SKey;
+        DropKey = (KeyCode)globalsettings.keybinds.DRKey;
 
         string dashDisplay = KeyToString(dashKey);
         string attackDisplay = KeyToString(attackKey);

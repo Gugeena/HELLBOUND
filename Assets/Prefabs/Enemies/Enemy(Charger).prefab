@@ -533,6 +533,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96f7e5335c37520428c34a2c66014836, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  animator: {fileID: 0}
 --- !u!1 &2104150949143119885
 GameObject:
   m_ObjectHideFlags: 0
@@ -1029,6 +1030,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96f7e5335c37520428c34a2c66014836, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  animator: {fileID: 0}
 --- !u!1 &4939554346995538806
 GameObject:
   m_ObjectHideFlags: 0
@@ -1163,10 +1165,13 @@ MonoBehaviour:
   attackSound: {fileID: 8300000, guid: e913376c8568bf64597b86434e38e930, type: 3}
   LPortal: {fileID: 0}
   RPortal: {fileID: 0}
+  rb: {fileID: 0}
   LLOCATION: {fileID: 0}
   RLLOCATION: {fileID: 0}
   lastproccessedkill: -1
   healamount: 10
+  stoned: 0
+  deathparticles: []
 --- !u!114 &6896750976944564204
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1179,6 +1184,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96f7e5335c37520428c34a2c66014836, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  animator: {fileID: 0}
 --- !u!1 &4977672520368061023
 GameObject:
   m_ObjectHideFlags: 0
@@ -1412,6 +1418,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96f7e5335c37520428c34a2c66014836, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  animator: {fileID: 0}
 --- !u!1 &6180179784786315043
 GameObject:
   m_ObjectHideFlags: 0
@@ -1704,6 +1711,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96f7e5335c37520428c34a2c66014836, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  animator: {fileID: 0}
 --- !u!1 &6487347898796803845
 GameObject:
   m_ObjectHideFlags: 0
@@ -1883,6 +1891,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96f7e5335c37520428c34a2c66014836, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  animator: {fileID: 0}
 --- !u!1 &6776774432028578102
 GameObject:
   m_ObjectHideFlags: 0
@@ -2227,3 +2236,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96f7e5335c37520428c34a2c66014836, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  animator: {fileID: 0}
