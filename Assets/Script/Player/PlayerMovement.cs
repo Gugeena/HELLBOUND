@@ -666,6 +666,8 @@ public class PlayerMovement : MonoBehaviour
             audioManager.instance.startEnd();
             yield return new WaitForSeconds(6f);
             canvasAnimator.Play("credits");
+            camShake.Stop();
+            camAnimator.gameObject.transform.position = new Vector2(25.43f, 0.7f);
             yield return new WaitForSeconds(22f);
             //finalfadeOut.SetActive(true);
             audioManager.instance.playAudio(finaldissapearence, 1, 1, transform, audioManager.instance.sfx);

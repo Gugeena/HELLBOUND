@@ -253,7 +253,7 @@ public class EyeballMovementScript : MonoBehaviour
             rb.linearVelocity = vel;
         }
 
-        if (collision.gameObject.tag == "mfHitbox")
+        if (collision.gameObject.tag == "mfHitbox" || collision.gameObject.tag == "meleehitbox")
         {
             death();
             RetrieveTeleportCount(collision);
