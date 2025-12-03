@@ -31,7 +31,8 @@ public class EyeballMovementScript : MonoBehaviour
 
     public GameObject DeathParticles;
 
-    public AudioClip deathSound;
+    public AudioClip deathSound,explodeSound;
+    public AudioClip[] sisini;
 
     public Transform LPortal;
     public Transform RPortal;
@@ -74,11 +75,14 @@ public class EyeballMovementScript : MonoBehaviour
 
     public GameObject[] deathparticles;
 
+    private spriteFlashScript colorFlash;
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         sr = GetComponent<SpriteRenderer>();
+        colorFlash = GetComponent<spriteFlashScript>();
 
         if(stoned)
         {
@@ -102,6 +106,7 @@ public class EyeballMovementScript : MonoBehaviour
     {
         yield return new WaitForSeconds(0.5f);
         canMove = true;
+        audioManager.instance.playRandomAudio(sisini, 0.2f, 1, transform, audioManager.instance.sfx);
         StartCoroutine(distanceDetection());
     }
 
@@ -147,13 +152,25 @@ public class EyeballMovementScript : MonoBehaviour
             }
             else
             {
-                charge = true;
-                movespeed = 11;
+                if (!charge) chargeUp();
                 rb.linearVelocity = transform.right * movespeed;
-                StartCoroutine(ExplodeAfterTime());
             }
         }
     }
+
+    void chargeUp()
+    {
+        charge = true;
+        colorFlash.targetValue = 0.4f;
+        colorFlash._duration = 0.4f;
+        colorFlash.callFlash();
+        colorFlash.targetValue = 1;
+        colorFlash._duration = 0.15f;
+
+        movespeed = 11;
+        StartCoroutine(ExplodeAfterTime());
+    }
+
     private IEnumerator distanceDetection()
     {
         yield return new WaitForFixedUpdate();
@@ -199,16 +216,8 @@ public class EyeballMovementScript : MonoBehaviour
 
     private IEnumerator DestroyTimer()
     {
-        Destroy(Glow);
-
-        transform.rotation = Quaternion.AngleAxis(0, Vector3.up);
-        movespeed = 0f;
-
-        Color color = sr.color;
-        color.a = 0f;
-        sr.color = color;
-
-        BlowUpParticles.SetActive(true);
+        Instantiate(BlowUpParticles, transform.position, Quaternion.identity);
+        audioManager.instance.playAudio(explodeSound, 0.65f, 1, transform, audioManager.instance.sfx);
         StartCoroutine(ExplosionHitbox());
 
         yield return new WaitForSeconds(0.5f);
