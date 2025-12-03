@@ -8,6 +8,7 @@ public class spriteFlashScript : MonoBehaviour
 {
 
     public float _duration;
+    public float targetValue = 1f;
 
     private int _hitEffectAmount = Shader.PropertyToID("_hEffectAmount");
     private int _hcolor = Shader.PropertyToID("_hEffectColor");
@@ -54,7 +55,7 @@ public class spriteFlashScript : MonoBehaviour
     public void callFlash()
     {
         _lerpAmount = 0;
-        DOTween.To(GetLerpValue, SetLerpValue, 1f, _duration).SetEase(Ease.OutExpo).OnUpdate(OnLerpUpdate).OnComplete(OnLerpComplete);
+        DOTween.To(GetLerpValue, SetLerpValue, targetValue, _duration).SetEase(Ease.OutExpo).OnUpdate(OnLerpUpdate).OnComplete(OnLerpComplete);
     }
 
     public void changeColor(bool isRed)

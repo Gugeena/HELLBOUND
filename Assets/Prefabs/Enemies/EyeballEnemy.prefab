@@ -82,6 +82,7 @@ GameObject:
   - component: {fileID: 2083026935205815712}
   - component: {fileID: 4393879747472511384}
   - component: {fileID: 7095935818385982349}
+  - component: {fileID: 5527550871166155268}
   m_Layer: 0
   m_Name: EyeballEnemy
   m_TagString: Untagged
@@ -104,7 +105,6 @@ Transform:
   m_Children:
   - {fileID: 1833197373902907780}
   - {fileID: 2263302352243101430}
-  - {fileID: 1893649588279929663}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &2011901626021842605
@@ -132,7 +132,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 63a926f177ab45b41a795a20336dc4f3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -180,10 +180,14 @@ MonoBehaviour:
   player: {fileID: 0}
   movespeed: 9
   Hitbox: {fileID: 458114086853799959}
-  BlowUpParticles: {fileID: 2044124731629223547}
+  BlowUpParticles: {fileID: 1582243209086010557, guid: 8650ca5eba779c743b4bab7c36de0323, type: 3}
   Glow: {fileID: 6710472653251859514}
   DeathParticles: {fileID: 2235657635126729578, guid: 4f8f4df7329ac7f4fbf828c767bbcee1, type: 3}
   deathSound: {fileID: 8300000, guid: 8b9044592f5121a4d8cc2d1c97be3bfe, type: 3}
+  explodeSound: {fileID: 8300000, guid: d3f7cb901904f2e4dbd7e5b9e6f8f313, type: 3}
+  sisini:
+  - {fileID: 8300000, guid: 6b3e7b169898d5d489eb6d10ebe86e46, type: 3}
+  - {fileID: 8300000, guid: 6bfb2226d77e53b4aa733ed65b69d6cd, type: 3}
   LPortal: {fileID: 0}
   RPortal: {fileID: 0}
   lastproccessedkill: -1
@@ -278,6 +282,20 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &5527550871166155268
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1905699683672262216}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4d48b5ba9c16efe48958d445f79149c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::spriteFlashScript
+  _duration: 0.14
+  targetValue: 1
 --- !u!1 &6710472653251859514
 GameObject:
   m_ObjectHideFlags: 0
@@ -368,74 +386,3 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!1001 &696775139404102342
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 6434919983300383799}
-    m_Modifications:
-    - target: {fileID: 1435778603118514681, guid: 8650ca5eba779c743b4bab7c36de0323, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0.0002
-      objectReference: {fileID: 0}
-    - target: {fileID: 1435778603118514681, guid: 8650ca5eba779c743b4bab7c36de0323, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.0853
-      objectReference: {fileID: 0}
-    - target: {fileID: 1435778603118514681, guid: 8650ca5eba779c743b4bab7c36de0323, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0.016114473
-      objectReference: {fileID: 0}
-    - target: {fileID: 1435778603118514681, guid: 8650ca5eba779c743b4bab7c36de0323, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.9525533
-      objectReference: {fileID: 0}
-    - target: {fileID: 1435778603118514681, guid: 8650ca5eba779c743b4bab7c36de0323, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1435778603118514681, guid: 8650ca5eba779c743b4bab7c36de0323, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1435778603118514681, guid: 8650ca5eba779c743b4bab7c36de0323, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0.30437204
-      objectReference: {fileID: 0}
-    - target: {fileID: 1435778603118514681, guid: 8650ca5eba779c743b4bab7c36de0323, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: -90
-      objectReference: {fileID: 0}
-    - target: {fileID: 1435778603118514681, guid: 8650ca5eba779c743b4bab7c36de0323, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1435778603118514681, guid: 8650ca5eba779c743b4bab7c36de0323, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1582243209086010557, guid: 8650ca5eba779c743b4bab7c36de0323, type: 3}
-      propertyPath: m_Name
-      value: blowUpParticlesEyeball
-      objectReference: {fileID: 0}
-    - target: {fileID: 1582243209086010557, guid: 8650ca5eba779c743b4bab7c36de0323, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 8650ca5eba779c743b4bab7c36de0323, type: 3}
---- !u!4 &1893649588279929663 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 1435778603118514681, guid: 8650ca5eba779c743b4bab7c36de0323, type: 3}
-  m_PrefabInstance: {fileID: 696775139404102342}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &2044124731629223547 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1582243209086010557, guid: 8650ca5eba779c743b4bab7c36de0323, type: 3}
-  m_PrefabInstance: {fileID: 696775139404102342}
-  m_PrefabAsset: {fileID: 0}
