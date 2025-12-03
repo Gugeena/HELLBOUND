@@ -482,6 +482,7 @@ public class tutorialPlayerMovement : MonoBehaviour
         GlobalSettings globalSettings = SaveSystem.Load();
         globalSettings.information.doneTutorial = 1;
         SaveSystem.Save(globalSettings);
+
         cineAnim.Play("cinecam_end");
         yield return new WaitForSeconds(3f);
         loadScene.SceneToLoad = 4;

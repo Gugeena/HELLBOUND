@@ -35,12 +35,8 @@ public class Functions : MonoBehaviour
 
     public void loadsaved()
     {
-        GlobalSettings globalsettings = SaveSystem.Load();
-
-        alreadybeatthegame = globalsettings.information.hasbeatthegame;
-
         RectTransform rectTransform = startGame.GetComponent<RectTransform>();
-        if (alreadybeatthegame != 0)
+        if (SaveSystem.Load().information.hasbeatthegame > 0)
         {
             rectTransform.anchoredPosition = new Vector2(0, -5f);
             tenth.SetActive(true);
@@ -81,9 +77,7 @@ public class Functions : MonoBehaviour
 
         //alreadybeatthegame = information.hasbeatthegame;
 
-        GlobalSettings globalsettings = SaveSystem.Load();
-
-        if (globalsettings.information.doneTutorial > 0) scene = 4;
+        if (SaveSystem.Load().information.doneTutorial > 0) scene = 4;
         StartCoroutine(StartGame(scene));
     }
 

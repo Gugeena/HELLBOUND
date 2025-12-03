@@ -172,7 +172,6 @@ public class PlayerMovement : MonoBehaviour
     public bool hasbeyonded;
 
     public Animator canvasAnimator, styleAnimator;
-    public GameObject HPbar;
 
     public static bool shouldMakeSound = true;
 
@@ -358,7 +357,7 @@ public class PlayerMovement : MonoBehaviour
     public static void TLOHLFADEOUTANDINNER(int decision)
     {
         if (TLOHLANIMATOR == null) return;
-        if(decision == 1) TLOHLANIMATOR.Play("TLOHLFADEOUT");
+        if (decision == 1) TLOHLANIMATOR.Play("TLOHLFADEOUT");
         else if (decision == 2) TLOHLANIMATOR.Play("TLOHFADEIN");
     }
 
@@ -471,7 +470,7 @@ public class PlayerMovement : MonoBehaviour
             //StartCoroutine(pickUpWeapon(3, "fists"));
         }
         */
-     
+
         if (StyleManager.canAscend && !isAngelic && !isDead)
         {
             if (Input.GetKeyDown(KeyCode.E))
@@ -514,7 +513,7 @@ public class PlayerMovement : MonoBehaviour
         isPoisoned = false;
         isPoisonRunning = false;
         TLOHLFADEOUTANDINNER(1);
-        if(isintenthlayer) TenthLayerOfHellScript.shouldturnoffforawhile = true;
+        if (isintenthlayer) TenthLayerOfHellScript.shouldturnoffforawhile = true;
         isGrounded = false;
         hasAscendedonce = true;
         canPause = false;
@@ -542,7 +541,12 @@ public class PlayerMovement : MonoBehaviour
         GameObject tospawn;
         if (Beyonder == true)
         {
-            if (!isintenthlayer) animtoplay = "player_finalangeltransition";
+            if (!isintenthlayer)
+            {
+                animtoplay = "player_finalangeltransition";
+                hasAscendedonce = false;
+                StartCoroutine(UIfadeOut());
+            }
             else animtoplay = "player_tenthlayerofhelltransition";
             tospawn = truespirit;
         }
@@ -587,13 +591,6 @@ public class PlayerMovement : MonoBehaviour
             yield return new WaitForSeconds(4f);
             fadeOut.SetActive(true);
             yield return new WaitForSeconds(1f);
-
-            GlobalSettings globalsettings = SaveSystem.Load();
-
-            globalsettings.information.hasbeatthegame = 1;
-
-            SaveSystem.Save(globalsettings);
-
             SceneManager.LoadScene(1);
         }
 
@@ -612,8 +609,6 @@ public class PlayerMovement : MonoBehaviour
         {
             yield return new WaitForSeconds(0.5f);
             autokillcollider.enabled = true;
-            hpAnimator.Play("HPFadeOut");
-            styleAnimator.Play("FadeOutStyle");
             //yield return new WaitForSecondsRealtime(1f);
         }
         foreach (ShakeSelfScript s in bodyPartShakes)
@@ -677,6 +672,9 @@ public class PlayerMovement : MonoBehaviour
             yield return new WaitForSeconds(2f);
             audioManager.instance.stopEnd();
             yield return new WaitForSeconds(2f);
+            GlobalSettings globalsettings = SaveSystem.Load();
+            globalsettings.information.hasbeatthegame = 1;
+            SaveSystem.Save(globalsettings);
             SceneManager.LoadScene(1);
             //audioManager.instance.playAudio(finaldissapearence, 1, 1, transform, audioManager.instance.sfx);
         }
@@ -692,8 +690,8 @@ public class PlayerMovement : MonoBehaviour
             }
         }
 
-        if(isintenthlayer) Destroy(gameObject);
-        if(!isintenthlayer && !Beyonder) Destroy(gameObject);
+        if (isintenthlayer) Destroy(gameObject);
+        if (!isintenthlayer && !Beyonder) Destroy(gameObject);
 
         AchivementScript.instance.UnlockAchivement("MADE_IN_HEAVEN");
     }
@@ -704,8 +702,18 @@ public class PlayerMovement : MonoBehaviour
         canAngel = false;
     }
 
+    public IEnumerator UIfadeOut()
+    {
+        yield return new WaitForSeconds(0.15f);
+        styleAnimator.enabled = true;
+        hpAnimator.enabled = true;
+        hpAnimator.Play("HPFadeOut");
+        styleAnimator.Play("FadeOutStyle");
+    }
+
     public IEnumerator spearAttack()
     {
+
         canPunch = false;
         anim.Play("player_spearattack");
         yield return new WaitForSeconds(0.3f);

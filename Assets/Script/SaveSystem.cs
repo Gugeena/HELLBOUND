@@ -13,18 +13,11 @@ public class SaveSystem
             settings.information = new Information();
             settings.audio = new AudioData();
             settings.keybinds = new KeybindsData();
-            Save(settings);
             return settings;
         }
 
         string json = File.ReadAllText(path);
         GlobalSettings result = JsonUtility.FromJson<GlobalSettings>(json);
-
-       if (result.information == null) result.information = new Information();
-       if (result.audio == null) result.audio = new AudioData();
-       if (result.keybinds == null) result.keybinds = new KeybindsData();
-
-        Save(result);
 
         return result;
     }
