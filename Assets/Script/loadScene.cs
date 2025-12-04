@@ -10,6 +10,7 @@ public class loadScene : MonoBehaviour
 
     void Start()
     {
+        Functions.setUpView();
         loadAsync = SceneManager.LoadSceneAsync(SceneToLoad);
         loadAsync.allowSceneActivation = false;
 

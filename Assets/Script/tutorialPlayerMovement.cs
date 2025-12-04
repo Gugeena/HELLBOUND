@@ -86,6 +86,7 @@ public class tutorialPlayerMovement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Functions.setUpView();
         moveCount = 0;
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();

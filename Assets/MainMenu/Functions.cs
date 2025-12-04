@@ -24,6 +24,7 @@ public class Functions : MonoBehaviour
 
     void Start()
     {
+        setUpView();
         SaveSystem.Load();
         AchivementScript.instance.UnlockAchivement("HELLBOUND_ENTRY");
         AudioListener.pause = false;
@@ -32,6 +33,27 @@ public class Functions : MonoBehaviour
         loadAudioSettings();
         loadsaved();
     }
+
+    public static void setUpView()
+    {
+        float targetAspect = 16f / 9f;
+        float windowAspect = (float)Screen.width / Screen.height;
+        float scaleHeight = windowAspect / targetAspect;
+
+        Camera camera = Camera.main;
+        if(scaleHeight < 1f)
+        {
+            camera.rect = new Rect(0, (1f - scaleHeight) / 2f, 1f, scaleHeight);
+        }
+        else
+        {
+            float scaleWidth = 1f / scaleHeight;
+            camera.rect = new Rect((1f - scaleWidth) / 2f, 0f, scaleWidth, 1f);
+        }
+        camera.backgroundColor = Color.black;
+        camera.clearFlags = CameraClearFlags.SolidColor;
+    }
+
 
     public void loadsaved()
     {
