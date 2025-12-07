@@ -285,6 +285,21 @@ public class EyeballMovementScript : MonoBehaviour
                 break;
             default: break;
         }
+        PlayerMovement pm = player.GetComponent<PlayerMovement>();
+        if (!PlayerMovement.lastkilled.Equals(this.gameObject) && !PlayerMovement.lastkilledby.Contains(collision.gameObject))
+        {
+            PlayerMovement.lastkilledstreak++;
+            pm.streaklosingstart();
+            if (PlayerMovement.lastkilledstreak == 3) AchivementScript.instance.UnlockAchivement("The Unholy Trinity");
+        }
+        else
+        {
+            pm.StopCoroutine(pm.streaklosingtimer);
+            PlayerMovement.lastkilledstreak = 0;
+            PlayerMovement.lastkilledby.Clear();
+        }
+        PlayerMovement.lastkilled = this.gameObject;
+        PlayerMovement.lastkilledby.Add(collision.gameObject);
     }
 
     private void OnTriggerStay2D(Collider2D collision)

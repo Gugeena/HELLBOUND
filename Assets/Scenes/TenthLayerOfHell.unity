@@ -42070,7 +42070,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 269, y: -270}
+  m_AnchoredPosition: {x: 261, y: -270}
   m_SizeDelta: {x: 1531.71, y: 769.25}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1614478369
@@ -43715,7 +43715,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 9999
   m_Sprite: {fileID: 21300000, guid: 065d03fcf9c1bc448a83e57b50c47878, type: 3}
-  m_Color: {r: 0.2924528, g: 0.2924528, b: 0.2924528, a: 0.23529412}
+  m_Color: {r: 0.122641504, g: 0.122641504, b: 0.122641504, a: 0.23529412}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -60808,7 +60808,6 @@ MonoBehaviour:
   hasbeyonded: 0
   canvasAnimator: {fileID: 883276627}
   styleAnimator: {fileID: 0}
-  HPbar: {fileID: 0}
   undachaijvayleoagarshemidzlia: 0
   isinbubble: 0
   hpAnimator: {fileID: 0}
@@ -61016,6 +61015,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _duration: 0.09
+  targetValue: 1
 --- !u!1 &2132901006
 GameObject:
   m_ObjectHideFlags: 0

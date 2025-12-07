@@ -17,6 +17,7 @@ using UnityEngine.UIElements;
 using System.IO;
 using static UnityEngine.ParticleSystem;
 using static UnityEngine.Rendering.DebugUI;
+using System.Collections.Generic;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -208,6 +209,13 @@ public class PlayerMovement : MonoBehaviour
 
     [SerializeField] ParticleSystem angelDeathParticles;
 
+    int deathcount = 0;
+
+    public static GameObject lastkilled;
+    public static List<GameObject> lastkilledby = new List<GameObject>();
+    public static int lastkilledstreak;
+    public Coroutine streaklosingtimer;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -226,7 +234,7 @@ public class PlayerMovement : MonoBehaviour
     }
 
     void variablesetting()
-    {
+    { 
         LilithScript.bossfightstarted = false;
         Time.timeScale = 1;
         direction = 1;
@@ -243,7 +251,11 @@ public class PlayerMovement : MonoBehaviour
         if (!isAngelic) canPause = true;
         else StartCoroutine(canPauseEnabler());
         String scenename = SceneManager.GetActiveScene().name;
-        if (scenename == "TenthLayerOfHell") isintenthlayer = true;
+        if (scenename == "TenthLayerOfHell")
+        {
+            AchivementScript.instance.UnlockAchivement("Doom’s Threshold");
+            isintenthlayer = true;
+        }
         else isintenthlayer = false;
     }
 
@@ -445,6 +457,23 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    public void streaklosingstart()
+    {
+        if (streaklosingtimer != null)
+            StopCoroutine(streaklosingtimer);
+
+        streaklosingtimer = StartCoroutine(streaklosing());    
+    }
+
+    IEnumerator streaklosing()
+    {
+        yield return new WaitForSeconds(3f);
+        lastkilledstreak = 0;
+        lastkilledby.Clear();
+        streaklosingtimer = null;
+        yield break;
+    }
+
     void handleCombat()
     {
         if (Input.GetKeyDown(AttackButton) && canPunch)
@@ -591,6 +620,8 @@ public class PlayerMovement : MonoBehaviour
             Instantiate(hurtparticle, transform.position, Quaternion.identity);
             yield return new WaitForSeconds(4f);
             fadeOut.SetActive(true);
+            AchivementScript.instance.UnlockAchivement("Hop Out of Trial by Fire");
+            if(deathcount == 0) AchivementScript.instance.UnlockAchivement("Infallible");
             yield return new WaitForSeconds(1f);
             SceneManager.LoadScene(1);
         }
@@ -1185,6 +1216,7 @@ public class PlayerMovement : MonoBehaviour
 
     private IEnumerator deathCRT()
     {
+        if(isintenthlayer) deathcount++;
         hasdiedforeverybody = true;
         if (PoisonQueCorountine != null) StopCoroutine(PoisonQueCorountine);
         poisonQueue = new Queue<float>();
@@ -1262,6 +1294,7 @@ public class PlayerMovement : MonoBehaviour
         hp = 150f;
         if(isintenthlayer) hpAnimator.Play("PlayerDepoisoning");
         yield return new WaitForSeconds(8f);
+        AchivementScript.instance.UnlockAchivement("Renascence");
         camShake.StopAllCoroutines();
         StartCoroutine(revive());
         yield return null;
