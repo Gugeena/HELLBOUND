@@ -213,6 +213,9 @@ public class PlayerMovement : MonoBehaviour
 
     public static GameObject lastkilled;
     public static List<GameObject> lastkilledby = new List<GameObject>();
+    public static List<GameObject> weaponsUsed = new List<GameObject>();
+    public int haskilledwithnewweapon = 0;
+    public bool isinkwew = false;
     public static int lastkilledstreak;
     public Coroutine streaklosingtimer;
 
@@ -234,7 +237,8 @@ public class PlayerMovement : MonoBehaviour
     }
 
     void variablesetting()
-    { 
+    {
+        if (!isAngelic) lastkilled = this.gameObject;
         LilithScript.bossfightstarted = false;
         Time.timeScale = 1;
         direction = 1;
@@ -1100,7 +1104,6 @@ public class PlayerMovement : MonoBehaviour
         yield return null;
     }
 
-
     IEnumerator loseStyle(int currentID)
     {
         shouldGainStyle = true;
@@ -1136,6 +1139,21 @@ public class PlayerMovement : MonoBehaviour
         }
         shouldLoseStyle = true;
         yield break;
+    }
+
+    public void killwitheveryweapon(GameObject weapon)
+    {
+        if (!weaponsUsed.Contains(weapon)) weaponsUsed.Add(weapon);
+        if(!isinkwew) StartCoroutine(resetkwew());
+        if (weaponsUsed.Count == 4) AchivementScript.instance.UnlockAchivement("MAL_ARSENAL");
+    }
+
+    public IEnumerator resetkwew()
+    {
+        isinkwew = true;
+        yield return new WaitForSeconds(5f);
+        weaponsUsed.Clear();
+        isinkwew = false;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)

@@ -326,6 +326,7 @@ public class EnemyChargerScript : MonoBehaviour
             Instantiate(particles, transform.position, Quaternion.identity);
         }
         else if (stoned) Instantiate(deathparticles[Random.Range(0, deathparticles.Length)], transform.position, Quaternion.identity);
+        PlayerMovement.
         Destroy(gameObject);
         yield break;
     }
@@ -383,6 +384,7 @@ public class EnemyChargerScript : MonoBehaviour
             default: break;
         }
         PlayerMovement pm = player.GetComponent<PlayerMovement>();
+        if (collision.gameObject == null) print("yle xar");
         if (!PlayerMovement.lastkilled.Equals(this.gameObject) && !PlayerMovement.lastkilledby.Contains(collision.gameObject))
         {
             PlayerMovement.lastkilledstreak++;
@@ -397,6 +399,7 @@ public class EnemyChargerScript : MonoBehaviour
         }
         PlayerMovement.lastkilled = this.gameObject;
         PlayerMovement.lastkilledby.Add(collision.gameObject);
+        pm.killwitheveryweapon(collision.gameObject);
         return teleportCount;
     }
 

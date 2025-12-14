@@ -91,6 +91,7 @@ public class LilithScript : MonoBehaviour
     Vector3 scale = new Vector3 (1, 1, 1);
 
     public bool shoulddieyet = true;
+    public bool washitbyspear = false;
 
     void Start()
     {
@@ -211,6 +212,8 @@ public class LilithScript : MonoBehaviour
         cum.Stop();
         lilithDeathEvent.Invoke();
         yield return null;
+        AchivementScript.instance.UnlockAchivement("DEFEAT_LILITH");
+        if(washitbyspear) AchivementScript.instance.UnlockAchivement("FORGIVE_ME");
         Destroy(gameObject);
     }
 
@@ -832,6 +835,7 @@ public class LilithScript : MonoBehaviour
     {
         if (collision.gameObject.tag == "mfHitbox")
         {
+            washitbyspear = false;
             float timer = 0.1f;
             if (collision.gameObject.name == "meleehitbox") StartCoroutine(damage(RetrieveTeleportCount(collision), 0.2f, timer));
             else
@@ -840,6 +844,7 @@ public class LilithScript : MonoBehaviour
                 if (Vector2.Distance(this.transform.position, player.transform.position) > 0.5f) timer = 0.5f;
                 if (collision.gameObject.name == "motherfuckr(Clone)") damagexz = 0.5f;
                 else damagexz = 1f;
+                if (collision.gameObject.name == "SpearPrefab(Clone)") washitbyspear = true;
                 StartCoroutine(damage(RetrieveTeleportCount(collision), damagexz, timer));
             }
         }

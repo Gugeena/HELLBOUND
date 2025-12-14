@@ -361,6 +361,7 @@ public class EnemySkyCandleScript : MonoBehaviour
         }
         PlayerMovement.lastkilled = this.gameObject;
         PlayerMovement.lastkilledby.Add(collision.gameObject);
+        pm.killwitheveryweapon(collision.gameObject);
         return teleportCount;
     }
 

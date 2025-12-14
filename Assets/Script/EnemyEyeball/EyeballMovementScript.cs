@@ -300,6 +300,7 @@ public class EyeballMovementScript : MonoBehaviour
         }
         PlayerMovement.lastkilled = this.gameObject;
         PlayerMovement.lastkilledby.Add(collision.gameObject);
+        pm.killwitheveryweapon(collision.gameObject);
     }
 
     private void OnTriggerStay2D(Collider2D collision)

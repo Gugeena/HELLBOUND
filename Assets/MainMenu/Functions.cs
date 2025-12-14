@@ -58,7 +58,7 @@ public class Functions : MonoBehaviour
     public void loadsaved()
     {
         RectTransform rectTransform = startGame.GetComponent<RectTransform>();
-        if (SaveSystem.Load().information.hasbeatthegame > 0)
+        if (SaveSystem.Load().information.hasbeatthegame == 1)
         {
             rectTransform.anchoredPosition = new Vector2(0, -5f);
             tenth.SetActive(true);

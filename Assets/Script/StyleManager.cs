@@ -72,11 +72,12 @@ public class StyleManager : MonoBehaviour
         switchStyle();
         StartCoroutine(styleLife());
         PlayerMovement playerMovement = GameObject.Find("Player(Clone)").GetComponent<PlayerMovement>();
+        PlayerMovement.hasAscendedonce = false;
+        hasalreadydonethis = false;
     }
 
     private void Update()
     {
-
         if (PlayerMovement.hasAscendedonce && !hasalreadydonethis)
         {
             styleAnim.enabled = false;
@@ -244,8 +245,6 @@ public class StyleManager : MonoBehaviour
     public void reset()
     {
         StopAllCoroutines();
-
-        // Reset all variables to their starting state
         stylePoints = 0;
         totalStylePoints = 0;
         currStyle = Style.Forsaken;
@@ -254,33 +253,25 @@ public class StyleManager : MonoBehaviour
         canAscend = false;
         wasLosingstyle = false;
         lastPlayedAnim = "";
-
-        // Reset UI and visuals
         fillImage.color = Color.red;
         styleSlider.value = 0;
         styleAnim.Play("red-lightgrey");
         styleText.text = "Forsaken";
         letterOutline.sprite = letterOutlines[(int)Style.Forsaken];
         letterFill.sprite = letterFills[(int)Style.Forsaken];
-
-        // Stop any shaking or animations that were active
         shaker.stopShake();
         textShaker.stopShake();
-
-        // Turn off Ascend text and reset related flags
         if (Ascend != null)
         {
             Ascend.SetActive(false);
             ascentionanimator.Play("AsecndTextDissapear");
         }
-
-        // Reset player’s angelic readiness
         if (playerMovement != null)
         {
             playerMovement.unreadyAngelic();
         }
-
-        // Restart the main style coroutine
+        PlayerMovement.hasAscendedonce = false;
+        hasalreadydonethis = false;
         StartCoroutine(styleLife());
     }
 

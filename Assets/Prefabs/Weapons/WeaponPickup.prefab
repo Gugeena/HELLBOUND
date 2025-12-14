@@ -195,7 +195,6 @@ MonoBehaviour:
   sr: {fileID: 5193152988583878042}
   bc: {fileID: 2971187673985941548}
   preSelectedWeapon: 0
-  lilithdrop: 0
 --- !u!50 &4541207817923102448
 Rigidbody2D:
   serializedVersion: 5
