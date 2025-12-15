@@ -110,6 +110,7 @@ public class PauseScript : MonoBehaviour
         Scroll.SetActive(false);
         Time.timeScale = 1f;
         Paused = false;
+        AudioListener.pause = false;
     }
 
     public void QuitToDesktop()

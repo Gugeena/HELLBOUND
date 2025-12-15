@@ -23748,6 +23748,7 @@ GameObject:
   - component: {fileID: 833567534}
   - component: {fileID: 833567532}
   - component: {fileID: 833567533}
+  - component: {fileID: 833567537}
   m_Layer: 0
   m_Name: Canvas
   m_TagString: Untagged
@@ -23887,6 +23888,18 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 9997
   m_TargetDisplay: 0
+--- !u!114 &833567537
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 833567530}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4ae082e1780028148b9b5523e47cac1c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AchivementScript
 --- !u!1 &837507272
 GameObject:
   m_ObjectHideFlags: 0
@@ -58525,6 +58538,8 @@ MonoBehaviour:
   isFuckingPoisoned: 0
   animatorofhands: []
   angelDeathParticles: {fileID: 0}
+  haskilledwithnewweapon: 0
+  isinkwew: 0
 --- !u!4 &2089724964
 Transform:
   m_ObjectHideFlags: 0
