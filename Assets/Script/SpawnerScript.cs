@@ -33,6 +33,8 @@ public class SpawnerScript : MonoBehaviour
         Player = GameObject.FindGameObjectWithTag("Player").transform;
         cooldownTimer = 1f;
         spawningcount = 1;
+        PauseScript.kill = 0;
+        lastProccesedamountofkills = -1;
     }
 
     void Update()

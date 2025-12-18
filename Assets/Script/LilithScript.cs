@@ -195,8 +195,8 @@ public class LilithScript : MonoBehaviour
         }
         Animator lilithhpanimator = GameObject.Find("HPFADER").GetComponent<Animator>();
         lilithhpanimator.Play("LilithHPFadeOut");
-        audioSource.Stop();
-        hailmarysound.Stop();
+        if(audioSource != null) audioSource.Stop();
+        if (hailmarysound != null) hailmarysound.Stop();
         for (int i = 0; i < destroyParticleLocations.Length; i++)
         {
             for (int j = 0; j < 4; j++)

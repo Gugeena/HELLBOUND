@@ -74,6 +74,8 @@ public class StyleManager : MonoBehaviour
         PlayerMovement playerMovement = GameObject.Find("Player(Clone)").GetComponent<PlayerMovement>();
         PlayerMovement.hasAscendedonce = false;
         hasalreadydonethis = false;
+        isAngelic = false;
+        shouldTurnOff = false;
     }
 
     private void Update()
