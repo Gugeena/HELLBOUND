@@ -13,11 +13,10 @@ public class AchivementScript : MonoBehaviour
     public void UnlockAchivement(string achivementAPIName)
     {
         if (!SteamManager.Initialized) return;
-        try
-        {
-            SteamUserStats.SetAchievement(achivementAPIName);
-            SteamUserStats.StoreStats();
-        }
-        catch { return; }
+
+        bool success = SteamUserStats.SetAchievement(achivementAPIName);
+        if (!success) return;
+
+        SteamUserStats.StoreStats();
     }
 }

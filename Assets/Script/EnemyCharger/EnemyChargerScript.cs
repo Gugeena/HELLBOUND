@@ -294,7 +294,7 @@ public class EnemyChargerScript : MonoBehaviour
             if (bc != null) bc.isTrigger = false;
             GameObject bodypart = rbb.gameObject;
         }
-        if (playerScript.shouldGainStyle)
+        if (playerScript.shouldGainStyle && !PlayerMovement.hasdiedforeverybody)
         {
             if (teleportCount == 0) StyleManager.instance.growStyle(2);
             else if (teleportCount > 0) StyleManager.instance.growStyle(3);
@@ -306,7 +306,7 @@ public class EnemyChargerScript : MonoBehaviour
         float dist = Directpath;
         if (!stoned || stoned == null)
         {
-            if (teleportCount <= 0)
+            if (teleportCount <= 0 && !PlayerMovement.hasdiedforeverybody)
             {
                 PlayerMovement playerScript = player.GetComponent<PlayerMovement>();
                 //print(dist);
@@ -319,7 +319,7 @@ public class EnemyChargerScript : MonoBehaviour
                     }
                 }
             }
-            else if (teleportCount > 0)
+            else if (teleportCount > 0 && !PlayerMovement.hasdiedforeverybody)
             {
                 if (playerScript.hp > 0) playerScript.hp += healamount * 0.7f;
             }

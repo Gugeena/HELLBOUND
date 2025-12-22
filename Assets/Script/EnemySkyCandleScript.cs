@@ -78,6 +78,8 @@ public class EnemySkyCandleScript : MonoBehaviour
 
     public GameObject[] deathparticles;
 
+    public GameObject hitbox;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -319,11 +321,6 @@ public class EnemySkyCandleScript : MonoBehaviour
         float knockback = 4f;
         Vector2 force = new Vector2(-direction, 0);
         rb.AddForce(force * (knockback * 1000f), ForceMode2D.Impulse);
-        if (playerScript.shouldGainStyle)
-        {
-            if (teleportCount > 0) StyleManager.instance.growStyle(2 * 1 + teleportCount);
-            else StyleManager.instance.growStyle(1 * 1 + teleportCount);
-        }
     }
 
     public int RetrieveTeleportCount(Collider2D collision)
@@ -415,6 +412,7 @@ public class EnemySkyCandleScript : MonoBehaviour
 
     public IEnumerator death()
     {
+        Destroy(hitbox);
         animatorofparent.Play("NULLSTATE");
         PauseScript.kill++;
         float pitch = UnityEngine.Random.RandomRange(0.8f, 1.01f);
@@ -455,7 +453,7 @@ public class EnemySkyCandleScript : MonoBehaviour
 
         if (!stoned)
         {
-            if (teleportCount <= 0)
+            if (teleportCount <= 0 && !PlayerMovement.hasdiedforeverybody)
             {
                 //print(dist);
                 if (Directpath < 8f)
@@ -467,13 +465,18 @@ public class EnemySkyCandleScript : MonoBehaviour
                     }
                 }
             }
-            else if (teleportCount > 0)
+            else if (teleportCount > 0 && !PlayerMovement.hasdiedforeverybody)
             {
                 if (playerScript.hp > 0) playerScript.hp += healamount * 0.7f;
             }
             Instantiate(particles, transform.position, Quaternion.identity);
         }
         else if (stoned) Instantiate(deathparticles[Random.Range(0, deathparticles.Length)], transform.position, Quaternion.identity);
+        if (playerScript.shouldGainStyle && !PlayerMovement.hasdiedforeverybody)
+        {
+            if (teleportCount > 0) StyleManager.instance.growStyle(2 * 1 + teleportCount);
+            else StyleManager.instance.growStyle(1 * 1 + teleportCount);
+        }
         if (playerScript.isAngelic) Instantiate(weaponPickup, this.gameObject.transform.position, Quaternion.identity);
         Destroy(gameObject);
         yield break;

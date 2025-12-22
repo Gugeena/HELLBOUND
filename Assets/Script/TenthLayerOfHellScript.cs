@@ -34,18 +34,12 @@ public class TenthLayerOfHellScript : MonoBehaviour
         last = -1;
         stoned = false;
         //shouldturnoffforawhile = false;
-        StartCoroutine(EventManager()); 
+        StartCoroutine(EventManager());
     }
 
     private void OnDisable()
     {
-        if(lastplayedaudio != null) lastplayedaudio.Stop();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        print("sote: " + shouldturnoffforawhile);
+        if (lastplayedaudio != null) lastplayedaudio.Stop();
     }
 
     public IEnumerator EventManager()
@@ -54,7 +48,7 @@ public class TenthLayerOfHellScript : MonoBehaviour
         while (true)
         {
             if (!alreadyin && !PlayerMovement.hasdiedforeverybody && !shouldturnoffforawhile)
-            {  
+            {
                 int random;
                 do { random = UnityEngine.Random.Range(0, 4); }
                 while (random == last || random == 3 && LilithScript.bossfightstarted);
@@ -147,12 +141,17 @@ public class TenthLayerOfHellScript : MonoBehaviour
     }
 
     public IEnumerator gettingstoned()
-    { 
+    {
         StartCoroutine(ColorFade(vinigreti, Color.cyan, 0.5f));
         stoned = true;
         yield return new WaitForSeconds(5f);
         stoned = false;
         yield return new WaitForSeconds(1f);
         alreadyin = false;
+    }
+
+    public void onPlayerDeath()
+    {
+        StartCoroutine(ColorFade(vinigreti, Color.black, 0.1f));
     }
 }

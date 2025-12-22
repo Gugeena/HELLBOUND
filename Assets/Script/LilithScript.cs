@@ -38,7 +38,6 @@ public class LilithScript : MonoBehaviour
     public GameObject fireBall;
     public GameObject fireBallSpawnParticles;
     public bool isGrounded = true;
-    public bool hasTeleported = false;
     public bool shouldPURPLE = true;
     public GameObject spawnParticles;
     public Vector3 center = new Vector3(24.61f, -1.1f, 0);
@@ -92,6 +91,11 @@ public class LilithScript : MonoBehaviour
 
     public bool shoulddieyet = true;
     public bool washitbyspear = false;
+
+    public bool attackInProgress = false;
+    public bool teleportInProgress = false;
+
+    Coroutine batCoroutine;
 
     void Start()
     {
@@ -156,7 +160,7 @@ public class LilithScript : MonoBehaviour
         handleHP();
         if (!isDead)
         {
-            if (hasBatted && canTeleport && !hasTeleported)
+            if (hasBatted && canTeleport && !teleportInProgress)
             {
                 StartCoroutine(HandleTeleport());
             }
@@ -254,6 +258,7 @@ public class LilithScript : MonoBehaviour
     IEnumerator HandleTeleport()
     {
         if (isDead || !canTeleport) yield break;
+        teleportInProgress = true;
         StopCoroutine(teleportCooldownBats());
         canTeleport = false;
         shouldFlip = false;
@@ -289,22 +294,23 @@ public class LilithScript : MonoBehaviour
         this.transform.position = pos;
         staffScale();
         if (isDead) yield break;
-        yield return new WaitForSeconds(0.5F);
+        yield return new WaitForSeconds(0.5f);
         staff.SetActive(true);
         handR.SetActive(false);
         hasAlreadyTeleportedonce = true;
         hasPredeterminedPlace = false;
+        teleportInProgress = false;
         if (isDead) yield break;
         //if(isDoneWithBats)StartCoroutine(attackCooldown(0.3f));
     }
 
     void HandleCombat()
     {
-        
-        if (canAttack && attackCount % 15 != 0 && attackCount != 0)
+        if (canAttack && attackCount % 15 != 0 && attackCount != 0 && !attackInProgress)
         {
             while (true)
             {
+                attackInProgress = true;
                 bool isInFarLeftPosition = Vector2.Distance(new Vector2(16.27f, -2.539f), this.transform.position) < 0.1f;
                 bool isInFarRightPosition = Vector2.Distance(new Vector2(33.98f, -2.539f), this.transform.position) < 0.1f;
 
@@ -342,7 +348,6 @@ public class LilithScript : MonoBehaviour
             }
         }
         else if (attackCount % 15 == 0 && attackCount != 0) StartCoroutine(BatAttack());
-
     }
 
     public IEnumerator flameAttack(bool isfarleft, bool isfarright)
@@ -610,9 +615,7 @@ public class LilithScript : MonoBehaviour
 
     private void resetStaff()
     {
-
         staffController.transform.rotation = Quaternion.Euler(0, 0, 0);
-
     }
 
     public IEnumerator summonAttack()
@@ -701,6 +704,7 @@ public class LilithScript : MonoBehaviour
         canAttack = true;
         shouldFlip = true;
         attackCount++;
+        attackInProgress = false;
         yield break;
     }
 
@@ -734,13 +738,13 @@ public class LilithScript : MonoBehaviour
         //yield return new WaitForSeconds(1f);
         //animator.SetBool("shouldBATS", true);
         //hasBatted = true;
-        StartCoroutine(teleportCooldownBats());
+        batCoroutine = StartCoroutine(teleportCooldownBats());
         animator.Play("LilithBats");
         shouldFlip = false;
         //audioManager.instance.playAudio(hailMary, 1, 1, transform, audioManager.instance.sfx);
         animator.SetBool("shouldBATS", true);
         yield return new WaitForSeconds(0.8f);
-
+        if (isDead) yield break;
         if (PlayerMovement.shouldMakeSound) hailmarysound = audioManager.instance.playAudio(hailMary, 1, 1, transform, audioManager.instance.sfx);
 
         StartCoroutine(batHailMary());
@@ -770,7 +774,7 @@ public class LilithScript : MonoBehaviour
             //Instantiate(bat, new Vector2(x2, 6.86f), Quaternion.identity);
         }
         yield return new WaitForSeconds(0.5f);
-        StopCoroutine(teleportCooldownBats());
+        StopCoroutine(batCoroutine);
         canAttack = true;
         isDoneWithBats = true;
         shouldPURPLE = false;
@@ -834,7 +838,7 @@ public class LilithScript : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.tag == "mfHitbox")
+        if (collision.gameObject.tag == "mfHitbox" && !isDead)
         {
             washitbyspear = false;
             float timer = 0.1f;

@@ -31,7 +31,7 @@ public class EyeballMovementScript : MonoBehaviour
 
     public GameObject DeathParticles;
 
-    public AudioClip deathSound,explodeSound;
+    public AudioClip deathSound, explodeSound, stonedExplodeSound;
     public AudioClip[] sisini;
 
     public Transform LPortal;
@@ -220,7 +220,8 @@ public class EyeballMovementScript : MonoBehaviour
     {
         Instantiate(BlowUpParticles, transform.position, Quaternion.identity);
         Instantiate(Hitbox, transform.position, Quaternion.identity);
-        audioManager.instance.playAudio(explodeSound, 1f, 1, transform, audioManager.instance.sfx);
+        AudioClip explodeAudio = stoned ? stonedExplodeSound : explodeSound;
+        audioManager.instance.playAudio(explodeAudio, 1f, 1, transform, audioManager.instance.sfx);
         StartCoroutine(ExplosionHitbox());
         yield return null;
         Destroy(gameObject);
@@ -333,7 +334,7 @@ public class EyeballMovementScript : MonoBehaviour
         if (!stoned || stoned == null)
         {
             playerScript.hp += healamount;
-            if (teleportCount <= 0)
+            if (teleportCount <= 0 && !PlayerMovement.hasdiedforeverybody)
             {
                 //printv(dist);
                 if (Directpath < 7f)
@@ -345,18 +346,18 @@ public class EyeballMovementScript : MonoBehaviour
                     }
                 }
             }
-            else if (teleportCount > 0)
+            else if (teleportCount > 0 && !PlayerMovement.hasdiedforeverybody)
             {
                 if (playerScript.hp > 0) playerScript.hp += healamount * 0.7f;
-            }
-            if (playerScript.shouldGainStyle)
-            {
-                if (teleportCount > 0) StyleManager.instance.growStyle(2 * 1 + teleportCount);
-                else StyleManager.instance.growStyle(1 * 1 + teleportCount);
             }
             Instantiate(DeathParticles, transform.position, Quaternion.identity);
         }
         else if (stoned) Instantiate(deathparticles[Random.Range(0, deathparticles.Length)], transform.position, Quaternion.identity);
+        if (playerScript.shouldGainStyle && !PlayerMovement.hasdiedforeverybody)
+        {
+            if (teleportCount > 0) StyleManager.instance.growStyle(2 * 1 + teleportCount);
+            else StyleManager.instance.growStyle(1 * 1 + teleportCount);
+        }
         if (playerScript.isAngelic) Instantiate(weaponPickup, this.gameObject.transform.position, Quaternion.identity);
         Destroy(gameObject);
     }

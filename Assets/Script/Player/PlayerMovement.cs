@@ -219,6 +219,8 @@ public class PlayerMovement : MonoBehaviour
     public static int lastkilledstreak;
     public Coroutine streaklosingtimer;
 
+    public TenthLayerOfHellScript tenthscript;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -227,7 +229,7 @@ public class PlayerMovement : MonoBehaviour
         variablesetting();
 
         if (!isAngelic) StartCoroutine(pickUpWeapon(0, "fists"));
-        else LilithScript.lilithDeathEvent += EnterFinalAscension;
+        //else LilithScript.lilithDeathEvent += EnterFinalAscension;
 
         rPEmitter = runParticles.emission;
 
@@ -327,13 +329,14 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
         //if (PauseScript.Paused || isDead) return;
-
+        /*
         if (LilithScript.bossfightstarted && !hassubscribedtolilith)
         {
             hassubscribedtolilith = true;
             LilithScript.lilithDeathEvent += EnterFinalAscension;
+            print("entered");
         }
-
+        */
 
         if (shouldEnd && !ukvegadavaida)
         {
@@ -504,7 +507,10 @@ public class PlayerMovement : MonoBehaviour
             //StartCoroutine(pickUpWeapon(3, "fists"));
         }
         */
-
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            StartCoroutine(enterAngelic(false));
+        }
         if (StyleManager.canAscend && !isAngelic && !isDead)
         {
             if (Input.GetKeyDown(KeyCode.E))
@@ -524,6 +530,17 @@ public class PlayerMovement : MonoBehaviour
     {
         angelOverlayAnim.Play("angelReady");
         canAngel = true;
+    }
+
+
+    private void OnEnable()
+    {
+        LilithScript.lilithDeathEvent += EnterFinalAscension;
+    }
+
+    private void OnDisable()
+    {
+        LilithScript.lilithDeathEvent -= EnterFinalAscension;
     }
 
     public void EnterFinalAscension()
@@ -579,7 +596,7 @@ public class PlayerMovement : MonoBehaviour
             {
                 animtoplay = "player_finalangeltransition";
                 hasAscendedonce = false;
-                StartCoroutine(UIfadeOut());
+                //StartCoroutine(UIfadeOut());
             }
             else animtoplay = "player_tenthlayerofhelltransition";
             tospawn = truespirit;
@@ -740,14 +757,16 @@ public class PlayerMovement : MonoBehaviour
         canAngel = false;
     }
 
+    /*
     public IEnumerator UIfadeOut()
     {
-        yield return new WaitForSeconds(0.15f);
+        yield return new WaitForSeconds(0.25f);
         styleAnimator.enabled = true;
         hpAnimator.enabled = true;
         hpAnimator.Play("HPFadeOut");
         styleAnimator.Play("FadeOutStyle");
     }
+    */
 
     public IEnumerator spearAttack()
     {
@@ -1271,6 +1290,8 @@ public class PlayerMovement : MonoBehaviour
         rb.bodyType = RigidbodyType2D.Kinematic;
 
         anim.Play(animclip);
+
+        if (isintenthlayer) tenthscript.onPlayerDeath();
 
         runParticles.Stop();
         DisableAllActiveWeapons();

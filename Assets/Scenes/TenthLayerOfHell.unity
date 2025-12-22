@@ -49782,6 +49782,7 @@ MonoBehaviour:
   angelDeathParticles: {fileID: 0}
   haskilledwithnewweapon: 0
   isinkwew: 0
+  tenthscript: {fileID: 0}
 --- !u!4 &1602791731
 Transform:
   m_ObjectHideFlags: 0
@@ -63291,7 +63292,7 @@ Animator:
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: 7194e4c20e2c41348a5f0f6d8bac989e, type: 2}
   m_CullingMode: 0
-  m_UpdateMode: 0
+  m_UpdateMode: 2
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
@@ -63347,7 +63348,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 9998
+  m_SortingOrder: 19999
   m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
   m_Color: {r: 0, g: 0, b: 0, a: 0}
   m_FlipX: 0
@@ -74228,7 +74229,7 @@ MonoBehaviour:
   rightHand: {fileID: 762624402}
   comboTime: 0.75
   runParticles: {fileID: 1224951686}
-  godMode: 1
+  godMode: 0
   RLocation: {fileID: 58100624}
   LLocation: {fileID: 1228808078}
   canDash: 1
@@ -74344,6 +74345,7 @@ MonoBehaviour:
   angelDeathParticles: {fileID: 0}
   haskilledwithnewweapon: 0
   isinkwew: 0
+  tenthscript: {fileID: 1573744521}
 --- !u!4 &2089724964
 Transform:
   m_ObjectHideFlags: 0
@@ -74516,7 +74518,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0.041882515, y: -1.0394973}
+  m_Offset: {x: 0.041882515, y: -1.032316}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -74526,7 +74528,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 0.69286156, y: 0.12975717}
+  m_Size: {x: 0.69286156, y: 0.1153948}
   m_EdgeRadius: 0
 --- !u!114 &2089724970
 MonoBehaviour:

@@ -1,73 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &458114086853799959
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1833197373902907780}
-  - component: {fileID: 6362008065240539894}
-  m_Layer: 0
-  m_Name: Hitbox
-  m_TagString: Explosion
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!4 &1833197373902907780
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 458114086853799959}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 6434919983300383799}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!58 &6362008065240539894
-CircleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 458114086853799959}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_CompositeOperation: 0
-  m_CompositeOrder: 0
-  m_Offset: {x: -0.00031303402, y: -0.0644564}
-  m_Radius: 2.1863225
 --- !u!1 &1905699683672262216
 GameObject:
   m_ObjectHideFlags: 0
@@ -82,6 +14,7 @@ GameObject:
   - component: {fileID: 2083026935205815712}
   - component: {fileID: 4393879747472511384}
   - component: {fileID: 7095935818385982349}
+  - component: {fileID: 7659259755967852603}
   m_Layer: 0
   m_Name: EyeballEnemy(Stoned)
   m_TagString: Untagged
@@ -102,9 +35,7 @@ Transform:
   m_LocalScale: {x: 0.8835, y: 0.8835, z: 0.8835}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1833197373902907780}
   - {fileID: 2263302352243101430}
-  - {fileID: 1893649588279929663}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &2011901626021842605
@@ -132,7 +63,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 63a926f177ab45b41a795a20336dc4f3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -179,11 +110,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 0}
   movespeed: 9
-  Hitbox: {fileID: 458114086853799959}
-  BlowUpParticles: {fileID: 2044124731629223547}
+  Hitbox: {fileID: 5712650555920437308, guid: 527113b89acabea458dcbd067c64f02e, type: 3}
+  BlowUpParticles: {fileID: 1582243209086010557, guid: 16ea88e593c8cf04d8373b28ff757e95, type: 3}
   Glow: {fileID: 6710472653251859514}
   DeathParticles: {fileID: 2235657635126729578, guid: 4f8f4df7329ac7f4fbf828c767bbcee1, type: 3}
   deathSound: {fileID: 8300000, guid: a12a8d6aef9e0e644a59a4dcb8d5dad1, type: 3}
+  explodeSound: {fileID: 8300000, guid: d3f7cb901904f2e4dbd7e5b9e6f8f313, type: 3}
+  stonedExplodeSound: {fileID: 8300000, guid: e6b912589e276fb45b4b4ec5a0d55544, type: 3}
+  sisini:
+  - {fileID: 8300000, guid: 6b3e7b169898d5d489eb6d10ebe86e46, type: 3}
+  - {fileID: 8300000, guid: 6bfb2226d77e53b4aa733ed65b69d6cd, type: 3}
   LPortal: {fileID: 0}
   RPortal: {fileID: 0}
   lastproccessedkill: -1
@@ -282,6 +218,20 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &7659259755967852603
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1905699683672262216}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4d48b5ba9c16efe48958d445f79149c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::spriteFlashScript
+  _duration: 0.14
+  targetValue: 1
 --- !u!1 &6710472653251859514
 GameObject:
   m_ObjectHideFlags: 0
@@ -372,74 +322,3 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!1001 &696775139404102342
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 6434919983300383799}
-    m_Modifications:
-    - target: {fileID: 1435778603118514681, guid: 8650ca5eba779c743b4bab7c36de0323, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0.0002
-      objectReference: {fileID: 0}
-    - target: {fileID: 1435778603118514681, guid: 8650ca5eba779c743b4bab7c36de0323, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.0853
-      objectReference: {fileID: 0}
-    - target: {fileID: 1435778603118514681, guid: 8650ca5eba779c743b4bab7c36de0323, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0.016114473
-      objectReference: {fileID: 0}
-    - target: {fileID: 1435778603118514681, guid: 8650ca5eba779c743b4bab7c36de0323, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.9525533
-      objectReference: {fileID: 0}
-    - target: {fileID: 1435778603118514681, guid: 8650ca5eba779c743b4bab7c36de0323, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1435778603118514681, guid: 8650ca5eba779c743b4bab7c36de0323, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1435778603118514681, guid: 8650ca5eba779c743b4bab7c36de0323, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0.30437204
-      objectReference: {fileID: 0}
-    - target: {fileID: 1435778603118514681, guid: 8650ca5eba779c743b4bab7c36de0323, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: -90
-      objectReference: {fileID: 0}
-    - target: {fileID: 1435778603118514681, guid: 8650ca5eba779c743b4bab7c36de0323, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1435778603118514681, guid: 8650ca5eba779c743b4bab7c36de0323, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1582243209086010557, guid: 8650ca5eba779c743b4bab7c36de0323, type: 3}
-      propertyPath: m_Name
-      value: blowUpParticlesEyeball
-      objectReference: {fileID: 0}
-    - target: {fileID: 1582243209086010557, guid: 8650ca5eba779c743b4bab7c36de0323, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 8650ca5eba779c743b4bab7c36de0323, type: 3}
---- !u!4 &1893649588279929663 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 1435778603118514681, guid: 8650ca5eba779c743b4bab7c36de0323, type: 3}
-  m_PrefabInstance: {fileID: 696775139404102342}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &2044124731629223547 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1582243209086010557, guid: 8650ca5eba779c743b4bab7c36de0323, type: 3}
-  m_PrefabInstance: {fileID: 696775139404102342}
-  m_PrefabAsset: {fileID: 0}

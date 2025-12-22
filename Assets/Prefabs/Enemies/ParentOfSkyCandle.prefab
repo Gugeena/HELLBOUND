@@ -346,6 +346,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96f7e5335c37520428c34a2c66014836, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  animator: {fileID: 0}
 --- !u!1 &1247048754157370086
 GameObject:
   m_ObjectHideFlags: 0
@@ -638,6 +639,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96f7e5335c37520428c34a2c66014836, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  animator: {fileID: 0}
 --- !u!1 &3003257866998577460
 GameObject:
   m_ObjectHideFlags: 0
@@ -986,6 +988,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96f7e5335c37520428c34a2c66014836, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  animator: {fileID: 0}
 --- !u!1 &6104835501643451698
 GameObject:
   m_ObjectHideFlags: 0
@@ -1003,7 +1006,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &7773853348564599595
 Transform:
   m_ObjectHideFlags: 0
@@ -1323,6 +1326,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96f7e5335c37520428c34a2c66014836, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  animator: {fileID: 0}
 --- !u!1 &8411270282444701278
 GameObject:
   m_ObjectHideFlags: 0
@@ -1455,6 +1459,7 @@ MonoBehaviour:
   weaponPickup: {fileID: 729149941573794601, guid: 26727b72f2514104bacba35cdf56052c, type: 3}
   stoned: 0
   deathparticles: []
+  hitbox: {fileID: 6104835501643451698}
 --- !u!114 &2711968041846255230
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1467,6 +1472,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96f7e5335c37520428c34a2c66014836, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  animator: {fileID: 0}
 --- !u!61 &7011913642787228923
 BoxCollider2D:
   m_ObjectHideFlags: 0
