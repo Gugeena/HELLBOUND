@@ -7,6 +7,8 @@ public class HoverShitScript : MonoBehaviour, IPointerEnterHandler, IPointerExit
 {
     public GameObject Glow;
     public bool isHovering = false;
+    public bool isReplay;
+    public bool isEntered;
 
     private void OnDisable()
     {
@@ -17,12 +19,22 @@ public class HoverShitScript : MonoBehaviour, IPointerEnterHandler, IPointerExit
     {
         isHovering = true;
         Glow.SetActive(true);
+        if (isReplay)
+        {
+            if (SaveSystem.Load().information.turnedon == 0) Glow.SetActive(true);
+            else if (SaveSystem.Load().information.turnedon == 1) Glow.SetActive(false);
+        }
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
         isHovering = false;
-        Glow.SetActive(false);
+        if(isReplay)
+        {
+            if (SaveSystem.Load().information.turnedon == 1) Glow.SetActive(true);
+            else if (SaveSystem.Load().information.turnedon == 0) Glow.SetActive(false);
+        }
+        else Glow.SetActive(false);
     }
 
     public void OnButtonClick()

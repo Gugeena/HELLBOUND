@@ -9326,6 +9326,7 @@ MonoBehaviour:
   stonedskyCandle: {fileID: 2982493664162884371, guid: 40f4bc78b8606f341b991fe831010e99, type: 3}
   stonedeyeBall: {fileID: 1905699683672262216, guid: 954427b42d4c9274cb1f1bcb643c487a, type: 3}
   spawningparticles: {fileID: 4471190713132977389, guid: 53fbc06bb2f442141ab223fb083a7a97, type: 3}
+  stonedspawningparticles: {fileID: 4471190713132977389, guid: bbde7cc5b7449324abfbe1ca38ee07fd, type: 3}
   Player: {fileID: 0}
   cooldownTimer: 0
 --- !u!4 &536033092
@@ -25871,7 +25872,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 58
+  m_SortingOrder: -480
   m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
   m_Color: {r: 0.5137255, g: 0.08235294, b: 0.6784314, a: 0}
   m_FlipX: 0
@@ -40275,6 +40276,10 @@ PrefabInstance:
       value: 0.99842554
       objectReference: {fileID: 0}
     - target: {fileID: 4842689667767617307, guid: 9bf11b089ca356d40a97b53f20adf632, type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 4842689667767617307, guid: 9bf11b089ca356d40a97b53f20adf632, type: 3}
       propertyPath: m_Offset.x
       value: -0.08781856
       objectReference: {fileID: 0}
@@ -49175,7 +49180,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1573744521
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -49695,6 +49700,7 @@ MonoBehaviour:
   fadeOut: {fileID: 0}
   finalfadeOut: {fileID: 0}
   hurtparticle: {fileID: 2235657635126729578, guid: 0b8e5145b57c31e49b0c1a6a4edd62c3, type: 3}
+  angelTransistion: 0
   angelOverlayAnim: {fileID: 0}
   Special: 0
   AttackButton: 0
@@ -49710,6 +49716,7 @@ MonoBehaviour:
   finaldissapearence: {fileID: 8300000, guid: e2c220fce51f4084f84c76590d4dc424, type: 3}
   Beyondascension: {fileID: 8300000, guid: e4da62ff74a9e1a41a253bf80e82d8f1, type: 3}
   angelicDeath: {fileID: 0}
+  levaniylea: {fileID: 0}
   punches:
   - {fileID: 8300000, guid: 62da8b6a6b0e9254988c9bd8f3e286ba, type: 3}
   - {fileID: 8300000, guid: b92fa1e7bcf634f47925069d3b97cba7, type: 3}
@@ -49783,6 +49790,7 @@ MonoBehaviour:
   haskilledwithnewweapon: 0
   isinkwew: 0
   tenthscript: {fileID: 0}
+  charchoba: {fileID: 0}
 --- !u!4 &1602791731
 Transform:
   m_ObjectHideFlags: 0
@@ -53282,7 +53290,7 @@ ParticleSystemRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: -13
+  m_SortingOrder: -499
   m_RenderMode: 0
   m_MeshDistribution: 0
   m_SortMode: 0
@@ -74256,6 +74264,7 @@ MonoBehaviour:
   fadeOut: {fileID: 1961705322}
   finalfadeOut: {fileID: 0}
   hurtparticle: {fileID: 2235657635126729578, guid: 0b8e5145b57c31e49b0c1a6a4edd62c3, type: 3}
+  angelTransistion: 0
   angelOverlayAnim: {fileID: 873852484}
   Special: 0
   AttackButton: 0
@@ -74271,6 +74280,7 @@ MonoBehaviour:
   finaldissapearence: {fileID: 8300000, guid: e2c220fce51f4084f84c76590d4dc424, type: 3}
   Beyondascension: {fileID: 8300000, guid: e4da62ff74a9e1a41a253bf80e82d8f1, type: 3}
   angelicDeath: {fileID: 0}
+  levaniylea: {fileID: 0}
   punches:
   - {fileID: 8300000, guid: 62da8b6a6b0e9254988c9bd8f3e286ba, type: 3}
   - {fileID: 8300000, guid: b92fa1e7bcf634f47925069d3b97cba7, type: 3}
@@ -74346,6 +74356,7 @@ MonoBehaviour:
   haskilledwithnewweapon: 0
   isinkwew: 0
   tenthscript: {fileID: 1573744521}
+  charchoba: {fileID: 0}
 --- !u!4 &2089724964
 Transform:
   m_ObjectHideFlags: 0
@@ -75221,6 +75232,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Glow: {fileID: 8182816481813438716}
   isHovering: 0
+  isReplay: 0
+  isEntered: 0
 --- !u!224 &2153556240245429045
 RectTransform:
   m_ObjectHideFlags: 0
@@ -75320,7 +75333,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: -12
+  m_SortingOrder: -486
   m_Sprite: {fileID: -215086040, guid: 53e8a71aa98ebd34c928bbd0342758a8, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -75378,7 +75391,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: -13
+  m_SortingOrder: -499
   m_Sprite: {fileID: 703149564, guid: e6953735c8cb55248991e3c38da174d3, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -75703,6 +75716,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Glow: {fileID: 4495064236233975189}
   isHovering: 0
+  isReplay: 0
+  isEntered: 0
 --- !u!224 &3570410829019131946
 RectTransform:
   m_ObjectHideFlags: 0
@@ -75857,6 +75872,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Glow: {fileID: 7867434024563699376}
   isHovering: 0
+  isReplay: 0
+  isEntered: 0
 --- !u!1 &4495064236233975189
 GameObject:
   m_ObjectHideFlags: 0
@@ -76540,6 +76557,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Glow: {fileID: 3653076455666167989}
   isHovering: 0
+  isReplay: 0
+  isEntered: 0
 --- !u!114 &7381037169571733472
 MonoBehaviour:
   m_ObjectHideFlags: 0

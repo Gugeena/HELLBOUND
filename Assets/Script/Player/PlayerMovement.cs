@@ -106,7 +106,8 @@ public class PlayerMovement : MonoBehaviour
 
     public GameObject hurtparticle;
 
-    private bool canAngel, isAngeled, angelTransistion;
+    private bool canAngel, isAngeled;
+    public bool angelTransistion;
 
     [SerializeField]
     private Animator angelOverlayAnim;
@@ -114,7 +115,7 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("SFX")]
     [SerializeField] private AudioClip death;
-    [SerializeField] private AudioClip mfGarwoba, firstLandSound, ascension, hitStop, revival, finaldissapearence, Beyondascension, angelicDeath;
+    [SerializeField] private AudioClip mfGarwoba, firstLandSound, ascension, hitStop, revival, finaldissapearence, Beyondascension, angelicDeath, levaniylea;
     [SerializeField] private AudioClip[] punches, gravelWalk, jumps, lands, bowShots, mfHits, spearHits, boomerangShots, hurts;
     private int walkedDistance = 1;
 
@@ -221,6 +222,10 @@ public class PlayerMovement : MonoBehaviour
 
     public TenthLayerOfHellScript tenthscript;
 
+    public Animation charchoba;
+
+    public static bool isInAngelTransition;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -229,6 +234,7 @@ public class PlayerMovement : MonoBehaviour
         variablesetting();
 
         if (!isAngelic) StartCoroutine(pickUpWeapon(0, "fists"));
+        else StartCoroutine(beInvincbleforawhile());
         //else LilithScript.lilithDeathEvent += EnterFinalAscension;
 
         rPEmitter = runParticles.emission;
@@ -240,10 +246,16 @@ public class PlayerMovement : MonoBehaviour
 
     void variablesetting()
     {
-        if (!isAngelic) lastkilled = this.gameObject;
+        if (!isAngelic)
+        {
+            lastkilled = this.gameObject;
+            direction = 1;
+            canPause = true;
+        }
+        else StartCoroutine(canPauseEnabler());
+        isInAngelTransition = false;
         LilithScript.bossfightstarted = false;
         Time.timeScale = 1;
-        direction = 1;
         hp = 150f;
         hpslider.value = 150f;
         canBePoisoned = true;
@@ -254,13 +266,12 @@ public class PlayerMovement : MonoBehaviour
         shouldmakeAudio = true;
         stopAttacking = false;
         hasdiedforeverybody = false;
-        if (!isAngelic) canPause = true;
-        else StartCoroutine(canPauseEnabler());
         String scenename = SceneManager.GetActiveScene().name;
         if (scenename == "TenthLayerOfHell")
         {
             AchivementScript.instance.UnlockAchivement("Doom’s Threshold");
             isintenthlayer = true;
+            if(isAngelic) tenthscript = GameObject.Find("TLOH").GetComponent<TenthLayerOfHellScript>();
         }
         else isintenthlayer = false;
     }
@@ -507,10 +518,16 @@ public class PlayerMovement : MonoBehaviour
             //StartCoroutine(pickUpWeapon(3, "fists"));
         }
         */
+
         if (Input.GetKeyDown(KeyCode.E))
         {
             StartCoroutine(enterAngelic(false));
         }
+        if (Input.GetKeyDown(KeyCode.T))
+        {
+            StartCoroutine(enterAngelic(true));
+        }
+
         if (StyleManager.canAscend && !isAngelic && !isDead)
         {
             if (Input.GetKeyDown(KeyCode.E))
@@ -606,12 +623,17 @@ public class PlayerMovement : MonoBehaviour
             animtoplay = "player_angelicShaking";
             tospawn = angelic;
         }
+
+        //transform.localScale = new Vector3(Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
+        //direction = 1;
+        isInAngelTransition = true;
         anim.Play(animtoplay);
 
         audioManager.instance.stopMusic();
 
         if (isintenthlayer && Beyonder)
         {
+            audioManager.instance.playAudio(levaniylea, 0.65f, 1, transform, audioManager.instance.sfx);
             autokillcollider.enabled = true;
             stopAttacking = true;
             rb.gravityScale = 0f;
@@ -639,7 +661,7 @@ public class PlayerMovement : MonoBehaviour
             }
             audioManager.instance.playAudio(slash, 1, 1, this.transform, audioManager.instance.sfx);
             Instantiate(hurtparticle, transform.position, Quaternion.identity);
-            yield return new WaitForSeconds(4f);
+            yield return new WaitForSeconds(2f);
             fadeOut.SetActive(true);
             AchivementScript.instance.UnlockAchivement("Hop Out of Trial by Fire");
             if(deathcount == 0) AchivementScript.instance.UnlockAchivement("Infallible");
@@ -711,6 +733,7 @@ public class PlayerMovement : MonoBehaviour
             PlayerMovement playerMovement = spawned.GetComponent<PlayerMovement>();
             StartCoroutine(playerMovement.pickUpWeapon(currentWeapon, "weapon"));
             spawned.transform.localScale = new Vector3(this.transform.localScale.x, 1, 1);
+            playerMovement.direction = spawned.transform.localScale.x < 0 ? -1 : 1;
         }
 
         if (Beyonder)
@@ -744,6 +767,20 @@ public class PlayerMovement : MonoBehaviour
                 tlohscript.alreadyin = false;
             }
         }
+
+        if(Equals(this,spawned))
+        {
+            if(this.transform.localScale.x < 0)
+            {
+                float currentRotation = this.bowHands.transform.rotation.z;
+                Transform tranBowHands = spawned.gameObject.transform.GetChild(2);
+                GameObject bowHands = tranBowHands.gameObject;
+                bowHands.transform.rotation = Quaternion.Euler(0,0,currentRotation);
+                Time.timeScale = 0;
+            }
+        }
+
+        isInAngelTransition = false;
 
         if (isintenthlayer) Destroy(gameObject);
         if (!isintenthlayer && !Beyonder) Destroy(gameObject);
@@ -815,7 +852,7 @@ public class PlayerMovement : MonoBehaviour
         Vector2 dir = mousepos - mfPos; // gvadzlevs directions -1;0 for left da egeti shit boomerangidan mausamde
         float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg; // radianebidan gadaaq degreeshi
         float pitch = UnityEngine.Random.Range(0.8f, 1.01f);
-        audioManager.instance.playRandomAudio(boomerangShots, 1, pitch, transform, audioManager.instance.sfx);
+        m.GetComponent<BoomerangWeaponScript>().boomerangSound = audioManager.instance.playRandomAudio(boomerangShots, 1, pitch, transform, audioManager.instance.sfx);
         mrb.linearVelocity = dir.normalized * 15f;
 
         boomerang.SetActive(false);
@@ -900,6 +937,13 @@ public class PlayerMovement : MonoBehaviour
         anim.SetBool("isMjolFlying", true);
     }
 
+    private IEnumerator beInvincbleforawhile()
+    {
+        invincible = true;
+        yield return new WaitForSeconds(1f);
+        invincible = false;
+    }
+
     private IEnumerator mfAttack()
     {
         canPunch = false;
@@ -919,7 +963,6 @@ public class PlayerMovement : MonoBehaviour
         canPunch = false;
         anim.Play("player_mf_special");
         yield return new WaitForSeconds(1.2f);
-        audioManager.instance.playAudio(mfGarwoba, 1f, 1, transform, audioManager.instance.sfx);
         Transform temp = transform.GetChild(3).GetChild(1);
         Vector2 mfPos = temp.position;
         Quaternion mfRot = temp.rotation;
@@ -929,8 +972,11 @@ public class PlayerMovement : MonoBehaviour
             else mfRot = Quaternion.Euler(0f, 0f, -155f);
         }
         GameObject m = Instantiate(motherFuckerPrefab, mfPos, mfRot);
-        m.GetComponent<mfScript>().direction = direction;
+        mfScript mfScript = m.GetComponent<mfScript>();
+        mfScript.mfSound = audioManager.instance.playAudio(mfGarwoba, 1f, 1, transform, audioManager.instance.sfx);
+        mfScript.direction = direction;
         motherfucker.SetActive(false);
+
         currentWeapon = 0;
         canPunch = true;
     }
@@ -1221,13 +1267,13 @@ public class PlayerMovement : MonoBehaviour
     public IEnumerator damage(int damage, float duration, bool poisoned)
     {
         invincible = true;
-
+        
         //hasdiedforeverybody = true;
         //isPoisoned = false;
         PauseScript.dmg += damage;
         invincible = true;
         hp -= damage;
-
+        
         if (hp <= 0 && !isDead)
         {
             StartCoroutine(deathCRT());
@@ -1262,7 +1308,7 @@ public class PlayerMovement : MonoBehaviour
         isDead = true;
         canPause = false;
         invincible = true;
-        DisableAllActiveWeapons();
+        //DisableAllActiveWeapons();
         stopAttacking = true;
         shouldMakeSound = false;
         rb.linearVelocity = Vector2.zero;
@@ -1289,12 +1335,14 @@ public class PlayerMovement : MonoBehaviour
         legBox.enabled = false;
         rb.bodyType = RigidbodyType2D.Kinematic;
 
-        anim.Play(animclip);
+        bool isInCharchoba = anim.GetCurrentAnimatorStateInfo(0).IsName("player_mf_special");
+        anim.CrossFade(animclip, 0);
+        //anim.Play(animclip);
 
-        if (isintenthlayer) tenthscript.onPlayerDeath();
+        if (isintenthlayer) tenthscript.onPlayerDeath(isAngelic ? 1.5f : 2.5f);
 
         runParticles.Stop();
-        DisableAllActiveWeapons();
+        //DisableAllActiveWeapons();
         if (isAngelic)
         {
             angelDeathParticles.Play();
@@ -1315,7 +1363,7 @@ public class PlayerMovement : MonoBehaviour
         rb.gravityScale = 8f;
         rb.bodyType = RigidbodyType2D.Dynamic;
         yield return new WaitForSeconds(1f);
-        DisableAllActiveWeapons();
+        //DisableAllActiveWeapons();
         rb.gravityScale = 0f;
         rb.bodyType = RigidbodyType2D.Kinematic;
         this.transform.position = new Vector3(this.transform.position.x, -4.4f, 0);
@@ -1328,7 +1376,7 @@ public class PlayerMovement : MonoBehaviour
         camAnimator.Play("player_camera_fall");
         audioManager.instance.stopMusic();
         yield return new WaitForSeconds(2f);
-        DisableAllActiveWeapons();
+        //DisableAllActiveWeapons();
         autokillcollider.enabled = true;
         hp = 150f;
         if(isintenthlayer) hpAnimator.Play("PlayerDepoisoning");
@@ -1375,12 +1423,19 @@ public class PlayerMovement : MonoBehaviour
         yield return null;
     }
 
+    /*
     public void DisableAllActiveWeapons()
     {
-        GameObject weapon = GameObject.Find("motherfuckr(Clone)") ?? GameObject.Find("BoomerangPrefab(Clone)");
-        if (weapon != null) Destroy(weapon);
+        Rigidbody2D[] rbs = GameObject.FindObjectsOfType<Rigidbody2D>(true);
+        foreach (Rigidbody2D rb in rbs)
+        {
+            String name = rb.gameObject.name;
+            if (name.StartsWith("motherfuckr") || name.StartsWith("BoomerangPrefab")) Destroy(rb.gameObject);
+        }
+
         StartCoroutine(pickUpWeapon(0, "null"));
     }
+    */
 
     IEnumerator posionCure(float seconds)
     {
@@ -1396,7 +1451,7 @@ public class PlayerMovement : MonoBehaviour
         waiting = true;
         Time.timeScale = 0f;
         yield return new WaitForSecondsRealtime(duration);
-        Time.timeScale = 1f;
+        if(!isInAngelTransition) Time.timeScale = 1f;
         waiting = false;
     }
 
@@ -1430,7 +1485,7 @@ public class PlayerMovement : MonoBehaviour
             Destroy(collision.gameObject.transform.parent.gameObject);
         }
 
-        if (!invincible && !godMode)
+        if (!invincible && !godMode && !isInAngelTransition)
         {
             if (collision.gameObject.CompareTag("enemyhitbox"))
             {

@@ -119,7 +119,7 @@ public class EnemyChargerScript : MonoBehaviour
 
         if (distance > stopDistance)
         {
-            if (canMove)
+            if (canMove && !PlayerMovement.hasdiedforeverybody)
             {
                 animator.SetBool("shouldRun", true);
                 animator.SetBool("shouldFein", false);
@@ -204,6 +204,14 @@ public class EnemyChargerScript : MonoBehaviour
         if (canAttack)
         {
             handleFlip();
+        }
+
+        if(PlayerMovement.hasdiedforeverybody && canMove)
+        {
+            canMove = false;
+            animator.SetBool("shouldRun", false);
+            animator.SetBool("shouldAttack", false);
+            animator.SetBool("shouldFein", true);
         }
 
         animator.SetBool("isGrounded", isGrounded);
@@ -340,10 +348,17 @@ public class EnemyChargerScript : MonoBehaviour
         float pitch = UnityEngine.Random.Range(0.8f, 1.01f);
         audioManager.instance.playRandomAudio(damageSounds, 0.65f, pitch, transform, audioManager.instance.sfx);
         Vector2 force = new Vector2(-direction, 0);
+        //StartCoroutine(hitScan());
         rb.AddForce(force * (knockback * 1000f), ForceMode2D.Impulse);
         PlayerMovement playerScript = player.GetComponent<PlayerMovement>();
     }
 
+    public IEnumerator hitHalt()
+    {
+        canMove = false;
+        yield return new WaitForSeconds(0.1f);
+        canMove = true;
+    }
 
     public IEnumerator attack()
     {

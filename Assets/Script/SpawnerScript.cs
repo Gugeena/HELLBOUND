@@ -11,7 +11,7 @@ public class SpawnerScript : MonoBehaviour
     private GameObject skyCandle, eyeBall, stonedskyCandle, stonedeyeBall;
 
     bool canspawn = true;
-    public GameObject spawningparticles;
+    public GameObject spawningparticles, stonedspawningparticles;
 
     public Transform Player;
 
@@ -39,6 +39,11 @@ public class SpawnerScript : MonoBehaviour
 
     void Update()
     {
+        if(Input.GetKeyDown(KeyCode.T))
+        {
+            print("shouldSpawn: " + shouldSpawn + "; canSpawn: " + canspawn);
+        }
+
         if ((int)PauseScript.kill % 10 == 0 && PauseScript.kill != 0 && (int)PauseScript.kill != lastProccesedamountofkills)
         {
             if (cooldownTimer > 0.8f)
@@ -82,42 +87,6 @@ public class SpawnerScript : MonoBehaviour
         }
     }
 
-    public IEnumerator spawner()
-    {
-        canspawn = false;
-        yield return new WaitForSeconds(cooldownTimer);
-        for (int i = 0; i < spawningcount; i++)
-        {
-            float randomvalue = UnityEngine.Random.Range(0, 1f);
-            float randomx = UnityEngine.Random.Range(15.379f, 35.6f);
-
-            float randomOffsetX = UnityEngine.Random.Range(-2f, 2f);
-            float randomYEyeball = UnityEngine.Random.Range(1f, 4f);
-            if (randomvalue < 0.8f && randomvalue > 0.5f)
-            {
-                float randomy = UnityEngine.Random.Range(-2.24f, 3.4f);
-                Instantiate(spawningparticles, new Vector2(randomx, randomy - 0.75f), Quaternion.identity);
-                yield return new WaitForSeconds(0.2f);
-                Instantiate(banished[1], new Vector2(randomx, randomy), Quaternion.identity);
-
-            }
-            else if (randomvalue < 0.5f || randomvalue < 0.8f)
-            {
-                Instantiate(spawningparticles, new Vector2(randomx, -3.189f - 0.75f), Quaternion.identity);
-                yield return new WaitForSeconds(0.2f);
-                Instantiate(banished[0], new Vector2(randomx, -3.189f), Quaternion.identity);
-            }
-            else
-            {
-                Instantiate(spawningparticles, new Vector2(Player.transform.position.x + randomOffsetX + 0.5f, randomYEyeball + 0.5f), Quaternion.identity);
-                yield return new WaitForSeconds(0.2f);
-                Instantiate(banished[2], new Vector2(Player.transform.position.x + randomOffsetX, randomYEyeball), Quaternion.identity);
-            }
-            //yield return new WaitForSeconds(0.5f);
-        }
-        canspawn = true;
-    }
-
     public IEnumerator theCoolerDanielSpawner()
     {
         if (shouldSpawn)
@@ -126,7 +95,10 @@ public class SpawnerScript : MonoBehaviour
             yield return new WaitForSeconds(cooldownTimer);
             for (int i = 0; i < spawningcount; i++)
             {
-                GameObject[] POOL = TenthLayerOfHellScript.stoned ? stonedbanished : banished;
+                bool isStoned = TenthLayerOfHellScript.stoned;
+                GameObject[] POOL = isStoned ? stonedbanished : banished;
+                GameObject spawnParticles = isStoned ? stonedspawningparticles : spawningparticles;
+
                 int enemyToSpawn = Random.Range(0, POOL.Length);
 
                 float randomx = Random.Range(15.379f, 35.6f);
@@ -145,10 +117,10 @@ public class SpawnerScript : MonoBehaviour
                 }
                 else pos.y = -3.189f;
 
-                if(!Equals(enemy, eyeBall)) Instantiate(spawningparticles, new Vector2(pos.x, pos.y - 0.75f), Quaternion.identity);
-                else Instantiate(spawningparticles, new Vector2(pos.x, pos.y), Quaternion.identity);
-                Instantiate(POOL[enemyToSpawn], pos, Quaternion.identity);
+                if (!Equals(enemy, eyeBall) && !Equals(enemy, stonedeyeBall)) Instantiate(spawnParticles, new Vector2(pos.x, pos.y - 0.75f), Quaternion.identity);
+                else Instantiate(spawnParticles, new Vector2(pos.x, pos.y), Quaternion.identity);
 
+                Instantiate(POOL[enemyToSpawn], pos, Quaternion.identity);
             }
             canspawn = true;
         }

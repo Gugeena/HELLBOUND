@@ -109,7 +109,8 @@ public class spearScript : MonoBehaviour
             collision.gameObject.tag == "FireballP" ||
             collision.gameObject.tag == "Fireball" || 
             collision.gameObject.tag == "Explosion" ||
-          collision.gameObject.tag == "Log")
+            collision.gameObject.tag == "Log" ||
+            collision.gameObject.tag == "Crystal")
         {
             return;
         }
@@ -146,7 +147,8 @@ public class spearScript : MonoBehaviour
           collision.gameObject.tag == "FireballP" ||
           collision.gameObject.tag == "Fireball" ||
           collision.gameObject.tag == "Explosion" ||
-          collision.gameObject.tag == "Log")
+          collision.gameObject.tag == "Log" ||
+          collision.gameObject.tag == "Crystal")
         {
             return;
         }

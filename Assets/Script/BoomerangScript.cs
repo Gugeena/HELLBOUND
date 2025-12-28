@@ -8,13 +8,13 @@ public class BoomerangScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(PauseScript.Paused) return;
+        if (PauseScript.Paused || PlayerMovement.isInAngelTransition) return;
 
         Vector3 mousePosition = Input.mousePosition;
         mousePosition = Camera.main.ScreenToWorldPoint(mousePosition);

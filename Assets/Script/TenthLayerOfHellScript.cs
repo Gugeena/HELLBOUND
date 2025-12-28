@@ -87,17 +87,19 @@ public class TenthLayerOfHellScript : MonoBehaviour
     }
 
     public IEnumerator snakeattack()
-    {
-        lastplayedaudio = audioManager.instance.playAudio(snakeaudio, 1, 1, this.transform, audioManager.instance.sfx);
-        StartCoroutine(ColorFade(vinigreti, Color.red, 0.5f));
+    { 
         if (shouldturnoffforawhile)
         {
             lastplayedaudio.Stop();
             alreadyin = false;
             yield break;
         }
+        lastplayedaudio = audioManager.instance.playAudio(snakeaudio, 1, 1, this.transform, audioManager.instance.sfx);
+        StartCoroutine(ColorFade(vinigreti, Color.red, 0.5f));
         string animation;
-        int random = UnityEngine.Random.Range(0, animations.Length);
+        int random;
+        do { random = UnityEngine.Random.Range(0, animations.Length); }
+        while (animations[random].name == "idletlohl");
         animation = animations[random].name;
         float waittime = 3.5f;
         if (animation.ToLower().Contains("vertical")) waittime = 3f;
@@ -150,8 +152,15 @@ public class TenthLayerOfHellScript : MonoBehaviour
         alreadyin = false;
     }
 
-    public void onPlayerDeath()
+    public void onPlayerDeath(float time)
     {
         StartCoroutine(ColorFade(vinigreti, Color.black, 0.1f));
+        StartCoroutine(SoundTurnOff(time));
+    }
+
+    private IEnumerator SoundTurnOff(float time)
+    {
+        yield return new WaitForSeconds(time);
+        lastplayedaudio.Stop();
     }
 }

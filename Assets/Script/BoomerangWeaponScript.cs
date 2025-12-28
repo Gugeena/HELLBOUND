@@ -17,6 +17,8 @@ public class BoomerangWeaponScript : MonoBehaviour
 
     private int teleportCount = 0;
 
+    public AudioSource boomerangSound;
+
     private void Start()
     {
         player = GameObject.Find("Player(Clone)");
@@ -29,7 +31,11 @@ public class BoomerangWeaponScript : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
+        if (!PlayerMovement.shouldMakeSound) boomerangSound.Stop();
+
         if (PauseScript.Paused) return;
+
         transform.Rotate(0, 0, 1440 * Time.deltaTime);
 
         if (shouldReturn)
@@ -57,6 +63,8 @@ public class BoomerangWeaponScript : MonoBehaviour
                 //this.transform.rotation = Quaternion.Euler(0, 0, angle);
             }
         }
+
+        if (PlayerMovement.hasdiedforeverybody) Destroy(this.gameObject);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -93,7 +101,8 @@ public class BoomerangWeaponScript : MonoBehaviour
             collision.gameObject.tag == "FireballP" ||
             collision.gameObject.tag == "Fireball" ||
             collision.gameObject.tag == "Explosion" ||
-            collision.gameObject.tag == "Log")
+            collision.gameObject.tag == "Log" ||
+            collision.gameObject.tag == "Crystal")
         {
             return;
         }
@@ -107,6 +116,11 @@ public class BoomerangWeaponScript : MonoBehaviour
     public int getteleportCount()
     {
         return teleportCount;
+    }
+
+    private void OnDestroy()
+    {
+        boomerangSound.Stop();
     }
 }
 

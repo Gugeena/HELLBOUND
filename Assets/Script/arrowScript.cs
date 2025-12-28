@@ -77,7 +77,7 @@ public class arrowScript : MonoBehaviour
             landed = true;
             rb.simulated = false;
             GetComponent<CapsuleCollider2D>().enabled = false;
-            audioManager.instance.playAudio(land, 1f, 1, transform, audioManager.instance.sfx);
+            if (PlayerMovement.shouldMakeSound) audioManager.instance.playAudio(land, 1f, 1, transform, audioManager.instance.sfx);
             StartCoroutine(goBack());
         }
 

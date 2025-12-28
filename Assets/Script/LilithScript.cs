@@ -172,6 +172,8 @@ public class LilithScript : MonoBehaviour
             if (shouldFlip) handleflip();
         }
 
+        if(!PlayerMovement.shouldMakeSound && hailmarysound.isPlaying) hailmarysound.Stop();
+
         // if(!canTeleport && !isDoneWithBats && hasBatted) StartCoroutine(firstTeleportCooldown());
     }
 
@@ -192,7 +194,7 @@ public class LilithScript : MonoBehaviour
         ShakeSelfScript shakeself = gameObject.GetComponent<ShakeSelfScript>();
         staffshake.Begin();
         shakeself.Begin();
-        if (PlayerMovement.isintenthlayer)
+        if (!PlayerMovement.isintenthlayer)
         {
             Animator vinnigreteAnimator = GameObject.Find("Vinigreti(Lilith)").GetComponent<Animator>();
             vinnigreteAnimator.Play("VinnigreteDissapearence");
@@ -209,7 +211,7 @@ public class LilithScript : MonoBehaviour
             }
         }
         Destroy(handrb.gameObject);
-        audioManager.instance.playAudio(lilithDeathSound, 1f, 1, transform, audioManager.instance.sfx);
+        if(PlayerMovement.shouldMakeSound) audioManager.instance.playAudio(lilithDeathSound, 1f, 1, transform, audioManager.instance.sfx);
         yield return new WaitForSeconds(1f);
         audioManager.instance.stopLillith();
         yield return new WaitForSeconds(2.4f);
@@ -392,9 +394,9 @@ public class LilithScript : MonoBehaviour
         //stateHash = Animator.StringToHash("LilithStaffHeartOrangeToRed");
         //heartAnimator.Play(stateHash, 0);
         staffScript.changeColor(LillithStaffScript.Colors.red);
+        shoulddieyet = true;
         yield return new WaitForSeconds(4f);
         shouldFlip = true;
-        shoulddieyet = true;
         StartCoroutine(attackCooldown(0.4f, 0));
     }
 
@@ -502,8 +504,8 @@ public class LilithScript : MonoBehaviour
             elapsed += Time.deltaTime;
             if (elapsed >= 0.3f && !hasplayed)
             {
-               if (PlayerMovement.shouldMakeSound) audioSource.Play(); audioManager.instance.playAudio(cast, 1, 1, transform, audioManager.instance.sfx);
-               hasplayed = true;
+               if (PlayerMovement.shouldMakeSound) audioManager.instance.playAudio(cast, 1, 1, transform, audioManager.instance.sfx); //audioSource.Play(); audioManager.instance.playAudio(cast, 1, 1, transform, audioManager.instance.sfx);
+                hasplayed = true;
             }
             if (isDead) yield break;
             yield return null;
@@ -586,7 +588,7 @@ public class LilithScript : MonoBehaviour
             elapsed += Time.deltaTime;
             if (elapsed >= 0.3f && !hasplayed)
             {
-                if (PlayerMovement.shouldMakeSound) audioSource.Play(); audioManager.instance.playAudio(cast, 1, 1, transform, audioManager.instance.sfx);
+                if (PlayerMovement.shouldMakeSound) audioManager.instance.playAudio(cast, 1, 1, transform, audioManager.instance.sfx);  //audioSource.Play(); audioManager.instance.playAudio(cast, 1, 1, transform, audioManager.instance.sfx);
                 hasplayed = true;
             }
             if (isDead) yield break;
@@ -845,11 +847,18 @@ public class LilithScript : MonoBehaviour
             if (collision.gameObject.name == "meleehitbox") StartCoroutine(damage(RetrieveTeleportCount(collision), 0.2f, timer));
             else
             {
-                float damagexz;
-                if (Vector2.Distance(this.transform.position, player.transform.position) > 0.5f) timer = 0.5f;
-                if (collision.gameObject.name == "motherfuckr(Clone)") damagexz = 0.5f;
+                float damagexz = 0;
+                if (collision.gameObject.name.StartsWith("BoomerangPrefab"))
+                {
+                    if (Vector2.Distance(this.transform.position, player.transform.position) > 0.5f)
+                    {
+                        timer = 0.5f;
+                    }
+                    damagexz = 0.55f;
+                }
+                else if (collision.gameObject.name.StartsWith("motherfuckr")) damagexz = 0.5f;
+                else if (collision.gameObject.name.StartsWith("SpearPrefab(Clone)")) washitbyspear = true;
                 else damagexz = 1f;
-                if (collision.gameObject.name == "SpearPrefab(Clone)") washitbyspear = true;
                 StartCoroutine(damage(RetrieveTeleportCount(collision), damagexz, timer));
             }
         }

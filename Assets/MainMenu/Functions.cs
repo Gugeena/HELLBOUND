@@ -11,7 +11,7 @@ using System.IO;
 
 public class Functions : MonoBehaviour
 {
-    public GameObject FadeOut;
+    public GameObject FadeOut, checkmark;
     public Animator settingsanim;
     public bool hasrolledin;
     public AudioMixer audioMixer;
@@ -58,7 +58,8 @@ public class Functions : MonoBehaviour
     public void loadsaved()
     {
         RectTransform rectTransform = startGame.GetComponent<RectTransform>();
-        if (SaveSystem.Load().information.hasbeatthegame == 1)
+        GlobalSettings globalSettings = SaveSystem.Load();
+        if (globalSettings.information.hasbeatthegame == 1)
         {
             rectTransform.anchoredPosition = new Vector2(0, -5f);
             tenth.SetActive(true);
@@ -67,6 +68,17 @@ public class Functions : MonoBehaviour
         {
             rectTransform.anchoredPosition = new Vector2(0, -72f);
         }
+
+        if (globalSettings.information.turnedon == 1)
+        {
+            globalSettings.information.doneTutorial = 0;
+        }
+        else
+        {
+            globalSettings.information.doneTutorial = 1;
+        }
+        SaveSystem.Save(globalSettings);
+        checkmark.SetActive(globalSettings.information.turnedon > 0);
     }
 
     public void Update()
@@ -81,7 +93,7 @@ public class Functions : MonoBehaviour
     {
         EventSystem.current.SetSelectedGameObject(null);
         int scene = 3;
-
+        //checkmark.SetActive(false);
         /*
         string path = System.IO.Path.Combine(Application.persistentDataPath, "Information.json");
 
@@ -101,6 +113,16 @@ public class Functions : MonoBehaviour
 
         if (SaveSystem.Load().information.doneTutorial > 0) scene = 4;
         StartCoroutine(StartGame(scene));
+    }
+
+    public void ReplayTutorialON()
+    {
+        GlobalSettings globalsettings = SaveSystem.Load();
+
+        globalsettings.information.turnedon ^= 1;
+        globalsettings.information.doneTutorial = globalsettings.information.turnedon == 1 ? 0 : 1;
+
+        SaveSystem.Save(globalsettings);
     }
 
     public void PlayTenth()

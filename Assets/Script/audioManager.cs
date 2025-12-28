@@ -34,7 +34,7 @@ public class audioManager : MonoBehaviour
         return audioSource;
     }
 
-    public void playRandomAudio(AudioClip[] a, float volume, float pitch, Transform pos, AudioMixerGroup channel)
+    public AudioSource playRandomAudio(AudioClip[] a, float volume, float pitch, Transform pos, AudioMixerGroup channel)
     {
         AudioSource audioSource = Instantiate(source, pos.position, Quaternion.identity);
 
@@ -48,6 +48,8 @@ public class audioManager : MonoBehaviour
         float len = audioSource.clip.length;
 
         Destroy(audioSource.gameObject, len);
+
+        return audioSource;
     }
 
     public void stopMusic() 

@@ -79,6 +79,8 @@ public class EyeballMovementScript : MonoBehaviour
 
     private Coroutine destroyCoroutine;
 
+    private bool shouldbookit = false;
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -116,7 +118,7 @@ public class EyeballMovementScript : MonoBehaviour
     {
         if (canMove)
         {
-            if (stopDistance <= distance && !charge)
+            if (stopDistance <= distance && !charge && !shouldbookit)
             {
                 Vector2 targetPosition;
                 Vector2 moveDir;
@@ -156,6 +158,14 @@ public class EyeballMovementScript : MonoBehaviour
             {
                 if (!charge) chargeUp();
                 rb.linearVelocity = transform.right * movespeed;
+            }
+
+            if(PlayerMovement.hasdiedforeverybody && canMove)
+            {
+                if (shouldbookit) return;
+                shouldbookit = true;
+                if (!(distance < stopDistance)) chargeUp();
+                rb.linearVelocity = (player.position - transform.position) * movespeed;
             }
         }
     }
@@ -221,7 +231,7 @@ public class EyeballMovementScript : MonoBehaviour
         Instantiate(BlowUpParticles, transform.position, Quaternion.identity);
         Instantiate(Hitbox, transform.position, Quaternion.identity);
         AudioClip explodeAudio = stoned ? stonedExplodeSound : explodeSound;
-        audioManager.instance.playAudio(explodeAudio, 1f, 1, transform, audioManager.instance.sfx);
+        if(PlayerMovement.shouldMakeSound) audioManager.instance.playAudio(explodeAudio, 1f, 1, transform, audioManager.instance.sfx);
         StartCoroutine(ExplosionHitbox());
         yield return null;
         Destroy(gameObject);

@@ -29,6 +29,8 @@ public class mfScript : MonoBehaviour
     private ParticleSystem particles;
     public Coroutine runningShake;
 
+    public AudioSource mfSound;
+
     private void Start()
     {
         playerTransform = GameObject.Find("Player(Clone)").transform;
@@ -65,6 +67,8 @@ public class mfScript : MonoBehaviour
         {
            StartCoroutine(back());
         }
+
+        if (PlayerMovement.hasdiedforeverybody) Destroy(this.gameObject);
     }
 
     private void backing()
@@ -116,6 +120,7 @@ public class mfScript : MonoBehaviour
     public void OnDestroy()
     {
         camShakerScript.Stop();
+        mfSound.Stop();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
