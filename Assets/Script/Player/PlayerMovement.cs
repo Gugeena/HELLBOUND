@@ -518,7 +518,7 @@ public class PlayerMovement : MonoBehaviour
             //StartCoroutine(pickUpWeapon(3, "fists"));
         }
         */
-
+        /*
         if (Input.GetKeyDown(KeyCode.E))
         {
             StartCoroutine(enterAngelic(false));
@@ -527,7 +527,7 @@ public class PlayerMovement : MonoBehaviour
         {
             StartCoroutine(enterAngelic(true));
         }
-
+        */
         if (StyleManager.canAscend && !isAngelic && !isDead)
         {
             if (Input.GetKeyDown(KeyCode.E))
