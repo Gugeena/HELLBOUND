@@ -18,6 +18,8 @@ using System.IO;
 using static UnityEngine.ParticleSystem;
 using static UnityEngine.Rendering.DebugUI;
 using System.Collections.Generic;
+using System.Linq;
+using Steamworks;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -214,7 +216,7 @@ public class PlayerMovement : MonoBehaviour
 
     public static GameObject lastkilled;
     public static List<GameObject> lastkilledby = new List<GameObject>();
-    public static List<GameObject> weaponsUsed = new List<GameObject>();
+    public static List<String> weaponsUsed = new List<String>();
     public int haskilledwithnewweapon = 0;
     public bool isinkwew = false;
     public static int lastkilledstreak;
@@ -225,6 +227,8 @@ public class PlayerMovement : MonoBehaviour
     public Animation charchoba;
 
     public static bool isInAngelTransition;
+
+    public Coroutine resetKW;
 
     // Start is called before the first frame update
     void Start()
@@ -1208,9 +1212,28 @@ public class PlayerMovement : MonoBehaviour
 
     public void killwitheveryweapon(GameObject weapon)
     {
-        if (!weaponsUsed.Contains(weapon)) weaponsUsed.Add(weapon);
-        if(!isinkwew) StartCoroutine(resetkwew());
+        string weaponName = getWeapon(weapon);
+        if (!weaponsUsed.Contains(weaponName) && weaponName != "0") weaponsUsed.Add(weaponName);
+       
+        if(weaponsUsed.Contains(weaponName) && resetKW != null)
+        {
+            StopCoroutine(resetKW);
+            isinkwew = false;
+        }    
+        if(!isinkwew) resetKW = StartCoroutine(resetkwew());
         if (weaponsUsed.Count == 4) AchivementScript.instance.UnlockAchivement("MAL_ARSENAL");
+    }
+
+    String getWeapon(GameObject weapon)
+    {
+        string name = weapon.name.ToLower();
+        string weapon1;
+
+        if (name.StartsWith("motherfuckr") || name.StartsWith("mf")) return weapon1 = "mf";
+        else if (name.StartsWith("spear") || name.StartsWith("explosion")) return weapon1 = "spear";
+        else if (name.StartsWith("boomerang")) return weapon1 = "boomerang";
+        else if (name.StartsWith("arrow")) return weapon1 = "bow";
+        else return weapon1 = "0";
     }
 
     public IEnumerator resetkwew()

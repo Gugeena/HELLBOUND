@@ -334,7 +334,6 @@ public class EnemyChargerScript : MonoBehaviour
             Instantiate(particles, transform.position, Quaternion.identity);
         }
         else if (stoned) Instantiate(deathparticles[Random.Range(0, deathparticles.Length)], transform.position, Quaternion.identity);
-        PlayerMovement.
         Destroy(gameObject);
         yield break;
     }

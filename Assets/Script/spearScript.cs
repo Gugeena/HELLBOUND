@@ -167,18 +167,15 @@ public class spearScript : MonoBehaviour
     public IEnumerator Bouttaxplode()
     {
         hasexploded = true;
-        Debug.Log("Explosion coroutine started");
         landed = true;
         particler.SetActive(false);
         yield return new WaitForSeconds(0.1f);
         rb.linearVelocity = Vector2.zero;
 
-        Debug.Log("Activating explosion GameObject");
         float pitch = UnityEngine.Random.Range(0.8f, 1.01f);
         audioManager.instance.playAudio(explode, 0.6f, pitch, transform, audioManager.instance.sfx);
         explosion.SetActive(true);
 
-        Debug.Log("Instantiating blowUpParticles");
         StartCoroutine(camShakerScript.shake());
         Instantiate(blowUpParticles, transform.position, Quaternion.identity);
 

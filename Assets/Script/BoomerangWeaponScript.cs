@@ -109,8 +109,6 @@ public class BoomerangWeaponScript : MonoBehaviour
 
         rb.linearVelocity = Vector2.zero;
         shouldReturn = true;
-
-        print("collided with: " + collision.gameObject.name + ", with tag: " + collision.gameObject.tag);
     }
 
     public int getteleportCount()
