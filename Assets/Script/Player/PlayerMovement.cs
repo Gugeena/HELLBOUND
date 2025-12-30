@@ -513,10 +513,7 @@ public class PlayerMovement : MonoBehaviour
             if (currentWeapon == 3 && isGrounded) StartCoroutine(mfSpecial());
             if (currentWeapon == 4) StartCoroutine(spearspecialAttack());
         }
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            StartCoroutine(enterAngelic(false));
-        }
+      
         /*
         if (Input.GetKeyDown(KeyCode.F))
         {
@@ -535,6 +532,7 @@ public class PlayerMovement : MonoBehaviour
             StartCoroutine(enterAngelic(true));
         }
         */
+
         if (StyleManager.canAscend && !isAngelic && !isDead)
         {
             if (Input.GetKeyDown(KeyCode.E))
