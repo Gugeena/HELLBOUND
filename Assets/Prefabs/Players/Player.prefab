@@ -13316,7 +13316,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4637744335431821295}
   - component: {fileID: 8313196766343360923}
-  - component: {fileID: 4014395510846299906}
   - component: {fileID: 7910945716964265125}
   m_Layer: 6
   m_Name: Midra_2
@@ -13398,28 +13397,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!95 &4014395510846299906
-Animator:
-  serializedVersion: 7
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7959166738983744780}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 6bd2baaf1dec2774da72facea0093d8d, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_AnimatePhysics: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!114 &7910945716964265125
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13444,7 +13421,6 @@ GameObject:
   m_Component:
   - component: {fileID: 3057629837883378821}
   - component: {fileID: 803169748465140841}
-  - component: {fileID: 9133699017653107290}
   - component: {fileID: 1869407171583592156}
   m_Layer: 6
   m_Name: Midra_2 (1)
@@ -13526,28 +13502,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!95 &9133699017653107290
-Animator:
-  serializedVersion: 7
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8406324680449654988}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 6bd2baaf1dec2774da72facea0093d8d, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_AnimatePhysics: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!114 &1869407171583592156
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14026,8 +13980,8 @@ MonoBehaviour:
   slash: {fileID: 8300000, guid: 8b9044592f5121a4d8cc2d1c97be3bfe, type: 3}
   isFuckingPoisoned: 0
   animatorofhands:
-  - {fileID: 4014395510846299906}
-  - {fileID: 9133699017653107290}
+  - {fileID: 0}
+  - {fileID: 0}
   angelDeathParticles: {fileID: 2920458354229232655}
   haskilledwithnewweapon: 0
   isinkwew: 0
