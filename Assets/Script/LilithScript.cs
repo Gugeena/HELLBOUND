@@ -745,7 +745,7 @@ public class LilithScript : MonoBehaviour
         animator.Play("LilithBats");
         shouldFlip = false;
         //audioManager.instance.playAudio(hailMary, 1, 1, transform, audioManager.instance.sfx);
-        animator.SetBool("shouldBATS", true);
+        if (!isDead) animator.SetBool("shouldBATS", true);
         yield return new WaitForSeconds(0.8f);
         if (isDead) yield break;
         if (PlayerMovement.shouldMakeSound) hailmarysound = audioManager.instance.playAudio(hailMary, 1, 1, transform, audioManager.instance.sfx);
@@ -845,11 +845,12 @@ public class LilithScript : MonoBehaviour
         {
             washitbyspear = false;
             float timer = 0.1f;
+            string name = collision.gameObject.name.ToLower();
             if (collision.gameObject.name == "meleehitbox") StartCoroutine(damage(RetrieveTeleportCount(collision), 0.2f, timer));
             else
             {
                 float damagexz = 0;
-                if (collision.gameObject.name.StartsWith("BoomerangPrefab"))
+                if (name.StartsWith("boomerangprefab"))
                 {
                     if (Vector2.Distance(this.transform.position, player.transform.position) > 0.5f)
                     {
@@ -857,14 +858,14 @@ public class LilithScript : MonoBehaviour
                     }
                     damagexz = 0.55f;
                 }
-                else if (collision.gameObject.name.StartsWith("motherfuckr"))
+                else if (name.StartsWith("motherfuckr"))
                 {
                     timer = 0.5f;
                     damagexz = 0.25f;
                 }
                 else damagexz = 1f;
 
-                if (collision.gameObject.name.StartsWith("Spear")) washitbyspear = true;
+                if (name.StartsWith("spear")) washitbyspear = true;
 
                 StartCoroutine(damage(RetrieveTeleportCount(collision), damagexz, timer));
             }

@@ -66,4 +66,13 @@ public class spriteFlashScript : MonoBehaviour
             material.SetColor(_hcolor, color);
         }
     }
+
+    public void forceDefault()
+    {
+        DOTween.Clear();
+        for (int i = 0; i < _materials.Length; ++i)
+        {
+            _materials[i].SetFloat(_hitEffectAmount, 0);
+        }
+    }    
 }
