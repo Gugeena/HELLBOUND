@@ -189,6 +189,7 @@ public class LilithScript : MonoBehaviour
         cum.time = 17f;
         StartCoroutine(cum.shake());
         isDead = true;
+        animator.SetBool("shouldBATS", false);
         animator.Play("LilithDeathAnimation");
         ShakeSelfScript staffshake = handrb.gameObject.GetComponent<ShakeSelfScript>();
         ShakeSelfScript shakeself = gameObject.GetComponent<ShakeSelfScript>();
@@ -856,7 +857,11 @@ public class LilithScript : MonoBehaviour
                     }
                     damagexz = 0.55f;
                 }
-                else if (collision.gameObject.name.StartsWith("motherfuckr")) damagexz = 0.5f;
+                else if (collision.gameObject.name.StartsWith("motherfuckr"))
+                {
+                    timer = 0.5f;
+                    damagexz = 0.25f;
+                }
                 else if (collision.gameObject.name.StartsWith("SpearPrefab(Clone)")) washitbyspear = true;
                 else damagexz = 1f;
                 StartCoroutine(damage(RetrieveTeleportCount(collision), damagexz, timer));

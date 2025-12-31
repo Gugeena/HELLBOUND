@@ -212,7 +212,7 @@ public class PlayerMovement : MonoBehaviour
 
     [SerializeField] ParticleSystem angelDeathParticles;
 
-    int deathcount = 0;
+    public int deathcount = 0;
 
     public static GameObject lastkilled;
     public static List<GameObject> lastkilledby = new List<GameObject>();
@@ -273,7 +273,7 @@ public class PlayerMovement : MonoBehaviour
         String scenename = SceneManager.GetActiveScene().name;
         if (scenename == "TenthLayerOfHell")
         {
-            AchivementScript.instance.UnlockAchivement("Doom’s Threshold");
+            AchivementScript.instance.UnlockAchivement("ENTER_TLOH");
             isintenthlayer = true;
             if(isAngelic) tenthscript = GameObject.Find("TLOH").GetComponent<TenthLayerOfHellScript>();
         }
@@ -398,7 +398,7 @@ public class PlayerMovement : MonoBehaviour
 
     void handleMovement()
     {
-        if (canMove)
+        if (canMove && !PauseScript.Paused)
         {
             if (Input.GetKeyDown(Drop) && currentWeapon != 0)
             {
@@ -513,7 +513,7 @@ public class PlayerMovement : MonoBehaviour
             if (currentWeapon == 3 && isGrounded) StartCoroutine(mfSpecial());
             if (currentWeapon == 4) StartCoroutine(spearspecialAttack());
         }
-      
+
         /*
         if (Input.GetKeyDown(KeyCode.F))
         {
@@ -646,10 +646,6 @@ public class PlayerMovement : MonoBehaviour
             anim.enabled = false;
             Rigidbody2D[] rbs = GetComponentsInChildren<Rigidbody2D>();
             flashScript.CallRedFlash();
-            foreach (Animator animator in animatorofhands)
-            {
-                animator.enabled = true;
-            }
             foreach (Rigidbody2D rbb in rbs)
             {
                 rbb.bodyType = RigidbodyType2D.Dynamic;
@@ -668,8 +664,8 @@ public class PlayerMovement : MonoBehaviour
             Instantiate(hurtparticle, transform.position, Quaternion.identity);
             yield return new WaitForSeconds(2f);
             fadeOut.SetActive(true);
-            AchivementScript.instance.UnlockAchivement("Hop Out of Trial by Fire");
-            if(deathcount == 0) AchivementScript.instance.UnlockAchivement("Infallible");
+            AchivementScript.instance.UnlockAchivement("BEAT_TLOH");
+            if(deathcount == 0) AchivementScript.instance.UnlockAchivement("NO_DEATH_TLOH");
             yield return new WaitForSeconds(1f);
             SceneManager.LoadScene(1);
         }
@@ -739,6 +735,7 @@ public class PlayerMovement : MonoBehaviour
             StartCoroutine(playerMovement.pickUpWeapon(currentWeapon, "weapon"));
             spawned.transform.localScale = new Vector3(this.transform.localScale.x, 1, 1);
             playerMovement.direction = spawned.transform.localScale.x < 0 ? -1 : 1;
+            playerMovement.deathcount = this.deathcount;
         }
 
         if (Beyonder)
@@ -1395,17 +1392,16 @@ public class PlayerMovement : MonoBehaviour
         uiCanvas.renderMode = RenderMode.WorldSpace;
         audioManager.instance.playAudio(revival, 1, 1, transform, audioManager.instance.sfx);
          
-
-
         camAnimator.Play("player_camera_fall");
         audioManager.instance.stopMusic();
         yield return new WaitForSeconds(2f);
+        if (isintenthlayer) TenthLayerOfHellScript.shouldturnoffforawhile = true;
         //DisableAllActiveWeapons();
         autokillcollider.enabled = true;
         hp = 150f;
         if(isintenthlayer) hpAnimator.Play("PlayerDepoisoning");
         yield return new WaitForSeconds(8f);
-        AchivementScript.instance.UnlockAchivement("Renascence");
+        AchivementScript.instance.UnlockAchivement("MEET_RAPHAEL");
         camShake.StopAllCoroutines();
         StartCoroutine(revive());
         yield return null;
@@ -1431,6 +1427,7 @@ public class PlayerMovement : MonoBehaviour
         StartCoroutine(pickUpWeapon(0, "null"));
         StyleManager.instance.reset();
         isDead = false;
+        if (isintenthlayer) TenthLayerOfHellScript.shouldturnoffforawhile = false;
         yield return new WaitForSeconds(2f);
         //invincible = false;
         SpawnerScript.shouldSpawn = true;

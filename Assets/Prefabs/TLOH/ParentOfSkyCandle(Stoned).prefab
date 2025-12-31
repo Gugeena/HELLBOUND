@@ -199,7 +199,7 @@ MonoBehaviour:
   healamount: 5
   loopCount: 0
   weaponPickup: {fileID: 729149941573794601, guid: 26727b72f2514104bacba35cdf56052c, type: 3}
-  stoned: 0
+  stoned: 1
   deathparticles:
   - {fileID: 5747986981960999749, guid: f5a10f5d8ca38d24ab3a2e0203708246, type: 3}
   - {fileID: 5747986981960999749, guid: 11a4c5235c4567d4492003220b6e22d1, type: 3}

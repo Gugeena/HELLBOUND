@@ -20,7 +20,7 @@ public class Functions : MonoBehaviour
     public int alreadybeatthegame = 0;
     public Button startGame, discord, quit, settings, tenthbutton;
     public GameObject tenth;
-    public GameObject eventsystem, glow;
+    public GameObject eventsystem, glow, glow1;
 
     void Start()
     {
@@ -127,7 +127,7 @@ public class Functions : MonoBehaviour
 
     public void PlayTenth()
     {
-        EventSystem.current.SetSelectedGameObject(null);
+       // EventSystem.current.SetSelectedGameObject(null);
         StartCoroutine(StartGame(6));
     }
 
@@ -148,8 +148,10 @@ public class Functions : MonoBehaviour
 
     void UnInteract()
     {
+        EventSystem.current.SetSelectedGameObject(null);
         Destroy(eventsystem);
         Destroy(glow);
+        Destroy(glow1);
         startGame.interactable = false;
         quit.interactable = false;
         settings.interactable = false;

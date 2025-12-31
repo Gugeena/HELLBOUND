@@ -40,6 +40,7 @@ public class TenthLayerOfHellScript : MonoBehaviour
     private void OnDisable()
     {
         if (lastplayedaudio != null) lastplayedaudio.Stop();
+        TLOHanim.Play("idletlohl");
     }
 
     public IEnumerator EventManager()
