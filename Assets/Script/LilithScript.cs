@@ -862,8 +862,10 @@ public class LilithScript : MonoBehaviour
                     timer = 0.5f;
                     damagexz = 0.25f;
                 }
-                else if (collision.gameObject.name.StartsWith("SpearPrefab(Clone)")) washitbyspear = true;
                 else damagexz = 1f;
+
+                if (collision.gameObject.name.StartsWith("Spear")) washitbyspear = true;
+
                 StartCoroutine(damage(RetrieveTeleportCount(collision), damagexz, timer));
             }
         }

@@ -403,7 +403,7 @@ public class EnemyChargerScript : MonoBehaviour
         {
             PlayerMovement.lastkilledstreak++;
             pm.streaklosingstart();
-            if (PlayerMovement.lastkilledstreak == 3) AchivementScript.instance.UnlockAchivement("The Unholy Trinity");
+            if (PlayerMovement.lastkilledstreak == 3) AchivementScript.instance.UnlockAchivement("THREE_FOR_THREE");
         }
         else
         {
