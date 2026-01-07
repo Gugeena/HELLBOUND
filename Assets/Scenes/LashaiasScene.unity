@@ -8208,7 +8208,7 @@ AudioSource:
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
-  Priority: 128
+  Priority: 0
   DopplerLevel: 1
   MinDistance: 1
   MaxDistance: 500
@@ -8340,7 +8340,7 @@ AudioSource:
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
-  Priority: 128
+  Priority: 0
   DopplerLevel: 1
   MinDistance: 1
   MaxDistance: 500
@@ -8437,7 +8437,7 @@ AudioSource:
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
-  Priority: 128
+  Priority: 0
   DopplerLevel: 1
   MinDistance: 1
   MaxDistance: 500
@@ -58632,6 +58632,7 @@ MonoBehaviour:
   isFuckingPoisoned: 0
   animatorofhands: []
   angelDeathParticles: {fileID: 0}
+  deathcount: 0
   haskilledwithnewweapon: 0
   isinkwew: 0
   tenthscript: {fileID: 0}

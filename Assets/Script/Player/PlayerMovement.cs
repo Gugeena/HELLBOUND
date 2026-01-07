@@ -230,6 +230,8 @@ public class PlayerMovement : MonoBehaviour
 
     public Coroutine resetKW;
 
+    public static bool shouldAim;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -270,6 +272,7 @@ public class PlayerMovement : MonoBehaviour
         shouldmakeAudio = true;
         stopAttacking = false;
         hasdiedforeverybody = false;
+        shouldAim = true;
         String scenename = SceneManager.GetActiveScene().name;
         if (scenename == "TenthLayerOfHell")
         {
@@ -1000,7 +1003,8 @@ public class PlayerMovement : MonoBehaviour
 
     private void bowAim()
     {
-        if (PauseScript.Paused) return;
+        print(shouldAim + "shouldAim");
+        //if (PauseScript.Paused || !shouldAim) return;
 
         Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
@@ -1009,6 +1013,8 @@ public class PlayerMovement : MonoBehaviour
         float angle = (Mathf.Atan2(aimDirection.y, aimDirection.x) * Mathf.Rad2Deg);
 
         bowHands.transform.eulerAngles = new Vector3(0, 0, angle);
+
+        print("Went in");
     }
 
     private void mjolAim()
@@ -1328,6 +1334,7 @@ public class PlayerMovement : MonoBehaviour
         poisonQueue = new Queue<float>();
         isPoisoned = false;
         isPoisonRunning = false;
+        shouldAim = false;
         isDead = true;
         canPause = false;
         invincible = true;
@@ -1430,6 +1437,7 @@ public class PlayerMovement : MonoBehaviour
         StyleManager.instance.reset();
         isDead = false;
         if (isintenthlayer) TenthLayerOfHellScript.shouldturnoffforawhile = false;
+        shouldAim = true;
         yield return new WaitForSeconds(2f);
         //invincible = false;
         SpawnerScript.shouldSpawn = true;
