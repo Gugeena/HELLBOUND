@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Security.Cryptography;
 using Unity.VisualScripting;
+using Unity.VisualScripting.Antlr3.Runtime;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Audio;
@@ -90,18 +91,25 @@ public class LilithScript : MonoBehaviour
     Vector3 scale = new Vector3 (1, 1, 1);
 
     public bool shoulddieyet = true;
-    public bool washitbyspear = false;
+    public bool washitbyspear = false, wasStunned = false;
 
     public bool attackInProgress = false;
-    public bool teleportInProgress = false;
+    public bool teleportInProgress = false, canBeStunned = true;
+    public static bool stunned = false;
 
     Coroutine batCoroutine;
+
+    public static bool isRight;
+
+    public bool alreadychoppin;
 
     void Start()
     {
         shouldFlip = true;
         scale = transform.localScale;
         bossfightstarted = true;
+        stunned = false;
+        alreadychoppin = false;
         StartCoroutine(waiter());
         /*
         canTeleport = true;
@@ -157,7 +165,21 @@ public class LilithScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (!stunned && wasStunned)
+        {
+            stunned = false;
+            animator.speed = 1;
+            wasStunned = false;
+            canBeStunned = false;
+            StartCoroutine(StunCooldown());
+            //canTeleport = false;
+            // StartCoroutine(damage(RetrieveTeleportCount(collision), 0.25f, 0.25f));
+        }
+
         handleHP();
+
+        if (stunned) return;
+
         if (!isDead)
         {
             if (hasBatted && canTeleport && !teleportInProgress)
@@ -177,8 +199,17 @@ public class LilithScript : MonoBehaviour
         // if(!canTeleport && !isDoneWithBats && hasBatted) StartCoroutine(firstTeleportCooldown());
     }
 
+    IEnumerator StunCooldown()
+    {
+        yield return new WaitForSeconds(0.2f);
+        canBeStunned = true;
+    }
+
     IEnumerator death()
     {
+        yield return new WaitUntil(() => !stunned);
+        print("stunned: " + stunned);
+        print("totxmeti");
         if(hailmarysound != null) hailmarysound.Stop();
         PlayerMovement.TLOHLFADEOUTANDINNER(1);
         TenthLayerOfHellScript.shouldturnoffforawhile = true;
@@ -251,7 +282,7 @@ public class LilithScript : MonoBehaviour
             }
         }
 
-        if(hp <= 0 && !isDead && shoulddieyet)
+        if(hp <= 0 && !isDead && shoulddieyet && !stunned)
         {
             StartCoroutine(death());
         }
@@ -261,6 +292,8 @@ public class LilithScript : MonoBehaviour
     IEnumerator HandleTeleport()
     {
         if (isDead || !canTeleport) yield break;
+        while (stunned) yield return null;
+        canBeStunned = false;
         teleportInProgress = true;
         StopCoroutine(teleportCooldownBats());
         canTeleport = false;
@@ -289,7 +322,7 @@ public class LilithScript : MonoBehaviour
                 case 6: pos = new Vector2(19.057f, 2.221f); break;
             }
         }
-        while (Vector2.Distance(pos, this.transform.position) < 0.1f);
+        while (Vector2.Distance(pos, this.transform.position) < 0.1f || Vector2.Distance(pos, PauseScript.lastPosition) < 0.1f);
         animator.SetBool("shouldPORT", false);
         shouldFlip = true;
         Instantiate(teleportParticles1, this.transform.position, Quaternion.identity);
@@ -304,6 +337,7 @@ public class LilithScript : MonoBehaviour
         hasPredeterminedPlace = false;
         teleportInProgress = false;
         if (isDead) yield break;
+        canBeStunned = true;
         //if(isDoneWithBats)StartCoroutine(attackCooldown(0.3f));
     }
 
@@ -355,6 +389,7 @@ public class LilithScript : MonoBehaviour
 
     public IEnumerator flameAttack(bool isfarleft, bool isfarright)
     {
+        while (stunned) yield return null;
         shoulddieyet = false;
         bool isInFarLeftPosition = isfarleft;
         bool isInFarRightPosition = isfarright;
@@ -376,6 +411,7 @@ public class LilithScript : MonoBehaviour
             scale.x = Mathf.Abs(scale.x);
         }
         transform.localScale = scale;
+        if (stunCheck()) yield break;
         animator.SetBool("shouldFLAME", true);
         //int stateHash = Animator.StringToHash("LilithStaffHeartRedToOrange");
         //heartAnimator.Play(stateHash, 0);
@@ -397,6 +433,7 @@ public class LilithScript : MonoBehaviour
         staffScript.changeColor(LillithStaffScript.Colors.red);
         shoulddieyet = true;
         yield return new WaitForSeconds(4f);
+        while (stunned) yield return null;
         shouldFlip = true;
         StartCoroutine(attackCooldown(0.4f, 0));
     }
@@ -505,8 +542,9 @@ public class LilithScript : MonoBehaviour
             elapsed += Time.deltaTime;
             if (elapsed >= 0.3f && !hasplayed)
             {
-               if (PlayerMovement.shouldMakeSound) audioManager.instance.playAudio(cast, 1, 1, transform, audioManager.instance.sfx); //audioSource.Play(); audioManager.instance.playAudio(cast, 1, 1, transform, audioManager.instance.sfx);
-                hasplayed = true;
+                yield return new WaitUntil(() => !stunned);
+                if (PlayerMovement.shouldMakeSound) audioManager.instance.playAudio(cast, 1, 1, transform, audioManager.instance.sfx); //audioSource.Play(); audioManager.instance.playAudio(cast, 1, 1, transform, audioManager.instance.sfx);
+               hasplayed = true;
             }
             if (isDead) yield break;
             yield return null;
@@ -514,7 +552,6 @@ public class LilithScript : MonoBehaviour
         //stateHash = Animator.StringToHash("LilithStaffHeartGreenToRed");
         //heartAnimator.Play(stateHash, 0);
         staffScript.changeColor(LillithStaffScript.Colors.red);
-
         //yield return new WaitForSeconds(0.05f);
         Vector2 direction = Vector2.zero;
         direction = (new Vector3(player.transform.position.x, player.transform.position.y - 0.4f) - shardSpawner.transform.position).normalized;
@@ -542,6 +579,24 @@ public class LilithScript : MonoBehaviour
         StartCoroutine(attackCooldown(0.4f, 0));
     }
 
+    public bool stunCheck()
+    {
+        if (stunned)
+        {
+            StartCoroutine(reset());
+        }
+        return stunned;
+    }
+
+    public IEnumerator reset()
+    {
+        if (isDead) yield break;
+        while (stunned) yield return null;
+        StartCoroutine(rotatetooriginal(staffController.transform));
+        yield return new WaitForSeconds(0.3f);
+        StartCoroutine(attackCooldown(0.4f, 0));
+    }
+
     private int getDirection()
     {
         if (player.transform.position.x > this.transform.position.x) return 1;
@@ -550,7 +605,6 @@ public class LilithScript : MonoBehaviour
 
     public IEnumerator fireBallAttack()
     {
-
         staffScript.changeColor(LillithStaffScript.Colors.purple);
 
         shouldFlip = true;
@@ -589,6 +643,7 @@ public class LilithScript : MonoBehaviour
             elapsed += Time.deltaTime;
             if (elapsed >= 0.3f && !hasplayed)
             {
+                yield return new WaitUntil(() => !stunned);
                 if (PlayerMovement.shouldMakeSound) audioManager.instance.playAudio(cast, 1, 1, transform, audioManager.instance.sfx);  //audioSource.Play(); audioManager.instance.playAudio(cast, 1, 1, transform, audioManager.instance.sfx);
                 hasplayed = true;
             }
@@ -608,7 +663,6 @@ public class LilithScript : MonoBehaviour
         Rigidbody2D shardrb = shard.GetComponent<Rigidbody2D>();
 
         shardrb.linearVelocity = direction * 20f;
-
         yield return new WaitForSeconds(0.2f);
         if (isDead) yield break;
         StartCoroutine(rotatetooriginal(staffController.transform));
@@ -697,6 +751,7 @@ public class LilithScript : MonoBehaviour
     IEnumerator attackCooldown(float cooldown, int attack) // 0 - Bats || 1 - Posion || 2 - Fireball || 3 - Summon || 4 - FirePillars
     {
         if (!isDoneWithBats) yield break;
+        while (stunned) yield return null;
         //if (attack == 0 || attack == 2) heartAnimator.Play("LilithStaffHeart(Purple-Red)");
         // else if (attack == 3) heartAnimator.Play("LilithStaffHeart(Yellow-Red)");
         //else if (attack == 1) heartAnimator.Play("LilithStaffHeart(Green-Red)");
@@ -727,6 +782,7 @@ public class LilithScript : MonoBehaviour
     IEnumerator BatAttack()
     {
         if (isDead) yield break;
+        while (stunned) yield return null;
         PlayerMovement.TLOHLFADEOUTANDINNER(1);
         TenthLayerOfHellScript.shouldturnoffforawhile = true;
         isDoneWithBats = false;
@@ -745,7 +801,9 @@ public class LilithScript : MonoBehaviour
         animator.Play("LilithBats");
         shouldFlip = false;
         //audioManager.instance.playAudio(hailMary, 1, 1, transform, audioManager.instance.sfx);
+        yield return new WaitUntil(() => !stunned);
         if (!isDead) animator.SetBool("shouldBATS", true);
+        while (stunned) yield return null;
         yield return new WaitForSeconds(0.8f);
         if (isDead) yield break;
         if (PlayerMovement.shouldMakeSound) hailmarysound = audioManager.instance.playAudio(hailMary, 1, 1, transform, audioManager.instance.sfx);
@@ -756,8 +814,10 @@ public class LilithScript : MonoBehaviour
         cum.time = 13f;
         StartCoroutine(cum.shake());
         yield return new WaitForSeconds(0.8f);
+        while (stunned) yield return null;
         hasBatted = true;
         yield return new WaitForSeconds(1f);
+        while (stunned) yield return null;
         animator.SetBool("shouldBATS", false);
         shouldFlip = true;
         //canTeleport = true;
@@ -767,6 +827,7 @@ public class LilithScript : MonoBehaviour
 
     IEnumerator batHailMary()
     {
+        yield return new WaitUntil(() => !stunned);
         for (int i = 0; i < 200; i++)
         {
             if (isDead) yield break;
@@ -776,6 +837,7 @@ public class LilithScript : MonoBehaviour
             Instantiate(bat, new Vector2(x1, 6.86f), Quaternion.identity);
             //Instantiate(bat, new Vector2(x2, 6.86f), Quaternion.identity);
         }
+        while (stunned) yield return null;
         yield return new WaitForSeconds(0.5f);
         StopCoroutine(batCoroutine);
         canAttack = true;
@@ -815,7 +877,7 @@ public class LilithScript : MonoBehaviour
         yield return new WaitForSeconds(timer);
         invincible = false;
     }
-
+        
     public int RetrieveTeleportCount(Collider2D collision)
     {
         int teleportCount = 0;
@@ -841,7 +903,12 @@ public class LilithScript : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.tag == "mfHitbox" && !isDead)
+        HandleHit(collision);
+    }
+
+    public void HandleHit(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "mfHitbox" && !isDead && !collision.gameObject.name.StartsWith("motherfuckr"))
         {
             washitbyspear = false;
             float timer = 0.1f;
@@ -858,11 +925,6 @@ public class LilithScript : MonoBehaviour
                     }
                     damagexz = 0.55f;
                 }
-                else if (name.StartsWith("motherfuckr"))
-                {
-                    timer = 0.5f;
-                    damagexz = 0.25f;
-                }
                 else damagexz = 1f;
 
                 if (name.StartsWith("spear")) washitbyspear = true;
@@ -870,5 +932,43 @@ public class LilithScript : MonoBehaviour
                 StartCoroutine(damage(RetrieveTeleportCount(collision), damagexz, timer));
             }
         }
+
+        if (collision.gameObject.name.StartsWith("motherfuckr") && canBeStunned)
+        {
+            if (collision.gameObject.transform.position.x > this.transform.position.x) isRight = true;
+            else isRight = false;
+            stunned = true;
+            animator.speed = 0;
+            wasStunned = true;
+            StartCoroutine(choppitychop());
+            //canTeleport = false;
+            // StartCoroutine(damage(RetrieveTeleportCount(collision), 0.25f, 0.25f));
+        }
+    }
+
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+    
+    }
+
+    public IEnumerator choppitychop()
+    {
+        if (alreadychoppin) yield break;
+        alreadychoppin = true;
+        for (int i = 0; i < 4; i++)
+        {
+            hp -= 0.25f;
+            yield return new WaitForSeconds(0.25f);
+        }
+        alreadychoppin = false;
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        //if (collision.gameObject.name.StartsWith("motherfuckr"))
+        //{
+            //canTeleport = true;
+            //stunned = false;
+        //}
     }
 }

@@ -18,11 +18,15 @@ public class PauseScript : MonoBehaviour
 
     string scenename;
 
-    public bool alreadyshown = false;
+    public bool alreadyshown = false, alreadyDummied = false;
 
     float minutes, seconds;
 
-    public GameObject TLOH;
+    public GameObject TLOH, lilith, lilithDummy;
+
+    public Transform OffShoot;
+
+    public static Vector3 lastPosition;
 
     private void Start()
     {
@@ -67,6 +71,12 @@ public class PauseScript : MonoBehaviour
 
     private void Update()
     {
+        if(LilithScript.stunned && !alreadyDummied)
+        {
+            alreadyDummied = true;
+            StartCoroutine(lilithImpact());
+        }
+
         if (scenename == "LashaiasScene" || scenename == "TenthLayerOfHell")
         {
             if (Input.GetKeyDown(KeyCode.Escape) && PlayerMovement.canPause)
@@ -103,6 +113,31 @@ public class PauseScript : MonoBehaviour
     public void YesMainMenu()
     {
         StartCoroutine(MainMenu());
+    }
+
+    private IEnumerator lilithImpact()
+    {
+        if (lilith == null) lilith = GameObject.Find("Lilith(Clone)");
+        GameObject dummy = Instantiate(lilithDummy, lilith.transform.position, lilith.transform.rotation);
+        dummy.transform.localScale = lilith.transform.localScale;
+         
+        Vector3 oldPosition = lilith.transform.position;
+        lastPosition = lilith.transform.position;
+        Quaternion oldRotation = lilith.transform.rotation;
+
+        lilith.transform.position = OffShoot.position;
+
+        yield return new WaitForSeconds(2);
+        Destroy(dummy);
+        lilith.SetActive(true);
+        alreadyDummied = false;
+
+        lilith.transform.position = oldPosition;
+        lilith.transform.rotation = oldRotation;
+
+        LilithScript.stunned = false;
+
+        print("shalom");
     }
 
     public void No()

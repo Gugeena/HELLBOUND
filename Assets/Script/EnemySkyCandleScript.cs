@@ -126,16 +126,7 @@ public class EnemySkyCandleScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
-        if (shouldrandomize && !hasRandomized)
-        {
-            //randomizedx = UnityEngine.Random.RandomRange(1, 5);
-            //randomizedy = UnityEngine.Random.RandomRange(3, 6);
-            //hasRandomized = true;
-            //StartCoroutine(randomizertimer());
-        }
-
-        if (hp <= 0)
+        if (hp <= 0 || player == null)
         {
             StartCoroutine(death());
         }
@@ -388,6 +379,8 @@ public class EnemySkyCandleScript : MonoBehaviour
         if (collision.gameObject.CompareTag("Fireball")) StartCoroutine(death());
 
         if (collision.gameObject.CompareTag("FireballP")) StartCoroutine(death());
+
+        //if (collision.gameObject.name.StartsWith("FirePillar")) StartCoroutine(death());
 
         if (collision.gameObject.name == "LLocation (1)")
         {

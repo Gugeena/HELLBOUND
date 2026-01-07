@@ -112,7 +112,7 @@ public class EnemyChargerScript : MonoBehaviour
     {
         if (canAttack) handleFlip();
 
-        if (hp <= 0)
+        if (hp <= 0 || player == null)
         {
             StartCoroutine(death());
         }

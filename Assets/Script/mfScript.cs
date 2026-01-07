@@ -1,3 +1,4 @@
+using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -38,7 +39,6 @@ public class mfScript : MonoBehaviour
 
     void Awake()
     {
-        
         move = false;
         playerTransform = GameObject.Find("Player(Clone)").transform;
         rb = GetComponent<Rigidbody2D>();
@@ -121,6 +121,7 @@ public class mfScript : MonoBehaviour
     {
         camShakerScript.Stop();
         mfSound.Stop();
+        mfSound.Stop();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -137,6 +138,22 @@ public class mfScript : MonoBehaviour
             teleportCount++;
             StartCoroutine(teleport());
         }
+
+        if (collision.gameObject.tag == "LilithGravityBox")
+        {
+            bool canBeStunned = GameObject.Find("Lilith(Clone)").GetComponent<LilithScript>().canBeStunned;
+            if (!canBeStunned) return;
+            print("cameti");
+            StartCoroutine(lilithChopUp());
+        }
+    }
+
+    IEnumerator lilithChopUp()
+    {
+        rb.linearVelocity = Vector2.zero;
+        move = false;
+        yield return new WaitForSeconds(2f);
+        goBack = true;
     }
 
     public int getteleportCount()

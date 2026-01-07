@@ -486,8 +486,7 @@ public class PlayerMovement : MonoBehaviour
 
     public void streaklosingstart()
     {
-        if (streaklosingtimer != null)
-            StopCoroutine(streaklosingtimer);
+        if (streaklosingtimer != null) StopCoroutine(streaklosingtimer);
 
         streaklosingtimer = StartCoroutine(streaklosing());    
     }
