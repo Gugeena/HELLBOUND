@@ -231,6 +231,7 @@ public class PlayerMovement : MonoBehaviour
     public Coroutine resetKW;
 
     public static bool shouldAim;
+    public bool isMfSpecialing;
 
     // Start is called before the first frame update
     void Start()
@@ -268,6 +269,7 @@ public class PlayerMovement : MonoBehaviour
         canPunch = true;
         canLose = true;
         shouldEnd = false;
+        isMfSpecialing = false;
         shouldMakeSound = true;
         shouldmakeAudio = true;
         stopAttacking = false;
@@ -708,12 +710,12 @@ public class PlayerMovement : MonoBehaviour
             flashScript.CallFlash();
             yield return new WaitForSecondsRealtime(0.05f);
         }
-        //else if (Beyonder) fadeOut.SetActive(true);
 
         anim.updateMode = AnimatorUpdateMode.Normal;
         angelTransistion = false;
-        //if(Beyonder) yield return new WaitForSeconds(0.1f);
-        if (Beyonder) spawnLocation = new Vector2(25.43f, 0.7f);
+
+        Vector2 center = new Vector2(25.43f, 0.7f);
+        if (Beyonder) spawnLocation = center;
         else spawnLocation = this.transform.position;
         GameObject spawned = Instantiate(tospawn, spawnLocation, Quaternion.identity);
         GameObject TLOH = null;
@@ -969,6 +971,7 @@ public class PlayerMovement : MonoBehaviour
     {
         canPunch = false;
         anim.Play("player_mf_special");
+        isMfSpecialing = true;
         yield return new WaitForSeconds(1.2f);
         Transform temp = transform.GetChild(3).GetChild(1);
         Vector2 mfPos = temp.position;
@@ -984,6 +987,7 @@ public class PlayerMovement : MonoBehaviour
         mfScript.direction = direction;
         motherfucker.SetActive(false);
 
+        isMfSpecialing = false;
         currentWeapon = 0;
         canPunch = true;
     }
@@ -1003,8 +1007,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void bowAim()
     {
-        print(shouldAim + "shouldAim");
-        //if (PauseScript.Paused || !shouldAim) return;
+        if (PauseScript.Paused || !shouldAim) return;
 
         Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
@@ -1013,8 +1016,6 @@ public class PlayerMovement : MonoBehaviour
         float angle = (Mathf.Atan2(aimDirection.y, aimDirection.x) * Mathf.Rad2Deg);
 
         bowHands.transform.eulerAngles = new Vector3(0, 0, angle);
-
-        print("Went in");
     }
 
     private void mjolAim()
@@ -1091,6 +1092,7 @@ public class PlayerMovement : MonoBehaviour
 
     private IEnumerator pickUpWeapon(int id, String name)
     {
+        if (isMfSpecialing) yield break;
         currentWeapon = id;
         if (anim == null) anim = GetComponent<Animator>();
         if (id == 0)
@@ -1331,6 +1333,7 @@ public class PlayerMovement : MonoBehaviour
         if(isintenthlayer) deathcount++;
         hasdiedforeverybody = true;
         if (PoisonQueCorountine != null) StopCoroutine(PoisonQueCorountine);
+        if (currentWeapon == 1) StartCoroutine(pickUpWeapon(0, "fist"));
         poisonQueue = new Queue<float>();
         isPoisoned = false;
         isPoisonRunning = false;
@@ -1453,20 +1456,6 @@ public class PlayerMovement : MonoBehaviour
         TLOHLFADEOUTANDINNER(2);
         yield return null;
     }
-
-    /*
-    public void DisableAllActiveWeapons()
-    {
-        Rigidbody2D[] rbs = GameObject.FindObjectsOfType<Rigidbody2D>(true);
-        foreach (Rigidbody2D rb in rbs)
-        {
-            String name = rb.gameObject.name;
-            if (name.StartsWith("motherfuckr") || name.StartsWith("BoomerangPrefab")) Destroy(rb.gameObject);
-        }
-
-        StartCoroutine(pickUpWeapon(0, "null"));
-    }
-    */
 
     IEnumerator posionCure(float seconds)
     {
