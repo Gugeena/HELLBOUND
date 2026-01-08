@@ -768,6 +768,10 @@ MonoBehaviour:
   wasStunned: 0
   attackInProgress: 0
   teleportInProgress: 0
+  canBeStunned: 1
+  alreadychoppin: 0
+  firePillarCast: {fileID: 8300000, guid: e4866d261df5ba9418bb92c42951071b, type: 3}
+  firepillarcastSource: {fileID: 0}
 --- !u!95 &7610987853696653380
 Animator:
   serializedVersion: 7
@@ -1068,7 +1072,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: -111
+  m_SortingOrder: -113
   m_Sprite: {fileID: 87209055, guid: 4de3eebee6c41524baa110d537dc5d2b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -1159,7 +1163,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: -113
+  m_SortingOrder: -114
   m_Sprite: {fileID: -822873220, guid: 4de3eebee6c41524baa110d537dc5d2b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -1271,7 +1275,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: -111
+  m_SortingOrder: -113
   m_Sprite: {fileID: 87209055, guid: 4de3eebee6c41524baa110d537dc5d2b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -2321,7 +2325,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: -112
+  m_SortingOrder: -113
   m_Sprite: {fileID: 915982432, guid: ce957dbebc8c248418a52a83d9c0ecfe, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0

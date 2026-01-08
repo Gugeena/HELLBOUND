@@ -58842,7 +58842,6 @@ MonoBehaviour:
   charchoba: {fileID: 0}
   isMfSpecialing: 0
   arrowPickup: {fileID: 8300000, guid: bbb1f96fde8deca4f837542cc168983c, type: 3}
-  arrowPickupSource: {fileID: 0}
 --- !u!4 &2089724964
 Transform:
   m_ObjectHideFlags: 0

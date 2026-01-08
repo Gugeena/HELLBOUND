@@ -233,6 +233,9 @@ public class PlayerMovement : MonoBehaviour
     public static bool shouldAim;
     public bool isMfSpecialing;
 
+    public AudioClip arrowPickup;
+    AudioSource arrowPickupSource;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -1368,6 +1371,7 @@ public class PlayerMovement : MonoBehaviour
         rb.bodyType = RigidbodyType2D.Kinematic;
 
         bool isInCharchoba = anim.GetCurrentAnimatorStateInfo(0).IsName("player_mf_special");
+        if (arrowPickupSource != null && arrowPickupSource.isPlaying) arrowPickupSource.Stop();
         anim.CrossFade(animclip, 0);
         //anim.Play(animclip);
 
@@ -1501,6 +1505,7 @@ public class PlayerMovement : MonoBehaviour
         {
             justShotBoomerang = false;
             hasArrow = true;
+            if (shouldMakeSound) arrowPickupSource = audioManager.instance.playAudio(arrowPickup, 1f, 1, this.transform, audioManager.instance.sfx);
             Destroy(collision.gameObject.transform.parent.gameObject);
         }
 

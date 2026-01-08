@@ -29,7 +29,7 @@ public class arrowScript : MonoBehaviour
 
     private void Update()
     {
-        if (player == null)
+        if (player == null || PlayerMovement.hasdiedforeverybody)
         {
             Destroy(gameObject);
         }

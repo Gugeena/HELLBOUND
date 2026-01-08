@@ -13,6 +13,8 @@ public class CrystalScript : MonoBehaviour
     public Transform RLocation;
     public Transform LLocation;
     public GameObject poisonBefore;
+    public AudioClip crystalBreak;
+    public AudioSource crystalBreakSource;
 
     // Start is called before the first frame update
     void Start()
@@ -23,7 +25,7 @@ public class CrystalScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if(!PlayerMovement.shouldMakeSound && crystalBreakSource != null && crystalBreakSource.isPlaying) crystalBreakSource.Stop();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -81,6 +83,7 @@ public class CrystalScript : MonoBehaviour
                 adder = 1f;
             }
 
+            if(PlayerMovement.shouldMakeSound) crystalBreakSource = audioManager.instance.playAudio(crystalBreak, 1, 1, this.transform, audioManager.instance.sfx);
             Instantiate(poisonBefore, new Vector2(this.transform.position.x, this.transform.position.y + adder), Quaternion.identity);
             for (int i = 0; i < particles.Length; i++)
             {

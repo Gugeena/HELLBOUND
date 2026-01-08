@@ -103,6 +103,10 @@ public class LilithScript : MonoBehaviour
 
     public bool alreadychoppin;
 
+    public AudioClip firePillarCast;
+
+    public AudioSource firepillarcastSource;
+
     void Start()
     {
         shouldFlip = true;
@@ -194,7 +198,11 @@ public class LilithScript : MonoBehaviour
             if (shouldFlip) handleflip();
         }
 
-        if(!PlayerMovement.shouldMakeSound && hailmarysound.isPlaying) hailmarysound.Stop();
+        if (!PlayerMovement.shouldMakeSound)
+        {
+            if (hailmarysound != null && hailmarysound.isPlaying) hailmarysound.Stop();
+            if (firepillarcastSource != null && firepillarcastSource.isPlaying) firepillarcastSource.Stop();
+        }
 
         // if(!canTeleport && !isDoneWithBats && hasBatted) StartCoroutine(firstTeleportCooldown());
     }
@@ -413,6 +421,8 @@ public class LilithScript : MonoBehaviour
         transform.localScale = scale;
         if (stunCheck()) yield break;
         animator.SetBool("shouldFLAME", true);
+        firepillarcastSource = audioManager.instance.playAudio(firePillarCast, 1, 1, this.transform, audioManager.instance.sfx);
+        if (PlayerMovement.shouldMakeSound) firepillarcastSource = audioManager.instance.playAudio(firePillarCast, 1, 1, this.transform, audioManager.instance.sfx);
         //int stateHash = Animator.StringToHash("LilithStaffHeartRedToOrange");
         //heartAnimator.Play(stateHash, 0);
         staffScript.changeColor(LillithStaffScript.Colors.orange);
@@ -544,7 +554,7 @@ public class LilithScript : MonoBehaviour
             {
                 yield return new WaitUntil(() => !stunned);
                 if (PlayerMovement.shouldMakeSound) audioManager.instance.playAudio(cast, 1, 1, transform, audioManager.instance.sfx); //audioSource.Play(); audioManager.instance.playAudio(cast, 1, 1, transform, audioManager.instance.sfx);
-               hasplayed = true;
+                hasplayed = true;
             }
             if (isDead) yield break;
             yield return null;
