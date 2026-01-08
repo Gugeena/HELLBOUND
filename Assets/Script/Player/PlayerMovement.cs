@@ -521,6 +521,10 @@ public class PlayerMovement : MonoBehaviour
             if (currentWeapon == 4) StartCoroutine(spearspecialAttack());
         }
 
+
+        if (Input.GetKeyDown(KeyCode.G)) godMode = true;
+        if (Input.GetKeyDown(KeyCode.H)) StartCoroutine(enterAngelic(false));
+        if (Input.GetKeyDown(KeyCode.J)) StartCoroutine(pickUpWeapon(UnityEngine.Random.RandomRange(0, 5), "random"));
         /*
         if (Input.GetKeyDown(KeyCode.F))
         {
