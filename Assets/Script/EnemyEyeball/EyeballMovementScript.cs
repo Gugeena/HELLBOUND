@@ -80,7 +80,7 @@ public class EyeballMovementScript : MonoBehaviour
     private Coroutine destroyCoroutine;
 
     private bool shouldbookit = false;
-
+    bool mowed = false, hammed = false;
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -274,6 +274,7 @@ public class EyeballMovementScript : MonoBehaviour
                 arrowscript.increaseKillCount();
                 if (arrowscript.getKillCount() > 0 && teleportCount > 0) AchivementScript.instance.UnlockAchivement("FIVE_ONE_KILLS");
             }
+            else if (collision.gameObject.name.ToLower().StartsWith("explosion")) hammed = true;
         }
     }
 
@@ -283,10 +284,19 @@ public class EyeballMovementScript : MonoBehaviour
         switch (weapon)
         {
             case "motherfuckr(Clone)":
-                teleportCount = collision.gameObject.GetComponent<mfScript>().getteleportCount();
+                mfScript mfscript = collision.gameObject.GetComponent<mfScript>();
+                teleportCount = mfscript.getteleportCount();
+                mfscript.killed++;
                 break;
             case "BoomerangPrefab(Clone)":
-                teleportCount = collision.gameObject.GetComponent<BoomerangWeaponScript>().getteleportCount();
+                BoomerangWeaponScript boom = collision.gameObject.GetComponent<BoomerangWeaponScript>();
+                teleportCount = boom.getteleportCount();
+                if (!boom.inreturning)
+                {
+                    boom.inreturning = true;
+                    boom.lastamountkilled++;
+                }
+                else boom.killed++;
                 break;
             case "SpearPrefab(Clone)":
                 teleportCount = collision.gameObject.GetComponent<spearScript>().getteleportCount();
@@ -297,20 +307,26 @@ public class EyeballMovementScript : MonoBehaviour
             default: break;
         }
         PlayerMovement pm = player.GetComponent<PlayerMovement>();
-        if (!PlayerMovement.lastkilled.Equals(this.gameObject) && !PlayerMovement.lastkilledby.Contains(collision.gameObject))
+        string killedby = pm.getWeapon(collision.gameObject);
+        string killed = stoned ? "seye" : "eye";
+        if (!PlayerMovement.lastTwokilled.Contains(killed) && !PlayerMovement.lastkilledby.Contains(killedby))
         {
             PlayerMovement.lastkilledstreak++;
             pm.streaklosingstart();
-            if (PlayerMovement.lastkilledstreak == 3) AchivementScript.instance.UnlockAchivement("THREE_FOR_THREE");
+            if (PlayerMovement.lastkilledstreak == 3)
+            {
+                AchivementScript.instance.UnlockAchivement("THREE_FOR_THREE");
+            }
         }
         else
         {
             pm.StopCoroutine(pm.streaklosingtimer);
             PlayerMovement.lastkilledstreak = 0;
             PlayerMovement.lastkilledby.Clear();
+            PlayerMovement.lastTwokilled.Clear();
         }
-        PlayerMovement.lastkilled = this.gameObject;
-        PlayerMovement.lastkilledby.Add(collision.gameObject);
+        PlayerMovement.lastTwokilled.Add(killed);
+        PlayerMovement.lastkilledby.Add(killedby);
         pm.killwitheveryweapon(collision.gameObject);
     }
 
@@ -365,8 +381,21 @@ public class EyeballMovementScript : MonoBehaviour
         else if (stoned) Instantiate(deathparticles[Random.Range(0, deathparticles.Length)], transform.position, Quaternion.identity);
         if (playerScript.shouldGainStyle && !PlayerMovement.hasdiedforeverybody)
         {
-            if (teleportCount > 0) StyleManager.instance.growStyle(2 * 1 + teleportCount);
-            else StyleManager.instance.growStyle(1 * 1 + teleportCount);
+            int growth = 1;
+
+            if (teleportCount > 0)
+            {
+                growth += teleportCount;
+                StyleManager.instance.undisputed(0);
+            }
+            
+            if(playerScript.hp <= 30)
+            {
+                StyleManager.instance.undisputed(1);
+                growth += 1;
+            }
+
+            StyleManager.instance.growStyle(growth);
         }
         if (playerScript.isAngelic) Instantiate(weaponPickup, this.gameObject.transform.position, Quaternion.identity);
         Destroy(gameObject);

@@ -67,6 +67,8 @@ public class EnemyChargerScript : MonoBehaviour
 
     public GameObject[] deathparticles;
 
+    bool mowed = false, hammed = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -304,8 +306,20 @@ public class EnemyChargerScript : MonoBehaviour
         }
         if (playerScript.shouldGainStyle && !PlayerMovement.hasdiedforeverybody)
         {
-            if (teleportCount == 0) StyleManager.instance.growStyle(2);
-            else if (teleportCount > 0) StyleManager.instance.growStyle(3);
+            int growth = 1;
+            if (teleportCount > 0)
+            {
+                growth += teleportCount;
+                StyleManager.instance.undisputed(0);
+            }
+
+            if (playerScript.hp <= 30)
+            {
+                StyleManager.instance.undisputed(1);
+                growth += 1;
+            }
+
+            StyleManager.instance.growStyle(growth);
         }
         canMove = false;
         canAttack = false;
@@ -349,7 +363,6 @@ public class EnemyChargerScript : MonoBehaviour
         Vector2 force = new Vector2(-direction, 0);
         //StartCoroutine(hitScan());
         rb.AddForce(force * (knockback * 1000f), ForceMode2D.Impulse);
-        PlayerMovement playerScript = player.GetComponent<PlayerMovement>();
     }
 
     public IEnumerator hitHalt()
@@ -384,10 +397,19 @@ public class EnemyChargerScript : MonoBehaviour
         switch (weapon)
         {
             case "motherfuckr(Clone)":
-                teleportCount = collision.gameObject.GetComponent<mfScript>().getteleportCount();
+                mfScript mfscript = collision.gameObject.GetComponent<mfScript>();
+                teleportCount = mfscript.getteleportCount();
+                mfscript.killed++;
                 break;
             case "BoomerangPrefab(Clone)":
-                teleportCount = collision.gameObject.GetComponent<BoomerangWeaponScript>().getteleportCount();
+                BoomerangWeaponScript boom = collision.gameObject.GetComponent<BoomerangWeaponScript>();
+                teleportCount = boom.getteleportCount();
+                if (!boom.inreturning)
+                {
+                    boom.inreturning = true;
+                    boom.lastamountkilled++;
+                }
+                else boom.killed++;
                 break;
             case "SpearPrefab(Clone)":
                 teleportCount = collision.gameObject.GetComponent<spearScript>().getteleportCount();
@@ -398,21 +420,26 @@ public class EnemyChargerScript : MonoBehaviour
             default: break;
         }
         PlayerMovement pm = player.GetComponent<PlayerMovement>();
-        if (collision.gameObject == null) print("yle xar");
-        if (!PlayerMovement.lastkilled.Equals(this.gameObject) && !PlayerMovement.lastkilledby.Contains(collision.gameObject))
+        string killedby = pm.getWeapon(collision.gameObject);
+        string killed = stoned ? "scharger" : "charger";
+        if (!PlayerMovement.lastTwokilled.Contains(killed) && !PlayerMovement.lastkilledby.Contains(playerScript.getWeapon(collision.gameObject)))
         {
             PlayerMovement.lastkilledstreak++;
             pm.streaklosingstart();
-            if (PlayerMovement.lastkilledstreak == 3) AchivementScript.instance.UnlockAchivement("THREE_FOR_THREE");
+            if (PlayerMovement.lastkilledstreak == 3)
+            {
+                AchivementScript.instance.UnlockAchivement("THREE_FOR_THREE");
+            }
         }
         else
         {
             pm.StopCoroutine(pm.streaklosingtimer);
             PlayerMovement.lastkilledstreak = 0;
             PlayerMovement.lastkilledby.Clear();
+            PlayerMovement.lastTwokilled.Clear();
         }
-        PlayerMovement.lastkilled = this.gameObject;
-        PlayerMovement.lastkilledby.Add(collision.gameObject);
+        PlayerMovement.lastTwokilled.Add(killed);
+        PlayerMovement.lastkilledby.Add(killedby);
         pm.killwitheveryweapon(collision.gameObject);
         return teleportCount;
     }
@@ -434,6 +461,7 @@ public class EnemyChargerScript : MonoBehaviour
                 arrowscript.increaseKillCount();
                 if (arrowscript.getKillCount() >= 5 && teleportCount > 0) AchivementScript.instance.UnlockAchivement("FIVE_ONE_KILLS");
             }
+            else if (collision.gameObject.name.ToLower().StartsWith("explosion")) hammed = true;
         }
       
         if (collision.gameObject.CompareTag("Crystal")) StartCoroutine(death());
@@ -462,7 +490,11 @@ public class EnemyChargerScript : MonoBehaviour
 
         if (collision.gameObject.tag == "meleehitbox") damage(1);
 
-        if (collision.gameObject.tag == "mfHitbox") StartCoroutine(death());
+        if (collision.gameObject.tag == "mfHitbox")
+        {
+            teleportCount = RetrieveTeleportCount(collision.collider);
+            StartCoroutine(death());
+        }
 
         if (collision.gameObject.CompareTag("Crystal")) StartCoroutine(death());
 

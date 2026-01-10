@@ -32,9 +32,13 @@ public class mfScript : MonoBehaviour
 
     public AudioSource mfSound;
 
+    public int killed = 0;
+    bool mowed = false;
+
     private void Start()
     {
         playerTransform = GameObject.Find("Player(Clone)").transform;
+        killed = 0;
     }
 
     void Awake()
@@ -68,6 +72,13 @@ public class mfScript : MonoBehaviour
            StartCoroutine(back());
         }
 
+        if(killed == 3 && !mowed)
+        {
+            mowed = true;
+            StyleManager.instance.growStyle(1);
+            StyleManager.instance.undisputed(2);
+            print("halloben");
+        }
         if (PlayerMovement.hasdiedforeverybody) Destroy(this.gameObject);
     }
 
@@ -129,13 +140,11 @@ public class mfScript : MonoBehaviour
         if (collision.gameObject.name == "LLocation")
         {
             rb.MovePosition(new Vector2(SidePortalScript.RLocation.position.x - 0.25f, transform.position.y));
-            teleportCount++;
             StartCoroutine(teleport());
         }
         else if (collision.gameObject.name == "RLocation")
         {
             rb.MovePosition(new Vector2(SidePortalScript.LLocation.position.x + 0.25f, transform.position.y));
-            teleportCount++;
             StartCoroutine(teleport());
         }
 

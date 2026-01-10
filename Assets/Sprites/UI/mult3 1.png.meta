@@ -1,0 +1,598 @@
+fileFormatVersion: 2
+guid: f24bc7523f7457b44b1ac35dcb991b53
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -350451020614342182
+    second: mult3 1_0
+  - first:
+      213: -4071838071874878241
+    second: mult3 1_1
+  - first:
+      213: 5548606776667923288
+    second: mult3 1_2
+  - first:
+      213: 4951426516129271010
+    second: mult3 1_3
+  - first:
+      213: -4625395399670290811
+    second: mult3 1_4
+  - first:
+      213: 6755671449634863218
+    second: mult3 1_5
+  - first:
+      213: 8901292127892132439
+    second: mult3 1_6
+  - first:
+      213: 7899518524131198085
+    second: mult3 1_7
+  - first:
+      213: 5536487438177753088
+    second: mult3 1_8
+  - first:
+      213: -3644432514047216800
+    second: mult3 1_9
+  - first:
+      213: 3266786114671503529
+    second: mult3 1_10
+  - first:
+      213: -5413416041467922514
+    second: mult3 1_11
+  - first:
+      213: 5303210400179703708
+    second: mult3 1_12
+  - first:
+      213: 6247274620827429095
+    second: mult3 1_13
+  - first:
+      213: 8363400268447460007
+    second: mult3 1_14
+  - first:
+      213: -5093134132791390203
+    second: mult3 1_15
+  - first:
+      213: 2134763577430506337
+    second: mult3 1_16
+  - first:
+      213: -8876469030060631243
+    second: mult3 1_17
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 1
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: mult3 1_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 49
+        width: 90
+        height: 100
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ad9eb1d47a2f22bf0800000000000000
+      internalID: -350451020614342182
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: mult3 1_1
+      rect:
+        serializedVersion: 2
+        x: 99
+        y: 49
+        width: 91
+        height: 76
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fd48cfed8dced77c0800000000000000
+      internalID: -4071838071874878241
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: mult3 1_2
+      rect:
+        serializedVersion: 2
+        x: 199
+        y: 0
+        width: 78
+        height: 125
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 853ed91377c900d40800000000000000
+      internalID: 5548606776667923288
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: mult3 1_3
+      rect:
+        serializedVersion: 2
+        x: 287
+        y: 49
+        width: 77
+        height: 89
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2ecc551ce2007b440800000000000000
+      internalID: 4951426516129271010
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: mult3 1_4
+      rect:
+        serializedVersion: 2
+        x: 374
+        y: 49
+        width: 65
+        height: 76
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5862de0f36b4fcfb0800000000000000
+      internalID: -4625395399670290811
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: mult3 1_5
+      rect:
+        serializedVersion: 2
+        x: 449
+        y: 49
+        width: 90
+        height: 76
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 278fbbee367f0cd50800000000000000
+      internalID: 6755671449634863218
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: mult3 1_6
+      rect:
+        serializedVersion: 2
+        x: 587
+        y: 49
+        width: 90
+        height: 100
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 752ddfc770eb78b70800000000000000
+      internalID: 8901292127892132439
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: mult3 1_7
+      rect:
+        serializedVersion: 2
+        x: 687
+        y: 49
+        width: 65
+        height: 76
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 58445778e3ab0ad60800000000000000
+      internalID: 7899518524131198085
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: mult3 1_8
+      rect:
+        serializedVersion: 2
+        x: 762
+        y: 49
+        width: 52
+        height: 100
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0085fffcdfd85dc40800000000000000
+      internalID: 5536487438177753088
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: mult3 1_9
+      rect:
+        serializedVersion: 2
+        x: 824
+        y: 49
+        width: 53
+        height: 89
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 063f45000ff5c6dc0800000000000000
+      internalID: -3644432514047216800
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: mult3 1_10
+      rect:
+        serializedVersion: 2
+        x: 887
+        y: 99
+        width: 27
+        height: 26
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9a86c22c9a4f55d20800000000000000
+      internalID: 3266786114671503529
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: mult3 1_11
+      rect:
+        serializedVersion: 2
+        x: 887
+        y: 49
+        width: 27
+        height: 51
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ea737e2baceafd4b0800000000000000
+      internalID: -5413416041467922514
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: mult3 1_12
+      rect:
+        serializedVersion: 2
+        x: 924
+        y: 11
+        width: 78
+        height: 114
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c9f4ed7e2c9c89940800000000000000
+      internalID: 5303210400179703708
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: mult3 1_13
+      rect:
+        serializedVersion: 2
+        x: 1012
+        y: 49
+        width: 52
+        height: 100
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7e86bbc0b27c2b650800000000000000
+      internalID: 6247274620827429095
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: mult3 1_14
+      rect:
+        serializedVersion: 2
+        x: 1074
+        y: 99
+        width: 28
+        height: 26
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7aaa733ab34c01470800000000000000
+      internalID: 8363400268447460007
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: mult3 1_15
+      rect:
+        serializedVersion: 2
+        x: 1074
+        y: 49
+        width: 28
+        height: 51
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5005d85ad7d8159b0800000000000000
+      internalID: -5093134132791390203
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: mult3 1_16
+      rect:
+        serializedVersion: 2
+        x: 1111
+        y: 49
+        width: 66
+        height: 76
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 16bff28c92430ad10800000000000000
+      internalID: 2134763577430506337
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: mult3 1_17
+      rect:
+        serializedVersion: 2
+        x: 1186
+        y: 49
+        width: 52
+        height: 76
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 53bda7b527270d480800000000000000
+      internalID: -8876469030060631243
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      mult3 1_0: -350451020614342182
+      mult3 1_1: -4071838071874878241
+      mult3 1_10: 3266786114671503529
+      mult3 1_11: -5413416041467922514
+      mult3 1_12: 5303210400179703708
+      mult3 1_13: 6247274620827429095
+      mult3 1_14: 8363400268447460007
+      mult3 1_15: -5093134132791390203
+      mult3 1_16: 2134763577430506337
+      mult3 1_17: -8876469030060631243
+      mult3 1_2: 5548606776667923288
+      mult3 1_3: 4951426516129271010
+      mult3 1_4: -4625395399670290811
+      mult3 1_5: 6755671449634863218
+      mult3 1_6: 8901292127892132439
+      mult3 1_7: 7899518524131198085
+      mult3 1_8: 5536487438177753088
+      mult3 1_9: -3644432514047216800
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

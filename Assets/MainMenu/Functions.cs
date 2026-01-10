@@ -11,7 +11,7 @@ using System.IO;
 
 public class Functions : MonoBehaviour
 {
-    public GameObject FadeOut, checkmark;
+    public GameObject FadeOut, checkmark, visualizercheckmark;
     public Animator settingsanim;
     public bool hasrolledin;
     public AudioMixer audioMixer;
@@ -41,7 +41,7 @@ public class Functions : MonoBehaviour
         float scaleHeight = windowAspect / targetAspect;
 
         Camera camera = Camera.main;
-        if(scaleHeight < 1f)
+        if (scaleHeight < 1f)
         {
             camera.rect = new Rect(0, (1f - scaleHeight) / 2f, 1f, scaleHeight);
         }
@@ -79,13 +79,14 @@ public class Functions : MonoBehaviour
         }
         SaveSystem.Save(globalSettings);
         checkmark.SetActive(globalSettings.information.turnedon > 0);
+        visualizercheckmark.SetActive(globalSettings.information.visualizer > 0);
     }
 
     public void Update()
     {
         if (hasrolledin)
         {
-            if(Input.GetKeyDown(KeyCode.Escape)) SettingsRollout();
+            if (Input.GetKeyDown(KeyCode.Escape)) SettingsRollout();
         }
     }
 
@@ -120,7 +121,17 @@ public class Functions : MonoBehaviour
         GlobalSettings globalsettings = SaveSystem.Load();
 
         globalsettings.information.turnedon ^= 1;
+        print(globalsettings.information.turnedon + " tn");
         globalsettings.information.doneTutorial = globalsettings.information.turnedon == 1 ? 0 : 1;
+
+        SaveSystem.Save(globalsettings);
+    }
+
+    public void StylePointsVisualizer()
+    {
+        GlobalSettings globalsettings = SaveSystem.Load();
+
+        globalsettings.information.visualizer ^= 1;
 
         SaveSystem.Save(globalsettings);
     }

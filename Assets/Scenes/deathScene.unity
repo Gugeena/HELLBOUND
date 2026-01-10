@@ -177,7 +177,11 @@ MonoBehaviour:
   damage: {fileID: 1141221449}
   time: {fileID: 693091665}
   alreadyshown: 0
+  alreadyDummied: 0
   TLOH: {fileID: 0}
+  lilith: {fileID: 0}
+  lilithDummy: {fileID: 0}
+  OffShoot: {fileID: 0}
 --- !u!114 &10487821
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -275,7 +279,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -80.8, y: -37.5}
+  m_AnchoredPosition: {x: -80.80002, y: -37.5}
   m_SizeDelta: {x: -438.00494, y: -384.47}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &693091665
@@ -299,7 +303,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: 793bc94ae04e9b54c98d0c150428b05f, type: 3}
+    m_Font: {fileID: 12800000, guid: 1f9498cb7881eb24aaf758b46aec1c43, type: 3}
     m_FontSize: 300
     m_FontStyle: 0
     m_BestFit: 0
@@ -467,7 +471,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 50.9, y: -3.300003}
+  m_AnchoredPosition: {x: 50.899994, y: -3.300003}
   m_SizeDelta: {x: -436.005, y: -380.435}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1141221449
@@ -491,7 +495,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: 793bc94ae04e9b54c98d0c150428b05f, type: 3}
+    m_Font: {fileID: 12800000, guid: 1f9498cb7881eb24aaf758b46aec1c43, type: 3}
     m_FontSize: 300
     m_FontStyle: 0
     m_BestFit: 0
@@ -707,7 +711,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: 793bc94ae04e9b54c98d0c150428b05f, type: 3}
+    m_Font: {fileID: 12800000, guid: 1f9498cb7881eb24aaf758b46aec1c43, type: 3}
     m_FontSize: 300
     m_FontStyle: 0
     m_BestFit: 0
@@ -1227,6 +1231,10 @@ PrefabInstance:
       value: 'Time:'
       objectReference: {fileID: 0}
     - target: {fileID: 2345563598673793180, guid: 04dd3da6096678f4fa530d81ee433db1, type: 3}
+      propertyPath: m_FontData.m_Font
+      value: 
+      objectReference: {fileID: 12800000, guid: 1f9498cb7881eb24aaf758b46aec1c43, type: 3}
+    - target: {fileID: 2345563598673793180, guid: 04dd3da6096678f4fa530d81ee433db1, type: 3}
       propertyPath: m_FontData.m_MaxSize
       value: 300
       objectReference: {fileID: 0}
@@ -1299,6 +1307,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4273791018650130211, guid: 04dd3da6096678f4fa530d81ee433db1, type: 3}
+      propertyPath: m_FontData.m_Font
+      value: 
+      objectReference: {fileID: 12800000, guid: 1f9498cb7881eb24aaf758b46aec1c43, type: 3}
+    - target: {fileID: 4273791018650130211, guid: 04dd3da6096678f4fa530d81ee433db1, type: 3}
       propertyPath: m_FontData.m_MaxSize
       value: 300
       objectReference: {fileID: 0}
@@ -1355,6 +1367,10 @@ PrefabInstance:
       value: Eradication notice.
       objectReference: {fileID: 0}
     - target: {fileID: 6903971322509134270, guid: 04dd3da6096678f4fa530d81ee433db1, type: 3}
+      propertyPath: m_FontData.m_Font
+      value: 
+      objectReference: {fileID: 12800000, guid: 1f9498cb7881eb24aaf758b46aec1c43, type: 3}
+    - target: {fileID: 6903971322509134270, guid: 04dd3da6096678f4fa530d81ee433db1, type: 3}
       propertyPath: m_FontData.m_MaxSize
       value: 300
       objectReference: {fileID: 0}
@@ -1374,6 +1390,10 @@ PrefabInstance:
       propertyPath: m_Text
       value: 'Banished souls eradicated:'
       objectReference: {fileID: 0}
+    - target: {fileID: 7381037170478178736, guid: 04dd3da6096678f4fa530d81ee433db1, type: 3}
+      propertyPath: m_FontData.m_Font
+      value: 
+      objectReference: {fileID: 12800000, guid: 1f9498cb7881eb24aaf758b46aec1c43, type: 3}
     - target: {fileID: 7381037170478178736, guid: 04dd3da6096678f4fa530d81ee433db1, type: 3}
       propertyPath: m_FontData.m_MaxSize
       value: 300
@@ -1532,7 +1552,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: 793bc94ae04e9b54c98d0c150428b05f, type: 3}
+    m_Font: {fileID: 12800000, guid: 1f9498cb7881eb24aaf758b46aec1c43, type: 3}
     m_FontSize: 300
     m_FontStyle: 0
     m_BestFit: 0

@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class BoomerangWeaponScript : MonoBehaviour
 {
-    bool shouldReturn = false;
+    public bool shouldReturn = false;
     public GameObject player;
     Vector2 targetPoint;
     public GameObject blowUpParticles;
@@ -19,10 +19,15 @@ public class BoomerangWeaponScript : MonoBehaviour
 
     public AudioSource boomerangSound;
 
+    public int killed, lastamountkilled;
+    public bool richoed = false, inreturning = false;
+
     private void Start()
     {
         player = GameObject.Find("Player(Clone)");
         rb = GetComponent<Rigidbody2D>();
+        killed = 0;
+        lastamountkilled = 0;
     }
 
     private void Update()
@@ -65,6 +70,16 @@ public class BoomerangWeaponScript : MonoBehaviour
         }
 
         if (PlayerMovement.hasdiedforeverybody) Destroy(this.gameObject);
+
+        if (!richoed)
+        {
+            if (shouldReturn && killed > 0 && lastamountkilled == 1)
+            {
+                richoed = true;
+                StyleManager.instance.undisputed(4);
+                StyleManager.instance.growStyle(1);
+            }
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

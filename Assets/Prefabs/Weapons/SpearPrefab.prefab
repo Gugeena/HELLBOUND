@@ -4848,6 +4848,7 @@ GameObject:
   - component: {fileID: 4784548235246485304}
   - component: {fileID: 4975719323687480960}
   - component: {fileID: 2321000655260687150}
+  - component: {fileID: 1104778638455749376}
   m_Layer: 0
   m_Name: Explosion
   m_TagString: mfHitbox
@@ -5001,6 +5002,34 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &1104778638455749376
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7160878169388947489}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 57ca7ce5f916eb743b9b426a1fdad24d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
+  mayhemcounter: 0
+  hammed: 0
+  contactFilter:
+    useTriggers: 0
+    useLayerMask: 1
+    useDepth: 0
+    useOutsideDepth: 0
+    useNormalAngle: 0
+    useOutsideNormalAngle: 0
+    layerMask:
+      serializedVersion: 2
+      m_Bits: 9344
+    minDepth: 0
+    maxDepth: 0
+    minNormalAngle: 0
+    maxNormalAngle: 0
 --- !u!1 &8249595046535959811
 GameObject:
   m_ObjectHideFlags: 0

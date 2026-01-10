@@ -116,9 +116,9 @@ public class PlayerMovement : MonoBehaviour
     public KeyCode Special, AttackButton, Jump, Dash, Drop;
 
     [Header("SFX")]
-    [SerializeField] private AudioClip death;
+    [SerializeField] private AudioClip death, stylemastery, deathBG;
     [SerializeField] private AudioClip mfGarwoba, firstLandSound, ascension, hitStop, revival, finaldissapearence, Beyondascension, angelicDeath, levaniylea;
-    [SerializeField] private AudioClip[] punches, gravelWalk, jumps, lands, bowShots, mfHits, spearHits, boomerangShots, hurts;
+    [SerializeField] private AudioClip[] punches, gravelWalk, jumps, lands, bowShots, mfHits, spearHits, boomerangShots, hurts, deaths;
     private int walkedDistance = 1;
 
     private bool firstLand = false;
@@ -215,7 +215,8 @@ public class PlayerMovement : MonoBehaviour
     public int deathcount = 0;
 
     public static GameObject lastkilled;
-    public static List<GameObject> lastkilledby = new List<GameObject>();
+    public static List<String> lastkilledby = new List<String>();
+    public static List<String> lastTwokilled = new List<String>();
     public static List<String> weaponsUsed = new List<String>();
     public int haskilledwithnewweapon = 0;
     public bool isinkwew = false;
@@ -235,6 +236,8 @@ public class PlayerMovement : MonoBehaviour
 
     public AudioClip arrowPickup;
     AudioSource arrowPickupSource;
+
+    bool hasheard = false;
 
     // Start is called before the first frame update
     void Start()
@@ -271,9 +274,14 @@ public class PlayerMovement : MonoBehaviour
         canBePoisoned = true;
         canPunch = true;
         canLose = true;
+        lastkilledby = new List<String>();
+        lastTwokilled = new List<String>();
+        weaponsUsed = new List<String>();
         shouldEnd = false;
         isMfSpecialing = false;
         shouldMakeSound = true;
+        hasheard = false;
+        hasheard = false;
         shouldmakeAudio = true;
         stopAttacking = false;
         hasdiedforeverybody = false;
@@ -499,6 +507,7 @@ public class PlayerMovement : MonoBehaviour
         yield return new WaitForSeconds(3f);
         lastkilledstreak = 0;
         lastkilledby.Clear();
+        lastTwokilled.Clear();
         streaklosingtimer = null;
         yield break;
     }
@@ -521,10 +530,11 @@ public class PlayerMovement : MonoBehaviour
             if (currentWeapon == 4) StartCoroutine(spearspecialAttack());
         }
 
-
-        if (Input.GetKeyDown(KeyCode.G)) godMode = true;
-        if (Input.GetKeyDown(KeyCode.H)) StartCoroutine(enterAngelic(false));
-        if (Input.GetKeyDown(KeyCode.J)) StartCoroutine(pickUpWeapon(UnityEngine.Random.RandomRange(0, 5), "random"));
+        /* 
+         if (Input.GetKeyDown(KeyCode.G)) godMode = true;
+         if (Input.GetKeyDown(KeyCode.H)) StartCoroutine(enterAngelic(false));
+         if (Input.GetKeyDown(KeyCode.J)) StartCoroutine(pickUpWeapon(UnityEngine.Random.RandomRange(0, 5), "random"));
+         */
         /*
         if (Input.GetKeyDown(KeyCode.F))
         {
@@ -822,7 +832,6 @@ public class PlayerMovement : MonoBehaviour
 
     public IEnumerator spearAttack()
     {
-
         canPunch = false;
         anim.Play("player_spearattack");
         yield return new WaitForSeconds(0.3f);
@@ -1238,7 +1247,7 @@ public class PlayerMovement : MonoBehaviour
         if (weaponsUsed.Count == 4) AchivementScript.instance.UnlockAchivement("MAL_ARSENAL");
     }
 
-    String getWeapon(GameObject weapon)
+    public String getWeapon(GameObject weapon)
     {
         string name = weapon.name.ToLower();
         string weapon1;
@@ -1358,6 +1367,7 @@ public class PlayerMovement : MonoBehaviour
 
         string animclip = "player_death";
         AudioClip clip = death;
+
         if (isAngelic)
         {
             clip = angelicDeath;
@@ -1409,8 +1419,8 @@ public class PlayerMovement : MonoBehaviour
         this.transform.position = new Vector3(this.transform.position.x, -4.4f, 0);
         rb.constraints = RigidbodyConstraints2D.FreezePositionY;
         uiCanvas.renderMode = RenderMode.WorldSpace;
-        audioManager.instance.playAudio(revival, 1, 1, transform, audioManager.instance.sfx);
-         
+        //AudioClip revivalClip = revival;
+        StartCoroutine(revivalPlayBack()); 
         camAnimator.Play("player_camera_fall");
         audioManager.instance.stopMusic();
         yield return new WaitForSeconds(2f);
@@ -1424,6 +1434,26 @@ public class PlayerMovement : MonoBehaviour
         camShake.StopAllCoroutines();
         StartCoroutine(revive());
         yield return null;
+    }
+
+    public IEnumerator revivalPlayBack()
+    {
+        float time = 3.0125f;
+        AudioClip revivalClip;
+        if (!hasheard)
+        {
+            hasheard = true;
+            revivalClip = stylemastery;
+        }
+        else
+        {
+            revivalClip = deaths[UnityEngine.Random.RandomRange(0, deaths.Length)];
+        }
+        if (revivalClip == revival) time = 0;
+        else audioManager.instance.playAudio(deathBG, 0.2f, 1, transform, audioManager.instance.music);
+        yield return new WaitForSeconds(time);
+        audioManager.instance.playAudio(revivalClip, 1, 1, transform, audioManager.instance.sfx);
+        //Time.timeScale = 0;
     }
 
     public IEnumerator revive()
