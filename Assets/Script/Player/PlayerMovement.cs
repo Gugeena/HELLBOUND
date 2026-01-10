@@ -529,7 +529,7 @@ public class PlayerMovement : MonoBehaviour
             if (currentWeapon == 3 && isGrounded) StartCoroutine(mfSpecial());
             if (currentWeapon == 4) StartCoroutine(spearspecialAttack());
         }
-
+        if (Input.GetKeyDown(KeyCode.H)) StartCoroutine(enterAngelic(true));
         /* 
          if (Input.GetKeyDown(KeyCode.G)) godMode = true;
          if (Input.GetKeyDown(KeyCode.H)) StartCoroutine(enterAngelic(false));
