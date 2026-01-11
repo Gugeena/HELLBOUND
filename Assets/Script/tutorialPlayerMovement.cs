@@ -74,6 +74,7 @@ public class tutorialPlayerMovement : MonoBehaviour
     private bool bowScene = false;
     private bool hasArrow = true;
 
+    public GlobalSettings globalSettings;
     public KeyCode Special, AttackButton, Jump, Dash, Drop;
 
     [Header("SFX")]
@@ -83,9 +84,24 @@ public class tutorialPlayerMovement : MonoBehaviour
     private int walkedDistance = 1;
     private int lastStepDistance = -1;
 
-    // Start is called before the first frame update
+    public static tutorialPlayerMovement instance;
+
+    private void Awake()
+    {
+        globalSettings = SaveSystem.Load();
+
+        Special = (KeyCode)globalSettings.keybinds.SKey;
+        AttackButton = (KeyCode)globalSettings.keybinds.AKey;
+        Jump = (KeyCode)globalSettings.keybinds.JKey;
+        Dash = (KeyCode)globalSettings.keybinds.DSHKey;
+        Drop = (KeyCode)globalSettings.keybinds.DRKey;
+
+
+        instance = this;
+    }
     void Start()
     {
+
         Functions.setUpView();
         moveCount = 0;
         rb = GetComponent<Rigidbody2D>();
@@ -95,12 +111,6 @@ public class tutorialPlayerMovement : MonoBehaviour
         canPunch = true;
         trapped = true;
 
-
-        Special = KeyBindManagerScript.heavyKey;
-        AttackButton = KeyBindManagerScript.attackKey;
-        Jump = KeyBindManagerScript.jumpKey;
-        Dash = KeyBindManagerScript.dashKey;
-        Drop = KeyBindManagerScript.DropKey;
 
         var emission = runParticles.emission;
         emission.enabled = false;
@@ -121,11 +131,6 @@ public class tutorialPlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.P))
-        {
-            ScreenCapture.CaptureScreenshot("Screenshot.png", superSize: 1);
-        }
-
         if (isGrounded)
         {
             IsJumping = false;
@@ -150,7 +155,6 @@ public class tutorialPlayerMovement : MonoBehaviour
         {
             audioManager.instance.playRandomAudio(gravelWalk, 1, 1, transform, audioManager.instance.sfx);
             walkedDistance++;
-            //lastStepDistance = walkedDistance;
         }
     }
 

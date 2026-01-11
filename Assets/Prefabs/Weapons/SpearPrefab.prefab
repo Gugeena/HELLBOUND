@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5173435280132588135}
   - component: {fileID: 3807610126706186971}
   - component: {fileID: 1121106012879833494}
-  m_Layer: 6
+  m_Layer: 13
   m_Name: runParticles
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4848,7 +4848,7 @@ GameObject:
   - component: {fileID: 4784548235246485304}
   - component: {fileID: 4975719323687480960}
   - component: {fileID: 2321000655260687150}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: Explosion
   m_TagString: mfHitbox
   m_Icon: {fileID: 0}
@@ -5012,7 +5012,7 @@ GameObject:
   - component: {fileID: 8414541415387059378}
   - component: {fileID: 8548669663914986777}
   - component: {fileID: 915881215924531339}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5120,7 +5120,7 @@ GameObject:
   - component: {fileID: 3753103886673623893}
   - component: {fileID: 1898058972566759690}
   - component: {fileID: 8209688177181366771}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: SpearPrefab
   m_TagString: mfHitbox
   m_Icon: {fileID: 0}

@@ -8,7 +8,10 @@ public class weaponPickupScript : MonoBehaviour
     [HideInInspector]
     public int weaponID;
 
+    public bool doDelay = true;
     public bool disappear = true;
+    public bool infinite = false;
+    public bool doThrowUp = true;
 
     enum weapon { random = 0, bow = 1, boomerang = 2, mf = 3, spear = 4, mjolnir = 5 };
     [SerializeField]
@@ -27,16 +30,14 @@ public class weaponPickupScript : MonoBehaviour
         if (preSelectedWeapon == 0)
         {
             setWeapon(Random.Range(1, 5));
-            throwUp();
         }
         else
         {
             setWeapon((int)preSelectedWeapon);
-            //bc.enabled = true;
-            //StartCoroutine(delay());
         }
 
-        StartCoroutine(deleter());
+        if(doThrowUp) throwUp();
+        if (disappear)StartCoroutine(deleter());
     }
 
     private void throwUp()
@@ -46,7 +47,7 @@ public class weaponPickupScript : MonoBehaviour
         int[] t = { -1, 1 };
         rb.AddTorque(Random.Range(170f, 210f) * t[Random.Range(0, 2)]);
 
-        if (disappear) StartCoroutine(delay());
+        if (doDelay) StartCoroutine(delay());
         else bc.enabled = true;
     }
 
@@ -58,7 +59,6 @@ public class weaponPickupScript : MonoBehaviour
 
     private IEnumerator delay()
     {
-       // if (this.gameObject.name == "BoomerangWhichYouJustShot") yield break;
         bc.enabled = false;
         yield return new WaitForSeconds(0.6f);
         bc.enabled = true;

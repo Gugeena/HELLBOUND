@@ -1,25 +1,9 @@
-using JetBrains.Annotations;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-using System.Security.Permissions;
-using Unity.Burst.Intrinsics;
-using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
-using UnityEngine.Audio;
-using UnityEngine.EventSystems;
-using UnityEngine.Rendering;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
-using UnityEngine.UIElements;
-using System.IO;
-using static UnityEngine.ParticleSystem;
-using static UnityEngine.Rendering.DebugUI;
-using System.Collections.Generic;
-using System.Linq;
-using Steamworks;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -117,8 +101,8 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("SFX")]
     [SerializeField] private AudioClip death;
-    [SerializeField] private AudioClip mfGarwoba, firstLandSound, ascension, hitStop, revival, finaldissapearence, Beyondascension, angelicDeath, levaniylea;
-    [SerializeField] private AudioClip[] punches, gravelWalk, jumps, lands, bowShots, mfHits, spearHits, boomerangShots, hurts;
+    [SerializeField] private AudioClip mfGarwoba, firstLandSound, ascension, hitStop, revival, finaldissapearence, Beyondascension, angelicDeath, levaniylea, chainBreak;
+    [SerializeField] private AudioClip[] punches, gravelWalk, jumps, lands, bowShots, mfHits, spearHits, boomerangShots, hurts, chainSounds;
     private int walkedDistance = 1;
 
     private bool firstLand = false;
@@ -236,12 +220,37 @@ public class PlayerMovement : MonoBehaviour
     public AudioClip arrowPickup;
     AudioSource arrowPickupSource;
 
+    public bool inTutorial = false;
+    private bool doBow;
+    private bool trapped = false;
+    private bool bowScene = false;
+    private float moveCount = 0;
+    [SerializeField] private Transform headTransform;
+    [SerializeField] private Animator cineAnim;
+    private ShakeSelfScript shakeSelfScript;
+    [SerializeField]
+    private ParticleSystem chainParticle;
+    [SerializeField]
+    private GameObject[] shackles;
+
+    [SerializeField] private Animator scrollAnim;
+
+    public static PlayerMovement instance;
+
+    private bool canOpen=true;
+
+    private void Awake()
+    {
+        instance = this;
+        variablesetting();
+    }
+
     // Start is called before the first frame update
     void Start()
     {
         Functions.setUpView();
         findeverythingatspawn();
-        variablesetting();
+        
 
         if (!isAngelic) StartCoroutine(pickUpWeapon(0, "fists"));
         else StartCoroutine(beInvincbleforawhile());
@@ -252,6 +261,17 @@ public class PlayerMovement : MonoBehaviour
         rb.excludeLayers = startLM;
 
         rb.sleepMode = RigidbodySleepMode2D.NeverSleep;
+
+        if (inTutorial)
+        {
+            isGrounded = false;
+
+            doBow = true;
+            trapped = true;
+            rb.simulated = false;
+            anim.SetBool("trapped", true);
+            anim.Play("player_chained");
+        }
     }
 
     void variablesetting()
@@ -319,17 +339,25 @@ public class PlayerMovement : MonoBehaviour
         LLocation = GameObject.Find("LLOCATIONLOCATION").transform;
         hpslider = GameObject.Find("HP").GetComponent<UnityEngine.UI.Slider>();
         anim = GetComponent<Animator>();
-        angelicTransistionTrans = GameObject.Find("angelicTransistionPos").transform;
+        if (!inTutorial)
+        {
+            angelicTransistionTrans = GameObject.Find("angelicTransistionPos").transform;
+            autokillcollider = GameObject.Find("InstaKillBox").GetComponent<BoxCollider2D>();
+            autokillcollider.enabled = false;
+            canvasAnimator = GameObject.Find("Canvas (1)").GetComponent<Animator>();
+
+        }
         flashScript = GameObject.Find("Flash").GetComponent<flashScript>();
         angelOverlayAnim = GameObject.Find("angelStatus").GetComponent<Animator>();
         camAnimator = GameObject.Find("Main Camera").GetComponent<Animator>();
         uiCanvas = GameObject.Find("Canvas").GetComponent<Canvas>();
         if (isAngelic) StartCoroutine(meteorSpawn());
-        autokillcollider = GameObject.Find("InstaKillBox").GetComponent<BoxCollider2D>();
-        autokillcollider.enabled = false;
-        canvasAnimator = GameObject.Find("Canvas (1)").GetComponent<Animator>();
+
+        
         hpAnimator = GameObject.Find("HP").GetComponent<Animator>();
         styleAnimator = GameObject.Find("styleAnim").GetComponent<Animator>();
+
+        shakeSelfScript = GetComponent<ShakeSelfScript>();
     }
 
     IEnumerator meteorSpawn()
@@ -374,10 +402,14 @@ public class PlayerMovement : MonoBehaviour
 
         if (!hasbeyonded)
         {
-            handleMovement();
-            handleCombat();
             if (!godMode) handleHP();
-            if (currentWeapon == 1) bowAim();
+            if (trapped == false && bowScene == false)
+            {
+                handleMovement();
+                handleCombat();
+            }
+            else if (trapped == true) { handleChained(); }
+            if (currentWeapon == 1 && !bowScene) bowAim();
             if (currentWeapon == 5) mjolAim();
             if (isMjolFlying)
             {
@@ -486,6 +518,105 @@ public class PlayerMovement : MonoBehaviour
             anim.SetBool("isJumping", !isGrounded);
         }
     }
+
+    void handleChained()
+    {
+        Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+
+        Vector3 pos = Vector2.Lerp(mousePos, headPivotTransform.position, 0.992f);
+        pos.z = 0;
+        headTransform.position = pos;
+
+        Vector3 aimDirection = (mousePos - transform.position).normalized;
+
+        float angle = (Mathf.Atan2(aimDirection.y, aimDirection.x) * Mathf.Rad2Deg);
+
+        headTransform.eulerAngles = new Vector3(0, 0, angle);
+
+
+        float x = mousePos.x - transform.position.x;
+        if (x < 0 && transform.localScale.x > 0)
+        {
+            transform.localScale = new Vector3(transform.localScale.x * -1, transform.localScale.y, transform.localScale.z);
+            direction = -1;
+        }
+        else if (x > 0 && transform.localScale.x < 0)
+        {
+            transform.localScale = new Vector3(Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
+            direction = 1;
+        }
+
+        if (Input.anyKeyDown && moveCount < 5)
+        {
+            StartCoroutine(escape());
+        }
+        else if (Input.anyKeyDown && moveCount >= 5)
+        {
+            StartCoroutine(breakChains());
+        }
+
+    }
+    private IEnumerator bowCutscene()
+    {
+        rb.linearVelocity = Vector2.zero;
+        isRunning = false;
+        isDashing = false;
+        isFalling = false;
+        anim.SetBool("isWalking", false);
+        anim.SetBool("isFalling", false);
+        anim.SetBool("isJumping", false);
+
+        canPunch = false;
+        anim.SetBool("isWalking", false);
+        anim.Play("player_bowShoot");
+        yield return new WaitForSeconds(0.4f);
+        audioManager.instance.playRandomAudio(bowShots, 0.5f, 1, transform, audioManager.instance.sfx);
+        Time.timeScale = 0.4f;
+        var emission = runParticles.emission;
+        emission.enabled = false;
+        GameObject arr = Instantiate(arrow, bowHands.transform.position, bowHands.transform.rotation);
+        arr.GetComponent<Rigidbody2D>().gravityScale = 0.2f;
+        arr.GetComponent<Rigidbody2D>().AddForce(arr.transform.right * 400 * direction);
+        canPunch = true;
+        yield return new WaitForSeconds(1.3f);
+        Time.timeScale = 1;
+        bowScene = false;
+    }
+
+
+    private IEnumerator escape()
+    {
+        shakeSelfScript.Begin();
+        audioManager.instance.playRandomAudio(chainSounds, 0.6f, 1, transform, audioManager.instance.sfx);
+        yield return new WaitForSeconds(0.23f);
+        shakeSelfScript.stopShake();
+        moveCount++;
+    }
+
+    private IEnumerator breakChains()
+    {
+        rb.simulated = true;
+        trapped = false;
+        anim.SetBool("trapped", false);
+        chainParticle.gameObject.SetActive(true);
+        chainParticle.Play();
+        audioManager.instance.playAudio(chainBreak, 0.8f, 1, transform, audioManager.instance.sfx);
+        foreach (GameObject g in shackles)
+        {
+            Rigidbody2D rb = g.GetComponent<Rigidbody2D>();
+            rb.simulated = true;
+            float randomX = UnityEngine.Random.Range(-5f, 5f);
+            float randomY = UnityEngine.Random.Range(0f, 10f);
+            Vector2 random = new Vector2(randomX, randomY);
+            rb.AddForce(random * 10);
+            rb.AddTorque(UnityEngine.Random.Range(-5f, 5f) * 15);
+        }
+        Time.timeScale = 0.2f;
+        cineAnim.Play("cinecam_zoomin");
+        yield return null;
+
+    }
+
 
     public void streaklosingstart()
     {
@@ -1120,6 +1251,13 @@ public class PlayerMovement : MonoBehaviour
             rightHand.SetActive(false);
             mjolnir.SetActive(false);
             anim.SetBool("shouldChargeIn", false);
+
+            if (doBow)
+            {
+                bowScene = true;
+                doBow = false;
+                StartCoroutine(bowCutscene());
+            }
         }
         else if (id == 2)
         {
@@ -1286,12 +1424,18 @@ public class PlayerMovement : MonoBehaviour
 
         }
 
-        if (collision.gameObject.layer == 3 && !firstLand)
+        if (collision.gameObject.layer == 3 && !firstLand && !inTutorial)
         {
             firstLand = true;
             rb.excludeLayers = endLM;
             StartCoroutine(camShake.shake());
             if (!isAngelic) audioManager.instance.playAudio(firstLandSound, 1, 1, transform, audioManager.instance.sfx);
+        }
+
+        if (collision.gameObject.layer == 3 && Time.timeScale < 1 && inTutorial)
+        {
+            Time.timeScale = 1;
+            cineAnim.Play("cinecam_zoomout");
         }
     }
 
@@ -1332,6 +1476,18 @@ public class PlayerMovement : MonoBehaviour
     private IEnumerator spriteFlash()
     {
         yield return null;
+    }
+
+    private IEnumerator endTutor()
+    {
+        GlobalSettings globalSettings = SaveSystem.Load();
+        globalSettings.information.doneTutorial = 1;
+        SaveSystem.Save(globalSettings);
+
+        cineAnim.Play("cinecam_endd");
+        yield return new WaitForSeconds(3f);
+        loadScene.SceneToLoad = 4;
+        SceneManager.LoadScene(2);
     }
 
     private IEnumerator deathCRT()
@@ -1484,11 +1640,14 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+
         if (collision.gameObject.CompareTag("weaponPickup") && currentWeapon == 0)
         {
             justShotBoomerang = false;
-            StartCoroutine(pickUpWeapon(collision.transform.parent.GetComponent<weaponPickupScript>().weaponID, collision.gameObject.name));
-            Destroy(collision.transform.parent.gameObject);
+
+            weaponPickupScript wps = collision.transform.parent.GetComponent<weaponPickupScript>();
+            StartCoroutine(pickUpWeapon(wps.weaponID, collision.gameObject.name));
+            if(!wps.infinite) Destroy(collision.transform.parent.gameObject);
         }
 
         if (collision.gameObject.CompareTag("boomerangPickup") && currentWeapon == 0)
@@ -1587,10 +1746,25 @@ public class PlayerMovement : MonoBehaviour
             isFalling = false;
         }
 
-        //if (collision.gameObject.CompareTag("poison"))
-        //{
-            //hpAnimator.Play("PlayerPoisoning");
-        //}
+
+        if (collision.gameObject.CompareTag("camTriggerDown"))
+        {
+            cineAnim.Play("cinecam_fall");
+            canvasAnimator.Play("hpComeDown");
+        }
+
+        TutorialNoteScript note = collision.gameObject.transform.parent.GetComponent<TutorialNoteScript>();
+        if (note != null && canOpen)
+        {
+            canOpen = false;
+            ScrollScript.instance.rollInScroll(note.noteText, note.headerImage, note.fontSize);
+        }
+
+        if (collision.gameObject.CompareTag("endTutorial"))
+        {
+            StartCoroutine(endTutor());
+        }
+
     }
 
     private void OnCollisionExit2D(Collision2D collision)
@@ -1609,6 +1783,11 @@ public class PlayerMovement : MonoBehaviour
             isinbubble = false;
             wasPoisoned = false;
             hpAnimator.Play("PlayerDepoisoning");
+        }
+
+        if (collision.gameObject.transform.parent.GetComponent<TutorialNoteScript>() != null)
+        {
+            canOpen = true;
         }
     }
 

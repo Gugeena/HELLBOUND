@@ -48,7 +48,7 @@ public class BoomerangWeaponScript : MonoBehaviour
                     GameObject drop = Instantiate(pickup, player.transform.position, Quaternion.identity);
                     drop.name = "BoomerangWhichYouJustShot";
                     weaponPickupScript weaponpickup = drop.GetComponent<weaponPickupScript>();
-                    weaponpickup.disappear = true;
+                    weaponpickup.doDelay = true;
                     Destroy(this.gameObject);
                 }
                 else

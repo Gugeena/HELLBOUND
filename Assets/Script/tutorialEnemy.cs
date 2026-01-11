@@ -20,9 +20,14 @@ public class tutorialEnemy : MonoBehaviour
     public GameObject player;
     public float healamount = 5f;
     public bool isdead;
+
+    int teleportCount = 0;
+
+    [SerializeField] private bool dropWeapon;
+    public DummySpawner spawner;
     void Start()
     {
-        player = GameObject.Find("player_tutorial");
+        player = GameObject.Find("Player(Clone)");
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         isGrounded = true;
@@ -59,17 +64,68 @@ public class tutorialEnemy : MonoBehaviour
             rbb.AddTorque(Random.Range(6f, 7f));
             rbb.gameObject.transform.parent = null;
             rbb.excludeLayers = rbb.excludeLayers ^ (1 << LayerMask.NameToLayer("Player"));
+            rbb.excludeLayers = rbb.excludeLayers ^ (1 << LayerMask.NameToLayer("Default"));
+            rbb.excludeLayers = rbb.excludeLayers ^ (1 << LayerMask.NameToLayer("Enemy"));
+            bodyPartScript bpscript = rbb.gameObject.GetComponent<bodyPartScript>();
+            if (bpscript != null) bpscript.disappear();
             BoxCollider2D bc = rbb.gameObject.GetComponent<BoxCollider2D>();
             if (bc != null) bc.isTrigger = false;
+            GameObject bodypart = rbb.gameObject;
+        }
+        PlayerMovement playerScript = PlayerMovement.instance;
+        if (playerScript.shouldGainStyle && !PlayerMovement.hasdiedforeverybody)
+        {
+            if (teleportCount == 0) StyleManager.instance.growStyle(2);
+            else if (teleportCount > 0) StyleManager.instance.growStyle(3);
         }
         Vector2 pos = this.transform.position;
         pos.y -= 0.3f;
-        Instantiate(bow, pos, Quaternion.identity);
+        if(dropWeapon)Instantiate(bow, pos, Quaternion.identity);
         //PlayerMovement playerScript = player.GetComponent<PlayerMovement>();
         //playerScript.hp += healamount;
         Instantiate(particles, transform.position, Quaternion.identity);
+        if(spawner != null)spawner.Spawn(1.75f);
         Destroy(gameObject);
         yield break;
+    }
+
+    public int RetrieveTeleportCount(Collider2D collision)
+    {
+        int teleportCount = 0;
+        string weapon = collision.gameObject.name;
+        switch (weapon)
+        {
+            case "motherfuckr(Clone)":
+                teleportCount = collision.gameObject.GetComponent<mfScript>().getteleportCount();
+                break;
+            case "BoomerangPrefab(Clone)":
+                teleportCount = collision.gameObject.GetComponent<BoomerangWeaponScript>().getteleportCount();
+                break;
+            case "SpearPrefab(Clone)":
+                teleportCount = collision.gameObject.GetComponent<spearScript>().getteleportCount();
+                break;
+            case "Arrow(Clone)":
+                teleportCount = collision.gameObject.GetComponent<arrowScript>().getteleportCount();
+                break;
+            default: break;
+        }
+        PlayerMovement pm = player.GetComponent<PlayerMovement>();
+        if (collision.gameObject == null) print("yle xar");
+        if (!PlayerMovement.lastkilled.Equals(this.gameObject) && !PlayerMovement.lastkilledby.Contains(collision.gameObject))
+        {
+            PlayerMovement.lastkilledstreak++;
+            pm.streaklosingstart();
+        }
+        else
+        {
+            pm.StopCoroutine(pm.streaklosingtimer);
+            PlayerMovement.lastkilledstreak = 0;
+            PlayerMovement.lastkilledby.Clear();
+        }
+        PlayerMovement.lastkilled = this.gameObject;
+        PlayerMovement.lastkilledby.Add(collision.gameObject);
+
+        return teleportCount;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -102,6 +158,7 @@ public class tutorialEnemy : MonoBehaviour
 
         if (collision.gameObject.tag == "mfHitbox")
         {
+            teleportCount = RetrieveTeleportCount(collision.collider);
             StartCoroutine(death());
         }
 

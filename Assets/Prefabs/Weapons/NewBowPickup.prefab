@@ -149,7 +149,7 @@ GameObject:
   - component: {fileID: 4034284919902532123}
   - component: {fileID: 4541207817923102448}
   m_Layer: 0
-  m_Name: WeaponPickup
+  m_Name: NewBowPickup
   m_TagString: weaponPickup
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -196,7 +196,7 @@ MonoBehaviour:
   - {fileID: 893569146, guid: ce957dbebc8c248418a52a83d9c0ecfe, type: 3}
   sr: {fileID: 5193152988583878042}
   bc: {fileID: 2971187673985941548}
-  preSelectedWeapon: 0
+  preSelectedWeapon: 1
 --- !u!50 &4541207817923102448
 Rigidbody2D:
   serializedVersion: 5

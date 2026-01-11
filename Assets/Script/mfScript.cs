@@ -42,9 +42,10 @@ public class mfScript : MonoBehaviour
         move = false;
         playerTransform = GameObject.Find("Player(Clone)").transform;
         rb = GetComponent<Rigidbody2D>();
-        camShakerScript = GetComponent<camShakerScript>();
+        if (!PlayerMovement.instance.inTutorial) camShakerScript = GetComponent<camShakerScript>();
+        else camShakerScript = null;
         StartCoroutine(life());
-        shakeSelfScript.Begin();
+        if (camShakerScript != null) shakeSelfScript.Begin();
         runningShake = null;
     }
 
@@ -96,7 +97,7 @@ public class mfScript : MonoBehaviour
     {
         yield return new WaitForSeconds(0.8f);
         move = true;
-        runningShake = StartCoroutine(camShakerScript.shake());
+        if(camShakerScript != null)runningShake = StartCoroutine(camShakerScript.shake());
         startPos = transform.position;
     }
 
@@ -104,7 +105,7 @@ public class mfScript : MonoBehaviour
     {
         rb.linearVelocity = Vector2.zero;
         move = false;
-        camShakerScript.Stop();
+        if(camShakerScript != null)camShakerScript.Stop();
         particles.Stop();
         yield return new WaitForSeconds(0.6f);
         rb.gravityScale = 1;
@@ -119,7 +120,7 @@ public class mfScript : MonoBehaviour
 
     public void OnDestroy()
     {
-        camShakerScript.Stop();
+        if(camShakerScript != null)camShakerScript.Stop();
         mfSound.Stop();
         mfSound.Stop();
     }

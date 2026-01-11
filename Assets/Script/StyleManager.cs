@@ -71,7 +71,7 @@ public class StyleManager : MonoBehaviour
         fillImage.color = Color.red;
         switchStyle();
         StartCoroutine(styleLife());
-        PlayerMovement playerMovement = GameObject.Find("Player(Clone)").GetComponent<PlayerMovement>();
+        playerMovement = GameObject.Find("Player(Clone)").GetComponent<PlayerMovement>();
         PlayerMovement.hasAscendedonce = false;
         hasalreadydonethis = false;
         isAngelic = false;
