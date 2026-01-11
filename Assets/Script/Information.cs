@@ -5,4 +5,5 @@ public class Information
     public int hasbeatthegame = 0;
     public int doneTutorial = 0;
     public int turnedon = 1;
+    public int visualizer = 1;
 }

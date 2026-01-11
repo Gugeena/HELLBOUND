@@ -28,6 +28,10 @@ TagManager:
   - autodamaylevebeli
   - Log
   - LilithGravityBox
+  - llocation
+  - rlocation
+  - llocation1
+  - rlocation1
   layers:
   - Default
   - TransparentFX
@@ -43,6 +47,7 @@ TagManager:
   - BodyPart
   - Log
   - Weapon
+  - Eye
   - 
   - 
   - 

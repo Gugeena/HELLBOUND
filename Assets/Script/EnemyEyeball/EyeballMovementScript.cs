@@ -80,7 +80,7 @@ public class EyeballMovementScript : MonoBehaviour
     private Coroutine destroyCoroutine;
 
     private bool shouldbookit = false;
-
+    bool mowed = false, hammed = false;
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -98,12 +98,13 @@ public class EyeballMovementScript : MonoBehaviour
         RPortal = GameObject.Find("RLocation").transform;
         LLOCATION = GameObject.Find("LLOCATIONLOCATION").transform;
         RLLOCATION = GameObject.Find("RLOCATIONLOCATION").transform;
-        handleDistance();
+        //handleDistance();
         StartRotation();
 
         rb.sleepMode = RigidbodySleepMode2D.NeverSleep;
 
         StartCoroutine(waiter());
+        //handleDistance();
     }
 
     public IEnumerator waiter()
@@ -183,11 +184,17 @@ public class EyeballMovementScript : MonoBehaviour
         destroyCoroutine = StartCoroutine(ExplodeAfterTime());
     }
 
+    private void FixedUpdate()
+    {
+    }
+
     private IEnumerator distanceDetection()
     {
-        yield return new WaitForFixedUpdate();
-        handleDistance();
-        StartCoroutine(distanceDetection());
+        while (true)
+        {
+            yield return new WaitForFixedUpdate();
+            handleDistance();
+        }
     }
 
     public void StartRotation()
@@ -251,66 +258,76 @@ public class EyeballMovementScript : MonoBehaviour
             StartCoroutine(DestroyTimer());
         }
 
-        if (collision.gameObject.name == "LLocation")
+        if (collision.gameObject.CompareTag("llocation"))
         {
             Vector2 vel = rb.linearVelocity;
             rb.MovePosition(new Vector2(SidePortalScript.RLocation.position.x, transform.position.y));
             rb.linearVelocity = vel;
         }
-        else if (collision.gameObject.name == "RLocation")
+        else if (collision.gameObject.CompareTag("rlocation"))
         {
             Vector2 vel = rb.linearVelocity;
             rb.MovePosition(new Vector2(SidePortalScript.LLocation.position.x, transform.position.y));
             rb.linearVelocity = vel;
         }
 
-        if (collision.gameObject.tag == "mfHitbox" || collision.gameObject.tag == "meleehitbox")
+        if (collision.gameObject.CompareTag("mfHitbox") || collision.gameObject.CompareTag("meleehitbox"))
         {
             death();
             RetrieveTeleportCount(collision);
-            if (collision.gameObject.name == "Arrow(Clone)")
+            arrowScript arrowscript = collision.gameObject.GetComponent<arrowScript>();
+            if (arrowscript != null)
             {
-                arrowScript arrowscript = collision.gameObject.GetComponent<arrowScript>();
                 arrowscript.increaseKillCount();
                 if (arrowscript.getKillCount() > 0 && teleportCount > 0) AchivementScript.instance.UnlockAchivement("FIVE_ONE_KILLS");
             }
+            else if (collision.gameObject.name.ToLower().StartsWith("explosion")) hammed = true;
         }
     }
 
     public void RetrieveTeleportCount(Collider2D collision)
     {
-        string weapon = collision.gameObject.name;
-        switch (weapon)
+        teleportCountScript tpcs = collision.gameObject.GetComponent<teleportCountScript>();
+        if (tpcs != null)
         {
-            case "motherfuckr(Clone)":
-                teleportCount = collision.gameObject.GetComponent<mfScript>().getteleportCount();
-                break;
-            case "BoomerangPrefab(Clone)":
-                teleportCount = collision.gameObject.GetComponent<BoomerangWeaponScript>().getteleportCount();
-                break;
-            case "SpearPrefab(Clone)":
-                teleportCount = collision.gameObject.GetComponent<spearScript>().getteleportCount();
-                break;
-            case "Arrow(Clone)":
-                teleportCount = collision.gameObject.GetComponent<arrowScript>().getteleportCount();
-                break;
-            default: break;
+            teleportCount = tpcs.teleportCount;
+            if (tpcs.weapon == 1)
+            {
+                BoomerangWeaponScript boom = collision.gameObject.GetComponent<BoomerangWeaponScript>();
+                if (!boom.inreturning)
+                {
+                    boom.inreturning = true;
+                    boom.lastamountkilled++;
+                }
+                else boom.killed++;
+            }
+            else if (tpcs.weapon == 2)
+            {
+                mfScript mfscript = collision.gameObject.GetComponent<mfScript>();
+                mfscript.killed++;
+            }
         }
         PlayerMovement pm = player.GetComponent<PlayerMovement>();
-        if (!PlayerMovement.lastkilled.Equals(this.gameObject) && !PlayerMovement.lastkilledby.Contains(collision.gameObject))
+        string killedby = pm.getWeapon(collision.gameObject);
+        string killed = stoned ? "seye" : "eye";
+        if (!PlayerMovement.lastTwokilled.Contains(killed) && !PlayerMovement.lastkilledby.Contains(killedby))
         {
             PlayerMovement.lastkilledstreak++;
             pm.streaklosingstart();
-            if (PlayerMovement.lastkilledstreak == 3) AchivementScript.instance.UnlockAchivement("THREE_FOR_THREE");
+            if (PlayerMovement.lastkilledstreak == 3)
+            {
+                AchivementScript.instance.UnlockAchivement("THREE_FOR_THREE");
+            }
         }
         else
         {
             pm.StopCoroutine(pm.streaklosingtimer);
             PlayerMovement.lastkilledstreak = 0;
             PlayerMovement.lastkilledby.Clear();
+            PlayerMovement.lastTwokilled.Clear();
         }
-        PlayerMovement.lastkilled = this.gameObject;
-        PlayerMovement.lastkilledby.Add(collision.gameObject);
+        PlayerMovement.lastTwokilled.Add(killed);
+        PlayerMovement.lastkilledby.Add(killedby);
         pm.killwitheveryweapon(collision.gameObject);
     }
 
@@ -365,8 +382,21 @@ public class EyeballMovementScript : MonoBehaviour
         else if (stoned) Instantiate(deathparticles[Random.Range(0, deathparticles.Length)], transform.position, Quaternion.identity);
         if (playerScript.shouldGainStyle && !PlayerMovement.hasdiedforeverybody)
         {
-            if (teleportCount > 0) StyleManager.instance.growStyle(2 * 1 + teleportCount);
-            else StyleManager.instance.growStyle(1 * 1 + teleportCount);
+            int growth = 1;
+
+            if (teleportCount > 0)
+            {
+                growth += teleportCount;
+                StyleManager.instance.undisputed(0);
+            }
+            
+            if(playerScript.hp <= 30)
+            {
+                StyleManager.instance.undisputed(1);
+                growth += 1;
+            }
+
+            StyleManager.instance.growStyle(growth);
         }
         if (playerScript.isAngelic) Instantiate(weaponPickup, this.gameObject.transform.position, Quaternion.identity);
         Destroy(gameObject);

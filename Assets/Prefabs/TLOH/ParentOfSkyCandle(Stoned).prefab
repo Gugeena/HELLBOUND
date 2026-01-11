@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3752604061165872501}
   - component: {fileID: 3448690856537418750}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: Head
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -300,7 +300,7 @@ GameObject:
   - component: {fileID: 3998254510725191302}
   - component: {fileID: 738374591808084542}
   - component: {fileID: 2698128376683203512}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: Leg_L
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -478,7 +478,7 @@ GameObject:
   - component: {fileID: 6414320932311606882}
   - component: {fileID: 6525037399885334563}
   - component: {fileID: 6252729164020907655}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: SkyCandle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -805,7 +805,7 @@ GameObject:
   - component: {fileID: 2741653783755625395}
   - component: {fileID: 2963529623365998434}
   - component: {fileID: 8549879661283476140}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: SkyCandle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -918,7 +918,7 @@ GameObject:
   - component: {fileID: 2285259838540030765}
   - component: {fileID: 3362078473381945071}
   - component: {fileID: 5839248017651388517}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: SkyCandle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1031,7 +1031,7 @@ GameObject:
   - component: {fileID: 2220741347442698068}
   - component: {fileID: 8803260129994419460}
   - component: {fileID: 4804484335784626314}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: SkyCandle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1145,7 +1145,7 @@ GameObject:
   - component: {fileID: 2069402734656315214}
   - component: {fileID: 8368197143508063479}
   - component: {fileID: 459015236603020102}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: headPivot
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -1267,7 +1267,7 @@ GameObject:
   - component: {fileID: 3206730639126291789}
   - component: {fileID: 5434382952880136084}
   - component: {fileID: 8013921620286700135}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: Leg_R
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -1447,7 +1447,7 @@ GameObject:
   - component: {fileID: 4603358910282641434}
   - component: {fileID: 6602403152544367577}
   - component: {fileID: 561008231983869056}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: Torso
   m_TagString: Enemy
   m_Icon: {fileID: 0}

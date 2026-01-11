@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 4393879747472511384}
   - component: {fileID: 7095935818385982349}
   - component: {fileID: 5527550871166155268}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: EyeballEnemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -116,6 +116,7 @@ MonoBehaviour:
   DeathParticles: {fileID: 2235657635126729578, guid: 4f8f4df7329ac7f4fbf828c767bbcee1, type: 3}
   deathSound: {fileID: 8300000, guid: 8b9044592f5121a4d8cc2d1c97be3bfe, type: 3}
   explodeSound: {fileID: 8300000, guid: d3f7cb901904f2e4dbd7e5b9e6f8f313, type: 3}
+  stonedExplodeSound: {fileID: 0}
   sisini:
   - {fileID: 8300000, guid: 6b3e7b169898d5d489eb6d10ebe86e46, type: 3}
   - {fileID: 8300000, guid: 6bfb2226d77e53b4aa733ed65b69d6cd, type: 3}

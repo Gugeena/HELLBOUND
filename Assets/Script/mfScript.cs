@@ -21,7 +21,6 @@ public class mfScript : MonoBehaviour
     private Transform playerTransform; 
 
     public int direction;
-    private int teleportCount = 0;
 
     public GameObject blowUpParticles;
     public GameObject pickup;
@@ -32,9 +31,15 @@ public class mfScript : MonoBehaviour
 
     public AudioSource mfSound;
 
+    public int killed = 0;
+    bool mowed = false;
+    public teleportCountScript tpcs;
+
     private void Start()
     {
         playerTransform = GameObject.Find("Player(Clone)").transform;
+        killed = 0;
+        tpcs = GetComponent<teleportCountScript>();
     }
 
     void Awake()
@@ -64,11 +69,17 @@ public class mfScript : MonoBehaviour
         else if (goBack) {
             backing();
         }
-        if(teleportCount >= 4 && (int) transform.position.x == (int) startPos.x)
+        if(tpcs.teleportCount >= 4 && (int) transform.position.x == (int) startPos.x)
         {
            StartCoroutine(back());
         }
 
+        if(killed == 3 && !mowed)
+        {
+            mowed = true;
+            StyleManager.instance.growStyle(1);
+            StyleManager.instance.undisputed(2);
+        }
         if (PlayerMovement.hasdiedforeverybody) Destroy(this.gameObject);
     }
 
@@ -115,7 +126,7 @@ public class mfScript : MonoBehaviour
     private IEnumerator teleport()
     {
         yield return new WaitForSeconds(0.2f);
-        teleportCount++;
+        tpcs.teleportCount++;
     }
 
     public void OnDestroy()
@@ -130,13 +141,11 @@ public class mfScript : MonoBehaviour
         if (collision.gameObject.name == "LLocation")
         {
             rb.MovePosition(new Vector2(SidePortalScript.RLocation.position.x - 0.25f, transform.position.y));
-            teleportCount++;
             StartCoroutine(teleport());
         }
         else if (collision.gameObject.name == "RLocation")
         {
             rb.MovePosition(new Vector2(SidePortalScript.LLocation.position.x + 0.25f, transform.position.y));
-            teleportCount++;
             StartCoroutine(teleport());
         }
 
@@ -144,7 +153,6 @@ public class mfScript : MonoBehaviour
         {
             bool canBeStunned = GameObject.Find("Lilith(Clone)").GetComponent<LilithScript>().canBeStunned;
             if (!canBeStunned) return;
-            print("cameti");
             StartCoroutine(lilithChopUp());
         }
     }
@@ -155,10 +163,5 @@ public class mfScript : MonoBehaviour
         move = false;
         yield return new WaitForSeconds(2f);
         goBack = true;
-    }
-
-    public int getteleportCount()
-    {
-        return teleportCount;
     }
 }

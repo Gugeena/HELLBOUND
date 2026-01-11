@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7297320866750984184}
   - component: {fileID: 4403662494094046609}
   - component: {fileID: 2337547169790056989}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: headPivot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -120,6 +120,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96f7e5335c37520428c34a2c66014836, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  animator: {fileID: 0}
 --- !u!1 &485655215828472493
 GameObject:
   m_ObjectHideFlags: 0
@@ -298,7 +299,7 @@ GameObject:
   - component: {fileID: 5848170605768579958}
   - component: {fileID: 1254708266555383202}
   - component: {fileID: 6555039305557762438}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Leg_R
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -464,6 +465,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96f7e5335c37520428c34a2c66014836, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  animator: {fileID: 0}
 --- !u!1 &2820825422078847068
 GameObject:
   m_ObjectHideFlags: 0
@@ -477,7 +479,7 @@ GameObject:
   - component: {fileID: 6179223300885438227}
   - component: {fileID: 6855596639613648443}
   - component: {fileID: 7350574167772551382}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Hand_L
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -643,6 +645,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96f7e5335c37520428c34a2c66014836, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  animator: {fileID: 0}
 --- !u!1 &3900754210921229924
 GameObject:
   m_ObjectHideFlags: 0
@@ -656,7 +659,7 @@ GameObject:
   - component: {fileID: 8571230622091834504}
   - component: {fileID: 3704664996587524714}
   - component: {fileID: 4825081991316869603}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Hand_R
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -822,6 +825,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96f7e5335c37520428c34a2c66014836, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  animator: {fileID: 0}
 --- !u!1 &4501965382474036922
 GameObject:
   m_ObjectHideFlags: 0
@@ -833,7 +837,7 @@ GameObject:
   - component: {fileID: 680576315426031028}
   - component: {fileID: 8942980167322611083}
   - component: {fileID: 933201552050765585}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Charger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1047,6 +1051,7 @@ MonoBehaviour:
   attackSound: {fileID: 8300000, guid: e913376c8568bf64597b86434e38e930, type: 3}
   LPortal: {fileID: 0}
   RPortal: {fileID: 0}
+  rb: {fileID: 0}
   LLOCATION: {fileID: 0}
   RLLOCATION: {fileID: 0}
   lastproccessedkill: -1
@@ -1069,6 +1074,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96f7e5335c37520428c34a2c66014836, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  animator: {fileID: 0}
 --- !u!95 &657147299384056334
 Animator:
   serializedVersion: 7
@@ -1104,7 +1110,7 @@ GameObject:
   - component: {fileID: 8576044578415574954}
   - component: {fileID: 5377419388980346741}
   - component: {fileID: 6841690771790071641}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Torso
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1270,6 +1276,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96f7e5335c37520428c34a2c66014836, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  animator: {fileID: 0}
 --- !u!1 &5140167774102105373
 GameObject:
   m_ObjectHideFlags: 0
@@ -1280,7 +1287,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8072636306061435228}
   - component: {fileID: 8418070625256085984}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Head
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1372,7 +1379,7 @@ GameObject:
   - component: {fileID: 8921014166256702733}
   - component: {fileID: 9160340278331150431}
   - component: {fileID: 144423648192198906}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Charger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1485,7 +1492,7 @@ GameObject:
   - component: {fileID: 508479367158638418}
   - component: {fileID: 8915352076154193604}
   - component: {fileID: 4473957840527630804}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Charger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1598,7 +1605,7 @@ GameObject:
   - component: {fileID: 6772800748597359052}
   - component: {fileID: 4990269302074213789}
   - component: {fileID: 2915520521642081764}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Charger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1841,7 +1848,7 @@ GameObject:
   - component: {fileID: 5149759189314481245}
   - component: {fileID: 2813146568029729157}
   - component: {fileID: 6628446707345137743}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Leg_L
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2007,6 +2014,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96f7e5335c37520428c34a2c66014836, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  animator: {fileID: 0}
 --- !u!1 &7907859952291866146
 GameObject:
   m_ObjectHideFlags: 0
@@ -2018,7 +2026,7 @@ GameObject:
   - component: {fileID: 498611030966554397}
   - component: {fileID: 6529815461657425943}
   - component: {fileID: 4406767606113167828}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Charger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2131,7 +2139,7 @@ GameObject:
   - component: {fileID: 8651168012607721671}
   - component: {fileID: 1449624037914979501}
   - component: {fileID: 5601948742028856683}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Charger
   m_TagString: Untagged
   m_Icon: {fileID: 0}

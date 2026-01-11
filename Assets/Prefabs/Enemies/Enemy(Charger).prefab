@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6911577463834694995}
   - component: {fileID: 8637785938706387764}
   - component: {fileID: 5621411196338470941}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Charger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -252,7 +252,7 @@ GameObject:
   - component: {fileID: 1701841224775670787}
   - component: {fileID: 5448184911637772869}
   - component: {fileID: 8317138937209931321}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Charger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -367,7 +367,7 @@ GameObject:
   - component: {fileID: 5068287716008234393}
   - component: {fileID: 1197243498961050493}
   - component: {fileID: 4132734178451557792}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Leg_R
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -545,7 +545,7 @@ GameObject:
   - component: {fileID: 7873579187410637429}
   - component: {fileID: 1630822226051633301}
   - component: {fileID: 7298878366866967360}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Charger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -658,7 +658,7 @@ GameObject:
   - component: {fileID: 6984797310847559776}
   - component: {fileID: 5316927391957956223}
   - component: {fileID: 683460678310663591}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Charger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -770,7 +770,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2795822706303419183}
   - component: {fileID: 3067393611087955167}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Head
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -864,7 +864,7 @@ GameObject:
   - component: {fileID: 5867612934524659880}
   - component: {fileID: 1123493558940216259}
   - component: {fileID: 5917079289600831259}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Hand_R
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1196,7 +1196,7 @@ GameObject:
   - component: {fileID: 7817879827142599345}
   - component: {fileID: 5584599014266335450}
   - component: {fileID: 8679485823535616602}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Charger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1310,7 +1310,7 @@ GameObject:
   - component: {fileID: 1044712230345415982}
   - component: {fileID: 9037654566186134994}
   - component: {fileID: 7933267201023608851}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: headPivot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1430,7 +1430,7 @@ GameObject:
   - component: {fileID: 7777786589852431393}
   - component: {fileID: 2055800848442438486}
   - component: {fileID: 1713374965614055751}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Charger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1545,7 +1545,7 @@ GameObject:
   - component: {fileID: 183208158697549470}
   - component: {fileID: 1764198430487979076}
   - component: {fileID: 2099686691222997287}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Torso
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1725,7 +1725,7 @@ GameObject:
   - component: {fileID: 5710584008041983118}
   - component: {fileID: 9144884997723064425}
   - component: {fileID: 1446371282456069351}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Leg_L
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2070,7 +2070,7 @@ GameObject:
   - component: {fileID: 7392064556759501260}
   - component: {fileID: 1872088953816742890}
   - component: {fileID: 2959868544400448438}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Hand_L
   m_TagString: Untagged
   m_Icon: {fileID: 0}

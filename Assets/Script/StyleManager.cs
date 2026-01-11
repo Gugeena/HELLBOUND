@@ -62,6 +62,17 @@ public class StyleManager : MonoBehaviour
 
     bool hasalreadydonethis = false;
 
+    bool shouldShow = true;
+    public Transform visualizerLocation, multiplierLocation;
+    public Text visualizer;
+    public GameObject Canvas;
+
+    public GlobalSettings globalSettings;
+
+    public bool canMultiply = true;
+
+    public GameObject LoopMultiplier, RecklessMultiplier, lawnmowerMultiplier, mayhemultiplier, richochetmultiplier;
+
     private void Start()
     {
         lightGrey = new Color(0.7f, 0.7f, 0.7f, 1.0f);
@@ -76,15 +87,23 @@ public class StyleManager : MonoBehaviour
         hasalreadydonethis = false;
         isAngelic = false;
         shouldTurnOff = false;
+        globalSettings = SaveSystem.Load();
+        canMultiply = globalSettings.information.visualizer == 1 ? true : false;
+        StartCoroutine(ascentiontextcontrol());
     }
 
     private void Update()
     {
+        if(stylePoints != Mathf.RoundToInt(styleSlider.value) && shouldShow && stylePoints > 0 && stylePoints > styleSlider.value && globalSettings.information.visualizer == 1)
+        {
+            StartCoroutine(styleVisualizer());
+        }
+
         if (PlayerMovement.hasAscendedonce && !hasalreadydonethis)
         {
             styleAnim.enabled = false;
             shaker.stopShake();
-            stylePoints = 30;
+            stylePoints = 70;
             styleSlider.value = stylePoints;
             currStyle = Style.Angelic;
             switchLetter(Style.Angelic);
@@ -117,11 +136,7 @@ public class StyleManager : MonoBehaviour
         }
         */
 
-        StartCoroutine(ascentiontextcontrol());
-
-        handleSlider();
-
-        if(stylePoints >= 30 && currStyle != Style.Angelic)
+        if(stylePoints >= 70 && currStyle != Style.Angelic)
         {
             currStyle++;
             styleAnim.Play("styleUp");
@@ -134,36 +149,69 @@ public class StyleManager : MonoBehaviour
         }
     }
 
+    public IEnumerator styleVisualizer()
+    {
+        shouldShow = false;
+        int gain = (int)(stylePoints - styleSlider.value);
+        gain = Mathf.Clamp(gain, 1, 99);
+        Text visualizer = Instantiate(this.visualizer, Canvas.transform);
+        visualizer.text = "+" + gain;
+        yield return new WaitForSeconds(0.2f);
+        shouldShow = true;
+    }
+
+    public IEnumerator Multiplicator(int multiple)
+    {
+        if (!canMultiply || PlayerMovement.hasAscendedonce) yield break;
+        //canMultiply = false;
+        GameObject toSpawn = LoopMultiplier;
+        if (multiple == 1) toSpawn = RecklessMultiplier;
+        else if (multiple == 2) toSpawn = lawnmowerMultiplier;
+        else if (multiple == 3) toSpawn = mayhemultiplier;
+        else if (multiple == 4) toSpawn = richochetmultiplier;
+        Instantiate(toSpawn, multiplierLocation.transform.position, Quaternion.identity, Canvas.transform);
+        yield return new WaitForSeconds(0.2f);
+        canMultiply = true;
+    }
+
+    public void undisputed(int multiple)
+    {
+        StartCoroutine(Multiplicator(multiple));
+    }
+
     public IEnumerator ascentiontextcontrol()
     {
-        while (!PlayerMovement.hasAscendedonce)
+        while (true)
         {
-            if (isAngelic && stylePoints >= 30 && !shouldTurnOff)
+            while (!PlayerMovement.hasAscendedonce)
             {
-                if (!Ascend.activeSelf)
+                if (isAngelic && stylePoints >= 70 && !shouldTurnOff)
                 {
-                    canAscend = true;
-                    Ascend.SetActive(true);
+                    if (!Ascend.activeSelf)
+                    {
+                        canAscend = true;
+                        Ascend.SetActive(true);
+                    }
                 }
-            }
-            else
-            {
-                if (Ascend.activeSelf)
+                else
                 {
-                    canAscend = false;
-                    ascentionanimator.Play("AsecndTextDissapear");
-                    yield return new WaitForSeconds(1f);
-                    Ascend.SetActive(false);
+                    if (Ascend.activeSelf)
+                    {
+                        canAscend = false;
+                        ascentionanimator.Play("AsecndTextDissapear");
+                        yield return new WaitForSeconds(1f);
+                        Ascend.SetActive(false);
+                    }
                 }
-            }
 
-            yield return new WaitForSeconds(0.1f);
+                yield return new WaitForSeconds(0.1f);
+            }
+            canAscend = false;
+            ascentionanimator.Play("AsecndTextDissapear");
+            yield return new WaitForSeconds(1f);
+            Ascend.SetActive(false);
+            yield break;
         }
-        canAscend = false;
-        ascentionanimator.Play("AsecndTextDissapear");
-        yield return new WaitForSeconds(1f);
-        Ascend.SetActive(false);
-        yield break;
     }
 
     void changeColors(string anim)
@@ -171,6 +219,11 @@ public class StyleManager : MonoBehaviour
         if (lastPlayedAnim == anim) return;
         styleAnim.Play(anim);
         lastPlayedAnim = anim;
+    }
+
+    private void FixedUpdate()
+    {
+        handleSlider();
     }
 
     private void handleSlider()
@@ -322,7 +375,7 @@ public class StyleManager : MonoBehaviour
     {
         styleAnim.Play("grow");
         stylePoints += ptsToAdd;
-        stylePoints = Mathf.Clamp(stylePoints, -3, 30);
+        stylePoints = Mathf.Clamp(stylePoints, -3, 70);
     }
 }
 

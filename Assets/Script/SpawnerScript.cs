@@ -35,15 +35,11 @@ public class SpawnerScript : MonoBehaviour
         spawningcount = 1;
         PauseScript.kill = 0;
         lastProccesedamountofkills = -1;
+        StartCoroutine(theCoolerDanielSpawner());
     }
 
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.T))
-        {
-            print("shouldSpawn: " + shouldSpawn + "; canSpawn: " + canspawn);
-        }
-
         if ((int)PauseScript.kill % 10 == 0 && PauseScript.kill != 0 && (int)PauseScript.kill != lastProccesedamountofkills)
         {
             if (cooldownTimer > 0.8f)
@@ -59,7 +55,7 @@ public class SpawnerScript : MonoBehaviour
             lastProccesedamountofkills = (int)PauseScript.kill;
         }
 
-        if(PauseScript.kill >= 30)
+        if(PauseScript.kill >= 30 && spawningcount != 2)
         {
             spawningcount = 2;
         }
@@ -81,48 +77,47 @@ public class SpawnerScript : MonoBehaviour
         */
 
         //print(PauseScript.kill + "----kills");
-        if (canspawn)
-        {
-            StartCoroutine(theCoolerDanielSpawner());
-        }
     }
 
     public IEnumerator theCoolerDanielSpawner()
     {
-        if (shouldSpawn)
+        while (true)
         {
-            canspawn = false;
-            yield return new WaitForSeconds(cooldownTimer);
-            for (int i = 0; i < spawningcount; i++)
+            if (shouldSpawn)
             {
-                bool isStoned = TenthLayerOfHellScript.stoned;
-                GameObject[] POOL = isStoned ? stonedbanished : banished;
-                GameObject spawnParticles = isStoned ? stonedspawningparticles : spawningparticles;
-
-                int enemyToSpawn = Random.Range(0, POOL.Length);
-
-                float randomx = Random.Range(15.379f, 35.6f);
-
-                Vector2 pos = new Vector2(randomx, 0);
-
-                GameObject enemy = POOL[enemyToSpawn];
-
-                if (Equals(enemy, skyCandle) || Equals(enemy, stonedskyCandle))
+                canspawn = false;
+                yield return new WaitForSeconds(cooldownTimer);
+                for (int i = 0; i < spawningcount; i++)
                 {
-                    pos.y = Random.Range(-2.24f, 3.4f);
-                }
-                else if (Equals(enemy, eyeBall) || Equals(enemy, stonedeyeBall))
-                {
-                    pos.y = Random.Range(1f, 4f);
-                }
-                else pos.y = -3.189f;
+                    bool isStoned = TenthLayerOfHellScript.stoned;
+                    GameObject[] POOL = isStoned ? stonedbanished : banished;
+                    GameObject spawnParticles = isStoned ? stonedspawningparticles : spawningparticles;
 
-                if (!Equals(enemy, eyeBall) && !Equals(enemy, stonedeyeBall)) Instantiate(spawnParticles, new Vector2(pos.x, pos.y - 0.75f), Quaternion.identity);
-                else Instantiate(spawnParticles, new Vector2(pos.x, pos.y), Quaternion.identity);
+                    int enemyToSpawn = Random.Range(0, POOL.Length);
 
-                Instantiate(POOL[enemyToSpawn], pos, Quaternion.identity);
+                    float randomx = Random.Range(15.379f, 35.6f);
+
+                    Vector2 pos = new Vector2(randomx, 0);
+
+                    GameObject enemy = POOL[enemyToSpawn];
+
+                    if (Equals(enemy, skyCandle) || Equals(enemy, stonedskyCandle))
+                    {
+                        pos.y = Random.Range(-2.24f, 3.4f);
+                    }
+                    else if (Equals(enemy, eyeBall) || Equals(enemy, stonedeyeBall))
+                    {
+                        pos.y = Random.Range(1f, 4f);
+                    }
+                    else pos.y = -3.189f;
+
+                    if (!Equals(enemy, eyeBall) && !Equals(enemy, stonedeyeBall)) Instantiate(spawnParticles, new Vector2(pos.x, pos.y - 0.75f), Quaternion.identity);
+                    else Instantiate(spawnParticles, new Vector2(pos.x, pos.y), Quaternion.identity);
+
+                    Instantiate(POOL[enemyToSpawn], pos, Quaternion.identity);
+                }
+                canspawn = true;
             }
-            canspawn = true;
         }
     }
 }
