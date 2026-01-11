@@ -18,13 +18,15 @@ public class arrowScript : MonoBehaviour
     [SerializeField]
     private AudioClip land, returnSound;
 
-    private int teleportCount = 0, killcount;
+    private int killcount;
+    private teleportCountScript tpcs;
     GameObject player;
 
     private void Awake()
     {
         player = GameObject.FindGameObjectWithTag("Player");
         rb = GetComponent<Rigidbody2D>();
+        tpcs = GetComponent<teleportCountScript>();
     }
 
     private void Update()
@@ -83,30 +85,25 @@ public class arrowScript : MonoBehaviour
 
         if (collision.gameObject.name == "LLocation")
         {
-            if (teleportCount >= 1) killcount = 0;
+            if (tpcs.teleportCount >= 1) killcount = 0;
             Vector2 vel = rb.linearVelocity;
             rb.MovePosition(new Vector2(SidePortalScript.RLocation.position.x, transform.position.y));
-            teleportCount++;
+            tpcs.teleportCount++;
             rb.linearVelocity = vel;
         }
         else if (collision.gameObject.name == "RLocation")
         {
-            if (teleportCount >= 1) killcount = 0;
+            if (tpcs.teleportCount >= 1) killcount = 0;
             Vector2 vel = rb.linearVelocity;
             rb.MovePosition(new Vector2(SidePortalScript.LLocation.position.x, transform.position.y));
-            teleportCount++;
+            tpcs.teleportCount++;
             rb.linearVelocity = vel;
         }
     }
 
-    public int getteleportCount()
-    {
-        return teleportCount;
-    }
-
     public void increaseKillCount()
     {
-        if (teleportCount == 0) return;
+        if (tpcs.teleportCount == 0) return;
         killcount++;
     }
 

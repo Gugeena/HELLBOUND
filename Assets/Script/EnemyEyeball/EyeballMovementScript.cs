@@ -98,12 +98,13 @@ public class EyeballMovementScript : MonoBehaviour
         RPortal = GameObject.Find("RLocation").transform;
         LLOCATION = GameObject.Find("LLOCATIONLOCATION").transform;
         RLLOCATION = GameObject.Find("RLOCATIONLOCATION").transform;
-        handleDistance();
+        //handleDistance();
         StartRotation();
 
         rb.sleepMode = RigidbodySleepMode2D.NeverSleep;
 
         StartCoroutine(waiter());
+        //handleDistance();
     }
 
     public IEnumerator waiter()
@@ -183,11 +184,17 @@ public class EyeballMovementScript : MonoBehaviour
         destroyCoroutine = StartCoroutine(ExplodeAfterTime());
     }
 
+    private void FixedUpdate()
+    {
+    }
+
     private IEnumerator distanceDetection()
     {
-        yield return new WaitForFixedUpdate();
-        handleDistance();
-        StartCoroutine(distanceDetection());
+        while (true)
+        {
+            yield return new WaitForFixedUpdate();
+            handleDistance();
+        }
     }
 
     public void StartRotation()
@@ -251,26 +258,26 @@ public class EyeballMovementScript : MonoBehaviour
             StartCoroutine(DestroyTimer());
         }
 
-        if (collision.gameObject.name == "LLocation")
+        if (collision.gameObject.CompareTag("llocation"))
         {
             Vector2 vel = rb.linearVelocity;
             rb.MovePosition(new Vector2(SidePortalScript.RLocation.position.x, transform.position.y));
             rb.linearVelocity = vel;
         }
-        else if (collision.gameObject.name == "RLocation")
+        else if (collision.gameObject.CompareTag("rlocation"))
         {
             Vector2 vel = rb.linearVelocity;
             rb.MovePosition(new Vector2(SidePortalScript.LLocation.position.x, transform.position.y));
             rb.linearVelocity = vel;
         }
 
-        if (collision.gameObject.tag == "mfHitbox" || collision.gameObject.tag == "meleehitbox")
+        if (collision.gameObject.CompareTag("mfHitbox") || collision.gameObject.CompareTag("meleehitbox"))
         {
             death();
             RetrieveTeleportCount(collision);
-            if (collision.gameObject.name == "Arrow(Clone)")
+            arrowScript arrowscript = collision.gameObject.GetComponent<arrowScript>();
+            if (arrowscript != null)
             {
-                arrowScript arrowscript = collision.gameObject.GetComponent<arrowScript>();
                 arrowscript.increaseKillCount();
                 if (arrowscript.getKillCount() > 0 && teleportCount > 0) AchivementScript.instance.UnlockAchivement("FIVE_ONE_KILLS");
             }
@@ -280,31 +287,25 @@ public class EyeballMovementScript : MonoBehaviour
 
     public void RetrieveTeleportCount(Collider2D collision)
     {
-        string weapon = collision.gameObject.name;
-        switch (weapon)
+        teleportCountScript tpcs = collision.gameObject.GetComponent<teleportCountScript>();
+        if (tpcs != null)
         {
-            case "motherfuckr(Clone)":
-                mfScript mfscript = collision.gameObject.GetComponent<mfScript>();
-                teleportCount = mfscript.getteleportCount();
-                mfscript.killed++;
-                break;
-            case "BoomerangPrefab(Clone)":
+            teleportCount = tpcs.teleportCount;
+            if (tpcs.weapon == 1)
+            {
                 BoomerangWeaponScript boom = collision.gameObject.GetComponent<BoomerangWeaponScript>();
-                teleportCount = boom.getteleportCount();
                 if (!boom.inreturning)
                 {
                     boom.inreturning = true;
                     boom.lastamountkilled++;
                 }
                 else boom.killed++;
-                break;
-            case "SpearPrefab(Clone)":
-                teleportCount = collision.gameObject.GetComponent<spearScript>().getteleportCount();
-                break;
-            case "Arrow(Clone)":
-                teleportCount = collision.gameObject.GetComponent<arrowScript>().getteleportCount();
-                break;
-            default: break;
+            }
+            else if (tpcs.weapon == 2)
+            {
+                mfScript mfscript = collision.gameObject.GetComponent<mfScript>();
+                mfscript.killed++;
+            }
         }
         PlayerMovement pm = player.GetComponent<PlayerMovement>();
         string killedby = pm.getWeapon(collision.gameObject);

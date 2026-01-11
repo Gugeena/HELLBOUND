@@ -19,7 +19,7 @@ using static UnityEngine.ParticleSystem;
 using static UnityEngine.Rendering.DebugUI;
 using System.Collections.Generic;
 using System.Linq;
-using Steamworks;
+//using Steamworks;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -514,6 +514,8 @@ public class PlayerMovement : MonoBehaviour
 
     void handleCombat()
     {
+        if(isDead) return;
+
         if (Input.GetKeyDown(AttackButton) && canPunch)
         {
             if (currentWeapon == 0) StartCoroutine(punch());
@@ -529,7 +531,7 @@ public class PlayerMovement : MonoBehaviour
             if (currentWeapon == 3 && isGrounded) StartCoroutine(mfSpecial());
             if (currentWeapon == 4) StartCoroutine(spearspecialAttack());
         }
-        if (Input.GetKeyDown(KeyCode.H)) StartCoroutine(enterAngelic(true));
+
         /* 
          if (Input.GetKeyDown(KeyCode.G)) godMode = true;
          if (Input.GetKeyDown(KeyCode.H)) StartCoroutine(enterAngelic(false));
@@ -1352,6 +1354,7 @@ public class PlayerMovement : MonoBehaviour
         poisonQueue = new Queue<float>();
         isPoisoned = false;
         isPoisonRunning = false;
+        isFuckingPoisoned = false;
         shouldAim = false;
         isDead = true;
         canPause = false;
@@ -1668,7 +1671,7 @@ public class PlayerMovement : MonoBehaviour
     public void ApplyPoison(float seconds)
     {
         poisonQueue.Enqueue(seconds);
-
+        print("isPoisonRunning: " + isPoisonRunning);
         if (!isPoisonRunning)
             PoisonQueCorountine = StartCoroutine(ProcessPoisonQueue());
     }
@@ -1678,6 +1681,7 @@ public class PlayerMovement : MonoBehaviour
         //if(!isFuckingPoisoned) hpAnimator.Play("PlayerPoisoning");
         //isPoisonRunning = true;
         if (!isFuckingPoisoned) hpAnimator.Play("PlayerPoisoning");
+        print("shevedi shignit, isfuckingpoisoned: " + isFuckingPoisoned);
         isPoisonRunning = true;
         isFuckingPoisoned = true;
 
@@ -1691,6 +1695,7 @@ public class PlayerMovement : MonoBehaviour
 
         hpAnimator.Play("PlayerDepoisoning");
         isPoisonRunning = false;
+        isFuckingPoisoned = false;
     }
 
     private void OnCollisionStay2D(Collision2D collision)

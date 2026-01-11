@@ -261,6 +261,7 @@ public class LilithScript : MonoBehaviour
         yield return null;
         AchivementScript.instance.UnlockAchivement("DEFEAT_LILITH");
         if(washitbyspear) AchivementScript.instance.UnlockAchivement("FORGIVE_ME");
+        if(washitbyspear) AchivementScript.instance.UnlockAchivement("FORGIVE_ME");
         Destroy(gameObject);
     }
 
@@ -888,27 +889,12 @@ public class LilithScript : MonoBehaviour
         invincible = false;
     }
         
+
     public int RetrieveTeleportCount(Collider2D collision)
     {
-        int teleportCount = 0;
-        String weapon = collision.gameObject.name;
-        switch (weapon)
-        {
-            case "motherfuckr(Clone)":
-                teleportCount = collision.gameObject.GetComponent<mfScript>().getteleportCount();
-                break;
-            case "BoomerangPrefab(Clone)":
-                teleportCount = collision.gameObject.GetComponent<BoomerangWeaponScript>().getteleportCount();
-                break;
-            case "SpearPrefab(Clone)":
-                teleportCount = collision.gameObject.GetComponent<spearScript>().getteleportCount();
-                break;
-            case "Arrow(Clone)":
-                teleportCount = collision.gameObject.GetComponent<arrowScript>().getteleportCount();
-                break;
-
-        }
-        return teleportCount;
+        teleportCountScript tpcs = collision.gameObject.GetComponent<teleportCountScript>();
+        if (tpcs != null) return tpcs.teleportCount;
+        return 0;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

@@ -15,7 +15,7 @@ public class BoomerangWeaponScript : MonoBehaviour
     public Transform RLocation;
     public Transform LLocation;
 
-    private int teleportCount = 0;
+    private teleportCountScript tpsc;
 
     public AudioSource boomerangSound;
 
@@ -28,6 +28,7 @@ public class BoomerangWeaponScript : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         killed = 0;
         lastamountkilled = 0;
+        tpsc = GetComponent<teleportCountScript>();
     }
 
     private void Update()
@@ -84,19 +85,20 @@ public class BoomerangWeaponScript : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.name == "LLocation")
+        string tag = collision.gameObject.tag;
+        if (collision.gameObject.CompareTag("llocation"))
         {
             RLocation = GameObject.Find("RLOCATIONLOCATION").transform;
             this.transform.position = new Vector3(RLocation.position.x, this.transform.position.y, 0);
-            teleportCount++;
+            tpsc.teleportCount++;
             shouldReturn = true;
             return;
         }
-        else if (collision.gameObject.name == "RLocation")
+        else if (collision.gameObject.CompareTag("rlocation"))
         {
             LLocation = GameObject.Find("LLOCATIONLOCATION").transform;
             this.transform.position = new Vector3(LLocation.position.x, this.transform.position.y, 0);
-            teleportCount++;
+            tpsc.teleportCount++;
             shouldReturn = true;
             return;
         }
@@ -124,11 +126,6 @@ public class BoomerangWeaponScript : MonoBehaviour
 
         rb.linearVelocity = Vector2.zero;
         shouldReturn = true;
-    }
-
-    public int getteleportCount()
-    {
-        return teleportCount;
     }
 
     private void OnDestroy()

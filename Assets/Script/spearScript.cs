@@ -25,14 +25,15 @@ public class spearScript : MonoBehaviour
 
     [SerializeField] private AudioClip explode;
 
-    private int teleportCount = 0;
-    
+    private teleportCountScript tpcs;
+
     private void Start()
     {
         player = GameObject.Find("Player");
         rb = GetComponent<Rigidbody2D>();
         camShakerScript = GetComponent<camShakerScript>();
         rb.linearVelocity = transform.up * 30;
+        tpcs = GetComponent<teleportCountScript>();
     }
 
     private void Update()
@@ -72,7 +73,7 @@ public class spearScript : MonoBehaviour
     {
         if (collision.gameObject.name == "LLocation")
         {
-            teleportCount++;
+            tpcs.teleportCount++;
             RLocation = GameObject.Find("RLOCATIONLOCATION").transform;
             this.transform.position = new Vector3(RLocation.position.x - 2f, this.transform.position.y, 0);
             //shouldReturn = true;
@@ -84,11 +85,10 @@ public class spearScript : MonoBehaviour
         }
         else if (collision.gameObject.name == "RLocation")
         {
-            teleportCount++;
+            tpcs.teleportCount++;
             LLocation = GameObject.Find("LLOCATIONLOCATION").transform;
             this.transform.position = new Vector3(LLocation.position.x + 2f, this.transform.position.y, 0);
             rb.gravityScale = 1f;
-            teleportCount++;
             BoxCollider2D boxCollider2D = new BoxCollider2D();
             boxCollider2D = GetComponent<BoxCollider2D>();
             boxCollider2D.isTrigger = false;
@@ -184,10 +184,5 @@ public class spearScript : MonoBehaviour
         explosion.SetActive(false);
         Destroy(gameObject);
         camShakerScript.Stop();
-    }
-
-    public int getteleportCount()
-    {
-        return teleportCount;
     }
 }

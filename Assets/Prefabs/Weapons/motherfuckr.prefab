@@ -5033,6 +5033,7 @@ GameObject:
   - component: {fileID: 8091954254775387319}
   - component: {fileID: -8677210378055009567}
   - component: {fileID: 3753103886673623893}
+  - component: {fileID: 3558494493432444380}
   m_Layer: 0
   m_Name: motherfuckr
   m_TagString: mfHitbox
@@ -5163,6 +5164,8 @@ MonoBehaviour:
   pickup: {fileID: 9132741610408570697, guid: f40d362fde6cdb84d96c435e5025057c, type: 3}
   particles: {fileID: 5553711038495349727}
   mfSound: {fileID: 0}
+  killed: 0
+  tpcs: {fileID: 0}
 --- !u!114 &-8677210378055009567
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5226,3 +5229,17 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 0.111092046, y: 0.22101915}
   m_EdgeRadius: 0
+--- !u!114 &3558494493432444380
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9132741610408570697}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 295cbf4e82fe01b4ba8fdb9e4bbbc07d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::teleportCountScript
+  teleportCount: 0
+  weapon: 2

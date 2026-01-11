@@ -89,6 +89,7 @@ public class StyleManager : MonoBehaviour
         shouldTurnOff = false;
         globalSettings = SaveSystem.Load();
         canMultiply = globalSettings.information.visualizer == 1 ? true : false;
+        StartCoroutine(ascentiontextcontrol());
     }
 
     private void Update()
@@ -135,10 +136,6 @@ public class StyleManager : MonoBehaviour
         }
         */
 
-        StartCoroutine(ascentiontextcontrol());
-
-        handleSlider();
-
         if(stylePoints >= 70 && currStyle != Style.Angelic)
         {
             currStyle++;
@@ -184,34 +181,37 @@ public class StyleManager : MonoBehaviour
 
     public IEnumerator ascentiontextcontrol()
     {
-        while (!PlayerMovement.hasAscendedonce)
+        while (true)
         {
-            if (isAngelic && stylePoints >= 70 && !shouldTurnOff)
+            while (!PlayerMovement.hasAscendedonce)
             {
-                if (!Ascend.activeSelf)
+                if (isAngelic && stylePoints >= 70 && !shouldTurnOff)
                 {
-                    canAscend = true;
-                    Ascend.SetActive(true);
+                    if (!Ascend.activeSelf)
+                    {
+                        canAscend = true;
+                        Ascend.SetActive(true);
+                    }
                 }
-            }
-            else
-            {
-                if (Ascend.activeSelf)
+                else
                 {
-                    canAscend = false;
-                    ascentionanimator.Play("AsecndTextDissapear");
-                    yield return new WaitForSeconds(1f);
-                    Ascend.SetActive(false);
+                    if (Ascend.activeSelf)
+                    {
+                        canAscend = false;
+                        ascentionanimator.Play("AsecndTextDissapear");
+                        yield return new WaitForSeconds(1f);
+                        Ascend.SetActive(false);
+                    }
                 }
-            }
 
-            yield return new WaitForSeconds(0.1f);
+                yield return new WaitForSeconds(0.1f);
+            }
+            canAscend = false;
+            ascentionanimator.Play("AsecndTextDissapear");
+            yield return new WaitForSeconds(1f);
+            Ascend.SetActive(false);
+            yield break;
         }
-        canAscend = false;
-        ascentionanimator.Play("AsecndTextDissapear");
-        yield return new WaitForSeconds(1f);
-        Ascend.SetActive(false);
-        yield break;
     }
 
     void changeColors(string anim)
@@ -219,6 +219,11 @@ public class StyleManager : MonoBehaviour
         if (lastPlayedAnim == anim) return;
         styleAnim.Play(anim);
         lastPlayedAnim = anim;
+    }
+
+    private void FixedUpdate()
+    {
+        handleSlider();
     }
 
     private void handleSlider()

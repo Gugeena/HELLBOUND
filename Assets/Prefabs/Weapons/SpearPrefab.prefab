@@ -5149,6 +5149,7 @@ GameObject:
   - component: {fileID: 3753103886673623893}
   - component: {fileID: 1898058972566759690}
   - component: {fileID: 8209688177181366771}
+  - component: {fileID: 5292544005019440885}
   m_Layer: 0
   m_Name: SpearPrefab
   m_TagString: mfHitbox
@@ -5344,3 +5345,15 @@ MonoBehaviour:
   frequency: 1.2
   time: 0.5
   onCollide: 0
+--- !u!114 &5292544005019440885
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9132741610408570697}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 295cbf4e82fe01b4ba8fdb9e4bbbc07d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
