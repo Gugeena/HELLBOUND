@@ -6,4 +6,5 @@ public class Information
     public int doneTutorial = 0;
     public int turnedon = 1;
     public int visualizer = 1;
+    public int isFirst = 1;
 }

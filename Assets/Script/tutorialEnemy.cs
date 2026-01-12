@@ -89,45 +89,6 @@ public class tutorialEnemy : MonoBehaviour
         yield break;
     }
 
-    public int RetrieveTeleportCount(Collider2D collision)
-    {
-        int teleportCount = 0;
-        string weapon = collision.gameObject.name;
-        switch (weapon)
-        {
-            case "motherfuckr(Clone)":
-                teleportCount = collision.gameObject.GetComponent<mfScript>().getteleportCount();
-                break;
-            case "BoomerangPrefab(Clone)":
-                teleportCount = collision.gameObject.GetComponent<BoomerangWeaponScript>().getteleportCount();
-                break;
-            case "SpearPrefab(Clone)":
-                teleportCount = collision.gameObject.GetComponent<spearScript>().getteleportCount();
-                break;
-            case "Arrow(Clone)":
-                teleportCount = collision.gameObject.GetComponent<arrowScript>().getteleportCount();
-                break;
-            default: break;
-        }
-        PlayerMovement pm = player.GetComponent<PlayerMovement>();
-        if (collision.gameObject == null) print("yle xar");
-        if (!PlayerMovement.lastkilled.Equals(this.gameObject) && !PlayerMovement.lastkilledby.Contains(collision.gameObject))
-        {
-            PlayerMovement.lastkilledstreak++;
-            pm.streaklosingstart();
-        }
-        else
-        {
-            pm.StopCoroutine(pm.streaklosingtimer);
-            PlayerMovement.lastkilledstreak = 0;
-            PlayerMovement.lastkilledby.Clear();
-        }
-        PlayerMovement.lastkilled = this.gameObject;
-        PlayerMovement.lastkilledby.Add(collision.gameObject);
-
-        return teleportCount;
-    }
-
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.tag == "meleehitbox")
@@ -158,7 +119,7 @@ public class tutorialEnemy : MonoBehaviour
 
         if (collision.gameObject.tag == "mfHitbox")
         {
-            teleportCount = RetrieveTeleportCount(collision.collider);
+            //teleportCount = RetrieveTeleportCount(collision.collider);
             StartCoroutine(death());
         }
 

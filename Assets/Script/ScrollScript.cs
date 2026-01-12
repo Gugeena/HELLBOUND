@@ -13,12 +13,14 @@ public class ScrollScript : MonoBehaviour
     private Animator animator;
 
     public bool isOut;
+    public static bool isIn = false;
 
     private void Awake()
     {
         instance = this;
         isOut = false;
         animator = GetComponent<Animator>();
+        isIn = false;
     }
 
     private void Update()
@@ -28,6 +30,8 @@ public class ScrollScript : MonoBehaviour
 
     public void rollInScroll(string text, Sprite image, int fontSize)
     {
+        if (text == null || image == null || fontSize == null) return;
+        isIn = true;
         scrollText.text = text;
         scrollText.fontSize = fontSize;
         headerImage.sprite = image;
@@ -41,6 +45,7 @@ public class ScrollScript : MonoBehaviour
         Time.timeScale = 1;
         animator.Play("ScrollRollOut");
         StartCoroutine(toggleOut());
+        isIn = false;
     }
 
     private IEnumerator toggleOut()

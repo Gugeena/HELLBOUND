@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -100,9 +101,9 @@ public class PlayerMovement : MonoBehaviour
     public KeyCode Special, AttackButton, Jump, Dash, Drop;
 
     [Header("SFX")]
-    [SerializeField] private AudioClip death;
+    [SerializeField] private AudioClip death, stylemastery, deathBG;
     [SerializeField] private AudioClip mfGarwoba, firstLandSound, ascension, hitStop, revival, finaldissapearence, Beyondascension, angelicDeath, levaniylea, chainBreak;
-    [SerializeField] private AudioClip[] punches, gravelWalk, jumps, lands, bowShots, mfHits, spearHits, boomerangShots, hurts, chainSounds;
+    [SerializeField] private AudioClip[] punches, gravelWalk, jumps, lands, bowShots, mfHits, spearHits, boomerangShots, hurts, chainSounds, deaths;
     private int walkedDistance = 1;
 
     private bool firstLand = false;
@@ -239,20 +240,17 @@ public class PlayerMovement : MonoBehaviour
     public static PlayerMovement instance;
 
     private bool canOpen=true;
-
-    private void Awake()
-    {
-        instance = this;
-        variablesetting();
-    }
+    public bool isFirst, tutorialLock;
     bool hasheard = false;
+    bool canEnd = true;
 
     // Start is called before the first frame update
     void Start()
     {
+        instance = this;
         Functions.setUpView();
         findeverythingatspawn();
-        
+        variablesetting();
 
         if (!isAngelic) StartCoroutine(pickUpWeapon(0, "fists"));
         else StartCoroutine(beInvincbleforawhile());
@@ -344,7 +342,7 @@ public class PlayerMovement : MonoBehaviour
 
         RLocation = GameObject.Find("RLOCATIONLOCATION").transform;
         LLocation = GameObject.Find("LLOCATIONLOCATION").transform;
-        hpslider = GameObject.Find("HP").GetComponent<UnityEngine.UI.Slider>();
+        hpslider = GameObject.Find("HP").GetComponent<Slider>();
         anim = GetComponent<Animator>();
         if (!inTutorial)
         {
@@ -445,7 +443,13 @@ public class PlayerMovement : MonoBehaviour
 
     void handleMovement()
     {
-        if (canMove && !PauseScript.Paused)
+        //if(ScrollScript.isIn)
+        //{
+           /// rb.angularVelocity = 0;
+        ///    return;
+        //}
+
+        if (canMove && !PauseScript.Paused && !ScrollScript.isIn)
         {
             if (Input.GetKeyDown(Drop) && currentWeapon != 0)
             {
@@ -602,6 +606,8 @@ public class PlayerMovement : MonoBehaviour
 
     private IEnumerator breakChains()
     {
+        canMove = false;
+        canPunch = false;
         rb.simulated = true;
         trapped = false;
         anim.SetBool("trapped", false);
@@ -621,7 +627,6 @@ public class PlayerMovement : MonoBehaviour
         Time.timeScale = 0.2f;
         cineAnim.Play("cinecam_zoomin");
         yield return null;
-
     }
 
 
@@ -1431,7 +1436,12 @@ public class PlayerMovement : MonoBehaviour
         {
             isGrounded = true;
             audioManager.instance.playRandomAudio(lands, 1f, 1, transform, audioManager.instance.sfx);
-
+            if(isFirst)
+            {
+                isFirst = false;
+                canPunch = true;
+                canMove = true;
+            }
         }
 
         if (collision.gameObject.layer == 3 && !firstLand && !inTutorial)
@@ -1491,10 +1501,17 @@ public class PlayerMovement : MonoBehaviour
     private IEnumerator endTutor()
     {
         GlobalSettings globalSettings = SaveSystem.Load();
-        globalSettings.information.doneTutorial = 1;
+        print("isFirst: " + globalSettings.information.isFirst);
+        if (globalSettings.information.isFirst == 1)
+        {
+            globalSettings.information.doneTutorial = 1;
+            globalSettings.information.turnedon = 0;
+            globalSettings.information.isFirst = 0;
+        }
         SaveSystem.Save(globalSettings);
 
         cineAnim.Play("cinecam_endd");
+        canvasAnimator.Play("hpComeUp");
         yield return new WaitForSeconds(3f);
         loadScene.SceneToLoad = 4;
         SceneManager.LoadScene(2);
@@ -1672,31 +1689,33 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        GameObject obj = collision.gameObject;
 
-        if (collision.gameObject.CompareTag("weaponPickup") && currentWeapon == 0)
+        if (obj.CompareTag("weaponPickup") && currentWeapon == 0)
         {
             justShotBoomerang = false;
 
-            weaponPickupScript wps = collision.transform.parent.GetComponent<weaponPickupScript>();
-            StartCoroutine(pickUpWeapon(wps.weaponID, collision.gameObject.name));
-            if(!wps.infinite) Destroy(collision.transform.parent.gameObject);
+            Transform parent1 = collision.transform.parent;
+            if (parent1 != null)
+            {
+                weaponPickupScript wps = parent1.GetComponent<weaponPickupScript>();
+                StartCoroutine(pickUpWeapon(wps.weaponID, collision.gameObject.name));
+                if (!wps.infinite) Destroy(collision.transform.parent.gameObject);
+            }
         }
-
-        if (collision.gameObject.CompareTag("boomerangPickup") && currentWeapon == 0)
+        else if (obj.CompareTag("boomerangPickup") && currentWeapon == 0)
         {
             if (collision.gameObject.name == "BoomerangWhichYouJustShot") justShotBoomerang = true;
             StartCoroutine(pickUpWeapon(2, collision.gameObject.name));
             Destroy(collision.gameObject);
         }
-
-        if (collision.gameObject.CompareTag("mfPickup") && currentWeapon == 0)
+        else if (obj.CompareTag("mfPickup") && currentWeapon == 0)
         {
             justShotBoomerang = false;
             StartCoroutine(pickUpWeapon(3, collision.gameObject.name));
             Destroy(collision.gameObject);
         }
-
-        if (collision.gameObject.CompareTag("arrowPickup"))
+        else if (obj.CompareTag("arrowPickup"))
         {
             justShotBoomerang = false;
             hasArrow = true;
@@ -1706,7 +1725,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (!invincible && !godMode && !isInAngelTransition)
         {
-            if (collision.gameObject.CompareTag("enemyhitbox"))
+            if (obj.CompareTag("enemyhitbox"))
             {
                 /*
                 float direction = Mathf.Sign(-transform.localScale.x);
@@ -1716,8 +1735,7 @@ public class PlayerMovement : MonoBehaviour
                 */
                 StartCoroutine(damage(30, 0.1f, false));
             }
-
-            if (collision.gameObject.CompareTag("enemyorb"))
+            else if (obj.CompareTag("enemyorb"))
             {
                 /*
                float direction = Mathf.Sign(-transform.localScale.x);
@@ -1727,8 +1745,7 @@ public class PlayerMovement : MonoBehaviour
                */
                 StartCoroutine(damage(25, 0.1f, false));
             }
-
-            if (collision.gameObject.CompareTag("Enemy"))
+            else if (obj.CompareTag("Enemy"))
             {
                 /*
                 hp -= 5;
@@ -1738,65 +1755,59 @@ public class PlayerMovement : MonoBehaviour
                  */
                 //rb.AddForce(force * (knockback * 10f), ForceMode2D.Impulse);
             }
-
-            if (collision.gameObject.CompareTag("Explosion"))
+            else if (obj.CompareTag("Explosion"))
             {
                 StartCoroutine(damage(25, 0.2f, false));
             }
-
-            if (collision.gameObject.name == "GreenFireBall(Clone)")
+            else if (obj.name == "GreenFireBall(Clone)")
             {
                 ApplyPoison(4f);
             }
-
-            if (collision.gameObject.CompareTag("FireballP"))
+            else if (obj.CompareTag("FireballP"))
             {
                 StartCoroutine(damage(20, 0.2f, false));
             }
-
-            if (collision.gameObject.CompareTag("Fireball"))
+            else if (obj.CompareTag("Fireball"))
             {
                 StartCoroutine(damage(8, 0.1f, false));
                 //invincible = false;
             }
-
-            if (collision.gameObject.CompareTag("Crystal"))
+            else if(obj.CompareTag("Crystal"))
             {
                 StartCoroutine(damage(15, 0.1f, false));
             }
-
-            if (collision.gameObject.CompareTag("Log"))
+            else if(obj.CompareTag("Log"))
             {
                 StartCoroutine(damage(25, 0.1f, false));
             }
         }
 
-        if (collision.gameObject.layer == 3 && collision.gameObject.name != "Movable")
+        if (obj.layer == 3 && obj.name != "Movable")
         {
             GetComponent<CapsuleCollider2D>().isTrigger = false;
             isGrounded = true;
             isFalling = false;
         }
-
-
-        if (collision.gameObject.CompareTag("camTriggerDown"))
+        else if (obj.CompareTag("camTriggerDown"))
         {
             cineAnim.Play("cinecam_fall");
             canvasAnimator.Play("hpComeDown");
+            tutorialLock = false;
         }
 
-        TutorialNoteScript note = collision.gameObject.transform.parent.GetComponent<TutorialNoteScript>();
-        if (note != null && canOpen)
+        Transform parent = collision.gameObject.transform.parent;
+        TutorialNoteScript note = null;
+        if (parent != null) note = parent.GetComponent<TutorialNoteScript>();
+        if (canOpen && note != null)
         {
             canOpen = false;
             ScrollScript.instance.rollInScroll(note.noteText, note.headerImage, note.fontSize);
         }
-
-        if (collision.gameObject.CompareTag("endTutorial"))
+        else if (obj.CompareTag("endTutorial") && canEnd)
         {
+            canEnd = false;
             StartCoroutine(endTutor());
         }
-
     }
 
     private void OnCollisionExit2D(Collision2D collision)
@@ -1809,7 +1820,8 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag("poison"))
+        GameObject obj = collision.gameObject;
+        if (obj.CompareTag("poison"))
         {
             isPoisoned = false;
             isinbubble = false;
@@ -1817,7 +1829,7 @@ public class PlayerMovement : MonoBehaviour
             hpAnimator.Play("PlayerDepoisoning");
         }
 
-        if (collision.gameObject.transform.parent.GetComponent<TutorialNoteScript>() != null)
+        if (!canOpen && obj.transform.parent.GetComponent<TutorialNoteScript>() != null)
         {
             canOpen = true;
         }

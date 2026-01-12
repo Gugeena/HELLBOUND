@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 4393879747472511384}
   - component: {fileID: 7095935818385982349}
   - component: {fileID: 5527550871166155268}
-  m_Layer: 13
+  m_Layer: 14
   m_Name: EyeballEnemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}

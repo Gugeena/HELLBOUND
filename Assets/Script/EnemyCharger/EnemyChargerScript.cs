@@ -479,7 +479,6 @@ public class EnemyChargerScript : MonoBehaviour
 
         if (collision.gameObject.CompareTag("Crystal") || collision.gameObject.CompareTag("poison") || collision.gameObject.CompareTag("Fireball") || collision.gameObject.CompareTag("FireballP")) StartCoroutine(death());
 
-
         if (collision.gameObject.CompareTag("llocation")) this.transform.position = new Vector3(RLLOCATION.position.x, this.transform.position.y, 0);
         else if (collision.gameObject.CompareTag("rlocation")) this.transform.position = new Vector3(LLOCATION.position.x, this.transform.position.y, 0);
     }

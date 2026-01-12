@@ -4848,6 +4848,7 @@ GameObject:
   - component: {fileID: 4784548235246485304}
   - component: {fileID: 4975719323687480960}
   - component: {fileID: 2321000655260687150}
+  - component: {fileID: 5364226171594277494}
   m_Layer: 13
   m_Name: Explosion
   m_TagString: mfHitbox
@@ -5001,6 +5002,34 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &5364226171594277494
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7160878169388947489}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 57ca7ce5f916eb743b9b426a1fdad24d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ExplosionMayhemScript
+  mayhemcounter: 0
+  hammed: 0
+  contactFilter:
+    useTriggers: 1
+    useLayerMask: 0
+    useDepth: 0
+    useOutsideDepth: 0
+    useNormalAngle: 0
+    useOutsideNormalAngle: 0
+    layerMask:
+      serializedVersion: 2
+      m_Bits: 17536
+    minDepth: 0
+    maxDepth: 0
+    minNormalAngle: 0
+    maxNormalAngle: 0
 --- !u!1 &8249595046535959811
 GameObject:
   m_ObjectHideFlags: 0
@@ -5120,6 +5149,7 @@ GameObject:
   - component: {fileID: 3753103886673623893}
   - component: {fileID: 1898058972566759690}
   - component: {fileID: 8209688177181366771}
+  - component: {fileID: 7129734529904929317}
   m_Layer: 13
   m_Name: SpearPrefab
   m_TagString: mfHitbox
@@ -5225,7 +5255,7 @@ Rigidbody2D:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 2048
   m_Interpolate: 0
   m_SleepingMode: 0
   m_CollisionDetection: 1
@@ -5246,7 +5276,7 @@ BoxCollider2D:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 2112
   m_LayerOverridePriority: 0
   m_ForceSendLayers:
     serializedVersion: 2
@@ -5315,3 +5345,17 @@ MonoBehaviour:
   frequency: 1.2
   time: 0.5
   onCollide: 0
+--- !u!114 &7129734529904929317
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9132741610408570697}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 295cbf4e82fe01b4ba8fdb9e4bbbc07d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::teleportCountScript
+  teleportCount: 0
+  weapon: 0

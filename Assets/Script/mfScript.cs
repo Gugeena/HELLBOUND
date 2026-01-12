@@ -69,7 +69,7 @@ public class mfScript : MonoBehaviour
         else if (goBack) {
             backing();
         }
-        if(tpcs.teleportCount >= 4 && (int) transform.position.x == (int) startPos.x)
+        if(tpcs.teleportCount >= 2 && (int) transform.position.x == (int) startPos.x)
         {
            StartCoroutine(back());
         }

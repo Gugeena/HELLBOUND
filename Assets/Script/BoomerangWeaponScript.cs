@@ -85,8 +85,8 @@ public class BoomerangWeaponScript : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        string tag = collision.gameObject.tag;
-        if (collision.gameObject.CompareTag("llocation"))
+        GameObject obj = collision.gameObject;
+        if (obj.CompareTag("llocation"))
         {
             RLocation = GameObject.Find("RLOCATIONLOCATION").transform;
             this.transform.position = new Vector3(RLocation.position.x, this.transform.position.y, 0);
@@ -94,7 +94,7 @@ public class BoomerangWeaponScript : MonoBehaviour
             shouldReturn = true;
             return;
         }
-        else if (collision.gameObject.CompareTag("rlocation"))
+        else if (obj.CompareTag("rlocation"))
         {
             LLocation = GameObject.Find("LLOCATIONLOCATION").transform;
             this.transform.position = new Vector3(LLocation.position.x, this.transform.position.y, 0);
@@ -103,23 +103,24 @@ public class BoomerangWeaponScript : MonoBehaviour
             return;
         }
 
-        if (collision.gameObject.tag == "enemyorb" ||
-            collision.gameObject.layer == 8 ||
-            collision.gameObject.name == "Hand_L" ||
-            collision.gameObject.name == "Hand_R" ||
-            collision.gameObject.name == "Leg_L" ||
-            collision.gameObject.name == "Leg_R" ||
-            collision.gameObject.name == "headPivot" ||
-            collision.gameObject.tag == "weaponPickup" ||
-            collision.gameObject.name == "square" ||
-            collision.gameObject.name == "Square" ||
-            collision.gameObject.name == "Torso" ||
-            collision.gameObject.tag == "poison" ||
-            collision.gameObject.tag == "FireballP" ||
-            collision.gameObject.tag == "Fireball" ||
-            collision.gameObject.tag == "Explosion" ||
-            collision.gameObject.tag == "Log" ||
-            collision.gameObject.tag == "Crystal")
+        if (obj.tag == "enemyorb" ||
+            obj.layer == 8 ||
+            obj.name == "Hand_L" ||
+            obj.name == "Hand_R" ||
+            obj.name == "Leg_L" ||
+            obj.name == "Leg_R" ||
+            obj.name == "headPivot" ||
+            obj.tag == "weaponPickup" ||
+            obj.name == "square" ||
+            obj.name == "Square" ||
+            obj.name == "Torso" ||
+            obj.tag == "poison" ||
+            obj.tag == "FireballP" ||
+            obj.tag == "Fireball" ||
+            obj.tag == "Explosion" ||
+            obj.tag == "Log" ||
+            obj.tag == "Crystal" ||
+            obj.tag == "note")
         {
             return;
         }

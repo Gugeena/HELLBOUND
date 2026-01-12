@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Rendering;
 using UnityEngine.UI;
 
 public class StyleManager : MonoBehaviour
@@ -72,6 +73,8 @@ public class StyleManager : MonoBehaviour
     public bool canMultiply = true;
 
     public GameObject LoopMultiplier, RecklessMultiplier, lawnmowerMultiplier, mayhemultiplier, richochetmultiplier;
+
+    public bool isTutorial;
 
     private void Start()
     {
@@ -373,6 +376,7 @@ public class StyleManager : MonoBehaviour
 
     public void growStyle(int ptsToAdd)
     {
+        if (isTutorial && currStyle == Style.Exorcist || playerMovement.tutorialLock) return;
         styleAnim.Play("grow");
         stylePoints += ptsToAdd;
         stylePoints = Mathf.Clamp(stylePoints, -3, 70);

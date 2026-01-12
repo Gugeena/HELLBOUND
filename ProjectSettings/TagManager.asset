@@ -32,6 +32,8 @@ TagManager:
   - rlocation
   - llocation1
   - rlocation1
+  - note
+  - bodyParts
   layers:
   - Default
   - TransparentFX
@@ -48,7 +50,6 @@ TagManager:
   - Log
   - Weapon
   - Eye
-  - 
   - 
   - 
   - 

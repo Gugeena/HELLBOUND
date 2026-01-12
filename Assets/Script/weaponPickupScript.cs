@@ -42,7 +42,7 @@ public class weaponPickupScript : MonoBehaviour
 
     private void throwUp()
     {
-
+        if (rb == null) return;
         rb.AddForce(transform.up * 200);
         int[] t = { -1, 1 };
         rb.AddTorque(Random.Range(170f, 210f) * t[Random.Range(0, 2)]);

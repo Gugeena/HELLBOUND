@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6573887935230083959}
   - component: {fileID: 8376405826657276370}
   - component: {fileID: 3356348075035935364}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: SkyCandle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -124,7 +124,7 @@ GameObject:
   - component: {fileID: 5903091430340126902}
   - component: {fileID: 7707153559715821725}
   - component: {fileID: 741815973199415069}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: SkyCandle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -238,9 +238,9 @@ GameObject:
   - component: {fileID: 624421540593492315}
   - component: {fileID: 261485203032323925}
   - component: {fileID: 9098091475092779801}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: headPivot
-  m_TagString: Enemy
+  m_TagString: bodyParts
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -277,7 +277,7 @@ BoxCollider2D:
     m_Bits: 128
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 320
+    m_Bits: 2368
   m_LayerOverridePriority: 0
   m_ForceSendLayers:
     serializedVersion: 2
@@ -329,7 +329,7 @@ Rigidbody2D:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 448
+    m_Bits: 2496
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
@@ -358,7 +358,7 @@ GameObject:
   - component: {fileID: 2301585089414482999}
   - component: {fileID: 2886617004247101106}
   - component: {fileID: 4278602953158730674}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: SkyCandle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -473,9 +473,9 @@ GameObject:
   - component: {fileID: 595920828981619409}
   - component: {fileID: 1347293201047531375}
   - component: {fileID: 7265885884661800944}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Leg_R
-  m_TagString: Enemy
+  m_TagString: bodyParts
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -570,7 +570,7 @@ BoxCollider2D:
     m_Bits: 128
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 320
+    m_Bits: 2368
   m_LayerOverridePriority: 0
   m_ForceSendLayers:
     serializedVersion: 2
@@ -622,7 +622,7 @@ Rigidbody2D:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 448
+    m_Bits: 2496
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
@@ -651,7 +651,7 @@ GameObject:
   - component: {fileID: 8529583931114945167}
   - component: {fileID: 264920907879868465}
   - component: {fileID: 541555436315091667}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: SkyCandle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -822,9 +822,9 @@ GameObject:
   - component: {fileID: 8764312858432517299}
   - component: {fileID: 6067262550477452797}
   - component: {fileID: 928729287032240388}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Torso
-  m_TagString: Enemy
+  m_TagString: bodyParts
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -919,7 +919,7 @@ BoxCollider2D:
     m_Bits: 128
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 320
+    m_Bits: 2368
   m_LayerOverridePriority: 0
   m_ForceSendLayers:
     serializedVersion: 2
@@ -971,7 +971,7 @@ Rigidbody2D:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 448
+    m_Bits: 2496
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
@@ -1160,9 +1160,9 @@ GameObject:
   - component: {fileID: 3580644609840113701}
   - component: {fileID: 1459327981457823146}
   - component: {fileID: 2115515407354042630}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Leg_L
-  m_TagString: Enemy
+  m_TagString: bodyParts
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1257,7 +1257,7 @@ BoxCollider2D:
     m_Bits: 128
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 320
+    m_Bits: 2368
   m_LayerOverridePriority: 0
   m_ForceSendLayers:
     serializedVersion: 2
@@ -1309,7 +1309,7 @@ Rigidbody2D:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 448
+    m_Bits: 2496
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
@@ -1390,7 +1390,7 @@ Rigidbody2D:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 448
+    m_Bits: 2496
   m_Interpolate: 1
   m_SleepingMode: 0
   m_CollisionDetection: 1
@@ -1460,6 +1460,7 @@ MonoBehaviour:
   stoned: 0
   deathparticles: []
   hitbox: {fileID: 6104835501643451698}
+  hammed: 0
 --- !u!114 &2711968041846255230
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1489,7 +1490,7 @@ BoxCollider2D:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 448
+    m_Bits: 2496
   m_LayerOverridePriority: 0
   m_ForceSendLayers:
     serializedVersion: 2
@@ -1529,7 +1530,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2383565742832665218}
   - component: {fileID: 8071201264785144729}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Head
   m_TagString: Untagged
   m_Icon: {fileID: 0}

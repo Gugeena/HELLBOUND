@@ -1116,6 +1116,7 @@ MonoBehaviour:
   Glow: {fileID: 1543417565}
   isHovering: 0
   isReplay: 0
+  isVisualizer: 0
   isEntered: 0
 --- !u!95 &178261460
 Animator:
@@ -2988,7 +2989,7 @@ GameObject:
   - component: {fileID: 435140453}
   m_Layer: 0
   m_Name: LLocation
-  m_TagString: Untagged
+  m_TagString: llocation
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4166,7 +4167,7 @@ GameObject:
   - component: {fileID: 584305543}
   m_Layer: 0
   m_Name: Note
-  m_TagString: Untagged
+  m_TagString: note
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4319,7 +4320,7 @@ GameObject:
   - component: {fileID: 598452909}
   m_Layer: 0
   m_Name: Note (1)
-  m_TagString: Untagged
+  m_TagString: note
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4341,15 +4342,17 @@ MonoBehaviour:
     Mastering style brings
     you closer to enlightenment.
 
-    Reach angelhood to face the exiled one.
+    Artillery stagnation drains Style Points.
 
-    Kill
-    demons in vicinity to replenish life force.
+    Reach
+    angelhood to face the exiled one.
 
-    Divine blessings may reach you
-    not down there.'
+    Kill demons in vicinity to replenish life
+    force.
+
+    Divine blessings may reach you not down there.'
   headerImage: {fileID: 21300000, guid: 353ce6e140b9543479cf469daae6557c, type: 3}
-  fontSize: 143
+  fontSize: 128
 --- !u!4 &598452910
 Transform:
   m_ObjectHideFlags: 0
@@ -4732,10 +4735,10 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 12800000, guid: 60484b47ed249e34aa4979c8eb6f13d4, type: 3}
-    m_FontSize: 143
+    m_FontSize: 128
     m_FontStyle: 0
     m_BestFit: 0
-    m_MinSize: 2
+    m_MinSize: 0
     m_MaxSize: 255
     m_Alignment: 1
     m_AlignByGeometry: 0
@@ -4745,16 +4748,15 @@ MonoBehaviour:
     m_LineSpacing: 1.01
   m_Text: 'Special moves grant bonus "Style Points"
 
-    Mastering style brings you
-    closer to enlightenment.
+    Armament stagnation drains
+    Style.
 
     Reach angelhood to face the exiled one.
 
-    Kill
-    demons in vicinity to replenish life force.
+    Kill demons in vicinity
+    to replenish life force.
 
-    Divine blessings may reach you
-    not down there.'
+    Divine blessings may reach you not down there.'
 --- !u!222 &640626077
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -5023,7 +5025,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -1
   m_Sprite: {fileID: 2277959051811333940, guid: c9b71ac1cbdaf0842b9d0229f8bb2f6f, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -16823,6 +16825,8 @@ MonoBehaviour:
   Dash: 0
   Drop: 0
   death: {fileID: 8300000, guid: 3bee4acdd5615e74c901b38838645913, type: 3}
+  stylemastery: {fileID: 0}
+  deathBG: {fileID: 0}
   mfGarwoba: {fileID: 8300000, guid: fc9371831b037fe469305d9848acba82, type: 3}
   firstLandSound: {fileID: 8300000, guid: 61dae628035ee0d4bbeb9caa4028df21, type: 3}
   ascension: {fileID: 8300000, guid: 40376724bedce7d4cba5d3a0eda324bc, type: 3}
@@ -16873,6 +16877,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 538b543b3fe21454eac516373f6b44ec, type: 3}
   - {fileID: 8300000, guid: cbda7c29fbd52644cba293a8dc237594, type: 3}
   - {fileID: 8300000, guid: 32277deef8f09d64abf9156a7d0342e9, type: 3}
+  deaths: []
   startLM:
     serializedVersion: 2
     m_Bits: 2304
@@ -16925,6 +16930,8 @@ MonoBehaviour:
   - {fileID: 2032795828}
   - {fileID: 1948676755}
   scrollAnim: {fileID: 1817364401}
+  isFirst: 1
+  tutorialLock: 1
 --- !u!4 &1027812935
 Transform:
   m_ObjectHideFlags: 0
@@ -17051,7 +17058,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -1
   m_Sprite: {fileID: 2277959051811333940, guid: c9b71ac1cbdaf0842b9d0229f8bb2f6f, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -19887,7 +19894,7 @@ GameObject:
   - component: {fileID: 1367928447}
   m_Layer: 0
   m_Name: RLocation
-  m_TagString: Untagged
+  m_TagString: rlocation
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -27525,6 +27532,7 @@ MonoBehaviour:
   Glow: {fileID: 1908745186}
   isHovering: 0
   isReplay: 0
+  isVisualizer: 0
   isEntered: 0
 --- !u!95 &1848226092
 Animator:
@@ -27950,6 +27958,7 @@ MonoBehaviour:
   Glow: {fileID: 1378018644}
   isHovering: 0
   isReplay: 0
+  isVisualizer: 0
   isEntered: 0
 --- !u!95 &1898034883
 Animator:
@@ -28503,7 +28512,7 @@ GameObject:
   - component: {fileID: 1938476790}
   m_Layer: 0
   m_Name: RLocation (1)
-  m_TagString: Untagged
+  m_TagString: rlocation1
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -28772,7 +28781,7 @@ GameObject:
   - component: {fileID: 1953432758}
   m_Layer: 0
   m_Name: LLocation (1)
-  m_TagString: Untagged
+  m_TagString: llocation1
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -34076,6 +34085,7 @@ MonoBehaviour:
   Glow: {fileID: 379873489}
   isHovering: 0
   isReplay: 0
+  isVisualizer: 0
   isEntered: 0
 --- !u!95 &2033522503
 Animator:
@@ -34494,7 +34504,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: -0.5034394, y: -0.005195573}
+  m_Offset: {x: -0.5034394, y: -0.037076995}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -34504,7 +34514,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 0.0068728924, y: 0.9896089}
+  m_Size: {x: 0.0068728924, y: 0.925846}
   m_EdgeRadius: 0
 --- !u!61 &2076344167
 BoxCollider2D:
@@ -34540,7 +34550,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: -0.005270779}
+  m_Offset: {x: 0, y: -0.037142396}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -34550,7 +34560,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 1, y: 0.98945844}
+  m_Size: {x: 1, y: 0.9257152}
   m_EdgeRadius: 0
 --- !u!212 &2076344168
 SpriteRenderer:
@@ -34901,6 +34911,33 @@ MonoBehaviour:
   Ascend: {fileID: 1760777015}
   ascentionanimator: {fileID: 1760777016}
   fill: {fileID: 1462860768}
+  visualizerLocation: {fileID: 0}
+  multiplierLocation: {fileID: 0}
+  visualizer: {fileID: 0}
+  Canvas: {fileID: 505600835}
+  globalSettings:
+    information:
+      hasbeatthegame: 0
+      doneTutorial: 0
+      turnedon: 1
+      visualizer: 1
+      isFirst: 1
+    keybinds:
+      JKey: 32
+      DSHKey: 304
+      SKey: 324
+      DRKey: 113
+      AKey: 323
+    audio:
+      SFXVolume: 1
+      MUSICVolume: 1
+  canMultiply: 1
+  LoopMultiplier: {fileID: 0}
+  RecklessMultiplier: {fileID: 0}
+  lawnmowerMultiplier: {fileID: 0}
+  mayhemultiplier: {fileID: 0}
+  richochetmultiplier: {fileID: 0}
+  isTutorial: 1
 --- !u!1 &2118639504
 GameObject:
   m_ObjectHideFlags: 0

@@ -12,9 +12,9 @@ GameObject:
   - component: {fileID: 7297320866750984184}
   - component: {fileID: 4403662494094046609}
   - component: {fileID: 2337547169790056989}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: headPivot
-  m_TagString: Untagged
+  m_TagString: bodyParts
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -51,7 +51,7 @@ BoxCollider2D:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 448
+    m_Bits: 2496
   m_LayerOverridePriority: 0
   m_ForceSendLayers:
     serializedVersion: 2
@@ -103,7 +103,7 @@ Rigidbody2D:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 192
+    m_Bits: 2240
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
@@ -299,9 +299,9 @@ GameObject:
   - component: {fileID: 5848170605768579958}
   - component: {fileID: 1254708266555383202}
   - component: {fileID: 6555039305557762438}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Leg_R
-  m_TagString: Untagged
+  m_TagString: bodyParts
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -396,7 +396,7 @@ BoxCollider2D:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 448
+    m_Bits: 2496
   m_LayerOverridePriority: 0
   m_ForceSendLayers:
     serializedVersion: 2
@@ -448,7 +448,7 @@ Rigidbody2D:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 192
+    m_Bits: 2240
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
@@ -479,9 +479,9 @@ GameObject:
   - component: {fileID: 6179223300885438227}
   - component: {fileID: 6855596639613648443}
   - component: {fileID: 7350574167772551382}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Hand_L
-  m_TagString: Untagged
+  m_TagString: bodyParts
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -576,7 +576,7 @@ BoxCollider2D:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 448
+    m_Bits: 2496
   m_LayerOverridePriority: 0
   m_ForceSendLayers:
     serializedVersion: 2
@@ -628,7 +628,7 @@ Rigidbody2D:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 192
+    m_Bits: 2240
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
@@ -659,9 +659,9 @@ GameObject:
   - component: {fileID: 8571230622091834504}
   - component: {fileID: 3704664996587524714}
   - component: {fileID: 4825081991316869603}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Hand_R
-  m_TagString: Untagged
+  m_TagString: bodyParts
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -756,7 +756,7 @@ BoxCollider2D:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 448
+    m_Bits: 2496
   m_LayerOverridePriority: 0
   m_ForceSendLayers:
     serializedVersion: 2
@@ -808,7 +808,7 @@ Rigidbody2D:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 192
+    m_Bits: 2240
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
@@ -837,7 +837,7 @@ GameObject:
   - component: {fileID: 680576315426031028}
   - component: {fileID: 8942980167322611083}
   - component: {fileID: 933201552050765585}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Charger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1004,7 +1004,7 @@ Rigidbody2D:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 192
+    m_Bits: 2240
   m_Interpolate: 1
   m_SleepingMode: 0
   m_CollisionDetection: 1
@@ -1062,6 +1062,7 @@ MonoBehaviour:
   - {fileID: 5747986981960999749, guid: 11a4c5235c4567d4492003220b6e22d1, type: 3}
   - {fileID: 5747986981960999749, guid: fdb2ba2182a18cd49a67977cdef53b64, type: 3}
   - {fileID: 5747986981960999749, guid: 9c40fbd8fecfb7741a31974ef9fcfa4f, type: 3}
+  hammed: 0
 --- !u!114 &1251144211613670193
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1110,9 +1111,9 @@ GameObject:
   - component: {fileID: 8576044578415574954}
   - component: {fileID: 5377419388980346741}
   - component: {fileID: 6841690771790071641}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Torso
-  m_TagString: Untagged
+  m_TagString: bodyParts
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1207,7 +1208,7 @@ BoxCollider2D:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 448
+    m_Bits: 2496
   m_LayerOverridePriority: 0
   m_ForceSendLayers:
     serializedVersion: 2
@@ -1259,7 +1260,7 @@ Rigidbody2D:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 192
+    m_Bits: 2240
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
@@ -1287,7 +1288,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8072636306061435228}
   - component: {fileID: 8418070625256085984}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Head
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1379,7 +1380,7 @@ GameObject:
   - component: {fileID: 8921014166256702733}
   - component: {fileID: 9160340278331150431}
   - component: {fileID: 144423648192198906}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Charger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1492,7 +1493,7 @@ GameObject:
   - component: {fileID: 508479367158638418}
   - component: {fileID: 8915352076154193604}
   - component: {fileID: 4473957840527630804}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Charger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1605,7 +1606,7 @@ GameObject:
   - component: {fileID: 6772800748597359052}
   - component: {fileID: 4990269302074213789}
   - component: {fileID: 2915520521642081764}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Charger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1814,7 +1815,7 @@ CapsuleCollider2D:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 192
+    m_Bits: 2240
   m_LayerOverridePriority: 0
   m_ForceSendLayers:
     serializedVersion: 2
@@ -1848,9 +1849,9 @@ GameObject:
   - component: {fileID: 5149759189314481245}
   - component: {fileID: 2813146568029729157}
   - component: {fileID: 6628446707345137743}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Leg_L
-  m_TagString: Untagged
+  m_TagString: bodyParts
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1945,7 +1946,7 @@ BoxCollider2D:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 448
+    m_Bits: 2496
   m_LayerOverridePriority: 0
   m_ForceSendLayers:
     serializedVersion: 2
@@ -1997,7 +1998,7 @@ Rigidbody2D:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 192
+    m_Bits: 2240
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
@@ -2026,7 +2027,7 @@ GameObject:
   - component: {fileID: 498611030966554397}
   - component: {fileID: 6529815461657425943}
   - component: {fileID: 4406767606113167828}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Charger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2139,7 +2140,7 @@ GameObject:
   - component: {fileID: 8651168012607721671}
   - component: {fileID: 1449624037914979501}
   - component: {fileID: 5601948742028856683}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Charger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
