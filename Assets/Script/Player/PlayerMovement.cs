@@ -579,6 +579,7 @@ public class PlayerMovement : MonoBehaviour
 
         canPunch = false;
         anim.SetBool("isWalking", false);
+        //anim.Play("player_idle", 0);
         anim.Play("player_bowShoot");
         yield return new WaitForSeconds(0.4f);
         audioManager.instance.playRandomAudio(bowShots, 0.5f, 1, transform, audioManager.instance.sfx);
@@ -1147,6 +1148,7 @@ public class PlayerMovement : MonoBehaviour
     private IEnumerator bowShoot()
     {
         canPunch = false;
+        //anim.Play("player_bowShoot");
         anim.Play("player_bowShoot");
         yield return new WaitForSeconds(0.4f);
         hasArrow = false;
