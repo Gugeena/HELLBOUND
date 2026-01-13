@@ -580,6 +580,8 @@ public class PlayerMovement : MonoBehaviour
         canPunch = false;
         anim.SetBool("isWalking", false);
         //anim.Play("player_idle", 0);
+
+        anim.SetLayerWeight(2, 1);
         anim.Play("player_bowShoot");
         yield return new WaitForSeconds(0.4f);
         audioManager.instance.playRandomAudio(bowShots, 0.5f, 1, transform, audioManager.instance.sfx);
@@ -1521,11 +1523,15 @@ public class PlayerMovement : MonoBehaviour
 
     private IEnumerator deathCRT()
     {
+
         if(isintenthlayer) deathcount++;
+        
         hasdiedforeverybody = true;
         if (PoisonQueCorountine != null) StopCoroutine(PoisonQueCorountine);
         if (currentWeapon == 1) StartCoroutine(pickUpWeapon(0, "fist"));
+        
         poisonQueue = new Queue<float>();
+        
         isPoisoned = false;
         isPoisonRunning = false;
         isFuckingPoisoned = false;
@@ -1536,9 +1542,15 @@ public class PlayerMovement : MonoBehaviour
         //DisableAllActiveWeapons();
         stopAttacking = true;
         shouldMakeSound = false;
+
+        
         rb.linearVelocity = Vector2.zero;
+        
         canMove = false;
+        
         SpawnerScript.shouldSpawn = false;
+
+        
         TLOHLFADEOUTANDINNER(1);
         yield return StartCoroutine(frameStop(0.2f));
 
@@ -1561,15 +1573,16 @@ public class PlayerMovement : MonoBehaviour
         legBox.enabled = false;
         rb.bodyType = RigidbodyType2D.Kinematic;
 
-        bool isInCharchoba = anim.GetCurrentAnimatorStateInfo(0).IsName("player_mf_special");
+        //bool isInCharchoba = anim.GetCurrentAnimatorStateInfo(0).IsName("player_mf_special");
         if (arrowPickupSource != null && arrowPickupSource.isPlaying) arrowPickupSource.Stop();
         anim.CrossFade(animclip, 0);
         //anim.Play(animclip);
 
-        if (isintenthlayer) tenthscript.onPlayerDeath(isAngelic ? 1.5f : 2.5f);
+        //if (isintenthlayer) tenthscript.onPlayerDeath(isAngelic ? 1.5f : 2.5f);
 
         runParticles.Stop();
-        //DisableAllActiveWeapons();
+        
+       
         if (isAngelic)
         {
             angelDeathParticles.Play();
@@ -1585,6 +1598,7 @@ public class PlayerMovement : MonoBehaviour
             StartCoroutine(gadasvla(5));
             yield break;
         }
+        
 
         yield return new WaitForSeconds(1f);
         rb.gravityScale = 8f;
@@ -1611,6 +1625,9 @@ public class PlayerMovement : MonoBehaviour
         camShake.StopAllCoroutines();
         StartCoroutine(revive());
         yield return null;
+
+        
+        yield break;
     }
 
     public IEnumerator revivalPlayBack()

@@ -118,6 +118,7 @@ public class SpawnerScript : MonoBehaviour
                 }
                 canspawn = true;
             }
+            else yield return null;
         }
     }
 }
