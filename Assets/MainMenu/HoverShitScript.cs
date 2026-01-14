@@ -12,7 +12,7 @@ public class HoverShitScript : MonoBehaviour, IPointerEnterHandler, IPointerExit
 
     private void OnDisable()
     {
-        Glow.SetActive(false);
+        if(Glow != null) Glow.SetActive(false);
     }
 
     public void OnPointerEnter(PointerEventData eventData)

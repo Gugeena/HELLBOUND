@@ -16,6 +16,7 @@ public class ScrollScript : MonoBehaviour
     public bool isOut;
     public static bool isIn = false;
     public bool canOpen = true;
+    public bool tutorialEnded;
 
     private void Awake()
     {
@@ -27,7 +28,10 @@ public class ScrollScript : MonoBehaviour
 
     private void Update()
     {
-        if(isOut && Input.GetKeyDown(KeyCode.Escape)) rollOutScroll();
+        if(isOut)
+        {
+            if(Input.GetKeyDown(KeyCode.Escape) || tutorialEnded) rollOutScroll();
+        }
     }
 
     public void rollInScroll(string text, Sprite image, int fontSize)
@@ -48,6 +52,7 @@ public class ScrollScript : MonoBehaviour
     public void rollOutScroll()
     {
         if (!isOut) return;
+        if (tutorialEnded) tutorialEnded = false;
         Time.timeScale = 1;
         animator.Play("ScrollRollOut");
         StartCoroutine(toggleOut());

@@ -28,6 +28,7 @@ public class Functions : MonoBehaviour
         SaveSystem.Load();
         AchivementScript.instance.UnlockAchivement("HELLBOUND_ENTRY");
         AudioListener.pause = false;
+        PauseScript.Paused = false;
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
         loadAudioSettings();

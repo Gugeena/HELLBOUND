@@ -97,7 +97,7 @@ public class StyleManager : MonoBehaviour
 
     private void Update()
     {
-        if(stylePoints != Mathf.RoundToInt(styleSlider.value) && shouldShow && stylePoints > 0 && stylePoints > styleSlider.value && globalSettings.information.visualizer == 1)
+        if(stylePoints != Mathf.RoundToInt(styleSlider.value) && shouldShow && stylePoints > 0 && stylePoints > styleSlider.value &&    globalSettings.information.visualizer == 1)
         {
             StartCoroutine(styleVisualizer());
         }
@@ -154,6 +154,7 @@ public class StyleManager : MonoBehaviour
 
     public IEnumerator styleVisualizer()
     {
+        if (isTutorial) yield break;
         shouldShow = false;
         int gain = (int)(stylePoints - styleSlider.value);
         gain = Mathf.Clamp(gain, 1, 99);
@@ -165,7 +166,7 @@ public class StyleManager : MonoBehaviour
 
     public IEnumerator Multiplicator(int multiple)
     {
-        if (!canMultiply || PlayerMovement.hasAscendedonce) yield break;
+        if (!canMultiply || PlayerMovement.hasAscendedonce || isTutorial) yield break;
         //canMultiply = false;
         GameObject toSpawn = LoopMultiplier;
         if (multiple == 1) toSpawn = RecklessMultiplier;

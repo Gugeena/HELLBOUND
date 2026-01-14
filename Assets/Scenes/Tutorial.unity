@@ -4353,7 +4353,7 @@ MonoBehaviour:
 
     Reach angelhood to face the
     exiled one.'
-  headerImage: {fileID: 21300000, guid: 353ce6e140b9543479cf469daae6557c, type: 3}
+  headerImage: {fileID: 21300000, guid: d3006418542a40446b2621270f1f526f, type: 3}
   fontSize: 143
 --- !u!4 &598452910
 Transform:
@@ -16935,6 +16935,7 @@ MonoBehaviour:
   scrollAnim: {fileID: 1817364401}
   isFirst: 1
   tutorialLock: 1
+  scrollScript: {fileID: 1817364402}
 --- !u!4 &1027812935
 Transform:
   m_ObjectHideFlags: 0
@@ -19600,7 +19601,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 7.38}
+  m_AnchoredPosition: {x: 0, y: 6.1}
   m_SizeDelta: {x: 115, y: 86}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1319273707
@@ -22443,6 +22444,7 @@ MonoBehaviour:
   - {fileID: 1076315200}
   isOut: 0
   canOpen: 1
+  tutorialEnded: 0
 --- !u!1 &1818579477
 GameObject:
   m_ObjectHideFlags: 0
@@ -35133,9 +35135,9 @@ MonoBehaviour:
   m_HandleRect: {fileID: 0}
   m_Direction: 2
   m_MinValue: 0
-  m_MaxValue: 30
+  m_MaxValue: 70
   m_WholeNumbers: 0
-  m_Value: 0
+  m_Value: 70
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public class spearScript : MonoBehaviour
@@ -74,10 +75,11 @@ public class spearScript : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         print("collision: " + collision.gameObject.name + ", " + collision.gameObject.tag);
-        if (collision.gameObject.name == "LLocation")
+        GameObject obj = collision.gameObject;
+        if (obj.CompareTag("llocation"))
         {
             tpcs.teleportCount++;
-            RLocation = GameObject.Find("RLOCATIONLOCATION").transform;
+            if (RLocation == null) RLocation = GameObject.Find("RLOCATIONLOCATION").transform;
             this.transform.position = new Vector3(RLocation.position.x - 2f, this.transform.position.y, 0);
             //shouldReturn = true;
             rb.gravityScale = 1f;
@@ -85,10 +87,10 @@ public class spearScript : MonoBehaviour
             boxCollider2D.isTrigger = false;
             return;
         }
-        else if (collision.gameObject.name == "RLocation")
+        else if (obj.CompareTag("rlocation"))
         {
             tpcs.teleportCount++;
-            LLocation = GameObject.Find("LLOCATIONLOCATION").transform;
+            if(LLocation == null) LLocation = GameObject.Find("LLOCATIONLOCATION").transform;
             this.transform.position = new Vector3(LLocation.position.x + 2f, this.transform.position.y, 0);
             rb.gravityScale = 1f;
             BoxCollider2D boxCollider2D = GetComponent<BoxCollider2D>();
@@ -98,26 +100,26 @@ public class spearScript : MonoBehaviour
         }
 
 
-        if (collision.gameObject.tag == "enemyorb" ||
-            collision.gameObject.name == "Hand_L" ||
-            collision.gameObject.name == "Hand_R" ||
-            collision.gameObject.name == "Leg_L" ||
-            collision.gameObject.name == "Leg_R" ||
-            collision.gameObject.name == "headPivot" ||
-            collision.gameObject.tag == "weaponPickup" ||
-            collision.gameObject.name == "square" ||
-            collision.gameObject.name == "Torso" ||
-            collision.gameObject.tag == "poison" ||
-            collision.gameObject.tag == "FireballP" ||
-            collision.gameObject.tag == "Fireball" ||
-            collision.gameObject.tag == "Explosion" ||
-            collision.gameObject.tag == "Log" ||
-            collision.gameObject.tag == "Crystal")
+        if ( obj.CompareTag("enemyorb") ||
+            obj.name == "Hand_L" ||
+            obj.name == "Hand_R" ||
+            obj.name == "Leg_L" ||
+            obj.name == "Leg_R" ||
+            obj.name == "headPivot" ||
+            obj.CompareTag("weaponPickup") ||
+            obj.name == "square" ||
+            obj.name == "Torso" ||
+            obj.CompareTag("poison") ||
+            obj.CompareTag("FireballP") ||
+            obj.CompareTag("Fireball") ||
+            obj.CompareTag("Explosion") ||
+            obj.CompareTag("Log") ||
+            obj.CompareTag("Crystal"))
         {
             return;
         }
 
-        if (collision.gameObject.layer == 8 && !hasexploded || collision.gameObject.layer == 3 && !hasexploded)
+        if (obj.layer == 8 && !hasexploded || obj.layer == 3 && !hasexploded)
         {
             Vector2 direction = collision.transform.position - transform.position;
             float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
@@ -136,7 +138,7 @@ public class spearScript : MonoBehaviour
 
     public void OnCollisionEnter2D(Collision2D collision)
     {
-        print("collision: " + collision.gameObject.name + ", " + collision.gameObject.tag);
+        GameObject obj = collision.gameObject;
         /*
         if (collision.gameObject.tag == "enemyorb" ||
           collision.gameObject.name == "Hand_L" ||
@@ -157,21 +159,23 @@ public class spearScript : MonoBehaviour
             return;
         }
         */
-        if (collision.gameObject.tag == "enemyorb" ||
-         collision.gameObject.tag == "weaponPickup" ||
-         collision.gameObject.name == "square" ||
-         collision.gameObject.tag == "poison" ||
-         collision.gameObject.tag == "FireballP" ||
-         collision.gameObject.tag == "Fireball" ||
-         collision.gameObject.tag == "Explosion" ||
-         collision.gameObject.tag == "Log" ||
-         collision.gameObject.tag == "Crystal")
+
+        if (obj.CompareTag("enemyorb") ||
+         obj.CompareTag("weaponPickup") ||
+         obj.name == "square" ||
+         obj.CompareTag("poison") ||
+         obj.CompareTag("FireballP") ||
+         obj.CompareTag("Fireball") ||
+         obj.CompareTag("Explosion") ||
+         obj.CompareTag("Log") ||
+         obj.CompareTag("Crystal"))
         {
             return;
         }
 
-        if (collision.gameObject.layer == 8 && !hasexploded || collision.gameObject.layer == 3 && !hasexploded)
+        if (obj.layer == 8 || obj.layer == 3 || obj.CompareTag("llocation") || obj.CompareTag("rlocation"))
         {
+            if (hasexploded) return;
             Vector2 direction = collision.transform.position - transform.position;
             float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
             transform.rotation = Quaternion.Euler(0f, 0f, angle - 90f);

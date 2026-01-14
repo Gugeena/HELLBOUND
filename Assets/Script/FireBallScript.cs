@@ -24,37 +24,38 @@ public class FireBallScript : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.name == "LLocation")
+        GameObject obj = collision.gameObject;
+        if (obj.CompareTag("llocation"))
         {
-            RLocation = GameObject.Find("RLOCATIONLOCATION").transform;
+            if (RLocation == null) RLocation = GameObject.Find("RLOCATIONLOCATION").transform;
             this.transform.position = new Vector3(RLocation.position.x - 0.3f, this.transform.position.y, this.transform.position.z);
             return;
         }
-        else if (collision.gameObject.name == "RLocation")
+        else if (obj.CompareTag("rlocation"))
         {
-            LLocation = GameObject.Find("LLOCATIONLOCATION").transform;
+            if(LLocation == null) LLocation = GameObject.Find("LLOCATIONLOCATION").transform;
             this.transform.position = new Vector3(LLocation.position.x + 0.3f, this.transform.position.y, this.transform.position.z);
             return;
         }
 
-        if (collision.gameObject.layer == 3 && collision.gameObject.name == "Ground" && isProjectile)
+        if (obj.layer == 3 && obj.name == "Ground" && isProjectile)
         {
             Instantiate(deathParticles, new Vector2(this.transform.position.x, this.transform.position.y - 0.5f), deathParticles.transform.rotation);
             //Instantiate(firePillar, new Vector2(this.transform.position.x, 1f), Quaternion.identity);
             Destroy(gameObject);
         }
-        else if (collision.gameObject.layer == 3 && !isProjectile)
+        else if (obj.layer == 3 && !isProjectile)
         {
             Instantiate(deathParticles, new Vector2(this.transform.position.x, this.transform.position.y + 0.25f), Quaternion.identity);
-            Quaternion rotation = collision.gameObject.name != "Ground" ? Quaternion.Euler(0, 0, 180)  : Quaternion.identity;
-            float y = collision.gameObject.name != "Ground" ? 0 : 1;
+            Quaternion rotation = obj.name != "Ground" ? Quaternion.Euler(0, 0, 180)  : Quaternion.identity;
+            float y = obj.name != "Ground" ? 0 : 1;
             Instantiate(firePillar, new Vector2(this.transform.position.x, y), rotation);
             Destroy(gameObject);
         }
-        else if (collision.gameObject.tag == "Player")
+        else if (obj.tag == "Player")
         {
             Instantiate(deathParticles, new Vector2(this.transform.position.x, this.transform.position.y - 0.25f), Quaternion.identity);
-            if(!isProjectile) Instantiate(firePillar, new Vector2(collision.gameObject.transform.position.x, 1f), Quaternion.identity);
+            if(!isProjectile) Instantiate(firePillar, new Vector2(obj.transform.position.x, 1f), Quaternion.identity);
             Destroy(gameObject);
         }
         /*

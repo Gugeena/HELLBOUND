@@ -23,7 +23,7 @@ public class TenthLayerOfHellScript : MonoBehaviour
         last = -1;
         stoned = false;
         shouldturnoffforawhile = false;
-        //StartCoroutine(EventManager());
+        StartCoroutine(EventManager());
     }
 
     private void OnEnable()
@@ -34,7 +34,7 @@ public class TenthLayerOfHellScript : MonoBehaviour
         last = -1;
         stoned = false;
         //shouldturnoffforawhile = false;
-        StartCoroutine(EventManager());
+        //StartCoroutine(EventManager());
     }
 
     private void OnDisable()
@@ -48,6 +48,7 @@ public class TenthLayerOfHellScript : MonoBehaviour
         yield return null;
         while (true)
         {
+            print("sami sami");
             if (!alreadyin && !PlayerMovement.hasdiedforeverybody && !shouldturnoffforawhile)
             {
                 int random;
@@ -75,8 +76,8 @@ public class TenthLayerOfHellScript : MonoBehaviour
         {
             if (shouldturnoffforawhile)
             {
+                if (lastplayedaudio != null && lastplayedaudio.isPlaying) lastplayedaudio.Stop();
                 alreadyin = false;
-                lastplayedaudio.Stop();
                 yield break;
             }
             yield return new WaitForSeconds(0.25f);
@@ -91,7 +92,7 @@ public class TenthLayerOfHellScript : MonoBehaviour
     { 
         if (shouldturnoffforawhile)
         {
-            lastplayedaudio.Stop();
+            if (lastplayedaudio != null && lastplayedaudio.isPlaying) lastplayedaudio.Stop();
             alreadyin = false;
             yield break;
         }
@@ -118,7 +119,7 @@ public class TenthLayerOfHellScript : MonoBehaviour
         {
             if (shouldturnoffforawhile)
             {
-                lastplayedaudio.Stop();
+                if(lastplayedaudio != null && lastplayedaudio.isPlaying) lastplayedaudio.Stop();
                 alreadyin = false;
                 yield break;
             }
@@ -162,6 +163,6 @@ public class TenthLayerOfHellScript : MonoBehaviour
     private IEnumerator SoundTurnOff(float time)
     {
         yield return new WaitForSeconds(time);
-        lastplayedaudio.Stop();
+        if (lastplayedaudio != null && lastplayedaudio.isPlaying) lastplayedaudio.Stop(); lastplayedaudio.Stop();
     }
 }

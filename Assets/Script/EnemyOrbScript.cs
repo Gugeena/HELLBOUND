@@ -38,9 +38,10 @@ public class EnemyOrbScript : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.tag == "enemyorb") return;
+        GameObject obj = collision.gameObject;
+        if (obj.tag == "enemyorb") return;
 
-        if (!(collision.gameObject.tag == "Enemy" || collision.gameObject.layer == 8) || collision.gameObject.tag == "mfHitbox" || collision.gameObject.tag == "meleehitbox")
+        if (!(obj.tag == "Enemy" || obj.layer == 8) || obj.tag == "mfHitbox" || obj.tag == "meleehitbox")
         {
             Destroy(gameObject);
         }
@@ -48,7 +49,8 @@ public class EnemyOrbScript : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (!(collision.gameObject.tag == "Enemy" || collision.gameObject.layer == 8))
+        GameObject obj = collision.gameObject;
+        if (!(obj.tag == "Enemy" || obj.layer == 8))
         {
             Destroy(gameObject);
         }

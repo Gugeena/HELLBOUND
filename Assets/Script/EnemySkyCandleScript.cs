@@ -363,16 +363,17 @@ public class EnemySkyCandleScript : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag("meleehitbox"))
+        GameObject obj = collision.gameObject;
+        if (obj.CompareTag("meleehitbox"))
         {
             damage(1);
         }
 
-        if (collision.gameObject.CompareTag("mfHitbox"))
+        if (obj.CompareTag("mfHitbox"))
         {
             teleportCount = RetrieveTeleportCount(collision);
             damage(2);
-            arrowScript arrowscript = collision.gameObject.GetComponent<arrowScript>();
+            arrowScript arrowscript = obj.GetComponent<arrowScript>();
             if (arrowscript != null)
             {
                 arrowscript.increaseKillCount();
@@ -381,16 +382,16 @@ public class EnemySkyCandleScript : MonoBehaviour
             //else if (collision.gameObject.name.StartsWith("Explosion")) hammed = true;
         }
 
-        if (collision.gameObject.CompareTag("Crystal") || collision.gameObject.CompareTag("poison") || collision.gameObject.CompareTag("Fireball") || collision.gameObject.CompareTag("FireballP")) StartCoroutine(death());
+        if (obj.CompareTag("Crystal") || obj.CompareTag("poison") || obj.CompareTag("Fireball") || obj.CompareTag("FireballP")) StartCoroutine(death());
 
         //if (collision.gameObject.name.StartsWith("FirePillar")) StartCoroutine(death());
 
-        if (collision.gameObject.CompareTag("llocation1"))
+        if (obj.CompareTag("llocation1"))
         {
             this.transform.position = new Vector3(RLLOCATION.position.x + 0.4f, this.transform.position.y, 0);
             canMove = true;
         }
-        else if (collision.gameObject.CompareTag("rlocation1"))
+        else if (obj.CompareTag("rlocation1"))
         {
             this.transform.position = new Vector3(LLOCATION.position.x - 0.4f, this.transform.position.y, 0);
             canMove = true;

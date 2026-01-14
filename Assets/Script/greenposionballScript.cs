@@ -27,14 +27,15 @@ public class greenposionballScript : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.gameObject.layer == 8 && random == 0)
+        GameObject obj = collision.gameObject;
+        if(obj.layer == 8 && random == 0)
         {
             GameObject particle = Instantiate(deathParticles, new Vector2(this.transform.position.x, this.transform.position.y - 0.70f), deathParticles.transform.rotation);
             Renderer renderer = particle.GetComponent<Renderer>();
             renderer.sortingOrder = -601;
             Destroy(gameObject);
         }
-        else if(collision.gameObject.layer == 3 && collision.gameObject.name != "Movable")
+        else if(obj.layer == 3 && obj.name != "Movable")
         {
             Instantiate(deathParticles, new Vector2(this.transform.position.x, this.transform.position.y - 0.5f), deathParticles.transform.rotation);
             Destroy(gameObject);

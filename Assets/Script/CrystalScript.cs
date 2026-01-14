@@ -37,39 +37,39 @@ public class CrystalScript : MonoBehaviour
             Destroy(gameObject);
         }
         */
+        GameObject obj = collision.gameObject;
 
-        if (collision.gameObject.name == "LLocation")
+        if (obj.tag == "llocation")
         {
-            RLocation = GameObject.Find("RLOCATIONLOCATION").transform;
+            if(RLocation == null) RLocation = GameObject.Find("RLOCATIONLOCATION").transform;
             this.transform.position = new Vector3(RLocation.position.x, this.transform.position.y, this.transform.position.z);
             return;
         }
-        else if (collision.gameObject.name == "RLocation")
+        else if (obj.tag == "rlocation")
         {
-            LLocation = GameObject.Find("LLOCATIONLOCATION").transform;
+            if (LLocation == null) LLocation = GameObject.Find("LLOCATIONLOCATION").transform;
             this.transform.position = new Vector3(LLocation.position.x, this.transform.position.y, this.transform.position.z);
             return;
         }
 
-        if (collision.gameObject.tag == "enemyorb" ||
-          collision.gameObject.name == "Hand_L" ||
-          collision.gameObject.name == "Hand_R" ||
-          collision.gameObject.name == "Leg_L" ||
-          collision.gameObject.name == "Leg_R" ||
-          collision.gameObject.name == "headPivot" ||
-          collision.gameObject.tag == "weaponPickup" ||
-          collision.gameObject.name == "square" ||
-          collision.gameObject.name == "Torso" ||
-          collision.gameObject.tag == "poison" || 
-          collision.gameObject.tag == "Fireball" ||
-          collision.gameObject.tag == "FireballP" ||
-          collision.gameObject.tag == "mfHitbox")
+        if (obj.CompareTag("enemyorb") ||
+          obj.name == "Hand_L" ||
+          obj.name == "Hand_R" ||
+          obj.name == "Leg_L" ||
+          obj.name == "Leg_R" ||
+          obj.name == "headPivot" ||
+          obj.CompareTag("weaponPickup") ||
+          obj.name == "square" ||
+          obj.name == "Torso" ||
+          obj.CompareTag("poison") ||
+          obj.CompareTag("Fireball") ||
+          obj.CompareTag("FireballP") ||
+          obj.CompareTag("mfHitbox"))
         {
-
-            return;
+           return;
         }
 
-        if (collision.gameObject.layer == 8 && !shouldBreakToPlatform)
+        if (obj.layer == 8 && !shouldBreakToPlatform)
         {
             return;
         }
@@ -78,7 +78,7 @@ public class CrystalScript : MonoBehaviour
         {
             hasExploded = true;
             float adder = 0f;
-            if (collision.gameObject.layer == 3 && collision.gameObject.name != "Movable")
+            if (obj.layer == 3 && obj.name != "Movable")
             {
                 adder = 1f;
             }

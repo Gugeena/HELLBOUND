@@ -74,7 +74,8 @@ public class arrowScript : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.layer == 3)
+        GameObject obj = collision.gameObject;
+        if (obj.layer == 3)
         {
             landed = true;
             rb.simulated = false;
@@ -83,7 +84,7 @@ public class arrowScript : MonoBehaviour
             StartCoroutine(goBack());
         }
 
-        if (collision.gameObject.name == "LLocation")
+        if (obj.CompareTag("llocation"))
         {
             if (tpcs.teleportCount >= 1) killcount = 0;
             Vector2 vel = rb.linearVelocity;
@@ -91,7 +92,7 @@ public class arrowScript : MonoBehaviour
             tpcs.teleportCount++;
             rb.linearVelocity = vel;
         }
-        else if (collision.gameObject.name == "RLocation")
+        else if (obj.CompareTag("rlocation"))
         {
             if (tpcs.teleportCount >= 1) killcount = 0;
             Vector2 vel = rb.linearVelocity;

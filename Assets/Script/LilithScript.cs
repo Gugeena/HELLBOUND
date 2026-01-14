@@ -904,12 +904,13 @@ public class LilithScript : MonoBehaviour
 
     public void HandleHit(Collider2D collision)
     {
-        if (collision.gameObject.tag == "mfHitbox" && !isDead && !collision.gameObject.name.StartsWith("motherfuckr"))
+        GameObject obj = collision.gameObject;
+        if (obj.CompareTag("mfHitbox") && !isDead && !obj.name.StartsWith("motherfuckr"))
         {
             washitbyspear = false;
             float timer = 0.1f;
             string name = collision.gameObject.name.ToLower();
-            if (collision.gameObject.name == "meleehitbox") StartCoroutine(damage(RetrieveTeleportCount(collision), 0.2f, timer));
+            if (obj.name == "meleehitbox") StartCoroutine(damage(RetrieveTeleportCount(collision), 0.2f, timer));
             else
             {
                 float damagexz = 0;
@@ -929,7 +930,7 @@ public class LilithScript : MonoBehaviour
             }
         }
 
-        if (collision.gameObject.name.StartsWith("motherfuckr") && canBeStunned)
+        if (obj.name.StartsWith("motherfuckr") && canBeStunned)
         {
             if (collision.gameObject.transform.position.x > this.transform.position.x) isRight = true;
             else isRight = false;

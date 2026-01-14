@@ -138,18 +138,19 @@ public class mfScript : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.name == "LLocation")
+        GameObject obj = collision.gameObject;
+        if (obj.CompareTag("llocation"))
         {
             rb.MovePosition(new Vector2(SidePortalScript.RLocation.position.x - 0.25f, transform.position.y));
             StartCoroutine(teleport());
         }
-        else if (collision.gameObject.name == "RLocation")
+        else if (obj.CompareTag("rlocation"))
         {
             rb.MovePosition(new Vector2(SidePortalScript.LLocation.position.x + 0.25f, transform.position.y));
             StartCoroutine(teleport());
         }
 
-        if (collision.gameObject.tag == "LilithGravityBox")
+        if (obj.CompareTag("LilithGravityBox"))
         {
             bool canBeStunned = GameObject.Find("Lilith(Clone)").GetComponent<LilithScript>().canBeStunned;
             if (!canBeStunned) return;

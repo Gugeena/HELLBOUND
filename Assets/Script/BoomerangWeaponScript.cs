@@ -103,24 +103,24 @@ public class BoomerangWeaponScript : MonoBehaviour
             return;
         }
 
-        if (obj.tag == "enemyorb" ||
+        if (obj.CompareTag("enemyorb") ||
             obj.layer == 8 ||
             obj.name == "Hand_L" ||
             obj.name == "Hand_R" ||
             obj.name == "Leg_L" ||
             obj.name == "Leg_R" ||
             obj.name == "headPivot" ||
-            obj.tag == "weaponPickup" ||
+            obj.CompareTag("weaponPickup") ||
             obj.name == "square" ||
             obj.name == "Square" ||
             obj.name == "Torso" ||
-            obj.tag == "poison" ||
-            obj.tag == "FireballP" ||
-            obj.tag == "Fireball" ||
-            obj.tag == "Explosion" ||
-            obj.tag == "Log" ||
-            obj.tag == "Crystal" ||
-            obj.tag == "note")
+            obj.CompareTag("poison") ||
+            obj.CompareTag("FireballP") ||
+            obj.CompareTag("Fireball") ||
+            obj.CompareTag("Explosion") ||
+            obj.CompareTag("Log") ||
+            obj.CompareTag("Crystal") ||
+            obj.CompareTag("note"))
         {
             return;
         }

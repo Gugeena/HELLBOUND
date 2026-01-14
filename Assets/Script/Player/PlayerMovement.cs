@@ -243,6 +243,7 @@ public class PlayerMovement : MonoBehaviour
     public bool isFirst, tutorialLock;
     bool hasheard = false;
     bool canEnd = true;
+    public ScrollScript scrollScript;
 
     // Start is called before the first frame update
     void Start()
@@ -268,10 +269,12 @@ public class PlayerMovement : MonoBehaviour
 
             doBow = true;
             trapped = true;
+            tutorialLock = true;
             rb.simulated = false;
             anim.SetBool("trapped", true);
             anim.Play("player_chained");
         }
+        else tutorialLock = false;
     }
 
     void variablesetting()
@@ -1271,7 +1274,7 @@ public class PlayerMovement : MonoBehaviour
             mjolnir.SetActive(false);
             anim.SetBool("shouldChargeIn", false);
 
-            if (doBow)
+            if (doBow && tutorialLock)
             {
                 bowScene = true;
                 doBow = false;
@@ -1513,7 +1516,7 @@ public class PlayerMovement : MonoBehaviour
             globalSettings.information.isFirst = 0;
         }
         SaveSystem.Save(globalSettings);
-
+        scrollScript.tutorialEnded = true;
         cineAnim.Play("cinecam_endd");
         canvasAnimator.Play("hpComeUp");
         yield return new WaitForSeconds(3f);
