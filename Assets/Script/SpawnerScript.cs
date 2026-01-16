@@ -35,6 +35,7 @@ public class SpawnerScript : MonoBehaviour
         spawningcount = 1;
         PauseScript.kill = 0;
         lastProccesedamountofkills = -1;
+        TenthLayerOfHellScript.stoned = false;
         StartCoroutine(theCoolerDanielSpawner());
     }
 

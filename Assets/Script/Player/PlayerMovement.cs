@@ -253,7 +253,7 @@ public class PlayerMovement : MonoBehaviour
         findeverythingatspawn();
         variablesetting();
 
-        if (!isAngelic) StartCoroutine(pickUpWeapon(0, "fists"));
+        if (!isAngelic) StartCoroutine(pickUpWeapon(1, "fists"));
         else StartCoroutine(beInvincbleforawhile());
         //else LilithScript.lilithDeathEvent += EnterFinalAscension;
 
@@ -612,8 +612,8 @@ public class PlayerMovement : MonoBehaviour
 
     private IEnumerator breakChains()
     {
-        canMove = false;
-        canPunch = false;
+        //canMove = false;
+        //canPunch = false;
         rb.simulated = true;
         trapped = false;
         anim.SetBool("trapped", false);

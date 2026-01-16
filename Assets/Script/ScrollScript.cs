@@ -17,20 +17,21 @@ public class ScrollScript : MonoBehaviour
     public static bool isIn = false;
     public bool canOpen = true;
     public bool tutorialEnded;
-
+    public bool isGoingOut;
     private void Awake()
     {
         instance = this;
         isOut = false;
         animator = GetComponent<Animator>();
         isIn = false;
+        isGoingOut = false;
     }
 
     private void Update()
     {
         if(isOut)
         {
-            if(Input.GetKeyDown(KeyCode.Escape) || tutorialEnded) rollOutScroll();
+            if(Input.GetKeyDown(KeyCode.Escape) || tutorialEnded && !isGoingOut) rollOutScroll();
         }
     }
 
@@ -52,6 +53,7 @@ public class ScrollScript : MonoBehaviour
     public void rollOutScroll()
     {
         if (!isOut) return;
+        isGoingOut = true;
         if (tutorialEnded) tutorialEnded = false;
         Time.timeScale = 1;
         animator.Play("ScrollRollOut");
@@ -62,6 +64,7 @@ public class ScrollScript : MonoBehaviour
     {
         yield return new WaitForSecondsRealtime(1.5f);
         isOut = !isOut;
+        isGoingOut = false; 
         if (isOut) yield break;
         yield return new WaitForSeconds(1f);
         scrollAnimator[0].Play("ScrollActualFadeIn", 1);

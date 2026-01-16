@@ -139,12 +139,12 @@ public class mfScript : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         GameObject obj = collision.gameObject;
-        if (obj.CompareTag("llocation"))
+        if (obj.CompareTag("llocation1"))
         {
             rb.MovePosition(new Vector2(SidePortalScript.RLocation.position.x - 0.25f, transform.position.y));
             StartCoroutine(teleport());
         }
-        else if (obj.CompareTag("rlocation"))
+        else if (obj.CompareTag("rlocation1"))
         {
             rb.MovePosition(new Vector2(SidePortalScript.LLocation.position.x + 0.25f, transform.position.y));
             StartCoroutine(teleport());

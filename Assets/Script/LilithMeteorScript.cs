@@ -48,7 +48,13 @@ public class LilithMeteorScript : MonoBehaviour
         sSelf = GetComponent<ShakeSelfScript>();
         StartCoroutine(cum.shake());
         yield return new WaitForSeconds(0.5f);
-        target = GameObject.Find("Tracker");
+        int random = UnityEngine.Random.RandomRange(0, 4);
+        if(random == 0) target = GameObject.Find("Tracker");
+        else if (random == 1) target = GameObject.Find("Tracker1");
+        else if (random == 2) target = GameObject.Find("Tracker2");
+        else if (random == 3) target = GameObject.Find("Tracker3");
+        else target = GameObject.Find("Tracker4");
+        crack = GameObject.Find("Crack");
         rb = GetComponent<Rigidbody2D>();
         dir = target.transform.position - this.transform.position;
         spawnbacklocation = GameObject.Find("LLOCATIONLOCATION (2)");
@@ -60,7 +66,7 @@ public class LilithMeteorScript : MonoBehaviour
     {
         if (shouldstart)
         {
-            rb.linearVelocity = dir * speed;
+            if(rb != null && dir != null && speed != null) rb.linearVelocity = dir * speed;
             StartCoroutine(speedBuildUp());
         }
     }

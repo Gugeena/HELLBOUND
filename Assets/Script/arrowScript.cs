@@ -10,7 +10,7 @@ public class arrowScript : MonoBehaviour
     private bool landed = false;
     private bool back = false;
 
-
+    public static bool hasShot = false;
     [SerializeField]
     private float returnSpeed = 20;
     [SerializeField]
@@ -86,9 +86,10 @@ public class arrowScript : MonoBehaviour
 
         if (obj.CompareTag("llocation"))
         {
+            hasShot = true;
             if (tpcs.teleportCount >= 1) killcount = 0;
             Vector2 vel = rb.linearVelocity;
-            rb.MovePosition(new Vector2(SidePortalScript.RLocation.position.x, transform.position.y));
+            //rb.MovePosition(new Vector2(SidePortalScript.RLocation.position.x, transform.position.y));
             tpcs.teleportCount++;
             rb.linearVelocity = vel;
         }
