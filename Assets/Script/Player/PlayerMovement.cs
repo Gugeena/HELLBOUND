@@ -253,7 +253,7 @@ public class PlayerMovement : MonoBehaviour
         findeverythingatspawn();
         variablesetting();
 
-        if (!isAngelic) StartCoroutine(pickUpWeapon(1, "fists"));
+        if (!isAngelic) StartCoroutine(pickUpWeapon(0, "fists"));
         else StartCoroutine(beInvincbleforawhile());
         //else LilithScript.lilithDeathEvent += EnterFinalAscension;
 

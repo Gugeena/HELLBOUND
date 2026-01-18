@@ -86,10 +86,9 @@ public class arrowScript : MonoBehaviour
 
         if (obj.CompareTag("llocation"))
         {
-            hasShot = true;
             if (tpcs.teleportCount >= 1) killcount = 0;
             Vector2 vel = rb.linearVelocity;
-            //rb.MovePosition(new Vector2(SidePortalScript.RLocation.position.x, transform.position.y));
+            rb.MovePosition(new Vector2(SidePortalScript.RLocation.position.x, transform.position.y));
             tpcs.teleportCount++;
             rb.linearVelocity = vel;
         }

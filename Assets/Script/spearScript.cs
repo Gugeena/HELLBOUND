@@ -80,7 +80,8 @@ public class spearScript : MonoBehaviour
         {
             tpcs.teleportCount++;
             if (RLocation == null) RLocation = GameObject.Find("RLOCATIONLOCATION").transform;
-            this.transform.position = new Vector3(RLocation.position.x - 2f, this.transform.position.y, 0);
+            // this.transform.position = new Vector3(RLocation.position.x - 2f, this.transform.position.y, 0);
+            this.transform.position = new Vector3(RLocation.position.x, this.transform.position.y, 0);
             //shouldReturn = true;
             rb.gravityScale = 1f;
             BoxCollider2D boxCollider2D = GetComponent<BoxCollider2D>();
@@ -91,7 +92,8 @@ public class spearScript : MonoBehaviour
         {
             tpcs.teleportCount++;
             if(LLocation == null) LLocation = GameObject.Find("LLOCATIONLOCATION").transform;
-            this.transform.position = new Vector3(LLocation.position.x + 2f, this.transform.position.y, 0);
+            // this.transform.position = new Vector3(LLocation.position.x + 2f, this.transform.position.y, 0);
+            this.transform.position = new Vector3(LLocation.position.x, this.transform.position.y, 0);
             rb.gravityScale = 1f;
             BoxCollider2D boxCollider2D = GetComponent<BoxCollider2D>();
             boxCollider2D.isTrigger = false;

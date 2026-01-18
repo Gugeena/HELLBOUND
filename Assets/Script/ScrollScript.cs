@@ -47,7 +47,7 @@ public class ScrollScript : MonoBehaviour
         headerImage.sprite = image;
         // Time.timeScale = 0;
         animator.Play("ScrollRollIn");
-        StartCoroutine(toggleOut());
+        StartCoroutine(isOutTruer());
     }
 
     public void rollOutScroll()
@@ -60,10 +60,16 @@ public class ScrollScript : MonoBehaviour
         StartCoroutine(toggleOut());
     }
 
+    private IEnumerator isOutTruer()
+    {
+        yield return new WaitForSeconds(1.5f);
+        isOut = true;
+    }
+
     private IEnumerator toggleOut()
     {
+        isOut = false;
         yield return new WaitForSecondsRealtime(1.5f);
-        isOut = !isOut;
         isGoingOut = false; 
         if (isOut) yield break;
         yield return new WaitForSeconds(1f);
