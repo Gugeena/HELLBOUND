@@ -187,6 +187,10 @@ public class StyleManager : MonoBehaviour
     {
         while (true)
         {
+            if (Input.GetKeyDown(KeyCode.P))
+            {
+                Debug.Log("hasascended: " + PlayerMovement.hasAscendedonce + ", isAngelic: " + isAngelic + ", stylePoints: " + stylePoints + ", shouldturnoff: " + shouldTurnOff + ", active: " + Ascend.activeSelf);
+            }
             while (!PlayerMovement.hasAscendedonce)
             {
                 if (isAngelic && stylePoints >= 70 && !shouldTurnOff)
