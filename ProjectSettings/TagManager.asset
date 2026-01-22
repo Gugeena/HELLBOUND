@@ -34,6 +34,7 @@ TagManager:
   - rlocation1
   - note
   - bodyParts
+  - pushUp
   layers:
   - Default
   - TransparentFX

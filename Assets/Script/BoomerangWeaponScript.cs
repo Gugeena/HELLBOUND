@@ -120,7 +120,8 @@ public class BoomerangWeaponScript : MonoBehaviour
             obj.CompareTag("Explosion") ||
             obj.CompareTag("Log") ||
             obj.CompareTag("Crystal") ||
-            obj.CompareTag("note"))
+            obj.CompareTag("note") ||
+            obj.CompareTag("pushUp"))
         {
             return;
         }

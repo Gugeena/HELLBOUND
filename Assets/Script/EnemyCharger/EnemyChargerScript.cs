@@ -14,7 +14,7 @@ public class EnemyChargerScript : MonoBehaviour
     public bool canAttack = true;
     public float detectiondistance = 8f;
     public Animator animator;
-    public bool canMove = true;
+    public bool canMove = true, pushedUp;
     Rigidbody2D rbprint;
     float hp = 2f;
     public GameObject particles;
@@ -122,7 +122,7 @@ public class EnemyChargerScript : MonoBehaviour
 
         if (distance > stopDistance)
         {
-            if (canMove && !PlayerMovement.hasdiedforeverybody)
+            if (canMove && !PlayerMovement.hasdiedforeverybody && !pushedUp)
             {
                 animator.SetBool("shouldRun", true);
                 animator.SetBool("shouldFein", false);
@@ -196,7 +196,7 @@ public class EnemyChargerScript : MonoBehaviour
                 animator.SetBool("shouldFein", false);
                 StartCoroutine(attack());
             }
-            else if ((int)player.transform.position.y != (int)this.transform.position.y)
+            else if ((int)player.transform.position.y != (int)this.transform.position.y && !pushedUp)
             {
                 animator.SetBool("shouldRun", false);
                 animator.SetBool("shouldAttack", false);
@@ -212,6 +212,13 @@ public class EnemyChargerScript : MonoBehaviour
         if (PlayerMovement.hasdiedforeverybody && canMove)
         {
             canMove = false;
+            animator.SetBool("shouldRun", false);
+            animator.SetBool("shouldAttack", false);
+            animator.SetBool("shouldFein", true);
+        }
+
+        if(pushedUp && canMove)
+        {
             animator.SetBool("shouldRun", false);
             animator.SetBool("shouldAttack", false);
             animator.SetBool("shouldFein", true);
@@ -311,8 +318,26 @@ public class EnemyChargerScript : MonoBehaviour
         }
         if (playerScript.shouldGainStyle && !PlayerMovement.hasdiedforeverybody)
         {
-            if (teleportCount == 0) StyleManager.instance.growStyle(2);
-            else if (teleportCount > 0) StyleManager.instance.growStyle(3);
+            int growth = 1;
+            if (teleportCount > 0)
+            {
+                growth += teleportCount;
+                StyleManager.instance.undisputed(0);
+            }
+
+            if (playerScript.hp <= 30)
+            {
+                StyleManager.instance.undisputed(1);
+                growth += 1;
+            }
+
+            if(pushedUp)
+            {
+                StyleManager.instance.undisputed(5);
+                growth += 1;
+            }
+
+            StyleManager.instance.growStyle(growth);
         }
         canMove = false;
         canAttack = false;
@@ -373,7 +398,7 @@ public class EnemyChargerScript : MonoBehaviour
         if (PlayerMovement.stopAttacking) yield break;
         float pitch = Random.Range(0.8f, 1.01f);
         audioManager.instance.playAudio(attackSound, 0.55f, pitch, transform, audioManager.instance.sfx);
-        rb.linearVelocity = Vector2.zero;
+        if(!pushedUp) rb.linearVelocity = Vector2.zero;
         yield return new WaitForSeconds(0.4f);
         attackHitbox.SetActive(true);
         yield return new WaitForSeconds(0.2f);
@@ -452,6 +477,18 @@ public class EnemyChargerScript : MonoBehaviour
             else if (collision.gameObject.name.StartsWith("Explosion")) hammed = true;
         }
 
+        if (!stoned && collision.gameObject.CompareTag("pushUp"))
+        {
+            pushUpScript pus = collision.gameObject.GetComponent<pushUpScript>();
+            if (pus.pushUp == 0)
+            {
+                pus.pushUp++;
+                rb.linearVelocity = Vector2.zero;
+                rb.AddForce(transform.up * (300 * 1000));
+                pushedUp = true;
+            }
+        }
+
         if (collision.gameObject.CompareTag("Crystal") || collision.gameObject.CompareTag("poison") || collision.gameObject.CompareTag("Fireball") || collision.gameObject.CompareTag("FireballP")) StartCoroutine(death());
 
         //if (collision.gameObject.CompareTag("llocation")) this.transform.position = new Vector3(RLLOCATION.position.x, this.transform.position.y, 0);
@@ -468,7 +505,11 @@ public class EnemyChargerScript : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.layer == 3) isGrounded = true;
+        if (collision.gameObject.layer == 3)
+        {
+            isGrounded = true;
+            pushedUp = false;
+        }
 
         if (collision.gameObject.CompareTag("meleehitbox")) damage(1);
         else if (collision.gameObject.CompareTag("mfHitbox"))

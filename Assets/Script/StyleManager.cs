@@ -72,7 +72,7 @@ public class StyleManager : MonoBehaviour
 
     public bool canMultiply = true;
 
-    public GameObject LoopMultiplier, RecklessMultiplier, lawnmowerMultiplier, mayhemultiplier, richochetmultiplier;
+    public GameObject LoopMultiplier, RecklessMultiplier, lawnmowerMultiplier, mayhemultiplier, richochetmultiplier, aerialMultiplier;
 
     public bool isTutorial;
 
@@ -173,6 +173,7 @@ public class StyleManager : MonoBehaviour
         else if (multiple == 2) toSpawn = lawnmowerMultiplier;
         else if (multiple == 3) toSpawn = mayhemultiplier;
         else if (multiple == 4) toSpawn = richochetmultiplier;
+        else if (multiple == 5) toSpawn = aerialMultiplier;
         Instantiate(toSpawn, multiplierLocation.transform.position, Quaternion.identity, Canvas.transform);
         yield return new WaitForSeconds(0.2f);
         canMultiply = true;
@@ -187,10 +188,12 @@ public class StyleManager : MonoBehaviour
     {
         while (true)
         {
+            /*
             if (Input.GetKeyDown(KeyCode.P))
             {
                 Debug.Log("hasascended: " + PlayerMovement.hasAscendedonce + ", isAngelic: " + isAngelic + ", stylePoints: " + stylePoints + ", shouldturnoff: " + shouldTurnOff + ", active: " + Ascend.activeSelf);
             }
+            */
             while (!PlayerMovement.hasAscendedonce)
             {
                 if (isAngelic && stylePoints >= 70 && !shouldTurnOff)

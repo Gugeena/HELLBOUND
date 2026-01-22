@@ -64,7 +64,8 @@ public class CrystalScript : MonoBehaviour
           obj.CompareTag("poison") ||
           obj.CompareTag("Fireball") ||
           obj.CompareTag("FireballP") ||
-          obj.CompareTag("mfHitbox"))
+          obj.CompareTag("mfHitbox") ||
+          obj.CompareTag("pushUp"))
         {
            return;
         }

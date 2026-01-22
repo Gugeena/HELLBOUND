@@ -14,17 +14,19 @@ public class KeyBindManagerScript : MonoBehaviour
     public static KeyCode jumpKey = KeyCode.Space;
     public static KeyCode heavyKey = KeyCode.Mouse1;
     public static KeyCode DropKey = KeyCode.Q;
+    public static KeyCode slideKey = KeyCode.LeftControl;
 
     public InputField inputfieldDash;
     public InputField inputfieldAttack;
     public InputField inputfieldJump;
     public InputField inputfieldHeavy;
     public InputField inputfieldDrop;
+    public InputField inputfieldSlide;
 
     public float shortKeyWidth = 160f;
     public float longKeyWidth = 200f;
 
-    public GameObject GlowJump, GlowDash, GlowAttack, GlowHeavy, GlowDrop;
+    public GameObject GlowJump, GlowDash, GlowAttack, GlowHeavy, GlowDrop, GlowSlide;
 
     /*
     private float pivotXJump = -4.2f;
@@ -73,6 +75,10 @@ public class KeyBindManagerScript : MonoBehaviour
         if (inputfieldHeavy.text == string.Empty)
         { GlowHeavy.SetActive(false); }
         else { GlowHeavy.SetActive(true) ; }
+
+        if (inputfieldSlide.text == string.Empty)
+        { GlowSlide.SetActive(false); }
+        else { GlowSlide.SetActive(true); }
     }
 
     private void DetectKeyInput()
@@ -130,6 +136,11 @@ public class KeyBindManagerScript : MonoBehaviour
                                 inputfieldDrop.text = "N/A";
                                 DropKey = KeyCode.None;
                             }
+                            else if (inputfieldSlide.isFocused)
+                            {
+                                inputfieldSlide.text = "N/A";
+                                slideKey = KeyCode.None;
+                            }
                             EventSystem.current.SetSelectedGameObject(null);
                             return;
                         }
@@ -143,6 +154,8 @@ public class KeyBindManagerScript : MonoBehaviour
                             SetHeavyKey(key);
                         else if (inputfieldDrop.isFocused)
                             setDropKey(key);
+                        else if (inputfieldSlide.isFocused)
+                            SetSlideKey(key);
                         EventSystem.current.SetSelectedGameObject(null);
                     }
 
@@ -178,7 +191,12 @@ public class KeyBindManagerScript : MonoBehaviour
                             DropKey = KeyCode.None;
                             inputfieldHeavy.placeholder.gameObject.SetActive(false);
                         }
-
+                        else if (inputfieldSlide.isFocused)
+                        {
+                            inputfieldSlide.text = string.Empty;
+                            slideKey = KeyCode.None;
+                            inputfieldSlide.placeholder.gameObject.SetActive(false);
+                        }
                     }
                 }
             }
@@ -192,6 +210,16 @@ public class KeyBindManagerScript : MonoBehaviour
         inputfieldDash.text = keyDisplay;
         AdjustInputFieldWidth(inputfieldDash, keyDisplay);
         inputfieldDash.ForceLabelUpdate();
+        SaveKeyBindings();
+    }
+
+    private void SetSlideKey(KeyCode key)
+    {
+        slideKey = key;
+        string keyDisplay = KeyToString(key);
+        inputfieldSlide.text = keyDisplay;
+        AdjustInputFieldWidth(inputfieldSlide, keyDisplay);
+        inputfieldSlide.ForceLabelUpdate();
         SaveKeyBindings();
     }
 
@@ -244,6 +272,7 @@ public class KeyBindManagerScript : MonoBehaviour
         globalsettings.keybinds.SKey = (int)heavyKey;
         globalsettings.keybinds.DRKey = (int)DropKey;
         globalsettings.keybinds.DSHKey = (int)dashKey;
+        globalsettings.keybinds.SLDKey = (int)slideKey;
 
         SaveSystem.Save(globalsettings);
     }
@@ -257,29 +286,33 @@ public class KeyBindManagerScript : MonoBehaviour
         jumpKey = (KeyCode)globalsettings.keybinds.JKey;
         heavyKey = (KeyCode)globalsettings.keybinds.SKey;
         DropKey = (KeyCode)globalsettings.keybinds.DRKey;
+        slideKey = (KeyCode)globalsettings.keybinds.SLDKey;
 
         string dashDisplay = KeyToString(dashKey);
         string attackDisplay = KeyToString(attackKey);
         string jumpDisplay = KeyToString(jumpKey);
         string HeavyDisplay = KeyToString(heavyKey);
         string DropDisplay = KeyToString(DropKey);
+        string slideDisplay = KeyToString(slideKey);
 
         inputfieldDash.text = dashDisplay;
         inputfieldAttack.text = attackDisplay;
         inputfieldJump.text = jumpDisplay;
         inputfieldHeavy.text = HeavyDisplay;
         inputfieldDrop.text = DropDisplay;
+        inputfieldSlide.text = slideDisplay;    
 
         AdjustInputFieldWidth(inputfieldDash, dashDisplay);
         AdjustInputFieldWidth(inputfieldAttack, attackDisplay);
         AdjustInputFieldWidth(inputfieldJump, jumpDisplay);
         AdjustInputFieldWidth(inputfieldHeavy, HeavyDisplay);
         AdjustInputFieldWidth(inputfieldDrop, DropDisplay);
+        AdjustInputFieldWidth(inputfieldSlide, slideDisplay);
     }
 
     private bool IsKeyAlreadyAssigned(KeyCode key)
     {
-        return key == dashKey || key == attackKey || key == jumpKey || key == heavyKey || key == DropKey;
+        return key == dashKey || key == attackKey || key == jumpKey || key == heavyKey || key == DropKey || key == slideKey;
     }
 
     private string KeyToString(KeyCode key)

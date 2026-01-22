@@ -547,7 +547,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: -111
+  m_SortingOrder: -11
   m_Sprite: {fileID: -1395331195791275123, guid: 32f82806afa640f4485e5ff91861b6da, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -590,7 +590,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9142559015911894894}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: ORBSPAWNER
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -749,7 +749,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2093561592138510623}
   - component: {fileID: 3464756169103502530}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: ParentOfSkyCandle(Stoned)
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -874,7 +874,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: -111
+  m_SortingOrder: -9
   m_Sprite: {fileID: 3215773647900194100, guid: 32f82806afa640f4485e5ff91861b6da, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -987,7 +987,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: -111
+  m_SortingOrder: -10
   m_Sprite: {fileID: -1432033925264984434, guid: 32f82806afa640f4485e5ff91861b6da, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -1100,7 +1100,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: -111
+  m_SortingOrder: -11
   m_Sprite: {fileID: -1395331195791275123, guid: 32f82806afa640f4485e5ff91861b6da, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0

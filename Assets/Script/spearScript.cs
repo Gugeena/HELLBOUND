@@ -116,7 +116,8 @@ public class spearScript : MonoBehaviour
             obj.CompareTag("Fireball") ||
             obj.CompareTag("Explosion") ||
             obj.CompareTag("Log") ||
-            obj.CompareTag("Crystal"))
+            obj.CompareTag("Crystal") ||
+            obj.CompareTag("pushUp"))
         {
             return;
         }

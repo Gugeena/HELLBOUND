@@ -9,7 +9,7 @@ using UnityEngine.UI;
 public class PlayerMovement : MonoBehaviour
 {
     [SerializeField]
-    private float speed, dashForce, jumpForce;
+    private float speed, dashForce, jumpForce, slideForce;
     [SerializeField]
     private Transform camFollowTransform, headPivotTransform;
 
@@ -17,6 +17,7 @@ public class PlayerMovement : MonoBehaviour
     private AnimationClip[] punchCombos;
     [SerializeField]
     private GameObject leftHand, rightHand;
+    public GameObject pushUp;
 
     private int comboIndex = 0;
     [SerializeField]
@@ -24,14 +25,14 @@ public class PlayerMovement : MonoBehaviour
     private float elapsed;
 
     [SerializeField]
-    private ParticleSystem runParticles;
+    private ParticleSystem runParticles, slideParticles;
 
-    private ParticleSystem.EmissionModule rPEmitter;
+    private ParticleSystem.EmissionModule rPEmitter, slideParticlesMitter;
 
     private Rigidbody2D rb;
     private Animator anim;
 
-    private bool isRunning, isDashing, isGrounded, isFalling;
+    private bool isRunning, isDashing, isGrounded, isFalling, isSliding;
     private bool canPunch;
 
     public bool godMode;
@@ -41,7 +42,7 @@ public class PlayerMovement : MonoBehaviour
     public Transform RLocation;
     public Transform LLocation;
 
-    public bool canDash = true;
+    public bool canDash = true, canSlide = true;
 
     public GameObject meleehitbox;
     public float hp = 0;
@@ -98,11 +99,11 @@ public class PlayerMovement : MonoBehaviour
 
     [SerializeField]
     private Animator angelOverlayAnim;
-    public KeyCode Special, AttackButton, Jump, Dash, Drop;
+    public KeyCode Special, AttackButton, Jump, Dash, Drop, Slide;
 
     [Header("SFX")]
     [SerializeField] private AudioClip death, stylemastery, deathBG;
-    [SerializeField] private AudioClip mfGarwoba, firstLandSound, ascension, hitStop, revival, finaldissapearence, Beyondascension, angelicDeath, levaniylea, chainBreak;
+    [SerializeField] private AudioClip mfGarwoba, firstLandSound, ascension, hitStop, revival, finaldissapearence, Beyondascension, angelicDeath, levaniylea, chainBreak, slidein;
     [SerializeField] private AudioClip[] punches, gravelWalk, jumps, lands, bowShots, mfHits, spearHits, boomerangShots, hurts, chainSounds, deaths;
     private int walkedDistance = 1;
 
@@ -191,6 +192,8 @@ public class PlayerMovement : MonoBehaviour
 
     public AudioClip slash;
 
+    private Coroutine slide;
+
     public bool isFuckingPoisoned = false;
 
     public Animator[] animatorofhands;
@@ -258,6 +261,7 @@ public class PlayerMovement : MonoBehaviour
         //else LilithScript.lilithDeathEvent += EnterFinalAscension;
 
         rPEmitter = runParticles.emission;
+        if(!inTutorial) slideParticlesMitter = slideParticles.emission;
 
         rb.excludeLayers = startLM;
 
@@ -337,6 +341,7 @@ public class PlayerMovement : MonoBehaviour
         Jump = KeyBindManagerScript.jumpKey;
         Dash = KeyBindManagerScript.dashKey;
         Drop = KeyBindManagerScript.DropKey;
+        Slide = KeyBindManagerScript.slideKey;
 
         rb = GetComponent<Rigidbody2D>();
         camShake = GetComponent<camShakerScript>();
@@ -428,7 +433,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (isRunning && !IsJumping) walkedDistance++;
+        if (isRunning && !IsJumping && !isSliding) walkedDistance++;
 
         if (walkedDistance % 15 == 0 && isGrounded)
         {
@@ -462,7 +467,7 @@ public class PlayerMovement : MonoBehaviour
             float x = Input.GetAxisRaw("Horizontal");
             float y = Input.GetAxisRaw("Vertical");
 
-            if (!isDashing) rb.linearVelocity = new Vector2(x * speed, rb.linearVelocity.y);
+            if (!isDashing && !isSliding) rb.linearVelocity = new Vector2(x * speed, rb.linearVelocity.y);
 
             isRunning = x != 0;
 
@@ -476,14 +481,13 @@ public class PlayerMovement : MonoBehaviour
 
                 if (!runParticles.isPlaying) rPEmitter.enabled = true;
 
+                var emission = runParticles.emission;
                 if (isGrounded)
                 {
-                    var emission = runParticles.emission;
                     emission.enabled = true;
                 }
                 else
                 {
-                    var emission = runParticles.emission;
                     emission.enabled = false;
                 }
             }
@@ -495,14 +499,15 @@ public class PlayerMovement : MonoBehaviour
             }
             if (isFalling)
             {
-                rb.gravityScale = 3f;
+                if(!isSliding) rb.gravityScale = 3f;
+                else rb.gravityScale = 1f;
             }
             else
             {
                 rb.gravityScale = 1f;
             }
 
-            if (!isDashing && !PauseScript.Paused)
+            if (!isDashing && !PauseScript.Paused && !isSliding)
             {
                 if (x < 0 && transform.localScale.x > 0)
                 {
@@ -516,15 +521,16 @@ public class PlayerMovement : MonoBehaviour
                 }
             }
 
-            if (Input.GetKeyDown(Dash) && !isDashing && canDash)
+            if (Input.GetKeyDown(Dash) && !isDashing && canDash && !isSliding)
             {
                 canDash = false;
                 StartCoroutine(dash());
             }
-
-            if (Input.GetKeyDown(Jump) && isGrounded && !IsJumping)
+            
+            if(isGrounded && !IsJumping && !isSliding)
             {
-                StartCoroutine(jump());
+                if (Input.GetKeyDown(Jump)) StartCoroutine(jump());
+                else if (Input.GetKeyDown(Slide) && canSlide && !inTutorial) slide = StartCoroutine(SlideDown());
             }
 
             isFalling = rb.linearVelocity.y < -0.1f;
@@ -1249,6 +1255,41 @@ public class PlayerMovement : MonoBehaviour
         IsJumping = false;
     }
 
+    private IEnumerator SlideDown()
+    {
+        isSliding = true;
+        anim.SetBool("isSliding", true);
+        float view = transform.localScale.x;
+        float slideForce = !isRunning ? 300 : 150;
+        if(view > 0) rb.AddForce(transform.right * slideForce);
+        else rb.AddForce(-transform.right * slideForce);
+        if (shouldMakeSound) audioManager.instance.playAudio(slidein, 0.7f, 1, transform, audioManager.instance.sfx);
+        pushUp.SetActive(true);
+        StartCoroutine(slideParticlesCRT());
+        //audioManager.instance.playRandomAudio(jumps, 0.7f, 1, transform, audioManager.instance.sfx);
+        yield return new WaitForSeconds(1.2f);
+        pushUp.SetActive(false);
+        anim.SetBool("isSliding", false);
+        isSliding = false;
+        StartCoroutine(slideCooldown());
+    }
+
+    private IEnumerator slideParticlesCRT()
+    {
+        //var emission = runParticles.emission;
+       // emission.enabled = false;
+        //runParticles.Stop();
+
+        var emission = slideParticles.emission;
+        emission.enabled = true;
+        slideParticles.Play();
+
+        yield return new WaitForSeconds(1f);
+
+        emission.enabled = false;
+        slideParticles.Stop();
+    }
+
     private IEnumerator pickUpWeapon(int id, String name)
     {
         if (isMfSpecialing) yield break;
@@ -1312,7 +1353,7 @@ public class PlayerMovement : MonoBehaviour
             motherfucker.SetActive(false);
             boomerang.SetActive(false);
             mjolnir.SetActive(false);
-            anim = GetComponent<Animator>();
+            if(anim == null) anim = GetComponent<Animator>();
             anim.SetBool("shouldChargeIn", true);
 
             bowHands.SetActive(false);
@@ -1420,28 +1461,27 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.name == "LLocation")
+        if (collision.gameObject.CompareTag("llocation"))
         {
             this.transform.position = new Vector3(RLocation.position.x, this.transform.position.y, 0);
-            if (isDashing)
-            {
-                //direction = -1;
-                StartCoroutine(dash());
-            }
+            if (isDashing) StartCoroutine(dash());
+            if (isSliding) slide = StartCoroutine(SlideDown());
         }
-        else if (collision.gameObject.name == "RLocation")
+        else if (collision.gameObject.CompareTag("rlocation"))
         {
             this.transform.position = new Vector3(LLocation.position.x, this.transform.position.y, 0);
-            if (isDashing)
-            {
-                //direction = -1;
-                StartCoroutine(dash());
-            }
+            if (isDashing) StartCoroutine(dash());
+            if(isSliding) slide = StartCoroutine(SlideDown());
         }
 
         if (collision.gameObject.layer == 3 || collision.gameObject.layer == 8)
         {
             isGrounded = true;
+            if (isSliding)
+            {
+                //if (slide != null) StopCoroutine(slide);
+                //slide = StartCoroutine(SlideDown());
+            }
             audioManager.instance.playRandomAudio(lands, 1f, 1, transform, audioManager.instance.sfx);
             if(isFirst)
             {
@@ -1470,6 +1510,12 @@ public class PlayerMovement : MonoBehaviour
     {
         yield return new WaitForSeconds(0.8f);
         canDash = true;
+    }
+
+    public IEnumerator slideCooldown()
+    {
+        yield return new WaitForSeconds(0.8f);
+        canSlide = true;
     }
 
     public IEnumerator damage(int damage, float duration, bool poisoned)

@@ -952,7 +952,7 @@ GameObject:
   - component: {fileID: 7272957952535580654}
   - component: {fileID: 1251144211613670193}
   - component: {fileID: 657147299384056334}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Enemy(Charger)(Stoned)
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -1029,6 +1029,7 @@ MonoBehaviour:
   detectiondistance: 8
   animator: {fileID: 657147299384056334}
   canMove: 1
+  pushedUp: 0
   particles: {fileID: 2235657635126729578, guid: c1679ffbc8cd43244b37d65014f049d3, type: 3}
   isGrounded: 0
   isFalling: 0

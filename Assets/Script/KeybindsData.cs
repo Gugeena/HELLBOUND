@@ -7,4 +7,5 @@ public class KeybindsData
     public int SKey = (int)KeyCode.Mouse1;
     public int DRKey = (int)KeyCode.Q;
     public int AKey = (int)KeyCode.Mouse0;
+    public int SLDKey = (int)KeyCode.LeftControl;
 }

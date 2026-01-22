@@ -19,11 +19,14 @@ public class TenthLayerOfHellScript : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        /*
         alreadyin = false;
         last = -1;
         stoned = false;
         shouldturnoffforawhile = false;
-        StartCoroutine(EventManager());
+        //StartCoroutine(EventManager());
+        */
+        shouldturnoffforawhile = false;
     }
 
     private void OnEnable()
@@ -34,7 +37,7 @@ public class TenthLayerOfHellScript : MonoBehaviour
         last = -1;
         stoned = false;
         //shouldturnoffforawhile = false;
-        //StartCoroutine(EventManager());
+        StartCoroutine(EventManager());
     }
 
     private void OnDisable()
@@ -45,10 +48,9 @@ public class TenthLayerOfHellScript : MonoBehaviour
 
     public IEnumerator EventManager()
     {
-        yield return null;
         while (true)
         {
-            print("sami sami");
+            print("alreadyin: " + alreadyin + ", hasdied: " + PlayerMovement.hasdiedforeverybody + ", shouldturnoff: " + shouldturnoffforawhile);
             if (!alreadyin && !PlayerMovement.hasdiedforeverybody && !shouldturnoffforawhile)
             {
                 int random;
