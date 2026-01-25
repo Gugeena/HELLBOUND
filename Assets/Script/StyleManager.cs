@@ -186,43 +186,43 @@ public class StyleManager : MonoBehaviour
 
     public IEnumerator ascentiontextcontrol()
     {
-        while (true)
+        while (!PlayerMovement.hasAscendedonce)
         {
+            print("11116");
             /*
+            print("11116");
             if (Input.GetKeyDown(KeyCode.P))
             {
+                print("11116");
                 Debug.Log("hasascended: " + PlayerMovement.hasAscendedonce + ", isAngelic: " + isAngelic + ", stylePoints: " + stylePoints + ", shouldturnoff: " + shouldTurnOff + ", active: " + Ascend.activeSelf);
             }
             */
-            while (!PlayerMovement.hasAscendedonce)
+            if (isAngelic && stylePoints >= 70 && !shouldTurnOff)
             {
-                if (isAngelic && stylePoints >= 70 && !shouldTurnOff)
+                if (!Ascend.activeSelf)
                 {
-                    if (!Ascend.activeSelf)
-                    {
-                        canAscend = true;
-                        Ascend.SetActive(true);
-                    }
+                    canAscend = true;
+                    Ascend.SetActive(true);
                 }
-                else
-                {
-                    if (Ascend.activeSelf)
-                    {
-                        canAscend = false;
-                        ascentionanimator.Play("AsecndTextDissapear");
-                        yield return new WaitForSeconds(1f);
-                        Ascend.SetActive(false);
-                    }
-                }
-
-                yield return new WaitForSeconds(0.1f);
             }
-            canAscend = false;
-            ascentionanimator.Play("AsecndTextDissapear");
-            yield return new WaitForSeconds(1f);
-            Ascend.SetActive(false);
-            yield break;
+            else
+            {
+                if (Ascend.activeSelf)
+                {
+                    canAscend = false;
+                    ascentionanimator.Play("AsecndTextDissapear");
+                    yield return new WaitForSeconds(1f);
+                    Ascend.SetActive(false);
+                }
+            }
+
+            yield return new WaitForSeconds(0.1f);
         }
+        print("11117");
+        canAscend = false;
+        ascentionanimator.Play("AsecndTextDissapear");
+        yield return new WaitForSeconds(1f);
+        Ascend.SetActive(false);
     }
 
     void changeColors(string anim)
@@ -339,6 +339,7 @@ public class StyleManager : MonoBehaviour
         PlayerMovement.hasAscendedonce = false;
         hasalreadydonethis = false;
         StartCoroutine(styleLife());
+        StartCoroutine(ascentiontextcontrol());
     }
 
     private IEnumerator styleLife()

@@ -1255,7 +1255,7 @@ public class PlayerMovement : MonoBehaviour
         IsJumping = false;
     }
 
-    private IEnumerator SlideDown()
+    private IEnumerator SlideDown ()
     {
         isSliding = true;
         anim.SetBool("isSliding", true);
@@ -1591,7 +1591,6 @@ public class PlayerMovement : MonoBehaviour
         //DisableAllActiveWeapons();
         stopAttacking = true;
         shouldMakeSound = false;
-
         
         rb.linearVelocity = Vector2.zero;
         

@@ -112,7 +112,7 @@ public class EyeballMovementScript : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
         canMove = true;
         audioManager.instance.playRandomAudio(sisini, 0.2f, 1, transform, audioManager.instance.sfx);
-        StartCoroutine(distanceDetection());
+        //StartCoroutine(distanceDetection());
     }
 
     void Update()
@@ -169,6 +169,8 @@ public class EyeballMovementScript : MonoBehaviour
                 rb.linearVelocity = (player.position - transform.position) * movespeed;
             }
         }
+
+        handleDistance();
     }
 
     void chargeUp()
@@ -184,10 +186,7 @@ public class EyeballMovementScript : MonoBehaviour
         destroyCoroutine = StartCoroutine(ExplodeAfterTime());
     }
 
-    private void FixedUpdate()
-    {
-    }
-
+    /*
     private IEnumerator distanceDetection()
     {
         while (true)
@@ -196,6 +195,7 @@ public class EyeballMovementScript : MonoBehaviour
             handleDistance();
         }
     }
+    */
 
     public void StartRotation()
     {

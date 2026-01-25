@@ -13504,6 +13504,37 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ShakeSelfScript
   _distance: 0.03
   _delayBetweenShakes: 0.0019
+--- !u!1 &8233745984787218519
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2916006457544231063}
+  m_Layer: 0
+  m_Name: GameObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2916006457544231063
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8233745984787218519}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.11141014, y: -0.49460983, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4933889505804729732}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8406324680449654988
 GameObject:
   m_ObjectHideFlags: 0
@@ -13935,6 +13966,7 @@ Transform:
   - {fileID: 3762826245546703911}
   - {fileID: 388390175345255155}
   - {fileID: 9097124015002177175}
+  - {fileID: 2916006457544231063}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &7908472988445349816
@@ -14013,7 +14045,7 @@ MonoBehaviour:
   angelicDeath: {fileID: 8300000, guid: d95926c9881696f498666b5a6e41fe59, type: 3}
   levaniylea: {fileID: 8300000, guid: d5a709ab40a2f3c4595266c6d63fe4f9, type: 3}
   chainBreak: {fileID: 0}
-  slidein: {fileID: 0}
+  slidein: {fileID: 8300000, guid: fa7cf495376558243a3e9254c165b44f, type: 3}
   punches:
   - {fileID: 8300000, guid: 62da8b6a6b0e9254988c9bd8f3e286ba, type: 3}
   - {fileID: 8300000, guid: b92fa1e7bcf634f47925069d3b97cba7, type: 3}

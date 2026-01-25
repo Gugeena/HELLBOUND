@@ -50,7 +50,7 @@ public class TenthLayerOfHellScript : MonoBehaviour
     {
         while (true)
         {
-            print("alreadyin: " + alreadyin + ", hasdied: " + PlayerMovement.hasdiedforeverybody + ", shouldturnoff: " + shouldturnoffforawhile);
+            //print("alreadyin: " + alreadyin + ", hasdied: " + PlayerMovement.hasdiedforeverybody + ", shouldturnoff: " + shouldturnoffforawhile);
             if (!alreadyin && !PlayerMovement.hasdiedforeverybody && !shouldturnoffforawhile)
             {
                 int random;
