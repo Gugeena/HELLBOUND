@@ -14,7 +14,8 @@ public class ExplosionMayhemScript : MonoBehaviour
     {
         Collider2D[] colliders = new Collider2D[3];
         Physics2D.OverlapCircle(this.transform.position, 3.34568f, contactFilter, colliders);
-        if (colliders.Length == 3 && hammed == false && colliders[2] != null)
+        foreach (Collider2D collider in colliders) print(collider.gameObject.name);
+        if (hammed == false && colliders[2] != null)
         {
             hammed = true;
             StyleManager.instance.growStyle(1);

@@ -74,7 +74,6 @@ public class spearScript : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        print("collision: " + collision.gameObject.name + ", " + collision.gameObject.tag);
         GameObject obj = collision.gameObject;
         if (obj.CompareTag("llocation"))
         {
