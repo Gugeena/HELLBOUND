@@ -43,11 +43,11 @@ public class KeyBindManagerScript : MonoBehaviour
     {
         Time.timeScale = 1f;
 
-        SetPivot(inputfieldJump, pivotX, pivotY);
-        SetPivot(inputfieldDash, pivotX, pivotY);
-        SetPivot(inputfieldAttack, pivotX, pivotY);
-        SetPivot(inputfieldHeavy, pivotX, pivotY);
-        SetPivot(inputfieldDrop, pivotX, pivotY);
+        //SetPivot(inputfieldJump, pivotX, pivotY);
+        //SetPivot(inputfieldDash, pivotX, pivotY);
+        //SetPivot(inputfieldAttack, pivotX, pivotY);
+        //SetPivot(inputfieldHeavy, pivotX, pivotY);
+        //SetPivot(inputfieldDrop, pivotX, pivotY);
 
         LoadKeyBindings();
 

@@ -6,4 +6,5 @@ public class GlobalSettings
     public Information information;
     public KeybindsData keybinds;
     public AudioData audio;
+    public LanguageData language;
 }
