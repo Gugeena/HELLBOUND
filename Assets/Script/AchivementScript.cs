@@ -19,5 +19,19 @@ public class AchivementScript : MonoBehaviour
 
         SteamUserStats.StoreStats();
     }
+
+    public void FillStat(string statAPIName, int value)
+    {
+        if (!SteamManager.Initialized) return;
+
+        if (!SteamUserStats.GetStat(statAPIName, out int currentValue)) return;
+
+        if (currentValue == value) return;
+
+        bool success = SteamUserStats.SetStat(statAPIName, value);
+        if (!success) return;
+
+        SteamUserStats.StoreStats();
+    }
 }
 

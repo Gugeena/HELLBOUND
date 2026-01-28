@@ -8,6 +8,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using System.IO;
+using Steamworks;
 
 public class Functions : MonoBehaviour
 {
@@ -26,13 +27,14 @@ public class Functions : MonoBehaviour
     {
         setUpView();
         SaveSystem.Load();
-        AchivementScript.instance.UnlockAchivement("HELLBOUND_ENTRY");
         AudioListener.pause = false;
         PauseScript.Paused = false;
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
         loadAudioSettings();
         loadsaved();
+        checkAllMultStat();
+        AchivementScript.instance.UnlockAchivement("HELLBOUND_ENTRY");
     }
 
     public static void setUpView()
@@ -81,6 +83,21 @@ public class Functions : MonoBehaviour
         SaveSystem.Save(globalSettings);
         checkmark.SetActive(globalSettings.information.turnedon > 0);
         visualizercheckmark.SetActive(globalSettings.information.visualizer > 0);
+    }
+
+    public void checkAllMultStat()
+    {
+        if (!SteamManager.Initialized) return;
+
+        int count = 0;
+        foreach (int i in SaveSystem.Load().information.multiplierUnlocks) if (i == 1) count++;
+
+        SteamUserStats.GetStat("MULT_COUNT", out int steamValue);
+        if (steamValue == count) return;
+
+        SteamUserStats.SetStat("MULT_COUNT", count);
+
+        SteamUserStats.StoreStats();
     }
 
     public void Update()

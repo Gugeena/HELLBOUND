@@ -2111,23 +2111,6 @@ MonoBehaviour:
   multiplierLocation: {fileID: 1558800529}
   visualizer: {fileID: 5073553853231339355, guid: 612c4fc4a1d8c8240af5d843b4ca03d1, type: 3}
   Canvas: {fileID: 833567530}
-  globalSettings:
-    information:
-      hasbeatthegame: 0
-      doneTutorial: 0
-      turnedon: 1
-      visualizer: 1
-      isFirst: 1
-    keybinds:
-      JKey: 32
-      DSHKey: 304
-      SKey: 324
-      DRKey: 113
-      AKey: 323
-      SLDKey: 306
-    audio:
-      SFXVolume: 1
-      MUSICVolume: 1
   canMultiply: 1
   LoopMultiplier: {fileID: 6392278692297575775, guid: c2f26dcf44941534fb0b539410bb0fbd, type: 3}
   RecklessMultiplier: {fileID: 6392278692297575775, guid: b58a18daf6d94484981c926ae1ff8e58, type: 3}
@@ -26777,7 +26760,6 @@ GameObject:
   m_Component:
   - component: {fileID: 840471214}
   - component: {fileID: 840471215}
-  - component: {fileID: 840471216}
   m_Layer: 6
   m_Name: Midra_2 (1)
   m_TagString: Untagged
@@ -26858,28 +26840,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!95 &840471216
-Animator:
-  serializedVersion: 7
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 840471213}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 6bd2baaf1dec2774da72facea0093d8d, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_AnimatePhysics: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &842052161
 GameObject:
   m_ObjectHideFlags: 0
@@ -42823,20 +42783,16 @@ MonoBehaviour:
     SPECIAL
     THANKS TO
 
+    MARIAM SIKMASHVILI
+
     GIORGI GELASHVILI
 
     SANDRO VLASOVI
 
-    ALEXANDER KOPALIANI
+    ALEXANDER
+    KOPALIANI
 
-    PLAYTESTERS
-
-
-
-    BUT
-    MOST IMPORTANTLY
-
-    THANK YOU FOR PLAYING OUR GAME'
+    PLAYTESTERS'
 --- !u!222 &1413390382
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -48227,7 +48183,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1464617499}
   - component: {fileID: 1464617500}
-  - component: {fileID: 1464617501}
   m_Layer: 6
   m_Name: Midra_2
   m_TagString: Untagged
@@ -48308,28 +48263,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!95 &1464617501
-Animator:
-  serializedVersion: 7
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1464617498}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 6bd2baaf1dec2774da72facea0093d8d, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_AnimatePhysics: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &1482521852
 GameObject:
   m_ObjectHideFlags: 0

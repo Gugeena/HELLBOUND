@@ -7,4 +7,5 @@ public class Information
     public int turnedon = 1;
     public int visualizer = 1;
     public int isFirst = 1;
+    public int[] multiplierUnlocks = new int[6];
 }

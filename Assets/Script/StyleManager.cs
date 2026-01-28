@@ -68,7 +68,7 @@ public class StyleManager : MonoBehaviour
     public Text visualizer;
     public GameObject Canvas;
 
-    public GlobalSettings globalSettings;
+    public static GlobalSettings globalSettings;
 
     public bool canMultiply = true;
 
@@ -117,6 +117,7 @@ public class StyleManager : MonoBehaviour
             isAngelic = true;
             fill.color = Color.yellow;
             hasalreadydonethis = true;
+            SaveSystem.Save(globalSettings);
             return;
         }
 
@@ -174,6 +175,14 @@ public class StyleManager : MonoBehaviour
         else if (multiple == 3) toSpawn = mayhemultiplier;
         else if (multiple == 4) toSpawn = richochetmultiplier;
         else if (multiple == 5) toSpawn = aerialMultiplier;
+        globalSettings.information.multiplierUnlocks[multiple] = 1;
+        int count = 0;
+        foreach (int i in globalSettings.information.multiplierUnlocks)
+        {
+            if (i == 1) count++;
+        }
+        AchivementScript.instance.FillStat("MULT_STAT", count);
+        //if (count == 6) AchivementScript.instance.UnlockAchivement("ALL_MULT");
         Instantiate(toSpawn, multiplierLocation.transform.position, Quaternion.identity, Canvas.transform);
         yield return new WaitForSeconds(0.2f);
         canMultiply = true;

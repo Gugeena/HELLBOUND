@@ -37,6 +37,8 @@ public class KeyBindManagerScript : MonoBehaviour
     private float pivotX = 0.5f;
     private float pivotY = 0.5f;
 
+    public static KeyBindManagerScript instance;
+
     private void Start()
     {
         Time.timeScale = 1f;
@@ -48,6 +50,8 @@ public class KeyBindManagerScript : MonoBehaviour
         SetPivot(inputfieldDrop, pivotX, pivotY);
 
         LoadKeyBindings();
+
+        instance = this;
     }
 
     private void Update()
@@ -315,7 +319,7 @@ public class KeyBindManagerScript : MonoBehaviour
         return key == dashKey || key == attackKey || key == jumpKey || key == heavyKey || key == DropKey || key == slideKey;
     }
 
-    private string KeyToString(KeyCode key)
+    public string KeyToString(KeyCode key)
     {
         switch (key)
         {

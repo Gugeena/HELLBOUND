@@ -1,3 +1,4 @@
+using NUnit.Framework;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -27,6 +28,8 @@ public class PauseScript : MonoBehaviour
     public Transform OffShoot;
 
     public static Vector3 lastPosition;
+
+    public UnityEngine.UI.Text tipText;
 
     private void Start()
     {
@@ -105,6 +108,8 @@ public class PauseScript : MonoBehaviour
 
     private IEnumerator MainMenu()
     {
+        GlobalSettings globalsettings = SaveSystem.Load();
+        if (!globalsettings.information.multiplierUnlocks.Equals(StyleManager.globalSettings.information.multiplierUnlocks)) SaveSystem.Save(StyleManager.globalSettings);
         Fadeout.SetActive(true);
         yield return new WaitForSecondsRealtime(0.95f);
         SceneManager.LoadScene(1);
@@ -136,8 +141,6 @@ public class PauseScript : MonoBehaviour
         lilith.transform.rotation = oldRotation;
 
         LilithScript.stunned = false;
-
-        print("shalom");
     }
 
     public void No()
@@ -150,6 +153,8 @@ public class PauseScript : MonoBehaviour
 
     public void QuitToDesktop()
     {
+        GlobalSettings globalsettings = SaveSystem.Load();
+        if (!globalsettings.information.multiplierUnlocks.Equals(StyleManager.globalSettings.information.multiplierUnlocks)) SaveSystem.Save(StyleManager.globalSettings);
         Application.Quit();
     }
 

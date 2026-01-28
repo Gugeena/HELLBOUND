@@ -138,7 +138,7 @@ public class PlayerMovement : MonoBehaviour
 
     private Coroutine currentLoseStyleCoroutine;
 
-    bool justShotBoomerang = false;
+    bool justShotBoomerang = false, isremotelyclosetoshowing = false;
 
     public static bool shouldEnd = false;
 
@@ -249,6 +249,12 @@ public class PlayerMovement : MonoBehaviour
     bool canEnd = true;
     public ScrollScript scrollScript;
 
+    public static bool TransitionalPoison;
+
+    public Animator camAnimatorForTutorial;
+
+    public bool tiphasexited;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -278,8 +284,16 @@ public class PlayerMovement : MonoBehaviour
             rb.simulated = false;
             anim.SetBool("trapped", true);
             anim.Play("player_chained");
+
+            StartCoroutine(waitformovementtip());
         }
         else tutorialLock = false;
+
+        if (TransitionalPoison)
+        {
+            hpAnimator.Play("PlayerDepoisoning");
+            TransitionalPoison = false;
+        }
     }
 
     void variablesetting()
@@ -363,7 +377,6 @@ public class PlayerMovement : MonoBehaviour
             autokillcollider = GameObject.Find("InstaKillBox").GetComponent<BoxCollider2D>();
             autokillcollider.enabled = false;
             canvasAnimator = GameObject.Find("Canvas (1)").GetComponent<Animator>();
-
         }
         flashScript = GameObject.Find("Flash").GetComponent<flashScript>();
         angelOverlayAnim = GameObject.Find("angelStatus").GetComponent<Animator>();
@@ -707,10 +720,7 @@ public class PlayerMovement : MonoBehaviour
             StartCoroutine(enterAngelic(true));
         }
         */
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            StartCoroutine(enterAngelic(false));
-        }
+
         if (StyleManager.canAscend && !isAngelic && !isDead)
         {
             if (Input.GetKeyDown(KeyCode.E))
@@ -1796,8 +1806,11 @@ public class PlayerMovement : MonoBehaviour
             if (parent1 != null)
             {
                 weaponPickupScript wps = parent1.GetComponent<weaponPickupScript>();
-                StartCoroutine(pickUpWeapon(wps.weaponID, collision.gameObject.name));
+                int weaponID = wps.weaponID;
+                StartCoroutine(pickUpWeapon(weaponID, collision.gameObject.name));
                 if (!wps.infinite) Destroy(collision.transform.parent.gameObject);
+
+                if (inTutorial && weaponID == 3 || inTutorial && weaponID == 4) StartCoroutine(weaponTIP());
             }
         }
         else if (obj.CompareTag("boomerangPickup") && currentWeapon == 0)
@@ -1888,8 +1901,9 @@ public class PlayerMovement : MonoBehaviour
         else if (obj.CompareTag("camTriggerDown"))
         {
             cineAnim.Play("cinecam_fall");
-            canvasAnimator.Play("hpComeDown");
+            StartCoroutine(hpComeDownWaiter());
             tutorialLock = false;
+            StartCoroutine(remoterCountdown());
         }
 
         Transform parent = collision.gameObject.transform.parent;
@@ -1905,6 +1919,19 @@ public class PlayerMovement : MonoBehaviour
             canEnd = false;
             StartCoroutine(endTutor());
         }
+    }
+
+    private IEnumerator remoterCountdown()
+    {
+        yield return new WaitForSeconds(1f);
+        isremotelyclosetoshowing = true;
+        yield break;
+    }
+
+    private IEnumerator hpComeDownWaiter()
+    {
+        yield return new WaitUntil(() => tiphasexited);
+        canvasAnimator.Play("hpComeDown");
     }
 
     private void OnCollisionExit2D(Collision2D collision)
@@ -1984,10 +2011,12 @@ public class PlayerMovement : MonoBehaviour
             float duration = poisonQueue.Dequeue();
             if (!isFuckingPoisoned) hpAnimator.Play("PlayerPoisoning");
             isFuckingPoisoned = true;
+            TransitionalPoison = true;
             yield return StartCoroutine(poison(duration));
         }
 
         hpAnimator.Play("PlayerDepoisoning");
+        TransitionalPoison = false;
         isPoisonRunning = false;
         isFuckingPoisoned = false;
     }
@@ -1998,5 +2027,25 @@ public class PlayerMovement : MonoBehaviour
         {
             isGrounded = true;
         }
+    }
+
+    private IEnumerator weaponTIP()
+    {
+        //if (!canShow) yield break;
+        yield return new WaitUntil(() => isremotelyclosetoshowing && tiphasexited);
+        //canShow = false;
+        camAnimatorForTutorial.Play("tip_slideinandout");
+        //yield return new WaitForSeconds(2.4f);
+        //canShow = true;
+    }
+
+    private IEnumerator waitformovementtip()
+    {
+        yield return new WaitUntil(() => isGrounded);
+        //canShow = false;
+        yield return new WaitForSeconds(0.5f);
+        camAnimatorForTutorial.Play("movementtip");
+        yield return new WaitForSeconds(2.4f);
+        tiphasexited = true;
     }
 }

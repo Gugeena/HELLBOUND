@@ -86,7 +86,7 @@ public class BoomerangWeaponScript : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         GameObject obj = collision.gameObject;
-        if (obj.CompareTag("llocation"))
+        if (obj.CompareTag("llocation1") || obj.CompareTag("llocation"))
         {
             RLocation = GameObject.Find("RLOCATIONLOCATION").transform;
             this.transform.position = new Vector3(RLocation.position.x, this.transform.position.y, 0);
@@ -94,7 +94,7 @@ public class BoomerangWeaponScript : MonoBehaviour
             shouldReturn = true;
             return;
         }
-        else if (obj.CompareTag("rlocation"))
+        else if (obj.CompareTag("rlocation1") || obj.CompareTag("rlocation"))
         {
             LLocation = GameObject.Find("LLOCATIONLOCATION").transform;
             this.transform.position = new Vector3(LLocation.position.x, this.transform.position.y, 0);
@@ -121,18 +121,20 @@ public class BoomerangWeaponScript : MonoBehaviour
             obj.CompareTag("Log") ||
             obj.CompareTag("Crystal") ||
             obj.CompareTag("note") ||
-            obj.CompareTag("pushUp"))
+            obj.CompareTag("pushUp") ||
+            obj.CompareTag("note"))
         {
             return;
         }
 
         rb.linearVelocity = Vector2.zero;
         shouldReturn = true;
+        print("1 " + collision.gameObject.tag);
     }
 
     private void OnDestroy()
     {
-        boomerangSound.Stop();
+        if(boomerangSound != null) boomerangSound.Stop();
     }
 }
 

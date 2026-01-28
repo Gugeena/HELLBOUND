@@ -790,7 +790,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
@@ -23967,8 +23967,8 @@ RectTransform:
   - {fileID: 1856778939}
   - {fileID: 1835718650}
   - {fileID: 1765489366}
-  - {fileID: 1419131209}
   - {fileID: 2155246102763282230}
+  - {fileID: 1419131209}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -59616,7 +59616,6 @@ MonoBehaviour:
   tutorialLock: 0
   scrollScript: {fileID: 0}
   camAnimatorForTutorial: {fileID: 0}
-  tiphasexited: 0
 --- !u!4 &2089724964
 Transform:
   m_ObjectHideFlags: 0
