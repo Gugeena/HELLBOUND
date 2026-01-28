@@ -53,6 +53,12 @@ public class LilithMeteorScript : MonoBehaviour
         dir = target.transform.position - this.transform.position;
         spawnbacklocation = GameObject.Find("LLOCATIONLOCATION (2)");
         shouldstart = true;
+        PlayerMovement.canPause = false;
+    }
+
+    private void OnDestroy()
+    {
+        PlayerMovement.canPause = true;
     }
 
     // Update is called once per frame

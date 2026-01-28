@@ -421,6 +421,7 @@ public class LilithScript : MonoBehaviour
         }
         transform.localScale = scale;
         if (stunCheck()) yield break;
+        while (stunned) yield return null;
         animator.SetBool("shouldFLAME", true);
         firepillarcastSource = audioManager.instance.playAudio(firePillarCast, 1, 1, this.transform, audioManager.instance.sfx);
         if (PlayerMovement.shouldMakeSound) firepillarcastSource = audioManager.instance.playAudio(firePillarCast, 1, 1, this.transform, audioManager.instance.sfx);
@@ -437,6 +438,7 @@ public class LilithScript : MonoBehaviour
         StartCoroutine(cum.shake());
         staffScale();
         shouldFlip = false;
+        while (stunned) yield return null;
         if (isInFarLeftPosition == true) flameanimator.Play("FlamesController-LeftFlame");
         else if (isInFarRightPosition == true) flameanimator.Play("FlamesController-RightFlame");
         //stateHash = Animator.StringToHash("LilithStaffHeartOrangeToRed");
@@ -511,6 +513,7 @@ public class LilithScript : MonoBehaviour
 
     public IEnumerator shardAttack()
     {
+        if (canAttack) yield break;
         //int stateHash = Animator.StringToHash("LilithStaffHeartRedToGreen");
         //heartAnimator.Play(stateHash, 0);
         staffScript.changeColor(LillithStaffScript.Colors.green);
@@ -544,7 +547,6 @@ public class LilithScript : MonoBehaviour
                 if (angle > 0) angle -= 360;
                 angle = Mathf.Clamp(angle, -240f, -120f);
                 //angle += 5f;
-                print("elseshi shevedi");
                 //angle += 60f;
             }
 
@@ -616,6 +618,8 @@ public class LilithScript : MonoBehaviour
 
     public IEnumerator fireBallAttack()
     {
+        if (canAttack) yield break;
+
         staffScript.changeColor(LillithStaffScript.Colors.purple);
 
         shouldFlip = true;

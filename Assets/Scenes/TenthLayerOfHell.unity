@@ -29699,6 +29699,11 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 1340
   m_TargetDisplay: 0
+--- !u!198 &1122048231 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 4393337824559050253, guid: 657b8bb3d37aa1048a36699c7988709d, type: 3}
+  m_PrefabInstance: {fileID: 269150072}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1123836988
 GameObject:
   m_ObjectHideFlags: 0
@@ -74719,7 +74724,7 @@ MonoBehaviour:
   pushUp: {fileID: 25705017}
   comboTime: 0.75
   runParticles: {fileID: 1224951686}
-  slideParticles: {fileID: 0}
+  slideParticles: {fileID: 1122048231}
   godMode: 0
   RLocation: {fileID: 58100624}
   LLocation: {fileID: 1228808078}

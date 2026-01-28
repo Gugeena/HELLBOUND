@@ -188,7 +188,6 @@ public class StyleManager : MonoBehaviour
     {
         while (!PlayerMovement.hasAscendedonce)
         {
-            print("11116");
             /*
             print("11116");
             if (Input.GetKeyDown(KeyCode.P))

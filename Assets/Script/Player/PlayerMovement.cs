@@ -34,6 +34,7 @@ public class PlayerMovement : MonoBehaviour
 
     private bool isRunning, isDashing, isGrounded, isFalling, isSliding;
     private bool canPunch;
+    private bool hasTeleportedwhilesliding = false;
 
     public bool godMode;
 
@@ -192,7 +193,7 @@ public class PlayerMovement : MonoBehaviour
 
     public AudioClip slash;
 
-    private Coroutine slide;
+    private Coroutine slide, slidecooldown;
 
     public bool isFuckingPoisoned = false;
 
@@ -291,6 +292,10 @@ public class PlayerMovement : MonoBehaviour
         }
         else StartCoroutine(canPauseEnabler());
         isInAngelTransition = false;
+        isFuckingPoisoned = false;
+        isPoisoned = false;
+        poisonQueue = new Queue<float>();
+        isPoisonRunning = false;
         LilithScript.bossfightstarted = false;
         Time.timeScale = 1;
         hp = 150f;
@@ -526,11 +531,11 @@ public class PlayerMovement : MonoBehaviour
                 canDash = false;
                 StartCoroutine(dash());
             }
-            
-            if(isGrounded && !IsJumping && !isSliding)
+
+            if (isGrounded && !IsJumping && !isSliding)
             {
                 if (Input.GetKeyDown(Jump)) StartCoroutine(jump());
-                else if (Input.GetKeyDown(Slide) && canSlide && !inTutorial) slide = StartCoroutine(SlideDown());
+                else if (Input.GetKeyDown(Slide) && canSlide && !inTutorial && !isDashing) slide = StartCoroutine(SlideDown());
             }
 
             isFalling = rb.linearVelocity.y < -0.1f;
@@ -702,7 +707,10 @@ public class PlayerMovement : MonoBehaviour
             StartCoroutine(enterAngelic(true));
         }
         */
-
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            StartCoroutine(enterAngelic(false));
+        }
         if (StyleManager.canAscend && !isAngelic && !isDead)
         {
             if (Input.GetKeyDown(KeyCode.E))
@@ -1139,16 +1147,12 @@ public class PlayerMovement : MonoBehaviour
         yield return new WaitForSeconds(1.2f);
         Transform temp = transform.GetChild(3).GetChild(1);
         Vector2 mfPos = temp.position;
-        Quaternion mfRot = temp.rotation;
-        if (isRunning)
-        {
-            if (this.transform.localScale.x < 0) mfRot = Quaternion.Euler(0f, 0f, 160f);
-            else mfRot = Quaternion.Euler(0f, 0f, -155f);
-        }
+        Quaternion mfRot; 
+        mfRot = isRunning ? (this.transform.localScale.x < 0 ? Quaternion.Euler(0f, 0f, 160f) : Quaternion.Euler(0f, 0f, -155f)) : temp.rotation;
         GameObject m = Instantiate(motherFuckerPrefab, mfPos, mfRot);
         mfScript mfScript = m.GetComponent<mfScript>();
-        mfScript.mfSound = audioManager.instance.playAudio(mfGarwoba, 1f, 1, transform, audioManager.instance.sfx);
         mfScript.direction = direction;
+        mfScript.mfSound = audioManager.instance.playAudio(mfGarwoba, 1f, 1, transform, audioManager.instance.sfx);
         motherfucker.SetActive(false);
 
         isMfSpecialing = false;
@@ -1255,23 +1259,27 @@ public class PlayerMovement : MonoBehaviour
         IsJumping = false;
     }
 
-    private IEnumerator SlideDown ()
+    private IEnumerator SlideDown()
     {
+        if (!canSlide || isSliding) yield break;
+        canSlide = false;
         isSliding = true;
         anim.SetBool("isSliding", true);
         float view = transform.localScale.x;
         float slideForce = !isRunning ? 300 : 150;
+        if (hasTeleportedwhilesliding) slideForce = 300f;
         if(view > 0) rb.AddForce(transform.right * slideForce);
         else rb.AddForce(-transform.right * slideForce);
         if (shouldMakeSound) audioManager.instance.playAudio(slidein, 0.7f, 1, transform, audioManager.instance.sfx);
         pushUp.SetActive(true);
         StartCoroutine(slideParticlesCRT());
         //audioManager.instance.playRandomAudio(jumps, 0.7f, 1, transform, audioManager.instance.sfx);
-        yield return new WaitForSeconds(1.2f);
+        yield return new WaitForSeconds(1f);
         pushUp.SetActive(false);
         anim.SetBool("isSliding", false);
         isSliding = false;
-        StartCoroutine(slideCooldown());
+        if (slidecooldown != null) yield break;
+        slidecooldown = StartCoroutine(slideCooldown());
     }
 
     private IEnumerator slideParticlesCRT()
@@ -1461,27 +1469,9 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("llocation"))
-        {
-            this.transform.position = new Vector3(RLocation.position.x, this.transform.position.y, 0);
-            if (isDashing) StartCoroutine(dash());
-            if (isSliding) slide = StartCoroutine(SlideDown());
-        }
-        else if (collision.gameObject.CompareTag("rlocation"))
-        {
-            this.transform.position = new Vector3(LLocation.position.x, this.transform.position.y, 0);
-            if (isDashing) StartCoroutine(dash());
-            if(isSliding) slide = StartCoroutine(SlideDown());
-        }
-
         if (collision.gameObject.layer == 3 || collision.gameObject.layer == 8)
         {
             isGrounded = true;
-            if (isSliding)
-            {
-                //if (slide != null) StopCoroutine(slide);
-                //slide = StartCoroutine(SlideDown());
-            }
             audioManager.instance.playRandomAudio(lands, 1f, 1, transform, audioManager.instance.sfx);
             if(isFirst)
             {
@@ -1504,6 +1494,46 @@ public class PlayerMovement : MonoBehaviour
             Time.timeScale = 1;
             cineAnim.Play("cinecam_zoomout");
         }
+
+        if (collision.gameObject.CompareTag("llocation"))
+        {
+            this.transform.position = new Vector3(RLocation.position.x, this.transform.position.y, 0);
+            if (isDashing) StartCoroutine(dash());
+            if (isSliding)
+            {
+                if (hasTeleportedwhilesliding) return;
+                hasTeleportedwhilesliding = true;
+
+                isSliding = false;
+                canSlide = true;
+
+                if (slide != null)
+                    StopCoroutine(slide);
+
+                slide = StartCoroutine(SlideDown());
+
+                //print("started  cor");
+            }
+        }
+        else if (collision.gameObject.CompareTag("rlocation"))
+        {
+            this.transform.position = new Vector3(LLocation.position.x, this.transform.position.y, 0);
+            if (isDashing) StartCoroutine(dash());
+            if (isSliding)
+            {
+                if (hasTeleportedwhilesliding) return;
+                hasTeleportedwhilesliding = true;
+
+                isSliding = false;
+                canSlide = true;
+
+                if (slide != null)
+                    StopCoroutine(slide);
+
+                slide = StartCoroutine(SlideDown());
+                print("started  cor1");
+            }
+        }
     }
 
     public IEnumerator dashCooldown()
@@ -1516,6 +1546,7 @@ public class PlayerMovement : MonoBehaviour
     {
         yield return new WaitForSeconds(0.8f);
         canSlide = true;
+        slidecooldown = null;
     }
 
     public IEnumerator damage(int damage, float duration, bool poisoned)
@@ -1554,7 +1585,6 @@ public class PlayerMovement : MonoBehaviour
     private IEnumerator endTutor()
     {
         GlobalSettings globalSettings = SaveSystem.Load();
-        print("isFirst: " + globalSettings.information.isFirst);
         if (globalSettings.information.isFirst == 1)
         {
             globalSettings.information.doneTutorial = 1;
@@ -1879,6 +1909,15 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnCollisionExit2D(Collision2D collision)
     {
+        if (collision.gameObject.CompareTag("llocation"))
+        {
+            hasTeleportedwhilesliding = false;
+        }
+        else if (collision.gameObject.CompareTag("rlocation"))
+        {
+            hasTeleportedwhilesliding = false;
+        }
+
         if (collision.gameObject.layer == 3 || collision.gameObject.layer == 8)
         {
             isGrounded = false;
@@ -1928,7 +1967,6 @@ public class PlayerMovement : MonoBehaviour
     public void ApplyPoison(float seconds)
     {
         poisonQueue.Enqueue(seconds);
-        print("isPoisonRunning: " + isPoisonRunning);
         if (!isPoisonRunning)
             PoisonQueCorountine = StartCoroutine(ProcessPoisonQueue());
     }
@@ -1938,7 +1976,6 @@ public class PlayerMovement : MonoBehaviour
         //if(!isFuckingPoisoned) hpAnimator.Play("PlayerPoisoning");
         //isPoisonRunning = true;
         if (!isFuckingPoisoned) hpAnimator.Play("PlayerPoisoning");
-        print("shevedi shignit, isfuckingpoisoned: " + isFuckingPoisoned);
         isPoisonRunning = true;
         isFuckingPoisoned = true;
 

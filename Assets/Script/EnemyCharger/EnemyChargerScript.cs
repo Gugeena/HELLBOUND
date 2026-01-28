@@ -316,6 +316,7 @@ public class EnemyChargerScript : MonoBehaviour
             if (bc != null) bc.isTrigger = false;
             GameObject bodypart = rbb.gameObject;
         }
+      
         if (playerScript.shouldGainStyle && !PlayerMovement.hasdiedforeverybody)
         {
             int growth = 1;
@@ -336,7 +337,7 @@ public class EnemyChargerScript : MonoBehaviour
                 StyleManager.instance.undisputed(5);
                 growth += 1;
             }
-
+            
             StyleManager.instance.growStyle(growth);
         }
         canMove = false;
