@@ -11259,7 +11259,7 @@ GameObject:
   - component: {fileID: 4221172384618176804}
   - component: {fileID: 5151086833000533028}
   - component: {fileID: 8210923424947455153}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: pushUp
   m_TagString: pushUp
   m_Icon: {fileID: 0}
@@ -11508,7 +11508,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: -20
+  m_SortingOrder: -5
   m_Sprite: {fileID: -452694930, guid: 4ec37cfc8854b234997c7c561d5ae88b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -14286,6 +14286,9 @@ MonoBehaviour:
   isFirst: 0
   tutorialLock: 0
   scrollScript: {fileID: 0}
+  camAnimatorForTutorial: {fileID: 0}
+  tiphasexited: 0
+  angelSubtites: {fileID: 0}
 --- !u!50 &4171776631434826395
 Rigidbody2D:
   serializedVersion: 5

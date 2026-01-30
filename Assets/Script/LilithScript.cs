@@ -216,8 +216,6 @@ public class LilithScript : MonoBehaviour
     IEnumerator death()
     {
         yield return new WaitUntil(() => !stunned);
-        print("stunned: " + stunned);
-        print("totxmeti");
         if(hailmarysound != null) hailmarysound.Stop();
         PlayerMovement.TLOHLFADEOUTANDINNER(1);
         TenthLayerOfHellScript.shouldturnoffforawhile = true;
@@ -229,6 +227,7 @@ public class LilithScript : MonoBehaviour
         StartCoroutine(cum.shake());
         isDead = true;
         animator.SetBool("shouldBATS", false);
+        PlayerMovement.instance.invincible = true;
         animator.Play("LilithDeathAnimation");
         ShakeSelfScript staffshake = handrb.gameObject.GetComponent<ShakeSelfScript>();
         ShakeSelfScript shakeself = gameObject.GetComponent<ShakeSelfScript>();
@@ -253,9 +252,11 @@ public class LilithScript : MonoBehaviour
         Destroy(handrb.gameObject);
         if(PlayerMovement.shouldMakeSound) audioManager.instance.playAudio(lilithDeathSound, 1f, 1, transform, audioManager.instance.sfx);
         yield return new WaitForSeconds(1f);
+        if(!PlayerMovement.instance.invincible) PlayerMovement.instance.invincible = true;
         audioManager.instance.stopLillith();
         yield return new WaitForSeconds(2.4f);
-        for(int i = 0; i < deathParticles.Length; i++) Instantiate(deathParticles[i], this.transform.position, Quaternion.identity);
+        if (!PlayerMovement.instance.invincible) PlayerMovement.instance.invincible = true;
+        for (int i = 0; i < deathParticles.Length; i++) Instantiate(deathParticles[i], this.transform.position, Quaternion.identity);
         cum.Stop();
         lilithDeathEvent.Invoke();
         yield return null;

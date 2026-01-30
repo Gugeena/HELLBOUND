@@ -4304,7 +4304,8 @@ MonoBehaviour:
   noteText: "Whatever goes around, comes around.\nUse it to your advantage. \nLooped
     attacks grant \"Style Points\".\nBeware, enemies can exploit it as well."
   headerImage: {fileID: 21300000, guid: a24a2e92f1d908d41a4ff611d11feb53, type: 3}
-  fontSize: 187
+  fontSize: 154
+  key: first_note
 --- !u!1 &596495736
 GameObject:
   m_ObjectHideFlags: 0
@@ -4451,6 +4452,7 @@ MonoBehaviour:
     exiled one.'
   headerImage: {fileID: 21300000, guid: d3006418542a40446b2621270f1f526f, type: 3}
   fontSize: 143
+  key: second_note
 --- !u!4 &598452910
 Transform:
   m_ObjectHideFlags: 0
@@ -4568,6 +4570,7 @@ GameObject:
   - component: {fileID: 603385170}
   - component: {fileID: 603385172}
   - component: {fileID: 603385171}
+  - component: {fileID: 603385173}
   m_Layer: 0
   m_Name: Text (Legacy) (1)
   m_TagString: Untagged
@@ -4591,8 +4594,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -300.4, y: 287}
-  m_SizeDelta: {x: 2198.78, y: 1396.88}
+  m_AnchoredPosition: {x: -278.68, y: 287}
+  m_SizeDelta: {x: 2678.51, y: 1396.88}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &603385171
 MonoBehaviour:
@@ -4627,9 +4630,9 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'LSHIFT - DASH
+  m_Text: 'LShift - Ausweichen
 
-    LCTRL - SLIDE'
+    LCtrl - Rutschen'
 --- !u!222 &603385172
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -4638,6 +4641,22 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 603385169}
   m_CullTransparentMesh: 1
+--- !u!114 &603385173
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 603385169}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eac9f5864189fa0489edf2ece0db027b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TextLocalisatorScript
+  key: movement_tip
+  germanFontSizeModificator: 0.5
+  italianFontSizeModificator: 0.8
+  pronemodify: 1
 --- !u!1 &617284314
 GameObject:
   m_ObjectHideFlags: 0
@@ -4889,8 +4908,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 2.083, y: -7.6}
-  m_SizeDelta: {x: 3426.346, y: 1145.443}
+  m_AnchoredPosition: {x: 1.2, y: -7.8}
+  m_SizeDelta: {x: 3612.137, y: 1145.443}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &640626076
 MonoBehaviour:
@@ -4914,29 +4933,29 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 12800000, guid: 60484b47ed249e34aa4979c8eb6f13d4, type: 3}
-    m_FontSize: 143
+    m_FontSize: 135
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 0
-    m_MaxSize: 255
+    m_MaxSize: 300
     m_Alignment: 1
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 1
     m_LineSpacing: 1.01
-  m_Text: 'Special moves grant bonus "Style Points"
+  m_Text: 'Los movimientos especiales otorgan bonus "Style Points".
 
-    Prolonged weapon use drains
-    Style Points.
+    El uso prolongado
+    de armas drena Style Points.
 
-    Mastering style brings you closer to enlightenment.
+    Dominar el estilo te acerca a la iluminacion.
 
-    Kill
-    demons in vicinity to replenish life force.
+    Mata
+    demonios cercanos para restaurar la fuerza vital.
 
-    Reach angelhood to face the
-    exiled one.'
+    Alcanza la angelitud para
+    enfrentar al exiliado.'
 --- !u!222 &640626077
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -6016,6 +6035,8 @@ GameObject:
   - component: {fileID: 770035089}
   - component: {fileID: 770035091}
   - component: {fileID: 770035090}
+  - component: {fileID: 770035093}
+  - component: {fileID: 770035094}
   m_Layer: 0
   m_Name: Text (Legacy)
   m_TagString: Untagged
@@ -6086,6 +6107,34 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 770035088}
   m_CullTransparentMesh: 1
+--- !u!114 &770035093
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 770035088}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eac9f5864189fa0489edf2ece0db027b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TextLocalisatorScript
+  key: combat_tip
+  germanFontSizeModificator: 0.5
+  italianFontSizeModificator: 0.8
+  pronemodify: 1
+--- !u!114 &770035094
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 770035088}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 190836c4057703d4cab208bb17899384, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::tutorialTextScript
 --- !u!1 &777468293
 GameObject:
   m_ObjectHideFlags: 0

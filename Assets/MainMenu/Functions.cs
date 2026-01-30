@@ -22,6 +22,7 @@ public class Functions : MonoBehaviour
     public Button startGame, discord, quit, settings, tenthbutton;
     public GameObject tenth;
     public GameObject eventsystem, glow, glow1;
+    public Dropdown dropdown;
 
     void Start()
     {
@@ -104,7 +105,11 @@ public class Functions : MonoBehaviour
     {
         if (hasrolledin)
         {
-            if (Input.GetKeyDown(KeyCode.Escape)) SettingsRollout();
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                SettingsRollout();
+                dropdown.Hide();
+            }
         }
     }
 

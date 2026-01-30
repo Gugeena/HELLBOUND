@@ -738,7 +738,7 @@ GameObject:
   - component: {fileID: 168282781}
   - component: {fileID: 168282783}
   - component: {fileID: 168282782}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: UnmovablePart
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1286,6 +1286,7 @@ GameObject:
   - component: {fileID: 235047445}
   - component: {fileID: 235047447}
   - component: {fileID: 235047446}
+  - component: {fileID: 235047448}
   m_Layer: 0
   m_Name: Text (Legacy) (3)
   m_TagString: Untagged
@@ -1354,6 +1355,22 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 235047444}
   m_CullTransparentMesh: 1
+--- !u!114 &235047448
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 235047444}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eac9f5864189fa0489edf2ece0db027b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TextLocalisatorScript
+  key: first
+  germanFontSizeModificator: 0.5
+  italianFontSizeModificator: 0.8
+  pronemodify: 1
 --- !u!1 &263009312
 GameObject:
   m_ObjectHideFlags: 0
@@ -7040,7 +7057,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: -0.0036547333, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -7050,7 +7067,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 0.5138839, y: 1}
   m_EdgeRadius: 0
 --- !u!212 &367947505
 SpriteRenderer:
@@ -7808,6 +7825,52 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &515743193
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 515743195}
+  - component: {fileID: 515743194}
+  m_Layer: 0
+  m_Name: LanguageSingleton
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &515743194
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 515743193}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a02df698724492b468cca0e6f810ffb3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LanguageData
+  unStaticCurrLangauge: 0
+  dropdown: {fileID: 0}
+--- !u!4 &515743195
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 515743193}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 24.07462, y: -25.97922, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &523667848
 GameObject:
   m_ObjectHideFlags: 0
@@ -14286,7 +14349,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: -20
+  m_SortingOrder: -5
   m_Sprite: {fileID: -452694930, guid: 4ec37cfc8854b234997c7c561d5ae88b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -24108,7 +24171,7 @@ GameObject:
   - component: {fileID: 837507273}
   - component: {fileID: 837507275}
   - component: {fileID: 837507274}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: UnmovablePart
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -25972,6 +26035,7 @@ GameObject:
   - component: {fileID: 993993996}
   - component: {fileID: 993993998}
   - component: {fileID: 993993997}
+  - component: {fileID: 993993999}
   m_Layer: 0
   m_Name: Text (Legacy) (1)
   m_TagString: Untagged
@@ -26040,6 +26104,22 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 993993995}
   m_CullTransparentMesh: 1
+--- !u!114 &993993999
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 993993995}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eac9f5864189fa0489edf2ece0db027b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TextLocalisatorScript
+  key: the
+  germanFontSizeModificator: 0.5
+  italianFontSizeModificator: 0.8
+  pronemodify: 1
 --- !u!1 &999295202
 GameObject:
   m_ObjectHideFlags: 0
@@ -26727,6 +26807,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 741520909}
+  - {fileID: 2043610188}
   m_Father: {fileID: 873852483}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -27269,6 +27350,7 @@ GameObject:
   - component: {fileID: 1204122529}
   - component: {fileID: 1204122531}
   - component: {fileID: 1204122530}
+  - component: {fileID: 1204122532}
   m_Layer: 0
   m_Name: Text (Legacy) (1)
   m_TagString: Untagged
@@ -27339,6 +27421,22 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1204122528}
   m_CullTransparentMesh: 1
+--- !u!114 &1204122532
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1204122528}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eac9f5864189fa0489edf2ece0db027b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TextLocalisatorScript
+  key: thank_you
+  germanFontSizeModificator: 0.5
+  italianFontSizeModificator: 0.8
+  pronemodify: 1
 --- !u!1 &1220645820
 GameObject:
   m_ObjectHideFlags: 0
@@ -33583,7 +33681,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: -0.012792751, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -33593,7 +33691,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 0.5138839, y: 1}
   m_EdgeRadius: 0
 --- !u!212 &1306376788
 SpriteRenderer:
@@ -34324,6 +34422,7 @@ GameObject:
   - component: {fileID: 1413390380}
   - component: {fileID: 1413390382}
   - component: {fileID: 1413390381}
+  - component: {fileID: 1413390383}
   m_Layer: 0
   m_Name: Text (Legacy)
   m_TagString: Untagged
@@ -34452,6 +34551,22 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1413390379}
   m_CullTransparentMesh: 1
+--- !u!114 &1413390383
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1413390379}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eac9f5864189fa0489edf2ece0db027b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TextLocalisatorScript
+  key: credits
+  germanFontSizeModificator: 0.5
+  italianFontSizeModificator: 0.8
+  pronemodify: 1
 --- !u!1 &1414106994
 GameObject:
   m_ObjectHideFlags: 0
@@ -44394,7 +44509,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: -0.0047916025, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -44404,7 +44519,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 0.5138839, y: 1}
   m_EdgeRadius: 0
 --- !u!212 &1463469979
 SpriteRenderer:
@@ -45224,7 +45339,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: -0.004264429, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -45234,7 +45349,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 0.5138839, y: 1}
   m_EdgeRadius: 0
 --- !u!212 &1541941601
 SpriteRenderer:
@@ -45361,7 +45476,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0.012651026, y: 0}
+  m_Offset: {x: 0.149083, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -45371,7 +45486,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 1.0253007, y: 1}
+  m_Size: {x: 0.7524369, y: 1}
   m_EdgeRadius: 0
 --- !u!212 &1547241898
 SpriteRenderer:
@@ -45758,6 +45873,7 @@ GameObject:
   - component: {fileID: 1614478368}
   - component: {fileID: 1614478370}
   - component: {fileID: 1614478369}
+  - component: {fileID: 1614478371}
   m_Layer: 0
   m_Name: Text (Legacy) (2)
   m_TagString: Untagged
@@ -45828,6 +45944,22 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1614478367}
   m_CullTransparentMesh: 1
+--- !u!114 &1614478371
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1614478367}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eac9f5864189fa0489edf2ece0db027b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TextLocalisatorScript
+  key: exile
+  germanFontSizeModificator: 0.9
+  italianFontSizeModificator: 0.8
+  pronemodify: 0
 --- !u!1 &1622461196
 GameObject:
   m_ObjectHideFlags: 0
@@ -54000,6 +54132,121 @@ Transform:
   m_Children: []
   m_Father: {fileID: 84163503}
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
+--- !u!1 &2043610187
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2043610188}
+  - component: {fileID: 2043610191}
+  - component: {fileID: 2043610190}
+  - component: {fileID: 2043610189}
+  - component: {fileID: 2043610192}
+  m_Layer: 0
+  m_Name: Angel Subtitles
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!224 &2043610188
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2043610187}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.104256764, y: 0.104256764, z: 0.104256764}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1101717746}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 7, y: -338}
+  m_SizeDelta: {x: 12279, y: 1140.35}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!95 &2043610189
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2043610187}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: fb3c2fea03530134a883c22545d6db0e, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &2043610190
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2043610187}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Text
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.8018868, g: 0.8018868, b: 0.8018868, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FontData:
+    m_Font: {fileID: 12800000, guid: 1f9498cb7881eb24aaf758b46aec1c43, type: 3}
+    m_FontSize: 300
+    m_FontStyle: 0
+    m_BestFit: 0
+    m_MinSize: 3
+    m_MaxSize: 300
+    m_Alignment: 1
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: awdadasdawda
+--- !u!222 &2043610191
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2043610187}
+  m_CullTransparentMesh: 1
+--- !u!114 &2043610192
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2043610187}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 70c3a6bdc6e1db2438862105dfb8e2ae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::subtitlesScript
 --- !u!1 &2045657877
 GameObject:
   m_ObjectHideFlags: 0
@@ -59040,7 +59287,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: -0.007359639, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -59050,7 +59297,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 0.5138839, y: 1}
   m_EdgeRadius: 0
 --- !u!212 &2055182321
 SpriteRenderer:
@@ -59210,7 +59457,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: -0.004264176, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -59220,7 +59467,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 0.5138839, y: 1}
   m_EdgeRadius: 0
 --- !u!212 &2067653087
 SpriteRenderer:
@@ -59562,8 +59809,8 @@ MonoBehaviour:
   - {fileID: 8300000, guid: d4959ea4f43f46b4090bd60235767721, type: 3}
   - {fileID: 8300000, guid: 7a4e0329aa8e2804c8e1b86ea6ee3bd0, type: 3}
   - {fileID: 8300000, guid: 7a4e0329aa8e2804c8e1b86ea6ee3bd0, type: 3}
-  - {fileID: 8300000, guid: 7a4e0329aa8e2804c8e1b86ea6ee3bd0, type: 3}
-  - {fileID: 8300000, guid: 7a4e0329aa8e2804c8e1b86ea6ee3bd0, type: 3}
+  - {fileID: 8300000, guid: bc889eb58f1fe904f9d8cd635494d099, type: 3}
+  - {fileID: 8300000, guid: bc889eb58f1fe904f9d8cd635494d099, type: 3}
   startLM:
     serializedVersion: 2
     m_Bits: 2304
@@ -59617,6 +59864,7 @@ MonoBehaviour:
   scrollScript: {fileID: 0}
   camAnimatorForTutorial: {fileID: 0}
   tiphasexited: 0
+  angelSubtites: {fileID: 2043610187}
 --- !u!4 &2089724964
 Transform:
   m_ObjectHideFlags: 0
@@ -59941,6 +60189,7 @@ GameObject:
   - component: {fileID: 5560004444006330197}
   - component: {fileID: 8806661552919862766}
   - component: {fileID: 8183588100814728474}
+  - component: {fileID: 8806661552919862767}
   m_Layer: 0
   m_Name: Yes
   m_TagString: Untagged
@@ -59964,7 +60213,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 68.9, y: -86.6}
+  m_AnchoredPosition: {x: 68.9, y: -72.2}
   m_SizeDelta: {x: 295.03, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!95 &473619140404834685
@@ -60021,7 +60270,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -48.329132, y: 13.699997}
+  m_AnchoredPosition: {x: -160.80002, y: 13.100006}
   m_SizeDelta: {x: -394.21002, y: -384.47}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &889629448022281569
@@ -60035,6 +60284,7 @@ GameObject:
   - component: {fileID: 8641210938649054315}
   - component: {fileID: 4158731121535458567}
   - component: {fileID: 6903971323214395374}
+  - component: {fileID: 8641210938649054316}
   m_Layer: 0
   m_Name: Text (Legacy)
   m_TagString: Untagged
@@ -60208,6 +60458,7 @@ GameObject:
   - component: {fileID: 5946468520489320724}
   - component: {fileID: 1950226253038226792}
   - component: {fileID: 1971969063189399882}
+  - component: {fileID: 5946468520489320725}
   m_Layer: 0
   m_Name: No
   m_TagString: Untagged
@@ -60427,7 +60678,7 @@ MonoBehaviour:
     m_BestFit: 0
     m_MinSize: 2
     m_MaxSize: 200
-    m_Alignment: 4
+    m_Alignment: 3
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 1
@@ -61035,6 +61286,7 @@ GameObject:
   - component: {fileID: 390750491042465594}
   - component: {fileID: 4228835998315995713}
   - component: {fileID: 4273791017945934195}
+  - component: {fileID: 5053609422507561831}
   m_Layer: 0
   m_Name: Text (Legacy) (1)
   m_TagString: Untagged
@@ -61042,6 +61294,22 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &5053609422507561831
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5053609422507561830}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eac9f5864189fa0489edf2ece0db027b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TextLocalisatorScript
+  key: signature
+  germanFontSizeModificator: 0.5
+  italianFontSizeModificator: 0.8
+  pronemodify: 1
 --- !u!224 &5054364959146865379
 RectTransform:
   m_ObjectHideFlags: 0
@@ -61058,7 +61326,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -72, y: -46.59999}
+  m_AnchoredPosition: {x: -161.1, y: -44}
   m_SizeDelta: {x: -394.21002, y: -384.47}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5239710354705023149
@@ -61110,6 +61378,7 @@ GameObject:
   - component: {fileID: 5054364959146865379}
   - component: {fileID: 6118410038818273317}
   - component: {fileID: 2345563598304095948}
+  - component: {fileID: 6118410038818273318}
   m_Layer: 0
   m_Name: QuitText
   m_TagString: Untagged
@@ -61176,6 +61445,22 @@ RectTransform:
   m_AnchoredPosition: {x: 139.6, y: 57.8}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &5946468520489320725
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1527980928560837012}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eac9f5864189fa0489edf2ece0db027b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TextLocalisatorScript
+  key: no
+  germanFontSizeModificator: 0.5
+  italianFontSizeModificator: 0.8
+  pronemodify: 1
 --- !u!212 &6043470083486389565
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -61242,6 +61527,22 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5382634848951284678}
   m_CullTransparentMesh: 1
+--- !u!114 &6118410038818273318
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5382634848951284678}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eac9f5864189fa0489edf2ece0db027b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TextLocalisatorScript
+  key: quit_desktop
+  germanFontSizeModificator: 0.9
+  italianFontSizeModificator: 0.8
+  pronemodify: 0
 --- !u!222 &6216121698562779652
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -61437,7 +61738,7 @@ MonoBehaviour:
     m_BestFit: 0
     m_MinSize: 2
     m_MaxSize: 200
-    m_Alignment: 4
+    m_Alignment: 3
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 1
@@ -61730,6 +62031,22 @@ RectTransform:
   m_AnchoredPosition: {x: -163.9, y: 97.499985}
   m_SizeDelta: {x: 295.03, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &8641210938649054316
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 889629448022281569}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eac9f5864189fa0489edf2ece0db027b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TextLocalisatorScript
+  key: eradication_postponed
+  germanFontSizeModificator: 0.5
+  italianFontSizeModificator: 0.8
+  pronemodify: 1
 --- !u!114 &8769023352923694405
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -61768,6 +62085,22 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 388977285310019149}
   m_CullTransparentMesh: 1
+--- !u!114 &8806661552919862767
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 388977285310019149}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eac9f5864189fa0489edf2ece0db027b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TextLocalisatorScript
+  key: yes
+  germanFontSizeModificator: 0.5
+  italianFontSizeModificator: 0.8
+  pronemodify: 1
 --- !u!1 &8817613573699429139
 GameObject:
   m_ObjectHideFlags: 0
@@ -61800,6 +62133,7 @@ GameObject:
   - component: {fileID: 741318104540821295}
   - component: {fileID: 6216121698562779652}
   - component: {fileID: 7381037169571733472}
+  - component: {fileID: 8835795305191675296}
   m_Layer: 0
   m_Name: MainMenuText
   m_TagString: Untagged
@@ -61807,6 +62141,22 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &8835795305191675296
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8835795305191675295}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eac9f5864189fa0489edf2ece0db027b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TextLocalisatorScript
+  key: return_menu
+  germanFontSizeModificator: 0.9
+  italianFontSizeModificator: 0.8
+  pronemodify: 0
 --- !u!114 &8995576224101117388
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -61919,3 +62269,4 @@ SceneRoots:
   - {fileID: 993594733}
   - {fileID: 1430388942}
   - {fileID: 291911570}
+  - {fileID: 515743195}

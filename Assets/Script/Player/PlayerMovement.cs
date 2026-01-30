@@ -255,6 +255,8 @@ public class PlayerMovement : MonoBehaviour
 
     public bool tiphasexited;
 
+    public GameObject angelSubtites;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -324,6 +326,7 @@ public class PlayerMovement : MonoBehaviour
         isMfSpecialing = false;
         shouldMakeSound = true;
         hasheard = false;
+        invincible = false;
         hasheard = false;
         shouldmakeAudio = true;
         stopAttacking = false;
@@ -697,11 +700,15 @@ public class PlayerMovement : MonoBehaviour
             if (currentWeapon == 4) StartCoroutine(spearspecialAttack());
         }
 
-        
-         if (Input.GetKeyDown(KeyCode.G)) godMode = true;
-         if (Input.GetKeyDown(KeyCode.H)) StartCoroutine(enterAngelic(false));
-         if (Input.GetKeyDown(KeyCode.J)) StartCoroutine(pickUpWeapon(UnityEngine.Random.RandomRange(0, 5), "random"));
-         
+        /*
+        if (Input.GetKeyDown(KeyCode.G)) godMode = true;
+        if (Input.GetKeyDown(KeyCode.H)) StartCoroutine(enterAngelic(false));
+        if (Input.GetKeyDown(KeyCode.J)) StartCoroutine(pickUpWeapon(UnityEngine.Random.RandomRange(0, 5), "random"));
+
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            StartCoroutine(enterAngelic(false));
+        }
         /*
         if (Input.GetKeyDown(KeyCode.F))
         {
@@ -1722,18 +1729,28 @@ public class PlayerMovement : MonoBehaviour
     {
         float time = 3.0125f;
         AudioClip revivalClip;
+        int random = 1;
+        int variation = 0;
         if (!hasheard)
         {
             hasheard = true;
             revivalClip = stylemastery;
+            variation = 1;
         }
         else
         {
-            revivalClip = deaths[UnityEngine.Random.RandomRange(0, deaths.Length)];
+            random = UnityEngine.Random.RandomRange(0, deaths.Length);
+            string name = deaths[random].name;
+            if (name.EndsWith("Angel")) variation = 0;
+            else variation = int.Parse(deaths[random].name[deaths[random].name.Length - 1].ToString());
+            print(deaths[random].name[deaths[random].name.Length - 1]);
+            revivalClip = deaths[random];
         }
         if (revivalClip == revival) time = 0;
         else audioManager.instance.playAudio(deathBG, 0.2f, 1, transform, audioManager.instance.music);
         yield return new WaitForSeconds(time);
+        angelSubtites.SetActive(true);
+        LanguageData.instance.playSubtitles(variation);
         audioManager.instance.playAudio(revivalClip, 1, 1, transform, audioManager.instance.sfx);
         //Time.timeScale = 0;
     }

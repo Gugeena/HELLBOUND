@@ -361,6 +361,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::TextLocalisatorScript
   key: drop
   germanFontSizeModificator: 0.75
+  italianFontSizeModificator: 0.8
+  pronemodify: 0
 --- !u!1 &44468911
 GameObject:
   m_ObjectHideFlags: 0
@@ -1273,7 +1275,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -2553,6 +2555,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::TextLocalisatorScript
   key: slide
   germanFontSizeModificator: 0.75
+  italianFontSizeModificator: 0.8
+  pronemodify: 0
 --- !u!1 &472267181
 GameObject:
   m_ObjectHideFlags: 0
@@ -3054,6 +3058,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::TextLocalisatorScript
   key: special
   germanFontSizeModificator: 0.75
+  italianFontSizeModificator: 0.8
+  pronemodify: 0
 --- !u!1 &596367540
 GameObject:
   m_ObjectHideFlags: 0
@@ -3398,6 +3404,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::TextLocalisatorScript
   key: jump
   germanFontSizeModificator: 0.75
+  italianFontSizeModificator: 0.8
+  pronemodify: 0
 --- !u!1 &623999590
 GameObject:
   m_ObjectHideFlags: 0
@@ -10185,7 +10193,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -10352,6 +10360,7 @@ MonoBehaviour:
   eventsystem: {fileID: 2064691277}
   glow: {fileID: 189006636}
   glow1: {fileID: 291790600}
+  dropdown: {fileID: 2112227940}
 --- !u!114 &1209260350
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11124,6 +11133,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::TextLocalisatorScript
   key: music
   germanFontSizeModificator: 0.75
+  italianFontSizeModificator: 0.8
+  pronemodify: 0
 --- !u!1 &1291600645
 GameObject:
   m_ObjectHideFlags: 0
@@ -11234,7 +11245,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 152.9, y: -113.600136}
+  m_AnchoredPosition: {x: 141.9, y: -113.600136}
   m_SizeDelta: {x: 1122.22, y: 359.26}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1299524351
@@ -11295,6 +11306,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::TextLocalisatorScript
   key: style_points
   germanFontSizeModificator: 0.75
+  italianFontSizeModificator: 0.8
+  pronemodify: 0
 --- !u!1 &1303469899
 GameObject:
   m_ObjectHideFlags: 0
@@ -11389,6 +11402,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::TextLocalisatorScript
   key: quit_game
   germanFontSizeModificator: 0.5
+  italianFontSizeModificator: 0.8
+  pronemodify: 1
 --- !u!1 &1348776687
 GameObject:
   m_ObjectHideFlags: 0
@@ -12231,6 +12246,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: '::'
   key: start_game
   germanFontSizeModificator: 0.5
+  italianFontSizeModificator: 0.8
+  pronemodify: 1
 --- !u!1 &1577417129
 GameObject:
   m_ObjectHideFlags: 0
@@ -12327,6 +12344,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::TextLocalisatorScript
   key: attack
   germanFontSizeModificator: 0.75
+  italianFontSizeModificator: 0.8
+  pronemodify: 0
 --- !u!1 &1618135905
 GameObject:
   m_ObjectHideFlags: 0
@@ -13453,7 +13472,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -246.70001, y: 82.299934}
+  m_AnchoredPosition: {x: -244, y: 82.299934}
   m_SizeDelta: {x: 715.72, y: 457.45}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1825866807
@@ -13514,6 +13533,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::TextLocalisatorScript
   key: dash
   germanFontSizeModificator: 0.75
+  italianFontSizeModificator: 0.8
+  pronemodify: 0
 --- !u!1 &1841448680
 GameObject:
   m_ObjectHideFlags: 0
@@ -13930,6 +13951,7 @@ GameObject:
   - component: {fileID: 1944512386}
   - component: {fileID: 1944512385}
   - component: {fileID: 1944512384}
+  - component: {fileID: 1944512389}
   m_Layer: 5
   m_Name: Button (Legacy) (2)
   m_TagString: Untagged
@@ -14091,6 +14113,22 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1944512382}
   m_CullTransparentMesh: 1
+--- !u!114 &1944512389
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1944512382}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eac9f5864189fa0489edf2ece0db027b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TextLocalisatorScript
+  key: tenth_layer_hell
+  germanFontSizeModificator: 0.5
+  italianFontSizeModificator: 0.8
+  pronemodify: 0
 --- !u!1 &1949098343
 GameObject:
   m_ObjectHideFlags: 0
@@ -14490,6 +14528,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::TextLocalisatorScript
   key: replay_tutorial
   germanFontSizeModificator: 0.75
+  italianFontSizeModificator: 0.8
+  pronemodify: 0
 --- !u!1 &2026102064
 GameObject:
   m_ObjectHideFlags: 0
@@ -14586,6 +14626,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::TextLocalisatorScript
   key: settings
   germanFontSizeModificator: 0.5
+  italianFontSizeModificator: 0.8
+  pronemodify: 1
 --- !u!1 &2051589572
 GameObject:
   m_ObjectHideFlags: 0
@@ -15261,6 +15303,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a02df698724492b468cca0e6f810ffb3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LanguageData
+  unStaticCurrLangauge: 0
+  dropdown: {fileID: 2112227940}
 --- !u!1 &2113008940
 GameObject:
   m_ObjectHideFlags: 0
@@ -15533,6 +15577,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::TextLocalisatorScript
   key: tenth_layer_hell
   germanFontSizeModificator: 0.5
+  italianFontSizeModificator: 0.8
+  pronemodify: 1
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

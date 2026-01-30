@@ -175,7 +175,7 @@ public class spearScript : MonoBehaviour
             return;
         }
 
-        if (obj.layer == 8 || obj.layer == 3 || obj.CompareTag("llocation") || obj.CompareTag("rlocation"))
+        if (obj.layer == 8 || obj.layer == 3 || obj.CompareTag("llocation") || obj.CompareTag("rlocation") || obj.name.StartsWith("Lilith"))
         {
             if (hasexploded) return;
             Vector2 direction = collision.transform.position - transform.position;

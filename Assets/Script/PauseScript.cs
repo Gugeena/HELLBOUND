@@ -161,12 +161,12 @@ public class PauseScript : MonoBehaviour
     public IEnumerator death()
     {
         alreadyshown = true;
-        kills.text = "" + kill;
-        damage.text = "" + dmg;
+        kills.text = LanguageData.instance.getCurrentLangText("banished_souls_eradicated") + kill;
+        damage.text = LanguageData.instance.getCurrentLangText("damage_received") + dmg;
         int totalseconds = (int)dro;
         int minutes = totalseconds / 60;
         int seconds = totalseconds % 60;
-        time.text = minutes + ":" + seconds.ToString("00");
+        time.text = LanguageData.instance.getCurrentLangText("time") +  minutes + ":" + seconds.ToString("00");
         yield return new WaitForSeconds(5f);
         Fadeout.SetActive(true);
         yield return new WaitForSeconds(0.95f);

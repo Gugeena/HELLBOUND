@@ -9,6 +9,9 @@ public class FireBallScript : MonoBehaviour
     public GameObject firePillar;
     public Transform RLocation;
     public Transform LLocation;
+    bool wentin = false;
+
+
     // Start is called before the first frame update
 
     void Start()
@@ -44,16 +47,18 @@ public class FireBallScript : MonoBehaviour
             //Instantiate(firePillar, new Vector2(this.transform.position.x, 1f), Quaternion.identity);
             Destroy(gameObject);
         }
-        else if (obj.layer == 3 && !isProjectile)
+        else if (obj.layer == 3 && !isProjectile && !wentin)
         {
+            wentin = true;
             Instantiate(deathParticles, new Vector2(this.transform.position.x, this.transform.position.y + 0.25f), Quaternion.identity);
             Quaternion rotation = obj.name != "Ground" ? Quaternion.Euler(0, 0, 180)  : Quaternion.identity;
             float y = obj.name != "Ground" ? 0 : 1;
             Instantiate(firePillar, new Vector2(this.transform.position.x, y), rotation);
             Destroy(gameObject);
         }
-        else if (obj.tag == "Player")
+        else if (obj.tag == "Player" && !wentin)
         {
+            wentin = true;
             Instantiate(deathParticles, new Vector2(this.transform.position.x, this.transform.position.y - 0.25f), Quaternion.identity);
             if(!isProjectile) Instantiate(firePillar, new Vector2(obj.transform.position.x, 1f), Quaternion.identity);
             Destroy(gameObject);

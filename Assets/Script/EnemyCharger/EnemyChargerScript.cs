@@ -480,9 +480,11 @@ public class EnemyChargerScript : MonoBehaviour
 
         if (!stoned && collision.gameObject.CompareTag("pushUp"))
         {
+            print("pushin detected");
             pushUpScript pus = collision.gameObject.GetComponent<pushUpScript>();
             if (pus.pushUp == 0)
             {
+                print("pushin detected1");
                 pus.pushUp++;
                 rb.linearVelocity = Vector2.zero;
                 rb.AddForce(transform.up * (300 * 1000));
