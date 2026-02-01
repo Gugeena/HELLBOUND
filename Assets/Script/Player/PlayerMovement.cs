@@ -682,7 +682,7 @@ public class PlayerMovement : MonoBehaviour
 
     void handleCombat()
     {
-        if(isDead) return;
+        if(isDead || PauseScript.Paused) return;
 
         if (Input.GetKeyDown(AttackButton) && canPunch)
         {

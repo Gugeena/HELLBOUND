@@ -12,7 +12,7 @@ public class mfScript : MonoBehaviour
     private camShakerScript camShakerScript;
     private Rigidbody2D rb;
 
-    private bool move, goBack;
+    public bool move, goBack;
     [SerializeField]
     private float speed, returnSpeed;
 
@@ -34,12 +34,14 @@ public class mfScript : MonoBehaviour
     public int killed = 0;
     bool mowed = false;
     public teleportCountScript tpcs;
+    public bool canStun;
 
     private void Start()
     {
         playerTransform = GameObject.Find("Player(Clone)").transform;
         killed = 0;
         tpcs = GetComponent<teleportCountScript>();
+        canStun = true;
     }
 
     void Awake()
@@ -107,9 +109,10 @@ public class mfScript : MonoBehaviour
     private IEnumerator life()
     {
         yield return new WaitForSeconds(0.8f);
-        move = true;
-        if(camShakerScript != null)runningShake = StartCoroutine(camShakerScript.shake());
+        if (camShakerScript != null) runningShake = StartCoroutine(camShakerScript.shake());
         startPos = transform.position;
+        if (!canStun) yield break;
+        move = true;
     }
 
     private IEnumerator back()
@@ -150,8 +153,9 @@ public class mfScript : MonoBehaviour
             StartCoroutine(teleport());
         }
 
-        if (obj.CompareTag("LilithGravityBox"))
+        if (obj.CompareTag("LilithGravityBox") && canStun && !goBack)
         {
+            canStun = false;
             bool canBeStunned = GameObject.Find("Lilith(Clone)").GetComponent<LilithScript>().canBeStunned;
             if (!canBeStunned) return;
             StartCoroutine(lilithChopUp());

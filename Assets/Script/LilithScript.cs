@@ -910,6 +910,23 @@ public class LilithScript : MonoBehaviour
     public void HandleHit(Collider2D collision)
     {
         GameObject obj = collision.gameObject;
+
+        mfScript mfScript = GetComponent<mfScript>();
+        if (mfScript != null && mfScript.goBack) return;
+
+        if (obj.name.StartsWith("motherfuckr") && canBeStunned)
+        {
+            if (collision.gameObject.transform.position.x > this.transform.position.x) isRight = true;
+            else isRight = false;
+            stunned = true;
+            animator.speed = 0;
+            wasStunned = true;
+            StartCoroutine(choppitychop());
+            return;
+            //canTeleport = false;
+            // StartCoroutine(damage(RetrieveTeleportCount(collision), 0.25f, 0.25f));
+        }
+
         if (obj.CompareTag("mfHitbox") && !isDead && !obj.name.StartsWith("motherfuckr"))
         {
             washitbyspear = false;
@@ -933,18 +950,6 @@ public class LilithScript : MonoBehaviour
 
                 StartCoroutine(damage(RetrieveTeleportCount(collision), damagexz, timer));
             }
-        }
-
-        if (obj.name.StartsWith("motherfuckr") && canBeStunned)
-        {
-            if (collision.gameObject.transform.position.x > this.transform.position.x) isRight = true;
-            else isRight = false;
-            stunned = true;
-            animator.speed = 0;
-            wasStunned = true;
-            StartCoroutine(choppitychop());
-            //canTeleport = false;
-            // StartCoroutine(damage(RetrieveTeleportCount(collision), 0.25f, 0.25f));
         }
     }
 
