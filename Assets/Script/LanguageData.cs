@@ -177,7 +177,7 @@ public class LanguageData : MonoBehaviour
         Spanish.Add("settings", "Configuracion");
         Spanish.Add("discord", "Discord");
         Spanish.Add("quit_game", "Salir del juego");
-        Spanish.Add("tenth_layer_hell", "Décima Capa del Infierno");
+        Spanish.Add("tenth_layer_hell", "Decima Capa del Infierno");
 
         Spanish.Add("first_note", "Lo que va, vuelve.\nUsalo a tu favor.\nLos ataques en bucle otorgan \"Style Points\".\nCuidado, los enemigos tambien pueden usarlo.");
         Spanish.Add("second_note", "Los movimientos especiales otorgan bonus \"Style Points\".\nEl uso prolongado de armas drena Style Points.\nDominar el estilo te acerca a la iluminacion.\nMata demonios cercanos para restaurar la fuerza vital.\nAlcanza la angelitud para enfrentar al exiliado.");
@@ -200,7 +200,7 @@ public class LanguageData : MonoBehaviour
         Spanish.Add("eradication_notice", "Aviso de erradicacion");
 
         Spanish.Add("eradication_postponed", "Erradicacion pospuesta por ahora...");
-        Spanish.Add("return_menu", "Volver al menu principal?");
+        Spanish.Add("return_menu", "Volver al menu?");
 
         Spanish.Add("the", "LA");
         Spanish.Add("first", "PRIMERA");
